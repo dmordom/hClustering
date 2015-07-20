@@ -1,0 +1,4 @@
+tree-file=/scr/klee2/moreno/trees/1050/centroid-26nb/2-monot/lh/nbtree.txt
+mask-file=/scr/klee2/moreno/scans/1050/mask.v
+tract-folder=/scr/klee2/moreno/prob_tracts/1050/connect_single/
+output=/scr/mandel1/test_moreno/
