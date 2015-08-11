@@ -62,26 +62,6 @@ WHnode.h
 WFileParser.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.h
 
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp
-vector
--
-list
--
-string
--
-utility
--
-map
--
-algorithm
--
-limits
--
-WStringUtils.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.h
-WHtreePartition.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
-
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
 vector
 -
@@ -198,12 +178,6 @@ listedCache.hpp
 fileManagerFactory.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.h
 
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp
-vector
--
-compactTract.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h
-
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h
 omp.h
 -
@@ -221,12 +195,6 @@ ctime
 -
 boost/date_time/posix_time/posix_time.hpp
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/boost/date_time/posix_time/posix_time.hpp
-compactTractChar.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.h
-
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp
-vector
--
 compactTractChar.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.h
 
@@ -321,12 +289,6 @@ compactTract.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h
 roiLoader.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.h
-
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp
-fileManager.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.h
-errno.h
--
 
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.h
 string
@@ -476,12 +438,6 @@ list
 utility
 -
 stdexcept
--
-
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp
-niftiManager.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.h
-nifti/nifti1_io.h
 -
 
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.h

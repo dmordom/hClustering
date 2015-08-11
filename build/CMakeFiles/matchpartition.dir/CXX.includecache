@@ -62,6 +62,26 @@ WHnode.h
 WFileParser.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.h
 
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp
+vector
+-
+list
+-
+string
+-
+utility
+-
+map
+-
+algorithm
+-
+limits
+-
+WStringUtils.h
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.h
+WHtreePartition.h
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
+
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
 vector
 -
@@ -493,12 +513,6 @@ nifti/nifti1_io.h
 -
 nifti/nifti1.h
 -
-
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp
-map
--
-protoNode.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.h
 
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.h
 utility

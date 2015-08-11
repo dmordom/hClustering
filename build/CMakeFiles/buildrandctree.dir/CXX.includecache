@@ -62,6 +62,26 @@ WHnode.h
 WFileParser.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.h
 
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp
+vector
+-
+list
+-
+string
+-
+utility
+-
+map
+-
+algorithm
+-
+limits
+-
+WStringUtils.h
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.h
+WHtreePartition.h
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
+
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h
 vector
 -
@@ -178,12 +198,6 @@ listedCache.hpp
 fileManagerFactory.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.h
 
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp
-vector
--
-compactTract.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h
-
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h
 omp.h
 -
@@ -201,12 +215,6 @@ ctime
 -
 boost/date_time/posix_time/posix_time.hpp
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/boost/date_time/posix_time/posix_time.hpp
-compactTractChar.h
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.h
-
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp
-vector
--
 compactTractChar.h
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.h
 
