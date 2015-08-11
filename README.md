@@ -4,10 +4,10 @@ Hierarchical clustering algorithms for whole-brain connectivity similarity analy
  David Moreno-Dominguez. d.mor.dom@gmail.com, moreno@cbs.mpg.de. www.cbs.mpg.de/~moreno
 
 Dependencies:
-- Boost [libboost-all] (tested with version 1.48, higher versions should also work)
+- Boost [libboost-all] (tested with version 1.48, higher versions should also work).
 - via [libviaio] Provided here. For vista files handling.
-- nifti-1 [libniftiio]. For nifti files handling
-- lznz [libznz]. Required by nifti library
+- nifti-1 [libniftiio]. For nifti files handling.
+- lznz [libznz]. Required by nifti library.
 
  For more reference on the underlying algorithms and research they have been used for refer to:
  
