@@ -3,6 +3,12 @@ Hierarchical clustering algorithms for whole-brain connectivity similarity analy
  
  David Moreno-Dominguez. d.mor.dom@gmail.com, moreno@cbs.mpg.de. www.cbs.mpg.de/~moreno
 
+Dependencies:
+- Boost [libboost-all] (tested with version 1.48, higher versions should also work)
+- via [libviaio] Provided here. For vista files handling.
+- nifti-1 [libniftiio]. For nifti files handling
+- lznz [libznz]. Required by nifti library
+
  For more reference on the underlying algorithms and research they have been used for refer to:
  
  - Moreno-Dominguez, D., Anwander, A., & KnÃ¶sche, T. R. (2014).   A hierarchical method for whole-brain connectivity-based parcellation.   Human Brain Mapping, 35(10), 5000-5025. doi: http:dx.doi.org/10.1002/hbm.22528
