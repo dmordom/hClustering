@@ -1,3 +1,36 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
+
 // std library
 #include <vector>
 #include <list>
@@ -10,79 +43,17 @@
 #include "graphTreeBuilder.h"
 
 
-bool graphTreeBuilder::readRoi( std::string filename )
+graphTreeBuilder::graphTreeBuilder( std::string roiFilename, bool verbose ):
+    m_roiLoaded( false ), m_treeReady( false ), m_logfile( 0 ), m_verbose( verbose )
 {
-    m_roi.clear();
+    fileManagerFactory fMFtestFormat;
+    m_niftiMode = fMFtestFormat.isNifti();
+    RoiLoader roiLoader( m_niftiMode );
+    m_roiLoaded = roiLoader.readRoi( roiFilename, &m_datasetGrid, &m_datasetSize, &m_numStreamlines, &m_roi, &m_trackids );
+}
 
-    WFileParser parser( filename );
-    if( !parser.readFile() )
-    {
-        std::cerr << "ERROR @ treeBuilder::readRoi(): Parser error" << std::endl;
-        return false;
-    }
-    std::vector< std::string > lines = parser.getRawLines();
-    if( lines.size() == 0 )
-    {
-        std::cerr << "ERROR @ treeBuilder::readRoi(): File is empty" << std::endl;
-        return false;
-    }
 
-    {
-        std::vector< std::vector< std::string > > datasetStrings = parser.getLinesForTagSeparated( "imagesize" );
-        if( datasetStrings.size() == 0 )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset size was not found in tree file" << std::endl;
-            return false;
-        }
-        if( datasetStrings.size() > 1 )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset attribute had multiple lines" << std::endl;
-            return false;
-        }
-        WHcoord datasetSize( boost::lexical_cast< coord_t >( datasetStrings[0][0] ), boost::lexical_cast< coord_t >(
-                        datasetStrings[0][1] ), boost::lexical_cast< coord_t >( datasetStrings[0][2] ) );
-        std::string gridString( datasetStrings[0][3] );
-        if( gridString == getGridString( HC_VISTA ) )
-        {
-            m_datasetGrid = HC_VISTA;
-        }
-        else if( gridString == getGridString( HC_NIFTI ) )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): " << gridString << " format not supported, only " << getGridString(
-                            HC_VISTA ) << " format supported" << std::endl;
-            return false;
-        }
-        else
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset grid type string \"" << gridString
-                            << "\" could not be identified" << std::endl;
-            return false;
-        }
-        m_datasetSize = datasetSize;
-    }
-    {
-        std::vector< std::vector< std::string > > coordStrings = parser.getLinesForTagSeparated( "roi" );
-        if( coordStrings.size() == 0 )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): no roi coordinates in roi file (lacking #roi tag?)" << std::endl;
-            return false;
-        }
-        m_roi.reserve( coordStrings.size() );
-        for( size_t i = 0; i < coordStrings.size(); ++i )
-        {
-            WHcoord tempCoord( boost::lexical_cast< coord_t >( coordStrings[i][0] ), boost::lexical_cast< coord_t >(
-                            coordStrings[i][1] ), boost::lexical_cast< coord_t >( coordStrings[i][2] ) );
-            m_roi.push_back( tempCoord );
-        }
-    }
-    std::sort( m_roi.begin(), m_roi.end() );
-    m_roiLoaded = true;
-    if( m_verbose )
-        std::cout << "Roi loaded, " << m_roi.size() << " seed voxels" << std::endl;
-    return true;
-} // end treeBuilder::readRoi() -------------------------------------------------------------------------------------
-
-void graphTreeBuilder::buildGraph( const tgraph_t graphMethod )
+void graphTreeBuilder::buildGraph( const TG_GRAPHTYPE graphMethod )
 {
     if( !m_roiLoaded )
     {
@@ -152,8 +123,8 @@ void graphTreeBuilder::buildGraph( const tgraph_t graphMethod )
         nodeID_t node2join1ID( lookup[lowestLocation.first] );
         nodeID_t node2join2ID( lookup[lowestLocation.second] );
         nodeID_t newID( std::make_pair( true, nodes.size() ) );
-        WHnode* node2join1( fetchNode( node2join1ID, leaves, nodes ) );
-        WHnode* node2join2( fetchNode( node2join2ID, leaves, nodes ) );
+        WHnode* node2join1( fetchNode( node2join1ID, &leaves, &nodes ) );
+        WHnode* node2join2( fetchNode( node2join2ID, &leaves, &nodes ) );
         node2join1->setParent( newID );
         node2join2->setParent( newID );
 
@@ -269,7 +240,7 @@ void graphTreeBuilder::buildGraph( const tgraph_t graphMethod )
                 message << ( elapsedTime % 3600 ) % 60 << "\". ";
                 std::cout << message.str() <<std::flush;
             }
-        } // end m_verbose
+        } // end verbose
 
 
 
@@ -285,24 +256,32 @@ void graphTreeBuilder::buildGraph( const tgraph_t graphMethod )
     std::string graphName;
     if( graphMethod == TG_SINGLE )
     {
-        graphName = "sing";
+        graphName = "single";
     }
     else if( graphMethod == TG_COMPLETE )
     {
-        graphName = "comp";
+        graphName = "complete";
     }
     else if( graphMethod == TG_AVERAGE )
     {
-        graphName = "avrg";
+        graphName = "average";
+    }
+    else if( graphMethod == TG_WEIGHTED )
+    {
+        graphName = "weighted";
+    }
+    else if( graphMethod == TG_WARD )
+    {
+        graphName = "ward";
     }
     else
     {
-        graphName = "wght";
+        throw std::runtime_error( "ERROR @ treeBuilder::buildGraph(): graph method not recognized" );
     }
 
     {
         std::list< WHcoord > discarded;
-        WHtree thisTree( graphName, m_datasetSize, leaves, nodes, m_roi, discarded, m_datasetGrid );
+        WHtree thisTree( graphName, m_datasetGrid, m_datasetSize, m_numStreamlines, 0, leaves, nodes, m_trackids, m_roi, discarded );
         m_tree = thisTree;
         std::vector< WHnode > emptyL, emptyN;
         leaves.swap( emptyL );
@@ -333,32 +312,43 @@ void graphTreeBuilder::writeTree() const
 {
     if( ( !m_treeReady ) || m_outputFolder.empty() )
     {
-        std::cerr << "ERROR @ treeBuilder::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
+        std::cerr << "ERROR @ graphTreeBuilder::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
         return;
     }
-    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt" );
-    m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
-    //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
-
+    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt", m_niftiMode );
     if( m_verbose )
     {
         std::cout << "Written standard tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
     if( m_logfile != 0 )
     {
         ( *m_logfile ) << "Standard tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
 
+    if( m_debug )
+    {
+        m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
+        //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
+        if( m_verbose )
+        {
+            std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+    }
     return;
 } // end treeBuilder::writeTree() -------------------------------------------------------------------------------------
 
 
-WHnode* graphTreeBuilder::fetchNode( const nodeID_t &thisNode, std::vector< WHnode > &leaves, std::vector< WHnode > &nodes ) const
+WHnode* graphTreeBuilder::fetchNode( const nodeID_t thisNode, std::vector< WHnode >* leavesPointer, std::vector< WHnode >* nodesPointer ) const
 {
+    std::vector< WHnode >& leaves = *leavesPointer;
+    std::vector< WHnode >& nodes = *nodesPointer;
+
     if( thisNode.first )
     {
         return &( nodes[thisNode.second] );
@@ -514,8 +504,8 @@ void graphTreeBuilder::loadDistMatrix( std::vector< std::vector< float > >* cons
     return;
 } // end treeBuilder::loadDistMatrix() -------------------------------------------------------------------------------------
 
-dist_t graphTreeBuilder::newGraphDist( const dist_t &distance1, const dist_t &distance2, const size_t &size1, const size_t &size2,
-                const tgraph_t &graphMethod ) const
+dist_t graphTreeBuilder::newGraphDist( const dist_t distance1, const dist_t distance2, const size_t size1, const size_t size2,
+                const TG_GRAPHTYPE graphMethod ) const
 {
     if( graphMethod == TG_SINGLE ) // Single graphMethodage: D(k,i+j) = min[D(i,k),D(j,k)]
     {
@@ -532,6 +522,12 @@ dist_t graphTreeBuilder::newGraphDist( const dist_t &distance1, const dist_t &di
     else if( graphMethod == TG_WEIGHTED ) // Weighted graphMethodage: D(k,i+j) = [D(i,k)+D(i,k)]/2
     {
         return ( distance1 + distance2 ) / 2;
+    }
+    else if ( graphMethod == TG_WARD )
+    {
+        dist_t avrg( ( ( size1 * distance1 ) + ( size2 * distance2 ) ) / ( size1 + size2 ) );
+        dist_t ward( (size1 * size2) * ( avrg - ( distance1 / 2.) - ( distance2 / 2.) ) / ( size1 + size2 )  );
+        return ward;
     }
     else
     {

@@ -1,0 +1,223 @@
+\hypertarget{classWHcoord}{\section{\-W\-Hcoord \-Class \-Reference}
+\label{classWHcoord}\index{\-W\-Hcoord@{\-W\-Hcoord}}
+}
+
+
+{\ttfamily \#include $<$\-W\-Hcoord.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWHcoord_aa5c17342dbe719cc415edf51ffb4350f}{\-W\-Hcoord} ()
+\item 
+\hyperlink{classWHcoord_a987b8d4aaa2e0081f04033b2be8e8b78}{\-W\-Hcoord} (coord\-\_\-t x\-\_\-init, coord\-\_\-t y\-\_\-init, coord\-\_\-t z\-\_\-init)
+\item 
+\hyperlink{classWHcoord_a932e18e68cf024052b2b8e37acff536f}{\-W\-Hcoord} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&object)
+\item 
+\hyperlink{classWHcoord_a4bbb4d5308187ba0892a933120bf4c63}{$\sim$\-W\-Hcoord} ()
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \& \hyperlink{classWHcoord_ac695022ff163e6f4099d1c88e86659fb}{operator=} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&rhs)
+\item 
+float \hyperlink{classWHcoord_a9e397e93eaf1dc9dc289d707e1167897}{get\-Phys\-Dist} (const \hyperlink{classWHcoord}{\-W\-Hcoord} voxel) const 
+\item 
+std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHcoord_a214eb2a2c641e1cad3cb4dd7341957a8}{get\-Phys\-Nbs} (const \hyperlink{classWHcoord}{\-W\-Hcoord} data\-Size, const unsigned int nb\-Level) const 
+\item 
+std\-::string \hyperlink{classWHcoord_ac3586e38d47b1b9b08e1f1618ed0a038}{get\-Name\-String} () const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHcoord_abd162d2be43273f5aead32723fe39fdd}{nifti2vista} (const \hyperlink{classWHcoord}{\-W\-Hcoord} data\-Size) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHcoord_ae189a048a5aa0b1375833f542ffebc24}{vista2nifti} (const \hyperlink{classWHcoord}{\-W\-Hcoord} data\-Size) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHcoord_a8d15380fff405a08ef4f7b0b02b290e7}{surf2vista} (const \hyperlink{classWHcoord}{\-W\-Hcoord} data\-Size) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHcoord_a1aa2b290b01b2effefc07ba791395510}{surf2nifti} (const \hyperlink{classWHcoord}{\-W\-Hcoord} data\-Size) const 
+\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classWHcoord_aff62663740e60363f99fd6951b68e761}{coord\-\_\-t \hyperlink{classWHcoord_aff62663740e60363f99fd6951b68e761}{m\-\_\-x}}\label{classWHcoord_aff62663740e60363f99fd6951b68e761}
+
+\begin{DoxyCompactList}\small\item\em x coordinate \end{DoxyCompactList}\item 
+\hypertarget{classWHcoord_aebd2a93712cf57652663538972330189}{coord\-\_\-t \hyperlink{classWHcoord_aebd2a93712cf57652663538972330189}{m\-\_\-y}}\label{classWHcoord_aebd2a93712cf57652663538972330189}
+
+\begin{DoxyCompactList}\small\item\em y coordinate \end{DoxyCompactList}\item 
+\hypertarget{classWHcoord_a63f1338fd188785c21667d16067abb89}{coord\-\_\-t \hyperlink{classWHcoord_a63f1338fd188785c21667d16067abb89}{m\-\_\-z}}\label{classWHcoord_a63f1338fd188785c21667d16067abb89}
+
+\begin{DoxyCompactList}\small\item\em z coordinate \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class to contain a seed voxel coordinate. consisting on x,y,z also implements coordinate gird changes and physical neighbor search 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWHcoord_aa5c17342dbe719cc415edf51ffb4350f}{\index{\-W\-Hcoord@{\-W\-Hcoord}!\-W\-Hcoord@{\-W\-Hcoord}}
+\index{\-W\-Hcoord@{\-W\-Hcoord}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{\-W\-Hcoord}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord\-::\-W\-Hcoord} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHcoord_aa5c17342dbe719cc415edf51ffb4350f}
+\-Constructor \hypertarget{classWHcoord_a987b8d4aaa2e0081f04033b2be8e8b78}{\index{\-W\-Hcoord@{\-W\-Hcoord}!\-W\-Hcoord@{\-W\-Hcoord}}
+\index{\-W\-Hcoord@{\-W\-Hcoord}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{\-W\-Hcoord}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord\-::\-W\-Hcoord} (
+\begin{DoxyParamCaption}
+\item[{coord\-\_\-t}]{x\-\_\-init, }
+\item[{coord\-\_\-t}]{y\-\_\-init, }
+\item[{coord\-\_\-t}]{z\-\_\-init}
+\end{DoxyParamCaption}
+)}}\label{classWHcoord_a987b8d4aaa2e0081f04033b2be8e8b78}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em x\-\_\-init} & x coordinate initializer \\
+\hline
+{\em y\-\_\-init} & y coordinate initializer \\
+\hline
+{\em z\-\_\-init} & z coordinate initializer \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHcoord_a932e18e68cf024052b2b8e37acff536f}{\index{\-W\-Hcoord@{\-W\-Hcoord}!\-W\-Hcoord@{\-W\-Hcoord}}
+\index{\-W\-Hcoord@{\-W\-Hcoord}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{\-W\-Hcoord}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord\-::\-W\-Hcoord} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{object}
+\end{DoxyParamCaption}
+)}}\label{classWHcoord_a932e18e68cf024052b2b8e37acff536f}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em object} & coordinate initializer \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHcoord_a4bbb4d5308187ba0892a933120bf4c63}{\index{\-W\-Hcoord@{\-W\-Hcoord}!$\sim$\-W\-Hcoord@{$\sim$\-W\-Hcoord}}
+\index{$\sim$\-W\-Hcoord@{$\sim$\-W\-Hcoord}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{$\sim$\-W\-Hcoord}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord\-::$\sim$\-W\-Hcoord} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHcoord_a4bbb4d5308187ba0892a933120bf4c63}
+\-Destructor 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWHcoord_ac3586e38d47b1b9b08e1f1618ed0a038}{\index{\-W\-Hcoord@{\-W\-Hcoord}!get\-Name\-String@{get\-Name\-String}}
+\index{get\-Name\-String@{get\-Name\-String}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{get\-Name\-String}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-W\-Hcoord\-::get\-Name\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_ac3586e38d47b1b9b08e1f1618ed0a038}
+returns a string with the coordinates of the voxel in the form \char`\"{}xxx\-\_\-yyy\-\_\-zzz\char`\"{} \begin{DoxyReturn}{\-Returns}
+output string 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_a9e397e93eaf1dc9dc289d707e1167897}{\index{\-W\-Hcoord@{\-W\-Hcoord}!get\-Phys\-Dist@{get\-Phys\-Dist}}
+\index{get\-Phys\-Dist@{get\-Phys\-Dist}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{get\-Phys\-Dist}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Hcoord\-::get\-Phys\-Dist} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{voxel}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_a9e397e93eaf1dc9dc289d707e1167897}
+returns the euclidean distance between this voxel and the input voxel 
+\begin{DoxyParams}{\-Parameters}
+{\em voxel} & coordinate to calculate distance to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+euclidean distance value 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_a214eb2a2c641e1cad3cb4dd7341957a8}{\index{\-W\-Hcoord@{\-W\-Hcoord}!get\-Phys\-Nbs@{get\-Phys\-Nbs}}
+\index{get\-Phys\-Nbs@{get\-Phys\-Nbs}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{get\-Phys\-Nbs}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Hcoord\-::get\-Phys\-Nbs} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{data\-Size, }
+\item[{const unsigned int}]{nb\-Level}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_a214eb2a2c641e1cad3cb4dd7341957a8}
+returns a vector containing the coordinates of the physical neighbours adjacent to the voxel, the neighbourhood level is defined by nb\-\_\-level 
+\begin{DoxyParams}{\-Parameters}
+{\em data\-Size} & dataset limits \\
+\hline
+{\em nb\-Level} & neighborhood value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+coordinate vector 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_abd162d2be43273f5aead32723fe39fdd}{\index{\-W\-Hcoord@{\-W\-Hcoord}!nifti2vista@{nifti2vista}}
+\index{nifti2vista@{nifti2vista}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{nifti2vista}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Hcoord\-::nifti2vista} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{data\-Size}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_abd162d2be43273f5aead32723fe39fdd}
+transform nifti coordinates to vista format 
+\begin{DoxyParams}{\-Parameters}
+{\em data\-Size} & dataset size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+converted coordinate 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_ac695022ff163e6f4099d1c88e86659fb}{\index{\-W\-Hcoord@{\-W\-Hcoord}!operator=@{operator=}}
+\index{operator=@{operator=}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} \& \-W\-Hcoord\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{classWHcoord_ac695022ff163e6f4099d1c88e86659fb}
+= member operator 
+\begin{DoxyParams}{\-Parameters}
+{\em rhs} & object to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+reference to copied object 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_a1aa2b290b01b2effefc07ba791395510}{\index{\-W\-Hcoord@{\-W\-Hcoord}!surf2nifti@{surf2nifti}}
+\index{surf2nifti@{surf2nifti}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{surf2nifti}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Hcoord\-::surf2nifti} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{data\-Size}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_a1aa2b290b01b2effefc07ba791395510}
+transform \-R\-A\-S coordinates to nifti format 
+\begin{DoxyParams}{\-Parameters}
+{\em data\-Size} & dataset size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+converted coordinate 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_a8d15380fff405a08ef4f7b0b02b290e7}{\index{\-W\-Hcoord@{\-W\-Hcoord}!surf2vista@{surf2vista}}
+\index{surf2vista@{surf2vista}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{surf2vista}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Hcoord\-::surf2vista} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{data\-Size}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_a8d15380fff405a08ef4f7b0b02b290e7}
+transform \-R\-A\-S coordinates to vista format 
+\begin{DoxyParams}{\-Parameters}
+{\em data\-Size} & dataset size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+converted coordinate 
+\end{DoxyReturn}
+\hypertarget{classWHcoord_ae189a048a5aa0b1375833f542ffebc24}{\index{\-W\-Hcoord@{\-W\-Hcoord}!vista2nifti@{vista2nifti}}
+\index{vista2nifti@{vista2nifti}!WHcoord@{\-W\-Hcoord}}
+\subsubsection[{vista2nifti}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Hcoord\-::vista2nifti} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord}}]{data\-Size}
+\end{DoxyParamCaption}
+) const}}\label{classWHcoord_ae189a048a5aa0b1375833f542ffebc24}
+transform vista coordinates to nifti format 
+\begin{DoxyParams}{\-Parameters}
+{\em data\-Size} & dataset size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+converted coordinate 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-Hcoord.\-h\item 
+src/common/\-W\-Hcoord.\-cpp\end{DoxyCompactItemize}

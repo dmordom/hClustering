@@ -1,0 +1,1204 @@
+\hypertarget{classWHtree}{\section{\-W\-Htree \-Class \-Reference}
+\label{classWHtree}\index{\-W\-Htree@{\-W\-Htree}}
+}
+
+
+{\ttfamily \#include $<$\-W\-Htree.\-h$>$}
+
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bfseries comp\-H\-Level}
+\begin{DoxyCompactList}\small\item\em implements a compare operator for nodes, depending on the hierarchical level \end{DoxyCompactList}\item 
+struct {\bfseries comp\-Size}
+\begin{DoxyCompactList}\small\item\em implements a compare operator for nodes inside a tree structure, depending on the \-Size \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWHtree_a089379c94e81e3347630f3d93d2445ac}{\-W\-Htree} ()
+\item 
+\hyperlink{classWHtree_a68fe52e6dc0adfb2220a7bee729cf244}{\-W\-Htree} (std\-::string filename)
+\item 
+\hyperlink{classWHtree_adc8aaafe88e7b50c3c013e76566f024d}{\-W\-Htree} (std\-::string tree\-Name, \-H\-C\-\_\-\-G\-R\-I\-D dataset\-Grid\-Init, \hyperlink{classWHcoord}{\-W\-Hcoord} dataset\-Size\-Init, size\-\_\-t num\-Streamlines\-Init, float log\-Factor\-Init, std\-::vector$<$ \hyperlink{classWHnode}{\-W\-Hnode} $>$ leaves\-Init, std\-::vector$<$ \hyperlink{classWHnode}{\-W\-Hnode} $>$ nodes\-Init, std\-::vector$<$ size\-\_\-t $>$ trackid\-Init, std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ coord\-Init, std\-::list$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ discard\-Init, float cpcc\-Init=0)
+\item 
+\hyperlink{classWHtree_ae6b2a4197e7522bf70492944755dad32}{\-W\-Htree} (const \hyperlink{classWHtree}{\-W\-Htree} \&object)
+\item 
+\hyperlink{classWHtree_aef3c0090b9b4ef6c80cd78798f786640}{$\sim$\-W\-Htree} ()
+\item 
+std\-::string \hyperlink{classWHtree_ac96c308f4fd7d214058de9a99f345400}{get\-Name} () const 
+\item 
+bool \hyperlink{classWHtree_a80c4bf2ca9f2418a9008d319ffd4567e}{is\-Loaded} () const 
+\item 
+size\-\_\-t \hyperlink{classWHtree_ab03e43500c6fde88ef3de0d4b5dae1a6}{get\-Num\-Leaves} () const 
+\item 
+size\-\_\-t \hyperlink{classWHtree_a2d54d764bc0251f439e0de29f521fb73}{get\-Num\-Nodes} () const 
+\item 
+std\-::vector$<$ \hyperlink{classWHnode}{\-W\-Hnode} $>$ \hyperlink{classWHtree_aa3f0daadbe8934acc6cee4442cd0a171}{get\-Leaves} () const 
+\item 
+std\-::vector$<$ \hyperlink{classWHnode}{\-W\-Hnode} $>$ \hyperlink{classWHtree_a1bbc4d264f8f4adfd8e184865f797468}{get\-Nodes} () const 
+\item 
+size\-\_\-t \hyperlink{classWHtree_ab3386a346f77f836797f7de87833e2f6}{get\-Num\-Discarded} () const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHtree_a7ced07989d496f8900eb619e62222570}{get\-Data\-Size} () const 
+\item 
+\-H\-C\-\_\-\-G\-R\-I\-D \hyperlink{classWHtree_aa99f18419299fe7c91bed3b08e70a9c7}{get\-Data\-Grid} () const 
+\item 
+float \hyperlink{classWHtree_a68f9b4e2111ccaaaf6e2c4be41509ba3}{get\-Cpcc} () const 
+\item 
+std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHtree_a64c80a0c7c5ebad5b01d372c2bf10c67}{get\-Roi} () const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_af0f3ea76d2b9c4a917bfc8ed74adfd41}{get\-Trackids} () const 
+\item 
+std\-::list$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHtree_ac4ba3c3512cec27c41d1ebe1b6d55061}{get\-Discarded} () const 
+\item 
+std\-::vector$<$ float $>$ \hyperlink{classWHtree_abb64d6b8f300437e56ffcf068f56cde2}{get\-Selected\-Values} () const 
+\item 
+float \hyperlink{classWHtree_a938a77f4db0ad79692891955b66b2b20}{get\-Selected\-Values} (size\-\_\-t index) const 
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ size\-\_\-t $>$ $>$ \hyperlink{classWHtree_a176e1b203ea2b839843fc0f59ae69a6a}{get\-Selected\-Partitions} () const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a6bf8c646f9bcde88e50811556cd017d4}{get\-Selected\-Partitions} (size\-\_\-t index) const 
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $>$ \hyperlink{classWHtree_a7c05c467516c4ca7520d973daba3af0d}{get\-Selected\-Colors} () const 
+\item 
+std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHtree_a19ea8b2bab791e07895590b8d53eddb6}{get\-Selected\-Colors} (size\-\_\-t index) const 
+\item 
+std\-::string \hyperlink{classWHtree_a0e25349a1ace7d47021d763cfae1852b}{get\-Report} (bool long\-Msg=true) const 
+\item 
+bool \hyperlink{classWHtree_a668db7c1368f273ef462e44bff2fc91d}{check} () const 
+\item 
+const \hyperlink{classWHnode}{\-W\-Hnode} \& \hyperlink{classWHtree_a2a024be0e6cf9b50a787aa3335d17449}{get\-Node} (const node\-I\-D\-\_\-t \&this\-Node) const 
+\item 
+const \hyperlink{classWHnode}{\-W\-Hnode} \& \hyperlink{classWHtree_a58a274bacff561739374ed95ed74488f}{get\-Node} (const size\-\_\-t this\-Node) const 
+\item 
+const \hyperlink{classWHnode}{\-W\-Hnode} \& \hyperlink{classWHtree_adc212da2ed903705afac40d96975cc7e}{get\-Leaf} (const size\-\_\-t this\-Leaf) const 
+\item 
+const \hyperlink{classWHnode}{\-W\-Hnode} \& \hyperlink{classWHtree_a53a4524bb216e0d320fdb5c98ec2c717}{get\-Root} () const 
+\item 
+size\-\_\-t \hyperlink{classWHtree_a335e5ee61ee857d9da6fbd960393c109}{get\-Leaf\-I\-D} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&this\-Coord) const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a0f9a23021c60b6bc72839852d51e4203}{get\-Leaves4node} (const size\-\_\-t node\-I\-D) const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a0768aa45b66453ef9689ce9b27a11038}{get\-Leaves4node} (const node\-I\-D\-\_\-t \&node\-I\-D) const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a50bc334e9b71cdc3c9821c5decad58b5}{get\-Branch\-Nodes} (const size\-\_\-t node\-I\-D) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHtree_a8550437c85a1c9d8ff5726e45044eef1}{get\-Coordinate4leaf} (const size\-\_\-t leaf\-I\-D) const 
+\item 
+std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHtree_af31b8dd9b39669b0969b5d06390652dc}{get\-Coordinates4node} (const size\-\_\-t node\-I\-D) const 
+\item 
+std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \hyperlink{classWHtree_abefe13898e516410826ec105c1af211e}{get\-Coordinates4node} (const node\-I\-D\-\_\-t \&node\-I\-D) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHtree_ae17b1e3c712515baf55ac5ba4cdb0e29}{get\-Mean\-Coordinate4node} (const size\-\_\-t node\-I\-D) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classWHtree_a211df0613a8e94addb903df8217b4b16}{get\-Mean\-Coordinate4node} (const node\-I\-D\-\_\-t \&node\-I\-D) const 
+\item 
+size\-\_\-t \hyperlink{classWHtree_a4dc2606d76140ba2e47e8d336dc0ef06}{get\-Common\-Ancestor} (const size\-\_\-t node\-I\-D1, const size\-\_\-t node\-I\-D2) const 
+\item 
+node\-I\-D\-\_\-t \hyperlink{classWHtree_aeb15be3e2c18384d6fb36ce38a64f795}{get\-Common\-Ancestor} (const node\-I\-D\-\_\-t \&node\-I\-D1, const node\-I\-D\-\_\-t \&node\-I\-D2) const 
+\item 
+std\-::vector$<$ node\-I\-D\-\_\-t $>$ \hyperlink{classWHtree_a089e58eee47582beeabf8a2a2b2a72de}{get\-Route2\-Root} (const node\-I\-D\-\_\-t \&node\-I\-D) const 
+\item 
+unsigned int \hyperlink{classWHtree_afafbcc4854af05430f68716da6dcf15d}{get\-Triplet\-Order} (const node\-I\-D\-\_\-t \&node\-I\-Da, const node\-I\-D\-\_\-t \&node\-I\-Db, const node\-I\-D\-\_\-t \&node\-I\-Dc) const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a5d37053a08788138498c80167713f372}{get\-Base\-Nodes} (const size\-\_\-t root) const 
+\item 
+std\-::vector$<$ node\-I\-D\-\_\-t $>$ \hyperlink{classWHtree_a738b06e4dea9b1bedb4fdb43273599a0}{get\-Base\-Nodes} (const node\-I\-D\-\_\-t \&root) const 
+\item 
+std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_abbdb2132e3114a12c07bcb42af832134}{get\-Root\-Base\-Nodes} () const 
+\item 
+bool \hyperlink{classWHtree_a2ce2301182542eb6cafd8b212a15be66}{test\-Root\-Base\-Nodes} () const 
+\item 
+dist\-\_\-t \hyperlink{classWHtree_ac9ac003a5bb8734f79c4b0a285a40344}{get\-Distance} (const size\-\_\-t node\-I\-D1, const size\-\_\-t node\-I\-D2) const 
+\item 
+dist\-\_\-t \hyperlink{classWHtree_a8a08e4cfbbeaa3a54930693bf04f310f}{get\-Distance} (const node\-I\-D\-\_\-t \&node\-I\-D1, const node\-I\-D\-\_\-t \&node\-I\-D2) const 
+\item 
+dist\-\_\-t \hyperlink{classWHtree_aa20e44655a0cadd64746d8019fea16af}{get\-Distance} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord1, const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord2) const 
+\item 
+dist\-\_\-t \hyperlink{classWHtree_a16ff893f6799ed8837c0a11bde4b8978}{get\-Leaf\-Distance} (const size\-\_\-t leaf\-I\-D1, const size\-\_\-t leaf\-I\-D2) const 
+\item 
+void \hyperlink{classWHtree_ab35a13b352c7c37f3269f86d09afa02b}{sort\-By\-Size} (std\-::vector$<$ size\-\_\-t $>$ $\ast$const node\-Vector) const 
+\item 
+void \hyperlink{classWHtree_ac335b37b8a0a26b9374e76535ac01c94}{sort\-By\-Size} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const node\-Vector) const 
+\item 
+void \hyperlink{classWHtree_aeda84a0333ad08114f1403a380263188}{sort\-By\-Size} (std\-::list$<$ size\-\_\-t $>$ $\ast$const node\-List) const 
+\item 
+void \hyperlink{classWHtree_a4e9421fbe40ad68332457c7ad7ec1f1a}{sort\-By\-Size} (std\-::list$<$ node\-I\-D\-\_\-t $>$ $\ast$const node\-List) const 
+\item 
+void \hyperlink{classWHtree_a9513c31ac9cf391009d7dcda6aa96b0d}{sort\-By\-H\-Level} (std\-::vector$<$ size\-\_\-t $>$ $\ast$const node\-Vector) const 
+\item 
+void \hyperlink{classWHtree_a3b9f8ca446fce05d2b6d3503995a46e4}{sort\-By\-H\-Level} (std\-::list$<$ size\-\_\-t $>$ $\ast$const node\-List) const 
+\item 
+void \hyperlink{classWHtree_afeb0ff1c414bbb5f4ca929efc384e6b5}{sort\-By\-H\-Level} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const node\-Vector) const 
+\item 
+void \hyperlink{classWHtree_a2598f2fcb0bfabd171f9859f51a2c0dc}{sort\-By\-H\-Level} (std\-::list$<$ node\-I\-D\-\_\-t $>$ $\ast$const node\-List) const 
+\item 
+void \hyperlink{classWHtree_a0f338c613960d45d80f6330dddbbb074}{load\-Contained\-Leaves} ()
+\item 
+void \hyperlink{classWHtree_a9ba656617bb3102c20f0771afa42bf04}{clear\-Contained\-Leaves} ()
+\item 
+bool \hyperlink{classWHtree_adbb0438fc5e1f0093a123a0e5c702888}{convert2grid} (const \-H\-C\-\_\-\-G\-R\-I\-D new\-Grid)
+\item 
+bool \hyperlink{classWHtree_aec015736c955a615f6b610f9a639309a}{read\-Tree} (const std\-::string \&filename)
+\item 
+bool \hyperlink{classWHtree_aba706369b101c3f42cd7a48e93ca8f54}{write\-Tree} (const std\-::string \&filename, const bool is\-Nifti=true) const 
+\item 
+bool \hyperlink{classWHtree_a224a9ec0a9e14105404a393d9f42fc2b}{write\-Tree\-Debug} (const std\-::string \&filename) const 
+\item 
+bool \hyperlink{classWHtree_a3e7b5ac0129cfef78438c037c8793cd8}{write\-Tree\-Old\-Walnut} (const std\-::string \&filename) const 
+\item 
+bool \hyperlink{classWHtree_a3deb538945b6e294e79d7e3faf264423}{write\-Tree\-Simple} (const std\-::string \&filename) const 
+\item 
+void \hyperlink{classWHtree_a5768ec8e7fc61966ab65fc3c0ed38bda}{insert\-Partitions} (const std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ \&selected\-Partitions, const std\-::vector$<$ float $>$ \&selected\-Values, const std\-::vector$<$ std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $>$ \&selected\-Colors=std\-::vector$<$ std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $>$())
+\item 
+void \hyperlink{classWHtree_aae629a3810d9c9dad305fc3024a32d39}{insert\-Part\-Colors} (const std\-::vector$<$ std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $>$ \&selected\-Colors)
+\item 
+void \hyperlink{classWHtree_a764ababf846cb18b5039d35b3dd02051}{clear\-Partitions} ()
+\item 
+void \hyperlink{classWHtree_a788d7d3be48109af762b2fba429a171b}{clear\-Part\-Colors} ()
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ unsigned int $>$ $>$ \hyperlink{classWHtree_afeb2829af19346f661662004c3888b2d}{get\-Branching} (const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&this\-Partition, size\-\_\-t depth\-Level, std\-::vector$<$ std\-::vector$<$ node\-I\-D\-\_\-t $>$ $>$ $\ast$partition\-Set, const bool exclude\-Leaves)
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ unsigned int $>$ $>$ \hyperlink{classWHtree_a0128fc5f21ebf318ef83c8c113e0e7f1}{get\-Branching} (const std\-::vector$<$ size\-\_\-t $>$ \&this\-Partition, size\-\_\-t depth\-Level, std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$partition\-Set)
+\end{DoxyCompactItemize}
+\subsection*{\-Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classWHtree_af72597ee1ec830f8baed4cf6530de2bb}{class {\bfseries tree\-Manager}}\label{classWHtree_af72597ee1ec830f8baed4cf6530de2bb}
+
+\item 
+\hypertarget{classWHtree_aa026eb4bf2b88a9c96a9f61becc4bc75}{class {\bfseries \-W\-Htree\-Processer}}\label{classWHtree_aa026eb4bf2b88a9c96a9f61becc4bc75}
+
+\item 
+\hypertarget{classWHtree_a76c0766ec0d11631be2a5536cb438e3b}{class {\bfseries \-W\-Htree\-Partition}}\label{classWHtree_a76c0766ec0d11631be2a5536cb438e3b}
+
+\item 
+\hypertarget{classWHtree_a6e4f46be3b13b1a3b8e387f92b0745b1}{class {\bfseries \-Cnb\-Tree\-Builder}}\label{classWHtree_a6e4f46be3b13b1a3b8e387f92b0745b1}
+
+\item 
+\hypertarget{classWHtree_a2b9669f74a8c5a48d2ab80e8b7dfcd30}{class {\bfseries graph\-Tree\-Builder}}\label{classWHtree_a2b9669f74a8c5a48d2ab80e8b7dfcd30}
+
+\item 
+\hypertarget{classWHtree_aa166ce0e9265255d37c059e22933ad75}{class {\bfseries rand\-Cnb\-Tree\-Builder}}\label{classWHtree_aa166ce0e9265255d37c059e22933ad75}
+
+\item 
+\hypertarget{classWHtree_a7a2a00e4f53408139140c80049a0fd7d}{class {\bfseries tree\-Comparer}}\label{classWHtree_a7a2a00e4f53408139140c80049a0fd7d}
+
+\item 
+\hypertarget{classWHtree_a56b8e264b4bfff5cc2854c918b1236a8}{class {\bfseries prune\-Tree}}\label{classWHtree_a56b8e264b4bfff5cc2854c918b1236a8}
+
+\item 
+\hypertarget{classWHtree_a5fb14ee3a81b09687fbf1fd7ad2cba51}{class {\bfseries image2tree\-Builder}}\label{classWHtree_a5fb14ee3a81b09687fbf1fd7ad2cba51}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements a hierarchical tree and provides functions for creation, partitioning, selection and navigation 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWHtree_a089379c94e81e3347630f3d93d2445ac}{\index{\-W\-Htree@{\-W\-Htree}!\-W\-Htree@{\-W\-Htree}}
+\index{\-W\-Htree@{\-W\-Htree}!WHtree@{\-W\-Htree}}
+\subsubsection[{\-W\-Htree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-::\-W\-Htree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtree_a089379c94e81e3347630f3d93d2445ac}
+\-Constructor \hypertarget{classWHtree_a68fe52e6dc0adfb2220a7bee729cf244}{\index{\-W\-Htree@{\-W\-Htree}!\-W\-Htree@{\-W\-Htree}}
+\index{\-W\-Htree@{\-W\-Htree}!WHtree@{\-W\-Htree}}
+\subsubsection[{\-W\-Htree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-::\-W\-Htree} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{filename}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtree_a68fe52e6dc0adfb2220a7bee729cf244}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing the name of the file with the tree data \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_adc8aaafe88e7b50c3c013e76566f024d}{\index{\-W\-Htree@{\-W\-Htree}!\-W\-Htree@{\-W\-Htree}}
+\index{\-W\-Htree@{\-W\-Htree}!WHtree@{\-W\-Htree}}
+\subsubsection[{\-W\-Htree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-::\-W\-Htree} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{tree\-Name, }
+\item[{\-H\-C\-\_\-\-G\-R\-I\-D}]{dataset\-Grid\-Init, }
+\item[{{\bf \-W\-Hcoord}}]{dataset\-Size\-Init, }
+\item[{size\-\_\-t}]{num\-Streamlines\-Init, }
+\item[{float}]{log\-Factor\-Init, }
+\item[{std\-::vector$<$ {\bf \-W\-Hnode} $>$}]{leaves\-Init, }
+\item[{std\-::vector$<$ {\bf \-W\-Hnode} $>$}]{nodes\-Init, }
+\item[{std\-::vector$<$ size\-\_\-t $>$}]{trackid\-Init, }
+\item[{std\-::vector$<$ {\bf \-W\-Hcoord} $>$}]{coord\-Init, }
+\item[{std\-::list$<$ {\bf \-W\-Hcoord} $>$}]{discard\-Init, }
+\item[{float}]{cpcc\-Init = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtree_adc8aaafe88e7b50c3c013e76566f024d}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree\-Name} & name of the tree \\
+\hline
+{\em dataset\-Grid\-Init} & type of grid coordinate space \\
+\hline
+{\em dataset\-Size\-Init} & size of the brain dataset \\
+\hline
+{\em num\-Streamlines\-Init} & number of streamlines per voxel on the tractograms that were processed to build this tree \\
+\hline
+{\em log\-Factor\-Init} & logarithmic normalization factor that was applied on the tracts when building the tree \\
+\hline
+{\em leaves\-Init} & vector of leaves \\
+\hline
+{\em nodes\-Init} & vector of nodes \\
+\hline
+{\em trackid\-Init} & vector of seed track ids \\
+\hline
+{\em coord\-Init} & vector of seed voxel coordinates \\
+\hline
+{\em discard\-Init} & vector of discarded seed voxel coordinates \\
+\hline
+{\em cpcc\-Init} & cpcc value of the tree \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_ae6b2a4197e7522bf70492944755dad32}{\index{\-W\-Htree@{\-W\-Htree}!\-W\-Htree@{\-W\-Htree}}
+\index{\-W\-Htree@{\-W\-Htree}!WHtree@{\-W\-Htree}}
+\subsubsection[{\-W\-Htree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-::\-W\-Htree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Htree} \&}]{object}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtree_ae6b2a4197e7522bf70492944755dad32}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em object} & tree object \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_aef3c0090b9b4ef6c80cd78798f786640}{\index{\-W\-Htree@{\-W\-Htree}!$\sim$\-W\-Htree@{$\sim$\-W\-Htree}}
+\index{$\sim$\-W\-Htree@{$\sim$\-W\-Htree}!WHtree@{\-W\-Htree}}
+\subsubsection[{$\sim$\-W\-Htree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-::$\sim$\-W\-Htree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_aef3c0090b9b4ef6c80cd78798f786640}
+\-Destructor 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWHtree_a668db7c1368f273ef462e44bff2fc91d}{\index{\-W\-Htree@{\-W\-Htree}!check@{check}}
+\index{check@{check}!WHtree@{\-W\-Htree}}
+\subsubsection[{check}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::check} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a668db7c1368f273ef462e44bff2fc91d}
+checks tree integrity \begin{DoxyReturn}{\-Returns}
+tree integrity indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a9ba656617bb3102c20f0771afa42bf04}{\index{\-W\-Htree@{\-W\-Htree}!clear\-Contained\-Leaves@{clear\-Contained\-Leaves}}
+\index{clear\-Contained\-Leaves@{clear\-Contained\-Leaves}!WHtree@{\-W\-Htree}}
+\subsubsection[{clear\-Contained\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::clear\-Contained\-Leaves} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a9ba656617bb3102c20f0771afa42bf04}
+frees the memory of m\-\_\-contained\-Leaves \hypertarget{classWHtree_a788d7d3be48109af762b2fba429a171b}{\index{\-W\-Htree@{\-W\-Htree}!clear\-Part\-Colors@{clear\-Part\-Colors}}
+\index{clear\-Part\-Colors@{clear\-Part\-Colors}!WHtree@{\-W\-Htree}}
+\subsubsection[{clear\-Part\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::clear\-Part\-Colors} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a788d7d3be48109af762b2fba429a171b}
+delete only color data of the saved partitions \hypertarget{classWHtree_a764ababf846cb18b5039d35b3dd02051}{\index{\-W\-Htree@{\-W\-Htree}!clear\-Partitions@{clear\-Partitions}}
+\index{clear\-Partitions@{clear\-Partitions}!WHtree@{\-W\-Htree}}
+\subsubsection[{clear\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::clear\-Partitions} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a764ababf846cb18b5039d35b3dd02051}
+delete all data related to saved partitions \hypertarget{classWHtree_adbb0438fc5e1f0093a123a0e5c702888}{\index{\-W\-Htree@{\-W\-Htree}!convert2grid@{convert2grid}}
+\index{convert2grid@{convert2grid}!WHtree@{\-W\-Htree}}
+\subsubsection[{convert2grid}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::convert2grid} (
+\begin{DoxyParamCaption}
+\item[{const \-H\-C\-\_\-\-G\-R\-I\-D}]{new\-Grid}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_adbb0438fc5e1f0093a123a0e5c702888}
+converts all the coordinates to the grid format indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Grid} & coordinate space in which to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+flag indicating if the change was performed 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a5d37053a08788138498c80167713f372}{\index{\-W\-Htree@{\-W\-Htree}!get\-Base\-Nodes@{get\-Base\-Nodes}}
+\index{get\-Base\-Nodes@{get\-Base\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{root}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a5d37053a08788138498c80167713f372}
+returns a vector with all the nodes that have direct link to leaves fro the indicated subtree 
+\begin{DoxyParams}{\-Parameters}
+{\em root} & id of the selected subtree root node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+node\-Id vector of base nodes 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a738b06e4dea9b1bedb4fdb43273599a0}{\index{\-W\-Htree@{\-W\-Htree}!get\-Base\-Nodes@{get\-Base\-Nodes}}
+\index{get\-Base\-Nodes@{get\-Base\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ node\-I\-D\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{root}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a738b06e4dea9b1bedb4fdb43273599a0}
+returns a vector with all the nodes that have direct link to leaves from the indicated subtree 
+\begin{DoxyParams}{\-Parameters}
+{\em root} & full id of the selected subtree root node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+node\-Id vector of base nodes 
+\end{DoxyReturn}
+\hypertarget{classWHtree_afeb2829af19346f661662004c3888b2d}{\index{\-W\-Htree@{\-W\-Htree}!get\-Branching@{get\-Branching}}
+\index{get\-Branching@{get\-Branching}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Branching}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ unsigned int $>$ $>$ {\bf \-W\-Htree\-::get\-Branching} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&}]{this\-Partition, }
+\item[{size\-\_\-t}]{depth\-Level, }
+\item[{std\-::vector$<$ std\-::vector$<$ node\-I\-D\-\_\-t $>$ $>$ $\ast$}]{partition\-Set, }
+\item[{const bool}]{exclude\-Leaves}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_afeb2829af19346f661662004c3888b2d}
+gets all possble sets of sub-\/partitions in a tree given an initial partition and a depth level (where leaves/nodes are identified with boolean-\/integer pair) 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Partition} & the starting partition \\
+\hline
+{\em depth\-Level} & the number of levels down to look for sub-\/partitions \\
+\hline
+{\em exclude\-Leaves} & if set (1 ), the the algorithm will not further subdivide a base-\/node (where all its children are single leaves) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition\-Set} & the vector of returned sub-\/partitions \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyReturn}{\-Returns}
+a set of integers identifying each of the clusters from the resulting sub-\/partitions with its parent cluster from the starting partition 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a0128fc5f21ebf318ef83c8c113e0e7f1}{\index{\-W\-Htree@{\-W\-Htree}!get\-Branching@{get\-Branching}}
+\index{get\-Branching@{get\-Branching}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Branching}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ unsigned int $>$ $>$ {\bf \-W\-Htree\-::get\-Branching} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{this\-Partition, }
+\item[{size\-\_\-t}]{depth\-Level, }
+\item[{std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$}]{partition\-Set}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a0128fc5f21ebf318ef83c8c113e0e7f1}
+gets all possble sets of sub-\/partitions in a tree given an initial partition and a depth level (where only non-\/leaf nodes are considered and are identified by a single integer) 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Partition} & the starting partition \\
+\hline
+{\em depth\-Level} & the number of levels down to look for sub-\/partitions \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition\-Set} & the vector of returned sub-\/partitions \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyReturn}{\-Returns}
+a set of integers identifying each of the clusters from the resulting sub-\/partitions with its parent cluster from the starting partition 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a50bc334e9b71cdc3c9821c5decad58b5}{\index{\-W\-Htree@{\-W\-Htree}!get\-Branch\-Nodes@{get\-Branch\-Nodes}}
+\index{get\-Branch\-Nodes@{get\-Branch\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Branch\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Branch\-Nodes} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a50bc334e9b71cdc3c9821c5decad58b5}
+\-Returns a vector with all the node \-I\-Ds contained in that branch 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector with all the node \-I\-Ds contained in that brnach 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a4dc2606d76140ba2e47e8d336dc0ef06}{\index{\-W\-Htree@{\-W\-Htree}!get\-Common\-Ancestor@{get\-Common\-Ancestor}}
+\index{get\-Common\-Ancestor@{get\-Common\-Ancestor}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Common\-Ancestor}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Common\-Ancestor} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D1, }
+\item[{const size\-\_\-t}]{node\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a4dc2606d76140ba2e47e8d336dc0ef06}
+retrieves the the first common ancestor node of two given nodes 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D1} & first node id \\
+\hline
+{\em node\-I\-D2} & second node id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-I\-D of ancestor 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aeb15be3e2c18384d6fb36ce38a64f795}{\index{\-W\-Htree@{\-W\-Htree}!get\-Common\-Ancestor@{get\-Common\-Ancestor}}
+\index{get\-Common\-Ancestor@{get\-Common\-Ancestor}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Common\-Ancestor}]{\setlength{\rightskip}{0pt plus 5cm}node\-I\-D\-\_\-t {\bf \-W\-Htree\-::get\-Common\-Ancestor} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D1, }
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_aeb15be3e2c18384d6fb36ce38a64f795}
+retrieves the the first common ancestor node of two given nodes 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D1} & first node/leaf full id \\
+\hline
+{\em node\-I\-D2} & second node/leaf full id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-I\-D of ancestor 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a8550437c85a1c9d8ff5726e45044eef1}{\index{\-W\-Htree@{\-W\-Htree}!get\-Coordinate4leaf@{get\-Coordinate4leaf}}
+\index{get\-Coordinate4leaf@{get\-Coordinate4leaf}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Coordinate4leaf}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Htree\-::get\-Coordinate4leaf} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a8550437c85a1c9d8ff5726e45044eef1}
+the coordinates of a particular leaf 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf\-I\-D} & id of the selected leaf \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+coordinate object with the coordinates of that leaf 
+\end{DoxyReturn}
+\hypertarget{classWHtree_af31b8dd9b39669b0969b5d06390652dc}{\index{\-W\-Htree@{\-W\-Htree}!get\-Coordinates4node@{get\-Coordinates4node}}
+\index{get\-Coordinates4node@{get\-Coordinates4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Coordinates4node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Htree\-::get\-Coordinates4node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_af31b8dd9b39669b0969b5d06390652dc}
+\-Returns a vector with all the seed voxel coordinates contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector with all the seed voxel coordinates contained in that cluster 
+\end{DoxyReturn}
+\hypertarget{classWHtree_abefe13898e516410826ec105c1af211e}{\index{\-W\-Htree@{\-W\-Htree}!get\-Coordinates4node@{get\-Coordinates4node}}
+\index{get\-Coordinates4node@{get\-Coordinates4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Coordinates4node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Htree\-::get\-Coordinates4node} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_abefe13898e516410826ec105c1af211e}
+\-Returns a vector with all the seed voxel coordinates contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & full id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector with all the seed voxel coordinates contained in that cluster 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a68f9b4e2111ccaaaf6e2c4be41509ba3}{\index{\-W\-Htree@{\-W\-Htree}!get\-Cpcc@{get\-Cpcc}}
+\index{get\-Cpcc@{get\-Cpcc}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Cpcc}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-::get\-Cpcc} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a68f9b4e2111ccaaaf6e2c4be41509ba3}
+\-Returns the cpcc value of the tree \begin{DoxyReturn}{\-Returns}
+value containing the cpcc 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aa99f18419299fe7c91bed3b08e70a9c7}{\index{\-W\-Htree@{\-W\-Htree}!get\-Data\-Grid@{get\-Data\-Grid}}
+\index{get\-Data\-Grid@{get\-Data\-Grid}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Data\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}\-H\-C\-\_\-\-G\-R\-I\-D {\bf \-W\-Htree\-::get\-Data\-Grid} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_aa99f18419299fe7c91bed3b08e70a9c7}
+\-Returns the dataset grid type \begin{DoxyReturn}{\-Returns}
+enum containing the grid type 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a7ced07989d496f8900eb619e62222570}{\index{\-W\-Htree@{\-W\-Htree}!get\-Data\-Size@{get\-Data\-Size}}
+\index{get\-Data\-Size@{get\-Data\-Size}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Data\-Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Htree\-::get\-Data\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a7ced07989d496f8900eb619e62222570}
+\-Returns the dataset size \begin{DoxyReturn}{\-Returns}
+coordinate containing the dataset dimensions 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ac4ba3c3512cec27c41d1ebe1b6d55061}{\index{\-W\-Htree@{\-W\-Htree}!get\-Discarded@{get\-Discarded}}
+\index{get\-Discarded@{get\-Discarded}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Discarded}]{\setlength{\rightskip}{0pt plus 5cm}std\-::list$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Htree\-::get\-Discarded} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_ac4ba3c3512cec27c41d1ebe1b6d55061}
+\-Returns the discarded list \begin{DoxyReturn}{\-Returns}
+list containing the discarded coordinates 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ac9ac003a5bb8734f79c4b0a285a40344}{\index{\-W\-Htree@{\-W\-Htree}!get\-Distance@{get\-Distance}}
+\index{get\-Distance@{get\-Distance}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf \-W\-Htree\-::get\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D1, }
+\item[{const size\-\_\-t}]{node\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_ac9ac003a5bb8734f79c4b0a285a40344}
+computes the cophenetic distance between 2 nodes 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D1} & first node to compute distance from \\
+\hline
+{\em node\-I\-D2} & second node to compute distance from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+cophenetic distance 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a8a08e4cfbbeaa3a54930693bf04f310f}{\index{\-W\-Htree@{\-W\-Htree}!get\-Distance@{get\-Distance}}
+\index{get\-Distance@{get\-Distance}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf \-W\-Htree\-::get\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D1, }
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a8a08e4cfbbeaa3a54930693bf04f310f}
+computes the cophenetic distance between 2 leaf/nodes 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D1} & first node/leaf to compute distance from \\
+\hline
+{\em node\-I\-D2} & second node/leaf to compute distance from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+cophenetic distance 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aa20e44655a0cadd64746d8019fea16af}{\index{\-W\-Htree@{\-W\-Htree}!get\-Distance@{get\-Distance}}
+\index{get\-Distance@{get\-Distance}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf \-W\-Htree\-::get\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{coord1, }
+\item[{const {\bf \-W\-Hcoord} \&}]{coord2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_aa20e44655a0cadd64746d8019fea16af}
+computes the cophenetic distance between 2 leaves 
+\begin{DoxyParams}{\-Parameters}
+{\em coord1} & first coordinate to compute distance from \\
+\hline
+{\em coord2} & second ncoordinate to compute distance from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+cophenetic distance 
+\end{DoxyReturn}
+\hypertarget{classWHtree_adc212da2ed903705afac40d96975cc7e}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaf@{get\-Leaf}}
+\index{get\-Leaf@{get\-Leaf}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaf}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf \-W\-Hnode} \& {\bf \-W\-Htree\-::get\-Leaf} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{this\-Leaf}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_adc212da2ed903705afac40d96975cc7e}
+returns a const pointer to the leaf indicated by the \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Leaf} & id of the required leaf \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+const reference to desired leaf object 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a16ff893f6799ed8837c0a11bde4b8978}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaf\-Distance@{get\-Leaf\-Distance}}
+\index{get\-Leaf\-Distance@{get\-Leaf\-Distance}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaf\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf \-W\-Htree\-::get\-Leaf\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf\-I\-D1, }
+\item[{const size\-\_\-t}]{leaf\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a16ff893f6799ed8837c0a11bde4b8978}
+computes the cophenetic distance between 2 leaves 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf\-I\-D1} & first leaf to compute distance from \\
+\hline
+{\em leaf\-I\-D2} & second leaf to compute distance from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+cophenetic distance 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a335e5ee61ee857d9da6fbd960393c109}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaf\-I\-D@{get\-Leaf\-I\-D}}
+\index{get\-Leaf\-I\-D@{get\-Leaf\-I\-D}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaf\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Leaf\-I\-D} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{this\-Coord}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a335e5ee61ee857d9da6fbd960393c109}
+returns the leaf \-I\-D of a coordinate in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Coord} & coordinate of the required leaf \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-I\-D of the leaf 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aa3f0daadbe8934acc6cee4442cd0a171}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaves@{get\-Leaves}}
+\index{get\-Leaves@{get\-Leaves}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hnode} $>$ {\bf \-W\-Htree\-::get\-Leaves} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_aa3f0daadbe8934acc6cee4442cd0a171}
+\-Returns the leaves of the tree \begin{DoxyReturn}{\-Returns}
+leaves vector 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a0f9a23021c60b6bc72839852d51e4203}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaves4node@{get\-Leaves4node}}
+\index{get\-Leaves4node@{get\-Leaves4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaves4node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Leaves4node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a0f9a23021c60b6bc72839852d51e4203}
+\-Returns a vector with all the leaf \-I\-Ds contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector with all the leaf \-I\-Ds contained in that cluster 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a0768aa45b66453ef9689ce9b27a11038}{\index{\-W\-Htree@{\-W\-Htree}!get\-Leaves4node@{get\-Leaves4node}}
+\index{get\-Leaves4node@{get\-Leaves4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Leaves4node}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Leaves4node} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a0768aa45b66453ef9689ce9b27a11038}
+\-Returns a vector with all the leaf \-I\-Ds contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & full id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector with all the leaf \-I\-Ds contained in that cluster 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ae17b1e3c712515baf55ac5ba4cdb0e29}{\index{\-W\-Htree@{\-W\-Htree}!get\-Mean\-Coordinate4node@{get\-Mean\-Coordinate4node}}
+\index{get\-Mean\-Coordinate4node@{get\-Mean\-Coordinate4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Mean\-Coordinate4node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Htree\-::get\-Mean\-Coordinate4node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_ae17b1e3c712515baf55ac5ba4cdb0e29}
+\-Returns the mean coordinate of all the seed voxel coordinates contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+coordinate object with the mean coordinates of that node 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a211df0613a8e94addb903df8217b4b16}{\index{\-W\-Htree@{\-W\-Htree}!get\-Mean\-Coordinate4node@{get\-Mean\-Coordinate4node}}
+\index{get\-Mean\-Coordinate4node@{get\-Mean\-Coordinate4node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Mean\-Coordinate4node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf \-W\-Htree\-::get\-Mean\-Coordinate4node} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a211df0613a8e94addb903df8217b4b16}
+\-Returns the mean coordinate of all the seed voxel coordinates contained in that cluster 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & full id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+coordinate object with the mean coordinates of that node 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ac96c308f4fd7d214058de9a99f345400}{\index{\-W\-Htree@{\-W\-Htree}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-W\-Htree\-::get\-Name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_ac96c308f4fd7d214058de9a99f345400}
+\-Returns the tree name \begin{DoxyReturn}{\-Returns}
+value containing the tree name 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a2a024be0e6cf9b50a787aa3335d17449}{\index{\-W\-Htree@{\-W\-Htree}!get\-Node@{get\-Node}}
+\index{get\-Node@{get\-Node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Node}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf \-W\-Hnode} \& {\bf \-W\-Htree\-::get\-Node} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{this\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a2a024be0e6cf9b50a787aa3335d17449}
+returns a const pointer to the node indicated by the \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Node} & full id of the required node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+const reference to desired node/leaf object 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a58a274bacff561739374ed95ed74488f}{\index{\-W\-Htree@{\-W\-Htree}!get\-Node@{get\-Node}}
+\index{get\-Node@{get\-Node}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Node}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf \-W\-Hnode} \& {\bf \-W\-Htree\-::get\-Node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{this\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a58a274bacff561739374ed95ed74488f}
+returns a const pointer to the node indicated by the \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em this\-Node} & id of the required node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+const reference to desired node object 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a1bbc4d264f8f4adfd8e184865f797468}{\index{\-W\-Htree@{\-W\-Htree}!get\-Nodes@{get\-Nodes}}
+\index{get\-Nodes@{get\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hnode} $>$ {\bf \-W\-Htree\-::get\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a1bbc4d264f8f4adfd8e184865f797468}
+\-Returns the nodes of the tree \begin{DoxyReturn}{\-Returns}
+nodes vector 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ab3386a346f77f836797f7de87833e2f6}{\index{\-W\-Htree@{\-W\-Htree}!get\-Num\-Discarded@{get\-Num\-Discarded}}
+\index{get\-Num\-Discarded@{get\-Num\-Discarded}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Num\-Discarded}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Num\-Discarded} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_ab3386a346f77f836797f7de87833e2f6}
+\-Returns the number of leaves of the tree \begin{DoxyReturn}{\-Returns}
+number of leaves 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ab03e43500c6fde88ef3de0d4b5dae1a6}{\index{\-W\-Htree@{\-W\-Htree}!get\-Num\-Leaves@{get\-Num\-Leaves}}
+\index{get\-Num\-Leaves@{get\-Num\-Leaves}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Num\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Num\-Leaves} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_ab03e43500c6fde88ef3de0d4b5dae1a6}
+\-Returns the number of leaves of the tree \begin{DoxyReturn}{\-Returns}
+number of leaves 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a2d54d764bc0251f439e0de29f521fb73}{\index{\-W\-Htree@{\-W\-Htree}!get\-Num\-Nodes@{get\-Num\-Nodes}}
+\index{get\-Num\-Nodes@{get\-Num\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Num\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Num\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a2d54d764bc0251f439e0de29f521fb73}
+\-Returns the number of nodes of the tree \begin{DoxyReturn}{\-Returns}
+number of leaves 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a0e25349a1ace7d47021d763cfae1852b}{\index{\-W\-Htree@{\-W\-Htree}!get\-Report@{get\-Report}}
+\index{get\-Report@{get\-Report}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Report}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-W\-Htree\-::get\-Report} (
+\begin{DoxyParamCaption}
+\item[{bool}]{long\-Msg = {\ttfamily true}}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a0e25349a1ace7d47021d763cfae1852b}
+writes out a small report status of the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em long\-Msg} & if set a longer two-\/line message will be output \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string with the status message 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a64c80a0c7c5ebad5b01d372c2bf10c67}{\index{\-W\-Htree@{\-W\-Htree}!get\-Roi@{get\-Roi}}
+\index{get\-Roi@{get\-Roi}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Roi}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Htree\-::get\-Roi} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a64c80a0c7c5ebad5b01d372c2bf10c67}
+\-Returns the roi coordinate vector \begin{DoxyReturn}{\-Returns}
+vector containing the roi coordinates 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a53a4524bb216e0d320fdb5c98ec2c717}{\index{\-W\-Htree@{\-W\-Htree}!get\-Root@{get\-Root}}
+\index{get\-Root@{get\-Root}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Root}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf \-W\-Hnode} \& {\bf \-W\-Htree\-::get\-Root} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a53a4524bb216e0d320fdb5c98ec2c717}
+returns a const reference to the root node \begin{DoxyReturn}{\-Returns}
+a const reference to the root node 
+\end{DoxyReturn}
+\hypertarget{classWHtree_abbdb2132e3114a12c07bcb42af832134}{\index{\-W\-Htree@{\-W\-Htree}!get\-Root\-Base\-Nodes@{get\-Root\-Base\-Nodes}}
+\index{get\-Root\-Base\-Nodes@{get\-Root\-Base\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Root\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Root\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_abbdb2132e3114a12c07bcb42af832134}
+returns a vector with all the nodes that have direct link to leaves from the main root \begin{DoxyReturn}{\-Returns}
+node\-Id vector of base nodes 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a089e58eee47582beeabf8a2a2b2a72de}{\index{\-W\-Htree@{\-W\-Htree}!get\-Route2\-Root@{get\-Route2\-Root}}
+\index{get\-Route2\-Root@{get\-Route2\-Root}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Route2\-Root}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ node\-I\-D\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Route2\-Root} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a089e58eee47582beeabf8a2a2b2a72de}
+node route to root node 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-D} & full id of the selected node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+node\-Id vector of nodes in the route 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a7c05c467516c4ca7520d973daba3af0d}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Colors@{get\-Selected\-Colors}}
+\index{get\-Selected\-Colors@{get\-Selected\-Colors}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ {\bf \-W\-Hcoord} $>$ $>$ {\bf \-W\-Htree\-::get\-Selected\-Colors} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a7c05c467516c4ca7520d973daba3af0d}
+\-Returns the set of the selected partition colors \begin{DoxyReturn}{\-Returns}
+vector containing the selected partitions colors 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a19ea8b2bab791e07895590b8d53eddb6}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Colors@{get\-Selected\-Colors}}
+\index{get\-Selected\-Colors@{get\-Selected\-Colors}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf \-W\-Hcoord} $>$ {\bf \-W\-Htree\-::get\-Selected\-Colors} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a19ea8b2bab791e07895590b8d53eddb6}
+\-Returns the selected partition colors from the saved set 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & index of the desired partition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector containing the selected partition colors 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a176e1b203ea2b839843fc0f59ae69a6a}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Partitions@{get\-Selected\-Partitions}}
+\index{get\-Selected\-Partitions@{get\-Selected\-Partitions}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ {\bf \-W\-Htree\-::get\-Selected\-Partitions} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a176e1b203ea2b839843fc0f59ae69a6a}
+\-Returns the set of the selected partitions \begin{DoxyReturn}{\-Returns}
+vector containing the selected partitions 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a6bf8c646f9bcde88e50811556cd017d4}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Partitions@{get\-Selected\-Partitions}}
+\index{get\-Selected\-Partitions@{get\-Selected\-Partitions}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Selected\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a6bf8c646f9bcde88e50811556cd017d4}
+\-Returns the indicated selected partition from the saved set 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & index of the desired partition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector containing the selected partition 
+\end{DoxyReturn}
+\hypertarget{classWHtree_abb64d6b8f300437e56ffcf068f56cde2}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Values@{get\-Selected\-Values}}
+\index{get\-Selected\-Values@{get\-Selected\-Values}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Values}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ float $>$ {\bf \-W\-Htree\-::get\-Selected\-Values} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_abb64d6b8f300437e56ffcf068f56cde2}
+\-Returns the cutting values for the selected partitions \begin{DoxyReturn}{\-Returns}
+vector containing the values for the selected partitions 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a938a77f4db0ad79692891955b66b2b20}{\index{\-W\-Htree@{\-W\-Htree}!get\-Selected\-Values@{get\-Selected\-Values}}
+\index{get\-Selected\-Values@{get\-Selected\-Values}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Selected\-Values}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-::get\-Selected\-Values} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a938a77f4db0ad79692891955b66b2b20}
+\-Returns the cutting values for the selected partition 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & index of the desired partition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+cutting values for the selected partition 
+\end{DoxyReturn}
+\hypertarget{classWHtree_af0f3ea76d2b9c4a917bfc8ed74adfd41}{\index{\-W\-Htree@{\-W\-Htree}!get\-Trackids@{get\-Trackids}}
+\index{get\-Trackids@{get\-Trackids}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Trackids}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ size\-\_\-t $>$ {\bf \-W\-Htree\-::get\-Trackids} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_af0f3ea76d2b9c4a917bfc8ed74adfd41}
+\-Returns the tractogram \-I\-Ds vector \begin{DoxyReturn}{\-Returns}
+vector containing the tractogram ids per leaf 
+\end{DoxyReturn}
+\hypertarget{classWHtree_afafbcc4854af05430f68716da6dcf15d}{\index{\-W\-Htree@{\-W\-Htree}!get\-Triplet\-Order@{get\-Triplet\-Order}}
+\index{get\-Triplet\-Order@{get\-Triplet\-Order}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Triplet\-Order}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf \-W\-Htree\-::get\-Triplet\-Order} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-Da, }
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-Db, }
+\item[{const node\-I\-D\-\_\-t \&}]{node\-I\-Dc}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_afafbcc4854af05430f68716da6dcf15d}
+checks the joining order of a given triplet 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-I\-Da} & first node/leaf of the triplet \\
+\hline
+{\em node\-I\-Db} & second node/leaf of the triplet \\
+\hline
+{\em node\-I\-Dc} & second node/leaf of the triplet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+joining order\-: 0=\char`\"{}non resolved\char`\"{} (a,b,c join at the same time), 1=\char`\"{}ab before c\char`\"{}, 2=\char`\"{}ac before b\char`\"{}, 3=\char`\"{}bc before a\char`\"{} 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aae629a3810d9c9dad305fc3024a32d39}{\index{\-W\-Htree@{\-W\-Htree}!insert\-Part\-Colors@{insert\-Part\-Colors}}
+\index{insert\-Part\-Colors@{insert\-Part\-Colors}!WHtree@{\-W\-Htree}}
+\subsubsection[{insert\-Part\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::insert\-Part\-Colors} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ std\-::vector$<$ {\bf \-W\-Hcoord} $>$ $>$ \&}]{selected\-Colors}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_aae629a3810d9c9dad305fc3024a32d39}
+insert a set of partitions colors into the tree data in case a set of saved partitions is already present 
+\begin{DoxyParams}{\-Parameters}
+{\em selected\-Colors} & the set of new colors for the included partitions \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a5768ec8e7fc61966ab65fc3c0ed38bda}{\index{\-W\-Htree@{\-W\-Htree}!insert\-Partitions@{insert\-Partitions}}
+\index{insert\-Partitions@{insert\-Partitions}!WHtree@{\-W\-Htree}}
+\subsubsection[{insert\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::insert\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ \&}]{selected\-Partitions, }
+\item[{const std\-::vector$<$ float $>$ \&}]{selected\-Values, }
+\item[{const std\-::vector$<$ std\-::vector$<$ {\bf \-W\-Hcoord} $>$ $>$ \&}]{selected\-Colors = {\ttfamily std\-:\-:vector$<$std\-:\-:vector$<${\bf \-W\-Hcoord}$>$~$>$()}}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a5768ec8e7fc61966ab65fc3c0ed38bda}
+insert a set of partitions into the tree data 
+\begin{DoxyParams}{\-Parameters}
+{\em selected\-Partitions} & a set of partitions \\
+\hline
+{\em selected\-Values} & the quality values for those partitions \\
+\hline
+{\em selected\-Colors} & the colors for each cluster of each partitions \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a80c4bf2ca9f2418a9008d319ffd4567e}{\index{\-W\-Htree@{\-W\-Htree}!is\-Loaded@{is\-Loaded}}
+\index{is\-Loaded@{is\-Loaded}!WHtree@{\-W\-Htree}}
+\subsubsection[{is\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::is\-Loaded} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHtree_a80c4bf2ca9f2418a9008d319ffd4567e}
+\-Returns the loading status of the tree \begin{DoxyReturn}{\-Returns}
+load indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a0f338c613960d45d80f6330dddbbb074}{\index{\-W\-Htree@{\-W\-Htree}!load\-Contained\-Leaves@{load\-Contained\-Leaves}}
+\index{load\-Contained\-Leaves@{load\-Contained\-Leaves}!WHtree@{\-W\-Htree}}
+\subsubsection[{load\-Contained\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::load\-Contained\-Leaves} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_a0f338c613960d45d80f6330dddbbb074}
+stores the contained leaves for each node \hypertarget{classWHtree_aec015736c955a615f6b610f9a639309a}{\index{\-W\-Htree@{\-W\-Htree}!read\-Tree@{read\-Tree}}
+\index{read\-Tree@{read\-Tree}!WHtree@{\-W\-Htree}}
+\subsubsection[{read\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::read\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename}
+\end{DoxyParamCaption}
+)}}\label{classWHtree_aec015736c955a615f6b610f9a639309a}
+\-Reads the the tree data from a file and creates the structure, containing it in the leaves, nodes and coordinates vectors 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing std\-::vector$<$h\-Node$>$ m\-\_\-leavesthe name of the file with the tree data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a9513c31ac9cf391009d7dcda6aa96b0d}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-H\-Level@{sort\-By\-H\-Level}}
+\index{sort\-By\-H\-Level@{sort\-By\-H\-Level}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-H\-Level} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$ $\ast$const}]{node\-Vector}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a9513c31ac9cf391009d7dcda6aa96b0d}
+\-Reorders the nodes in the vector according to their hierarchical level 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-Vector} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a3b9f8ca446fce05d2b6d3503995a46e4}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-H\-Level@{sort\-By\-H\-Level}}
+\index{sort\-By\-H\-Level@{sort\-By\-H\-Level}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-H\-Level} (
+\begin{DoxyParamCaption}
+\item[{std\-::list$<$ size\-\_\-t $>$ $\ast$const}]{node\-List}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a3b9f8ca446fce05d2b6d3503995a46e4}
+\-Reorders the nodes in the list according to their hierarchical level 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-List} & list of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_afeb0ff1c414bbb5f4ca929efc384e6b5}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-H\-Level@{sort\-By\-H\-Level}}
+\index{sort\-By\-H\-Level@{sort\-By\-H\-Level}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-H\-Level} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{node\-Vector}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_afeb0ff1c414bbb5f4ca929efc384e6b5}
+\-Reorders the nodes in the vector according to their hierarchical level 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-Vector} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a2598f2fcb0bfabd171f9859f51a2c0dc}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-H\-Level@{sort\-By\-H\-Level}}
+\index{sort\-By\-H\-Level@{sort\-By\-H\-Level}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-H\-Level} (
+\begin{DoxyParamCaption}
+\item[{std\-::list$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{node\-List}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a2598f2fcb0bfabd171f9859f51a2c0dc}
+\-Reorders the nodes in the list according to their hierarchical level 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-List} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_ab35a13b352c7c37f3269f86d09afa02b}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-Size@{sort\-By\-Size}}
+\index{sort\-By\-Size@{sort\-By\-Size}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-Size} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$ $\ast$const}]{node\-Vector}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_ab35a13b352c7c37f3269f86d09afa02b}
+\-Reorders the nodes in the vector according to their size 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-Vector} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_ac335b37b8a0a26b9374e76535ac01c94}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-Size@{sort\-By\-Size}}
+\index{sort\-By\-Size@{sort\-By\-Size}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-Size} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{node\-Vector}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_ac335b37b8a0a26b9374e76535ac01c94}
+\-Reorders the nodes in the vector according to their size 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-Vector} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_aeda84a0333ad08114f1403a380263188}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-Size@{sort\-By\-Size}}
+\index{sort\-By\-Size@{sort\-By\-Size}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-Size} (
+\begin{DoxyParamCaption}
+\item[{std\-::list$<$ size\-\_\-t $>$ $\ast$const}]{node\-List}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_aeda84a0333ad08114f1403a380263188}
+\-Reorders the nodes in the list according to their size 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-List} & list of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a4e9421fbe40ad68332457c7ad7ec1f1a}{\index{\-W\-Htree@{\-W\-Htree}!sort\-By\-Size@{sort\-By\-Size}}
+\index{sort\-By\-Size@{sort\-By\-Size}!WHtree@{\-W\-Htree}}
+\subsubsection[{sort\-By\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-::sort\-By\-Size} (
+\begin{DoxyParamCaption}
+\item[{std\-::list$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{node\-List}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a4e9421fbe40ad68332457c7ad7ec1f1a}
+\-Reorders the nodes in the list according to their size 
+\begin{DoxyParams}{\-Parameters}
+{\em node\-List} & vector of nodes to be reordered \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtree_a2ce2301182542eb6cafd8b212a15be66}{\index{\-W\-Htree@{\-W\-Htree}!test\-Root\-Base\-Nodes@{test\-Root\-Base\-Nodes}}
+\index{test\-Root\-Base\-Nodes@{test\-Root\-Base\-Nodes}!WHtree@{\-W\-Htree}}
+\subsubsection[{test\-Root\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::test\-Root\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a2ce2301182542eb6cafd8b212a15be66}
+tests if all base nodes have only leaf children \begin{DoxyReturn}{\-Returns}
+true if all base nodes have only leaf children 
+\end{DoxyReturn}
+\hypertarget{classWHtree_aba706369b101c3f42cd7a48e93ca8f54}{\index{\-W\-Htree@{\-W\-Htree}!write\-Tree@{write\-Tree}}
+\index{write\-Tree@{write\-Tree}!WHtree@{\-W\-Htree}}
+\subsubsection[{write\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::write\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename, }
+\item[{const bool}]{is\-Nifti = {\ttfamily true}}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_aba706369b101c3f42cd7a48e93ca8f54}
+writes the current tree data 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing the name of the file to be written \\
+\hline
+{\em is\-Nifti} & a flag indicating whether the tree should be written in nifti coordinates \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a224a9ec0a9e14105404a393d9f42fc2b}{\index{\-W\-Htree@{\-W\-Htree}!write\-Tree\-Debug@{write\-Tree\-Debug}}
+\index{write\-Tree\-Debug@{write\-Tree\-Debug}!WHtree@{\-W\-Htree}}
+\subsubsection[{write\-Tree\-Debug}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::write\-Tree\-Debug} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a224a9ec0a9e14105404a393d9f42fc2b}
+writes all redundant tree data for debugging purposes 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing the name of the file to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a3e7b5ac0129cfef78438c037c8793cd8}{\index{\-W\-Htree@{\-W\-Htree}!write\-Tree\-Old\-Walnut@{write\-Tree\-Old\-Walnut}}
+\index{write\-Tree\-Old\-Walnut@{write\-Tree\-Old\-Walnut}!WHtree@{\-W\-Htree}}
+\subsubsection[{write\-Tree\-Old\-Walnut}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::write\-Tree\-Old\-Walnut} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a3e7b5ac0129cfef78438c037c8793cd8}
+writes dta for working with the old walnut module 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing the name of the file to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success indicator 
+\end{DoxyReturn}
+\hypertarget{classWHtree_a3deb538945b6e294e79d7e3faf264423}{\index{\-W\-Htree@{\-W\-Htree}!write\-Tree\-Simple@{write\-Tree\-Simple}}
+\index{write\-Tree\-Simple@{write\-Tree\-Simple}!WHtree@{\-W\-Htree}}
+\subsubsection[{write\-Tree\-Simple}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Htree\-::write\-Tree\-Simple} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_a3deb538945b6e294e79d7e3faf264423}
+writes only join data without coordinates or reading labels 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & string containing the name of the file to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success indicator 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-Htree.\-h\item 
+src/common/\-W\-Htree.\-cpp\end{DoxyCompactItemize}

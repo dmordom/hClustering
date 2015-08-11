@@ -1,0 +1,107 @@
+\hypertarget{classWFileParser}{\section{\-W\-File\-Parser \-Class \-Reference}
+\label{classWFileParser}\index{\-W\-File\-Parser@{\-W\-File\-Parser}}
+}
+
+
+{\ttfamily \#include $<$\-W\-File\-Parser.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWFileParser_a7838bba397952de1e7844d10b36b11a3}{\-W\-File\-Parser} (const std\-::string file\-Name)
+\item 
+\hyperlink{classWFileParser_ab168f0a43963e4d0ea0d21935d96dd68}{$\sim$\-W\-File\-Parser} ()
+\item 
+bool \hyperlink{classWFileParser_a9032cf97623ab15701e38d7b1e728faa}{read\-File} ()
+\item 
+std\-::vector$<$ std\-::string $>$ \hyperlink{classWFileParser_a6eccded8bc8399d01aefb234c0a6d479}{get\-Raw\-Lines} ()
+\item 
+std\-::vector$<$ std\-::string $>$ \hyperlink{classWFileParser_ab76f068213508d9e6c269a844a754350}{get\-Lines\-For\-Tag} (std\-::string tag)
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ std\-::string $>$ $>$ \hyperlink{classWFileParser_a43749562819e790e6826152d6a82b7e0}{get\-Lines\-For\-Tag\-Separated} (std\-::string tag)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements text file loading and several convinience methods to access the recovered text 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWFileParser_a7838bba397952de1e7844d10b36b11a3}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!\-W\-File\-Parser@{\-W\-File\-Parser}}
+\index{\-W\-File\-Parser@{\-W\-File\-Parser}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{\-W\-File\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-File\-Parser\-::\-W\-File\-Parser} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string}]{file\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWFileParser_a7838bba397952de1e7844d10b36b11a3}
+constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em file\-Name} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWFileParser_ab168f0a43963e4d0ea0d21935d96dd68}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!$\sim$\-W\-File\-Parser@{$\sim$\-W\-File\-Parser}}
+\index{$\sim$\-W\-File\-Parser@{$\sim$\-W\-File\-Parser}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{$\sim$\-W\-File\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-File\-Parser\-::$\sim$\-W\-File\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWFileParser_ab168f0a43963e4d0ea0d21935d96dd68}
+destructor 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWFileParser_ab76f068213508d9e6c269a844a754350}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!get\-Lines\-For\-Tag@{get\-Lines\-For\-Tag}}
+\index{get\-Lines\-For\-Tag@{get\-Lines\-For\-Tag}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{get\-Lines\-For\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::string $>$ {\bf \-W\-File\-Parser\-::get\-Lines\-For\-Tag} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{tag}
+\end{DoxyParamCaption}
+)}}\label{classWFileParser_ab76f068213508d9e6c269a844a754350}
+getter 
+\begin{DoxyParams}{\-Parameters}
+{\em tag} & tag marking a certain type of content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+vector of strings for each line for the tag 
+\end{DoxyReturn}
+\hypertarget{classWFileParser_a43749562819e790e6826152d6a82b7e0}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!get\-Lines\-For\-Tag\-Separated@{get\-Lines\-For\-Tag\-Separated}}
+\index{get\-Lines\-For\-Tag\-Separated@{get\-Lines\-For\-Tag\-Separated}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{get\-Lines\-For\-Tag\-Separated}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ std\-::string $>$ $>$ {\bf \-W\-File\-Parser\-::get\-Lines\-For\-Tag\-Separated} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{tag}
+\end{DoxyParamCaption}
+)}}\label{classWFileParser_a43749562819e790e6826152d6a82b7e0}
+getter 
+\begin{DoxyParams}{\-Parameters}
+{\em tag} & tag marking a certain type of content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+same as get\-Lines\-For\-Tag but each line represented as vector of strings 
+\end{DoxyReturn}
+\hypertarget{classWFileParser_a6eccded8bc8399d01aefb234c0a6d479}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!get\-Raw\-Lines@{get\-Raw\-Lines}}
+\index{get\-Raw\-Lines@{get\-Raw\-Lines}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{get\-Raw\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::string $>$ {\bf \-W\-File\-Parser\-::get\-Raw\-Lines} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWFileParser_a6eccded8bc8399d01aefb234c0a6d479}
+getter \begin{DoxyReturn}{\-Returns}
+the content of the loaded as vector of strings for each line 
+\end{DoxyReturn}
+\hypertarget{classWFileParser_a9032cf97623ab15701e38d7b1e728faa}{\index{\-W\-File\-Parser@{\-W\-File\-Parser}!read\-File@{read\-File}}
+\index{read\-File@{read\-File}!WFileParser@{\-W\-File\-Parser}}
+\subsubsection[{read\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-File\-Parser\-::read\-File} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWFileParser_a9032cf97623ab15701e38d7b1e728faa}
+helper function to read a text file \begin{DoxyReturn}{\-Returns}
+string containing the file 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-File\-Parser.\-h\item 
+src/common/\-W\-File\-Parser.\-cpp\end{DoxyCompactItemize}

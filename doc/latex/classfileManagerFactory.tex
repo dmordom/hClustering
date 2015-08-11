@@ -1,0 +1,96 @@
+\hypertarget{classfileManagerFactory}{\section{file\-Manager\-Factory \-Class \-Reference}
+\label{classfileManagerFactory}\index{file\-Manager\-Factory@{file\-Manager\-Factory}}
+}
+
+
+{\ttfamily \#include $<$file\-Manager\-Factory.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classfileManagerFactory_a14d4febc2f4a2d1db1218c7fc4d8b3f9}{file\-Manager\-Factory} (std\-::string io\-Folder\-Init=\char`\"{}\char`\"{})
+\item 
+\hypertarget{classfileManagerFactory_acf969eacd4d8adf629ba3e0055478790}{\hyperlink{classfileManagerFactory_acf969eacd4d8adf629ba3e0055478790}{$\sim$file\-Manager\-Factory} ()}\label{classfileManagerFactory_acf969eacd4d8adf629ba3e0055478790}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classfileManagerFactory_ac7819d6a53543b5db71f57776de0de01}{is\-Nifti} ()
+\item 
+bool \hyperlink{classfileManagerFactory_aa69e217f378ea58bf94d6fd63d295bc4}{is\-Vista} ()
+\item 
+void \hyperlink{classfileManagerFactory_a403da3ae30c3608b97acca7c75259a6e}{set\-Nifti} ()
+\item 
+void \hyperlink{classfileManagerFactory_a6190412b0d6a2844d91d7f5b3378b39a}{set\-Vista} ()
+\item 
+\hyperlink{classfileManager}{file\-Manager} \& \hyperlink{classfileManagerFactory_a4e1d8cad8d6ccad5ac2ffbaa3ace5ac3}{get\-F\-M} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class handles the creation of an appropiate file manager working either nifti or vista format files depending on the value of a static member 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classfileManagerFactory_a14d4febc2f4a2d1db1218c7fc4d8b3f9}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!file\-Manager\-Factory@{file\-Manager\-Factory}}
+\index{file\-Manager\-Factory@{file\-Manager\-Factory}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{file\-Manager\-Factory}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\-Manager\-Factory\-::file\-Manager\-Factory} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{io\-Folder\-Init = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManagerFactory_a14d4febc2f4a2d1db1218c7fc4d8b3f9}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em io\-Folder\-Init} & input-\/output folder for the file manager \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classfileManagerFactory_a4e1d8cad8d6ccad5ac2ffbaa3ace5ac3}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!get\-F\-M@{get\-F\-M}}
+\index{get\-F\-M@{get\-F\-M}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{get\-F\-M}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\-Manager} \& {\bf file\-Manager\-Factory\-::get\-F\-M} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classfileManagerFactory_a4e1d8cad8d6ccad5ac2ffbaa3ace5ac3}
+returns a refererence to the appropiate file manager \begin{DoxyReturn}{\-Returns}
+reference to a file\-Manger object 
+\end{DoxyReturn}
+\hypertarget{classfileManagerFactory_ac7819d6a53543b5db71f57776de0de01}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!is\-Nifti@{is\-Nifti}}
+\index{is\-Nifti@{is\-Nifti}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{is\-Nifti}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf file\-Manager\-Factory\-::is\-Nifti} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManagerFactory_ac7819d6a53543b5db71f57776de0de01}
+queries whether the nifti mode is currently set \begin{DoxyReturn}{\-Returns}
+if true current file mode is nifti 
+\end{DoxyReturn}
+\hypertarget{classfileManagerFactory_aa69e217f378ea58bf94d6fd63d295bc4}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!is\-Vista@{is\-Vista}}
+\index{is\-Vista@{is\-Vista}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{is\-Vista}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf file\-Manager\-Factory\-::is\-Vista} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManagerFactory_aa69e217f378ea58bf94d6fd63d295bc4}
+queries whether the vista mode is currently set \begin{DoxyReturn}{\-Returns}
+if true current file mode is vista 
+\end{DoxyReturn}
+\hypertarget{classfileManagerFactory_a403da3ae30c3608b97acca7c75259a6e}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!set\-Nifti@{set\-Nifti}}
+\index{set\-Nifti@{set\-Nifti}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{set\-Nifti}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-Factory\-::set\-Nifti} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManagerFactory_a403da3ae30c3608b97acca7c75259a6e}
+prepares the class to return a reference to a nifti file manager \hypertarget{classfileManagerFactory_a6190412b0d6a2844d91d7f5b3378b39a}{\index{file\-Manager\-Factory@{file\-Manager\-Factory}!set\-Vista@{set\-Vista}}
+\index{set\-Vista@{set\-Vista}!fileManagerFactory@{file\-Manager\-Factory}}
+\subsubsection[{set\-Vista}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-Factory\-::set\-Vista} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManagerFactory_a6190412b0d6a2844d91d7f5b3378b39a}
+prepares the class to return a reference to a vista file manager 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/file\-Manager\-Factory.\-h\item 
+src/common/file\-Manager\-Factory.\-cpp\end{DoxyCompactItemize}

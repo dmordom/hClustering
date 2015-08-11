@@ -1,0 +1,233 @@
+\hypertarget{classprotoNode}{\section{proto\-Node \-Class \-Reference}
+\label{classprotoNode}\index{proto\-Node@{proto\-Node}}
+}
+
+
+{\ttfamily \#include $<$proto\-Node.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classprotoNode_aa4b68057501d1778281990132ac91ef6}{proto\-Node} (std\-::pair$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$ \hyperlink{classprotoNode_a2520a90a64d192423f146e1499874f35}{near\-Nb}, std\-::map$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$ nb\-Nodes, bool isactive=true)
+\item 
+\hypertarget{classprotoNode_a4341b741f3b1ac85d21e556e797544fe}{\hyperlink{classprotoNode_a4341b741f3b1ac85d21e556e797544fe}{$\sim$proto\-Node} ()}\label{classprotoNode_a4341b741f3b1ac85d21e556e797544fe}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classprotoNode_aa1845f5c6b3dccbdbf34d5dc4a473908}{is\-Active} () const 
+\item 
+bool \hyperlink{classprotoNode_ab2d1c59170381bf98489530091fcaabe}{is\-Discarded} () const 
+\item 
+dist\-\_\-t \hyperlink{classprotoNode_affed3066e510c22006a56dde1821f255}{near\-Dist} () const 
+\item 
+node\-I\-D\-\_\-t \hyperlink{classprotoNode_a2520a90a64d192423f146e1499874f35}{near\-Nb} () const 
+\item 
+void \hyperlink{classprotoNode_ac5c5eaa32ec60fc7564c8c1955c50e1e}{clear\-Nbhood} ()
+\item 
+void \hyperlink{classprotoNode_a0d32591dc4d0bb2394debbeba755a307}{discard} ()
+\item 
+void \hyperlink{classprotoNode_a425759fb190957d0f40fd83c0a48bb51}{inactivate} ()
+\item 
+void \hyperlink{classprotoNode_a2eb4e11e5f22191a0f9624a9b72b42e6}{reactivate} ()
+\item 
+bool \hyperlink{classprotoNode_a888ebfa1e99e950ea4060378a13a5af0}{update\-Nbhood} (const node\-I\-D\-\_\-t \&old\-Node1, const node\-I\-D\-\_\-t \&old\-Node2, const node\-I\-D\-\_\-t \&new\-Node, const dist\-\_\-t new\-Dist)
+\item 
+bool \hyperlink{classprotoNode_aa639a669ad8f736ee88f8f9a89d98c75}{update\-Activhood} (const node\-I\-D\-\_\-t \&old\-Node1, const node\-I\-D\-\_\-t \&old\-Node2, const node\-I\-D\-\_\-t \&new\-Node, const dist\-\_\-t new\-Dist, const bool \hyperlink{classprotoNode_aa1845f5c6b3dccbdbf34d5dc4a473908}{is\-Active}, const std\-::vector$<$ \hyperlink{classprotoNode}{proto\-Node} $>$ \&proto\-Nodes)
+\item 
+void \hyperlink{classprotoNode_a890cde58417813b8fddd8d0aa56971a5}{update\-Dist} (const node\-I\-D\-\_\-t \&updated\-Node, const dist\-\_\-t updated\-Dist)
+\item 
+bool \hyperlink{classprotoNode_a59ee3e6b038b2c1d1ea51977dd42faca}{update\-Active} (const std\-::vector$<$ \hyperlink{classprotoNode}{proto\-Node} $>$ \&proto\-Nodes)
+\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classprotoNode_acebd42184bada7a52e3d368a38a1d8cd}{std\-::pair$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$ \hyperlink{classprotoNode_acebd42184bada7a52e3d368a38a1d8cd}{m\-\_\-near\-Nb}}\label{classprotoNode_acebd42184bada7a52e3d368a38a1d8cd}
+
+\begin{DoxyCompactList}\small\item\em current nearest neighbour data \end{DoxyCompactList}\item 
+\hypertarget{classprotoNode_a5ebd181f21682d15861f073209672000}{std\-::map$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$ \hyperlink{classprotoNode_a5ebd181f21682d15861f073209672000}{m\-\_\-nb\-Nodes}}\label{classprotoNode_a5ebd181f21682d15861f073209672000}
+
+\begin{DoxyCompactList}\small\item\em list of current neighbours data \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class implements a tree node information container without hierarchical relationships to use while tree building 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classprotoNode_aa4b68057501d1778281990132ac91ef6}{\index{proto\-Node@{proto\-Node}!proto\-Node@{proto\-Node}}
+\index{proto\-Node@{proto\-Node}!protoNode@{proto\-Node}}
+\subsubsection[{proto\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf proto\-Node\-::proto\-Node} (
+\begin{DoxyParamCaption}
+\item[{std\-::pair$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$}]{near\-Nb, }
+\item[{std\-::map$<$ node\-I\-D\-\_\-t, dist\-\_\-t $>$}]{nb\-Nodes, }
+\item[{bool}]{isactive = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_aa4b68057501d1778281990132ac91ef6}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em near\-Nb} & information on the nearest neighbor of this protonode \\
+\hline
+{\em nb\-Nodes} & a map wit the information on all the neighbor of this protonode \\
+\hline
+{\em isactive} & a boolean flag indicating whther this protonode is currently active (if its allowed to be merged with another protonode) \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classprotoNode_ac5c5eaa32ec60fc7564c8c1955c50e1e}{\index{proto\-Node@{proto\-Node}!clear\-Nbhood@{clear\-Nbhood}}
+\index{clear\-Nbhood@{clear\-Nbhood}!protoNode@{proto\-Node}}
+\subsubsection[{clear\-Nbhood}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf proto\-Node\-::clear\-Nbhood} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_ac5c5eaa32ec60fc7564c8c1955c50e1e}
+erases the stored neighbor information \hypertarget{classprotoNode_a0d32591dc4d0bb2394debbeba755a307}{\index{proto\-Node@{proto\-Node}!discard@{discard}}
+\index{discard@{discard}!protoNode@{proto\-Node}}
+\subsubsection[{discard}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf proto\-Node\-::discard} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_a0d32591dc4d0bb2394debbeba755a307}
+discards the protonode as outlier \hypertarget{classprotoNode_a425759fb190957d0f40fd83c0a48bb51}{\index{proto\-Node@{proto\-Node}!inactivate@{inactivate}}
+\index{inactivate@{inactivate}!protoNode@{proto\-Node}}
+\subsubsection[{inactivate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf proto\-Node\-::inactivate} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_a425759fb190957d0f40fd83c0a48bb51}
+inactivates the protonode so that it may not be merged until reactivated \hypertarget{classprotoNode_aa1845f5c6b3dccbdbf34d5dc4a473908}{\index{proto\-Node@{proto\-Node}!is\-Active@{is\-Active}}
+\index{is\-Active@{is\-Active}!protoNode@{proto\-Node}}
+\subsubsection[{is\-Active}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf proto\-Node\-::is\-Active} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_aa1845f5c6b3dccbdbf34d5dc4a473908}
+returns true if protonode is active (allowed to merge with other protonode) \begin{DoxyReturn}{\-Returns}
+active flag 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_ab2d1c59170381bf98489530091fcaabe}{\index{proto\-Node@{proto\-Node}!is\-Discarded@{is\-Discarded}}
+\index{is\-Discarded@{is\-Discarded}!protoNode@{proto\-Node}}
+\subsubsection[{is\-Discarded}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf proto\-Node\-::is\-Discarded} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_ab2d1c59170381bf98489530091fcaabe}
+returns true if protonode has been discarded as outlier \begin{DoxyReturn}{\-Returns}
+discarded flag 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_affed3066e510c22006a56dde1821f255}{\index{proto\-Node@{proto\-Node}!near\-Dist@{near\-Dist}}
+\index{near\-Dist@{near\-Dist}!protoNode@{proto\-Node}}
+\subsubsection[{near\-Dist}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf proto\-Node\-::near\-Dist} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_affed3066e510c22006a56dde1821f255}
+returns the distance (dissimilarity) to the closest neighbor of the protonode \begin{DoxyReturn}{\-Returns}
+nearest neighbor distance value 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_a2520a90a64d192423f146e1499874f35}{\index{proto\-Node@{proto\-Node}!near\-Nb@{near\-Nb}}
+\index{near\-Nb@{near\-Nb}!protoNode@{proto\-Node}}
+\subsubsection[{near\-Nb}]{\setlength{\rightskip}{0pt plus 5cm}node\-I\-D\-\_\-t {\bf proto\-Node\-::near\-Nb} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_a2520a90a64d192423f146e1499874f35}
+returns the \-I\-D of the closest neighbor of the protonode \begin{DoxyReturn}{\-Returns}
+nearest neighbor full-\/\-I\-D 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_a2eb4e11e5f22191a0f9624a9b72b42e6}{\index{proto\-Node@{proto\-Node}!reactivate@{reactivate}}
+\index{reactivate@{reactivate}!protoNode@{proto\-Node}}
+\subsubsection[{reactivate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf proto\-Node\-::reactivate} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classprotoNode_a2eb4e11e5f22191a0f9624a9b72b42e6}
+reactivates the protonode to allow for it being merged \hypertarget{classprotoNode_a59ee3e6b038b2c1d1ea51977dd42faca}{\index{proto\-Node@{proto\-Node}!update\-Active@{update\-Active}}
+\index{update\-Active@{update\-Active}!protoNode@{proto\-Node}}
+\subsubsection[{update\-Active}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf proto\-Node\-::update\-Active} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ {\bf proto\-Node} $>$ \&}]{proto\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classprotoNode_a59ee3e6b038b2c1d1ea51977dd42faca}
+scans the neighbourhood information and updates the nearest neighbor information to that of the closest active neighbor protonode 
+\begin{DoxyParams}{\-Parameters}
+{\em proto\-Nodes} & the vector containing all the protonodes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+if true the new nearest neighbor for this protonode has changed 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_aa639a669ad8f736ee88f8f9a89d98c75}{\index{proto\-Node@{proto\-Node}!update\-Activhood@{update\-Activhood}}
+\index{update\-Activhood@{update\-Activhood}!protoNode@{proto\-Node}}
+\subsubsection[{update\-Activhood}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf proto\-Node\-::update\-Activhood} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{old\-Node1, }
+\item[{const node\-I\-D\-\_\-t \&}]{old\-Node2, }
+\item[{const node\-I\-D\-\_\-t \&}]{new\-Node, }
+\item[{const dist\-\_\-t}]{new\-Dist, }
+\item[{const bool}]{is\-Active, }
+\item[{const std\-::vector$<$ {\bf proto\-Node} $>$ \&}]{proto\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classprotoNode_aa639a669ad8f736ee88f8f9a89d98c75}
+replaces old neighbourhood data and substitutes it with updated data when neighbour voxels join in the tree takes into account active flag information so that nearest neighbor will be the nearest active neighbor 
+\begin{DoxyParams}{\-Parameters}
+{\em old\-Node1} & \-I\-D of the first protonode of the pair that was merged \\
+\hline
+{\em old\-Node2} & \-I\-D of the second protonode of the pair that was merged \\
+\hline
+{\em new\-Node} & \-I\-D of the newly created protonode \\
+\hline
+{\em new\-Dist} & distance to the newly created protonode \\
+\hline
+{\em is\-Active} & active flag of the newly created protonode \\
+\hline
+{\em proto\-Nodes} & the vector containing all the protonodes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+if true the new nearest neighbor for this protonode has changed 
+\end{DoxyReturn}
+\hypertarget{classprotoNode_a890cde58417813b8fddd8d0aa56971a5}{\index{proto\-Node@{proto\-Node}!update\-Dist@{update\-Dist}}
+\index{update\-Dist@{update\-Dist}!protoNode@{proto\-Node}}
+\subsubsection[{update\-Dist}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf proto\-Node\-::update\-Dist} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{updated\-Node, }
+\item[{const dist\-\_\-t}]{updated\-Dist}
+\end{DoxyParamCaption}
+)}}\label{classprotoNode_a890cde58417813b8fddd8d0aa56971a5}
+update the stored distance value for the indicated neighbor 
+\begin{DoxyParams}{\-Parameters}
+{\em updated\-Node} & neighbor \-I\-D which distance value needs updating \\
+\hline
+{\em updated\-Dist} & new distance value to the indicated neighbor \\
+\hline
+\end{DoxyParams}
+\hypertarget{classprotoNode_a888ebfa1e99e950ea4060378a13a5af0}{\index{proto\-Node@{proto\-Node}!update\-Nbhood@{update\-Nbhood}}
+\index{update\-Nbhood@{update\-Nbhood}!protoNode@{proto\-Node}}
+\subsubsection[{update\-Nbhood}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf proto\-Node\-::update\-Nbhood} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t \&}]{old\-Node1, }
+\item[{const node\-I\-D\-\_\-t \&}]{old\-Node2, }
+\item[{const node\-I\-D\-\_\-t \&}]{new\-Node, }
+\item[{const dist\-\_\-t}]{new\-Dist}
+\end{DoxyParamCaption}
+)}}\label{classprotoNode_a888ebfa1e99e950ea4060378a13a5af0}
+replaces old neighbourhood data and substitutes it with updated data when neighbour voxels join in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em old\-Node1} & \-I\-D of the first protonode of the pair that was merged \\
+\hline
+{\em old\-Node2} & \-I\-D of the second protonode of the pair that was merged \\
+\hline
+{\em new\-Node} & \-I\-D of the newly created protonode \\
+\hline
+{\em new\-Dist} & distance to the newly created protonode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+if true the new nearest neighbor for this protonode has changed 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/proto\-Node.\-h\item 
+src/common/proto\-Node.\-cpp\end{DoxyCompactItemize}

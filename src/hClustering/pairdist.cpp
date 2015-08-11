@@ -1,3 +1,70 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+//
+//  pairdist
+//
+//  Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree.
+//   Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms.
+//
+//   --version:       Program version.
+//
+//   -h --help:       Produce extended program help message.
+//
+//   -t --tree:       File with the hierarchical tree.
+//
+//   -i --IDs:        Input node IDs to compute the distance from, insert a pair of values, one for each node ID.
+//
+//  [-l --leaves]:    Interpret input node IDs as leaf IDs.
+//
+//  [-t --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result).
+//                     Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold.
+//                     Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired.
+//
+//   -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tratograms in case of node IDS).
+//                     Tracts must be normalized.
+//
+//   -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use toghether with -leaves option.
+//
+//   -M --matrixf:    Folder with the dissimilarity matrix files. Use only toghether with -leaves option.
+//
+//  [--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files.
+//
+//
+//  example:
+//
+//  pairdist -t tree.txt -i 234 368 -t 0.4 -L leaftracts/ -N nodetracts/ -M matrix/
+//
+//---------------------------------------------------------------------------
+
 // std librabry
 #include <vector>
 #include <string>
@@ -12,25 +79,15 @@
 #include <boost/filesystem.hpp>
 
 // classes
-#include "WHcoord.h"
-#include "WHnode.h"
 #include "WHtree.h"
 #include "compactTract.h"
 #include "compactTractChar.h"
-#include "vistaManager.h"
+#include "fileManagerFactory.h"
 #include "distBlock.h"
+#include "treeManager.h"
+#include "WStringUtils.h"
 
 
-const float thresValue(0.4);
-
-
-// A helper function to simplify the main part.
-template<class T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
-{
-    copy(v.begin(), v.end(), std::ostream_iterator<T>(os, " "));
-    return os;
-}
 
 int main( int argc, char *argv[] )
 {
@@ -42,39 +99,39 @@ int main( int argc, char *argv[] )
         // ========== PROGRAM PARAMETERS ==========
 
         std::string progName("pairdist");
-        std::string configFilename("/home/raid2/moreno/Code/hClustering/config/"+progName+".cfg");
+        std::string configFilename("../../config/"+progName+".cfg");
 
         // program parameters
         std::string treeFilename;
-        std::string singleTractFolder, meanTractFolder;
-        std::string distMatrixFolder;
-        std::pair<nodeID_t,nodeID_t> inNodes;
-        std::pair<WHcoord,WHcoord> inCoords;
-        bool byTract(false), byMatrix(false), byTree(false), byCoords(false), byNodes(false), verbose(false);
+        std::string leafTractFolder,nodeTractFolder, distMatrixFolder;
+        std::vector<size_t> inNodes;
+        bool byLeafTract(false), byNodeTract(false), byMatrix(false), areLeaves( false );
+        size_t idA( 0 ), idB( 0 );
+        float thresValue(0);
 
         // Declare a group of options that will be allowed only on command line
         boost::program_options::options_description genericOptions("Generic options");
         genericOptions.add_options()
-                ("version,V", "print version string")
-                ("help,h", "produce help message")
-                ("input-nodes,n", boost::program_options::value<bool> (), "input nodeID pair (each consisting of a boolean leaf/node flag value followed by an id number) to compute distance of, if used, input-coords option will be ignored")
-                ("input-coords,c", boost::program_options::value<coord_t> (), "input leaf coordinate pair to compute distance of")
+                ( "version", "Program version" )
+                ( "help,h", "Produce extended program help message" )
+                ( "tree,t",  boost::program_options::value< std::string >(&treeFilename), "tree file")
+                ( "IDs,i", boost::program_options::value< std::vector< size_t > >(&inNodes)->multitoken(), "input node IDs to compute the distance from, insert a pair of values, one for each node ID")
+                ( "leaves,l", "[opt] interpret input nodes as leaf IDs")
+                ( "threshold,t", boost::program_options::value<float> (&thresValue)->implicit_value(0), "[opt] threshold to apply before dissimilarity computation. Default 0 (no threshold). Use only for options -L and -N")
+                ( "leaftractf,L", boost::program_options::value< std::string >(&leafTractFolder), "[opt] folder with the leaf seed voxel probabilistic tracts. Tracts must be normalized")
+                ( "nodetractf,N", boost::program_options::value< std::string >(&nodeTractFolder), "[opt] folder with the node mean tracts. Tracts must be normalized")
+                ( "matrixf,M",  boost::program_options::value< std::string >(&distMatrixFolder), "[opt] folder with the distance matrix files")
                 ;
 
         // Declare a group of options that will be allowed both on command line and in config file
         boost::program_options::options_description configOptions("Configuration");
         configOptions.add_options()
-                ("tree-file,t",  boost::program_options::value< std::string >(&treeFilename), "file with the hierarchical tree")
-                ("dist-folder,d",  boost::program_options::value< std::string >(&distMatrixFolder), "folder with the distance matrix files")
-                ("singlet-folder,s", boost::program_options::value< std::string >(&singleTractFolder), "folder with the single-voxel probabilistic tracts")
-                ("meant-folder,f", boost::program_options::value< std::string >(&meanTractFolder), "folder with the node mean tracts")
-                ("verbose,v", "verbose option")
-            ;
+                ( "vista", "[opt] Write output tree in vista coordinates (default is nifti)." )
+                ;
 
         // Hidden options, will be allowed both on command line and in config file, but will not be shown to the user.
         boost::program_options::options_description hiddenOptions("Hidden options");
         hiddenOptions.add_options()
-                ("rest", boost::program_options::value< std::vector<size_t> >())
                 ;
 
         boost::program_options::options_description cmdlineOptions;
@@ -84,7 +141,7 @@ int main( int argc, char *argv[] )
         boost::program_options::options_description visibleOptions("Allowed options");
         visibleOptions.add(genericOptions).add(configOptions);
         boost::program_options::positional_options_description posOpt; //this arguments do not need to specify the option descriptor when typed in
-        posOpt.add("rest", -1);
+        //posOpt.add("rest", -1);
 
 
         boost::program_options::variables_map variableMap;
@@ -95,275 +152,295 @@ int main( int argc, char *argv[] )
         notify(variableMap);
 
 
-        ////////////////////////////
-# if 0
-        if (variableMap.count("input-coords")) {
-            coord_t mode(variableMap["input-coords"].as<coord_t>());
-            WHcoord coor(10,10,10);
-            WHcoord sizeG(160,200,160);
-            std::cout<<mode<<" nbhood of coordinate "<<coor<<std::endl;
-            std::vector<WHcoord> nbs(coor.getPhysNbs(sizeG,mode));
-            std::cout<<"Total nbs: "<<nbs.size()<<std::endl;
-            for (size_t i=0; i<nbs.size();++i) {
-                std::cout<<nbs[i]<<std::endl;
-            }
-            return 0;
-        }
-
-#endif
-        ////////////////////////////////////
 
 
 
 
-
-        if (variableMap.count("help")) {
-            std::cout << visibleOptions << std::endl;
+        if ( variableMap.count( "help" ) )
+        {
+            std::cout << "---------------------------------------------------------------------------" << std::endl;
+            std::cout << std::endl;
+            std::cout << " Project: hClustering" << std::endl;
+            std::cout << std::endl;
+            std::cout << " Whole-Brain Connectivity-Based Hierarchical Parcellation Project" << std::endl;
+            std::cout << " David Moreno-Dominguez" << std::endl;
+            std::cout << " d.mor.dom@gmail.com" << std::endl;
+            std::cout << " moreno@cbs.mpg.de" << std::endl;
+            std::cout << " www.cbs.mpg.de/~moreno" << std::endl;
+            std::cout << std::endl;
+            std::cout << " For more reference on the underlying algorithm and research they have been used for refer to:" << std::endl;
+            std::cout << " - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014)." << std::endl;
+            std::cout << "   A hierarchical method for whole-brain connectivity-based parcellation." << std::endl;
+            std::cout << "   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528" << std::endl;
+            std::cout << " - Moreno-Dominguez, D. (2014)." << std::endl;
+            std::cout << "   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography." << std::endl;
+            std::cout << "   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig." << std::endl;
+            std::cout << "   ISBN 978-3-941504-45-5" << std::endl;
+            std::cout << std::endl;
+            std::cout << " hClustering is free software: you can redistribute it and/or modify" << std::endl;
+            std::cout << " it under the terms of the GNU Lesser General Public License as published by" << std::endl;
+            std::cout << " the Free Software Foundation, either version 3 of the License, or" << std::endl;
+            std::cout << " (at your option) any later version." << std::endl;
+            std::cout << " http://creativecommons.org/licenses/by-nc/3.0" << std::endl;
+            std::cout << std::endl;
+            std::cout << " hClustering is distributed in the hope that it will be useful," << std::endl;
+            std::cout << " but WITHOUT ANY WARRANTY; without even the implied warranty of" << std::endl;
+            std::cout << " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the" << std::endl;
+            std::cout << " GNU Lesser General Public License for more details." << std::endl;
+            std::cout << std::endl;
+            std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
+            std::cout << "pairdist" << std::endl << std::endl;
+            std::cout << "Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree." << std::endl;
+            std::cout << " Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms." << std::endl << std::endl;
+            std::cout << " --version:       Program version." << std::endl << std::endl;
+            std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
+            std::cout << " -t --tree:       File with the hierarchical tree." << std::endl << std::endl;
+            std::cout << " -i --IDs:        Input node IDs to compute the distance from, insert a pair of values, one for each node ID." << std::endl << std::endl;
+            std::cout << "[-l --leaves]:    Interpret input node IDs as leaf IDs." << std::endl << std::endl;
+            std::cout << "[-t --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result)." << std::endl;
+            std::cout << "                   Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold." << std::endl;
+            std::cout << "                   Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired." << std::endl << std::endl;
+            std::cout << " -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tratograms in case of node IDS)." << std::endl;
+            std::cout << "                   Tracts must be normalized." << std::endl << std::endl;
+            std::cout << " -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use toghether with -leaves option." << std::endl << std::endl;
+            std::cout << " -M --matrixf:    Folder with the dissimilarity matrix files. Use only toghether with -leaves option." << std::endl << std::endl;
+            std::cout << "[--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "example:" << std::endl << std::endl;
+            std::cout << "pairdist -t tree.txt -i 234 368 -t 0.4 -L leaftracts/ -N nodetracts/ -M matrix/" << std::endl << std::endl;
             exit(0);
         }
-        if (variableMap.count("version")) {
-            std::cout << progName <<", version 1.0"<<std::endl;
+
+        if (variableMap.count( "version" ) )
+        {
+            std::cout << progName << ", version 2.0" <<std::endl;
             exit(0);
         }
-        if (variableMap.count("verbose")) {
-            std::cout << "verbose output"<<std::endl;
-            verbose=true;
+
+
+        if ( variableMap.count( "vista" ) )
+        {
+            std::cout << "Using vista format" << std::endl;
+            fileManagerFactory fmf;
+            fmf.setVista();
         }
-        if (variableMap.count("tree-file")) {
-            if(!boost::filesystem::is_regular_file(boost::filesystem::path(treeFilename))) {
-                std::cerr << "ERROR: tree file \""<<treeFilename<<"\" is not a regular file"<<std::endl;
+        else
+        {
+            std::cout << "Using nifti format" << std::endl;
+            fileManagerFactory fmf;
+            fmf.setNifti();
+        }
+
+        if (variableMap.count( "tree" ) )
+        {
+            if( !boost::filesystem::is_regular_file(boost::filesystem::path( treeFilename ) ) )
+            {
+                std::cerr << "ERROR: tree file \"" << treeFilename << "\" is not a regular file" << std::endl;
                 std::cerr << visibleOptions << std::endl;
                 exit(-1);
             }
-            std::cout << "Input tree file: "<< treeFilename << std::endl;
-            byTree=true;
-        } else if (variableMap.count("input-nodes")) {
-            std::cout << "WARNING: input-nodes option will be ignored as no tree file was stated" << std::endl;
+            std::cout << "Tree file: "<< treeFilename << std::endl;
         }
-        if (variableMap.count("dist-folder")) {
-            if(!boost::filesystem::is_directory(boost::filesystem::path(distMatrixFolder))) {
-                std::cerr << "ERROR: distance matrix folder \""<<distMatrixFolder<<"\" is not a directory"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            }
-            std::cout << "Distance matrix folder: "<< distMatrixFolder << std::endl;
-            byMatrix=true;
-        }
-        if (variableMap.count("singlet-folder")) {
-            if(!boost::filesystem::is_directory(boost::filesystem::path(singleTractFolder))) {
-                std::cerr << "ERROR: single tract folder \""<<singleTractFolder<<"\" is not a directory"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            }
-            std::cout << "Single tracts folder: "<< singleTractFolder << std::endl;
-            byTract=true;
-        }
-        if (variableMap.count("meant-folder")) {
-            if(!boost::filesystem::is_directory(boost::filesystem::path(meanTractFolder))) {
-                std::cerr << "ERROR: mean tract folder \""<<meanTractFolder<<"\" is not a directory"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            }
-            std::cout << "Mean tracts folder: "<< meanTractFolder << std::endl;
-            byTract=true;
-        }
-        if(!byTree && !byMatrix && !byTract) {
-            std::cerr << "ERROR: at least one source must be entered (tract-folder, mdist-folder, or tree-file) "<<std::endl;
+        else
+        {
+            std::cerr << "ERROR: no tree file stated"<<std::endl;
             std::cerr << visibleOptions << std::endl;
             exit(-1);
         }
 
-        if (variableMap.count("input-nodes") && byTree) {
 
-            if (!variableMap.count("rest")) {
-                std::cerr << "ERROR: 2 full node IDs must be entered"<<std::endl;
+        if ( variableMap.count("IDs") )
+        {
+            if(inNodes.size()!=2) {
+                std::cerr << "ERROR: 2 node/leaf IDs must be entered" <<std::endl;
                 std::cerr << visibleOptions << std::endl;
                 exit(-1);
             }
-            std::vector<size_t> inNodesVector(variableMap["rest"].as<std::vector<size_t> >());
+            idA = inNodes[0];
+            idB = inNodes[1];
+            std::cout<< "Input IDs: " << idA << " " << idB << std::endl;
+        }
+        else
+        {
+            std::cerr << "ERROR: no input node/leaf IDs stated"<<std::endl;
+            std::cerr << visibleOptions << std::endl;
+            exit(-1);
+        }
 
-            if(inNodesVector.size()!=3) {
-                std::cerr << "ERROR: 2 full node IDs must be entered"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            } else {
 
-                inNodes=std::make_pair(std::make_pair(variableMap["input-nodes"].as<bool>(),inNodesVector[0]), std::make_pair(inNodesVector[1],inNodesVector[2]));
-                std::cout << "Input nodes are: "<< inNodes.first.first <<"-"<< inNodes.first.second <<" and "<< inNodes.second.first <<"-"<< inNodes.second.second << std::endl;
-                byNodes=true;
+        if ( variableMap.count("leaves") )
+        {
+            std::cout<< "Interpreting inputs as leaf IDs" << std::endl;
+            areLeaves = true;
+        }
+        else
+        {
+            std::cout<< "Interpreting inputs as node IDs" << std::endl;
+            areLeaves = false;
+        }
 
-                if  (inNodes.first.first||inNodes.second.first) {
-                    if ((byTract)&&(!variableMap.count("meant-folder")) ) {
-                        std::cerr << "ERROR: When using node ids, mean tract folder must be stated"<<std::endl;
-                        std::cerr << visibleOptions << std::endl;
-                        exit(-1);
-                    }
-                    if (byMatrix) {
-                        std::cout << "WARNING: dist-folder option will be ignored" << std::endl;
-                        byMatrix=false;
-                    }
-                }
-                if ( (!inNodes.first.first||!inNodes.second.first)&&(byTract)&&(!variableMap.count("singlet-folder")) ) {
-                    std::cerr << "ERROR: When using leaf ids, single tract folder must be stated"<<std::endl;
+        if ( variableMap.count( "matrixf" ) )
+        {
+            if( !areLeaves )
+            {
+                std::cerr << "WARNING: using node IDs, distance matrix input will be ignored"<<std::endl;
+                byMatrix=false;
+            }
+            else
+            {
+                if( !boost::filesystem::is_directory( boost::filesystem::path( distMatrixFolder ) ) )
+                {
+                    std::cerr << "ERROR: distance matrix folder \""<<distMatrixFolder<<"\" is not a directory"<<std::endl;
                     std::cerr << visibleOptions << std::endl;
                     exit(-1);
                 }
-
-                if (byTree && variableMap.count("input-coords"))
-                    std::cout << "WARNING: input-coords option will be ignored" << std::endl;
+                std::cout << "Distance matrix folder: "<< distMatrixFolder << std::endl;
+                byMatrix=true;
             }
-
-        } else if (variableMap.count("input-coords")){
-
-            if (!variableMap.count("rest")) {
-                std::cerr << "ERROR: 2 full coordinate sets must be entered"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            }
-            std::vector<coord_t> inCoordVector;
-            inCoordVector.push_back(variableMap["input-coords"].as<coord_t>());
-            {
-                std::vector<size_t> tempVector(variableMap["rest"].as<std::vector<size_t> >());
-                inCoordVector.reserve(tempVector.size());
-                for(std::vector<size_t>::iterator iter(tempVector.begin()); iter!=tempVector.end(); ++iter) {
-                    inCoordVector.push_back(*iter);
-                }
-            }
-
-
-            if(inCoordVector.size()!=6) {
-                std::cerr << "ERROR: a total of 6 coordinates must be entered (3 per leaf)"<<std::endl;
-                std::cerr << visibleOptions << std::endl;
-                exit(-1);
-            } else {
-                WHcoord coord1(inCoordVector[0],inCoordVector[1],inCoordVector[2]);
-                WHcoord coord2(inCoordVector[3],inCoordVector[4],inCoordVector[5]);
-                inCoords=std::make_pair(coord1,coord2);
-                std::cout << "Input coordinates are: "<< coord1 <<" and "<< coord2 << std::endl;
-                byCoords=true;
-
-            }
-        } else {
-            std::cerr << "ERROR: no input nodes stated"<<std::endl;
-            std::cerr << visibleOptions << std::endl;
-            exit(-1);
         }
+
+        if ( variableMap.count( "leaftractf" ) )
+        {
+            if( !boost::filesystem::is_directory(boost::filesystem::path( leafTractFolder ) ) )
+            {
+                std::cerr << "ERROR: leaf seed tract folder \""<<leafTractFolder<<"\" is not a directory"<<std::endl;
+                std::cerr << visibleOptions << std::endl;
+                exit(-1);
+            }
+            std::cout << "Leaf seed tract folder: "<< leafTractFolder << std::endl;
+            byLeafTract=true;
+        }
+
+        if ( variableMap.count( "nodetractf" ) )
+        {
+            if( areLeaves )
+            {
+                std::cerr << "WARNING: using leaf IDs, mean node tract folder input will be ignored"<<std::endl;
+                byNodeTract=false;
+            }
+            else
+            {
+                if( !boost::filesystem::is_directory( boost::filesystem::path( nodeTractFolder ) ) )
+                {
+                    std::cerr << "ERROR: node mean tract folder \""<<nodeTractFolder<<"\" is not a directory"<<std::endl;
+                    std::cerr << visibleOptions << std::endl;
+                    exit(-1);
+                }
+                std::cout << "Node mean tract folder: "<< nodeTractFolder << std::endl;
+                byNodeTract=true;
+            }
+        }
+
+        if (variableMap.count( "threshold" ) )
+        {
+            if( byNodeTract || byLeafTract )
+            {
+                if(thresValue < 0 || thresValue >= 1)
+                {
+                    std::cerr << "ERROR: tthreshold must be [0,1)"<<std::endl;
+                    std::cerr << visibleOptions << std::endl;
+                    exit(-1);
+                }
+                std::cout << "Tractogram threshold: "<< thresValue << std::endl;
+            }
+            else
+            {
+                std::cerr << "WARNING: Not using tractogram sources (option -L or -N), threshold input will be ignored"<<std::endl;
+            }
+        }
+        else
+        {
+            if( byNodeTract || byLeafTract )
+            {
+                std::cout << "No tractogram threshold will be applied" << std::endl;
+            }
+        }
+
 
 
         // ========== OBTAIN DISTANCES ==========
 
-
-
-        if(byTree) {
-            WHtree tree(treeFilename);
-            std::cout<<tree.getReport()<<std::endl<<std::endl;
-            dist_t copheneticDist(0);
-            if(byNodes) {
-                if (inNodes.first.first) {
-                    std::cout<<"Node "<< inNodes.first.first <<"-"<< inNodes.first.second <<std::endl;
-                } else {
-                    inCoords.first=tree.getCoordinate4leaf(inNodes.first.second);
-                    std::cout<<"Leaf "<< inNodes.first.first <<"-"<< inNodes.first.second <<" : "<<inCoords.first<<std::endl;
-                }
-                if (inNodes.second.first) {
-                    std::cout<<"Node "<< inNodes.second.first <<"-"<< inNodes.second.second <<std::endl;
-                } else {
-                    inCoords.second=tree.getCoordinate4leaf(inNodes.second.second);
-                    std::cout<<"Leaf "<< inNodes.second.first <<"-"<< inNodes.second.second <<" : "<<inCoords.second<<std::endl;
-                }
-                copheneticDist =  tree.getDistance(inNodes.first,inNodes.second);
-            } else {
-                copheneticDist = tree.getDistance(inCoords.first, inCoords.second);
-            }
-            std::cout<<"Cophenetic distance:\t"<<boost::lexical_cast<std::string>(copheneticDist)<<std::endl;
+        size_t id1( inNodes[0] ), id2( inNodes[1] );
+        nodeID_t fullID1, fullID2;
+        if( areLeaves )
+        {
+            fullID1 = std::make_pair< bool, size_t >( false, id1 );
+            fullID2 = std::make_pair< bool, size_t >( false, id2 );
+        }
+        else
+        {
+            fullID1 = std::make_pair< bool, size_t >( true, id1 );
+            fullID2 = std::make_pair< bool, size_t >( true, id2 );
         }
 
-        if(byTract) {
+        WHtree tree( treeFilename );
+        std::cout << tree.getReport() << std::endl << std::endl;
+        dist_t copheneticDist( tree.getDistance( fullID1, fullID2 ) );
+        std::cout << "Cophenetic distance:\t" << string_utils::toString( copheneticDist ) << std::endl;
+
+        if(byMatrix)
+        {
+            distBlock distanceBlock( distMatrixFolder );
+            WHcoord coord1( tree.getCoordinate4leaf( id1 ) ), coord2( tree.getCoordinate4leaf( id2 ) );
+            distanceBlock.loadBlock( coord1, coord2 );
+            dist_t matrixDist( distanceBlock.getDistance( coord1, coord2 ) );
+            std::cout<< "Matrix distance:\t" << string_utils::toString( matrixDist ) << std::endl;
+        }
+
+        if( byNodeTract )
+        {
+            fileManagerFactory nodeFileMF( nodeTractFolder );
+            fileManager& nodeFM( nodeFileMF.getFM() );
             compactTract tract1, tract2;
-            compactTractChar charTract1, charTract2;
-            if(byNodes) {
-                if (inNodes.first.first) {
-                    vistaManager vMngr(meanTractFolder);
-                    vMngr.readAsLog();
-                    vMngr.readAsUnThres();
-                    vMngr.readNodeTract(inNodes.first.second,tract1);                    
-                } else {
-                    vistaManager vMngr(singleTractFolder);
-                    vMngr.readAsLog();
-                    vMngr.readAsUnThres();
-                    vMngr.readLeafTract(inCoords.first,tract1);
-                    vMngr.readLeafTract(inCoords.first,charTract1);
-                }
-                if (inNodes.second.first) {
-                    vistaManager vMngr(meanTractFolder);
-                    vMngr.readAsLog();
-                    vMngr.readAsUnThres();
-                    vMngr.readNodeTract(inNodes.second.second,tract2);
-                } else {
-                    vistaManager vMngr(singleTractFolder);
-                    vMngr.readAsLog();
-                    vMngr.readAsUnThres();
-                    vMngr.readLeafTract(inCoords.second,tract2);
-                    vMngr.readLeafTract(inCoords.second,charTract2);
-                }
-            } else {
-                vistaManager vMngr(singleTractFolder);
-                vMngr.readAsLog();
-                vMngr.readAsUnThres();
-                vMngr.readLeafTract(inCoords.first,tract1);
-                vMngr.readLeafTract(inCoords.first,charTract1);
-                vMngr.readLeafTract(inCoords.second,tract2);
-                vMngr.readLeafTract(inCoords.second,charTract2);
-            }
-            dist_t directDist(0);
-            tract1.threshold(thresValue);
-            tract2.threshold(thresValue);
-            charTract1.threshold(thresValue);
-            charTract2.threshold(thresValue);
-            tract1.getNorm();
-            tract2.getNorm();
-            charTract1.getNorm();
-            charTract2.getNorm();
-
-            directDist = tract1.tractDistance(tract2);
-            std::cout<<"Direct distance:\t"<<boost::lexical_cast<std::string>(directDist)<<std::endl;
-
-            if( charTract1.size() > 0 )
-            {
-                dist_t charDist(0);
-                charDist = charTract1.tractDistance(tract2);
-                std::cout<<"Direct (char-float) distance:\t"<<boost::lexical_cast<std::string>(charDist)<<std::endl;
-            }
-            if( charTract2.size() > 0 )
-            {
-                dist_t charDist(0);
-                charDist = tract1.tractDistance(charTract2);
-                std::cout<<"Direct (float-char) distance:\t"<<boost::lexical_cast<std::string>(charDist)<<std::endl;
-            }
-
-            if( charTract1.size() > 0 && charTract2.size() > 0 )
-            {
-                dist_t charDist(0);
-                charDist = charTract1.tractDistance(charTract2);
-                std::cout<<"Direct (char-char) distance:\t"<<boost::lexical_cast<std::string>(charDist)<<std::endl;
-            }
+            nodeFM.readAsLog();
+            nodeFM.readAsUnThres();
+            nodeFM.readNodeTract( id1, &tract1 );
+            nodeFM.readNodeTract( id2, &tract2 );
+            tract1.computeNorm();
+            tract2.computeNorm();
+            tract1.threshold( thresValue );
+            tract2.threshold( thresValue );
+            dist_t nodeDist( tract1.tractDistance( tract2 ) );
+            std::cout<< "Distance by node tracts:\t" << string_utils::toString( nodeDist ) << std::endl;
         }
 
-        if(byMatrix) {
-            dist_t matrixDist(0);
-            distBlock distanceBlock(distMatrixFolder);
-            distanceBlock.loadBlock(inCoords.first,inCoords.second);
-            matrixDist = distanceBlock.getDistance(inCoords.first,inCoords.second);
-            std::cout<<"Matrix distance:\t"<<boost::lexical_cast<std::string>(matrixDist)<<std::endl;
+        if( byLeafTract )
+        {
+            if( areLeaves )
+            {
+                fileManagerFactory leafFileMF( leafTractFolder );
+                fileManager& leafFM( leafFileMF.getFM() );
+                compactTract tract1, tract2;
+                leafFM.readAsLog();
+                leafFM.readAsUnThres();
+                leafFM.readLeafTract( id1, tree.getTrackids(), tree.getRoi(), &tract1 );
+                leafFM.readLeafTract( id2, tree.getTrackids(), tree.getRoi(), &tract2 );
+                tract1.computeNorm();
+                tract2.computeNorm();
+                tract1.threshold( thresValue );
+                tract2.threshold( thresValue );
+                dist_t leafDist( tract1.tractDistance( tract2 ) );
+                std::cout<< "Distance by leaf tracts:\t" << string_utils::toString( leafDist ) << std::endl;
+            }
+            else
+            {
+                treeManager treeMgr(&tree, true);
+                treeMgr.setSingleTractFolder( leafTractFolder );
+                compactTract meanTract1( treeMgr.getMeanTract( id1 ) );
+                compactTract meanTract2( treeMgr.getMeanTract( id2 ) );
+                meanTract1.computeNorm();
+                meanTract2.computeNorm();
+                meanTract1.threshold( thresValue );
+                meanTract2.threshold( thresValue );
+                dist_t meanDist( meanTract1.tractDistance( meanTract2 ) );
+                std::cout<< "Distance by averaged leaf tracts:\t" << string_utils::toString( meanDist ) << std::endl;
+            }
         }
-        std::cout<<std::endl;
-
 
         // save and print total time
         time_t programEndTime(time(NULL));
         int totalTime( difftime(programEndTime,programStartTime) );
         std::cout << "Program Finished, total time: " << totalTime/3600 <<"h "<<  (totalTime%3600)/60 <<"' "<< ((totalTime%3600)%60) <<"\""<< std::endl;
-
 
 
 //    }

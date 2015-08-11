@@ -1,0 +1,386 @@
+\hypertarget{classtreeComparer}{\section{tree\-Comparer \-Class \-Reference}
+\label{classtreeComparer}\index{tree\-Comparer@{tree\-Comparer}}
+}
+
+
+{\ttfamily \#include $<$tree\-Comparer.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtreeComparer_a53551cd3430fa547485ea45e714ad3db}{tree\-Comparer} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree1, \hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree2, bool verbose)
+\item 
+\hyperlink{classtreeComparer_a40dc7445acfe23391f860f4a84b29f61}{tree\-Comparer} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree1, \hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree2, \hyperlink{classtreeComparer}{tree\-Comparer} \&comparer)
+\item 
+\hypertarget{classtreeComparer_a24cb1c677cf90de79ab0ac6e175af0ce}{\hyperlink{classtreeComparer_a24cb1c677cf90de79ab0ac6e175af0ce}{$\sim$tree\-Comparer} ()}\label{classtreeComparer_a24cb1c677cf90de79ab0ac6e175af0ce}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classtreeComparer_a1ee6e259efd0135538c0f88251fbdcd0}{set\-Single\-Tract\-Folder1} (std\-::string single\-Tract\-Folder1)
+\item 
+void \hyperlink{classtreeComparer_a8760017af781840b4fa94fb31df6715a}{set\-Single\-Tract\-Folder2} (std\-::string single\-Tract\-Folder2)
+\item 
+void \hyperlink{classtreeComparer_a2c54d8ade854830bd1d50ae4f3719f59}{set\-Mean\-Tract\-Folder1} (std\-::string mean\-Tract\-Folder1)
+\item 
+void \hyperlink{classtreeComparer_a89839f15356d52b1a0f40160fab40f20}{set\-Mean\-Tract\-Folder2} (std\-::string mean\-Tract\-Folder2)
+\item 
+void \hyperlink{classtreeComparer_a0374573a06423d3e96e92f8a43ddf8a4}{set\-Max\-Phys\-Dist} (size\-\_\-t max\-Phys\-Dist)
+\item 
+void \hyperlink{classtreeComparer_ae4ab8def41fb390611c7f9c05058b8de}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+void \hyperlink{classtreeComparer_aad2741eb4f6a394291c1e2a2572e0e8d}{set\-Coords\-From\-File} (bool coords\-From\-File)
+\item 
+void \hyperlink{classtreeComparer_a183feb12a318e7ce8059df89a91169ad}{set\-Mean\-Tracts\-From\-File} (bool mean\-Tracts\-From\-File)
+\item 
+bool \hyperlink{classtreeComparer_a07954cac24b564553656e9e0c238c3dc}{are\-Real\-Base\-Nodes} () const 
+\item 
+void \hyperlink{classtreeComparer_aa11418a78e82217f6db7e2cb4a9f59ee}{set\-Relative\-Threshold} (float rel\-Thres)
+\item 
+void \hyperlink{classtreeComparer_a126c2eda8a641abc1f74b2d734bbb1b7}{get\-Base\-Dist\-Matrix} ()
+\item 
+void \hyperlink{classtreeComparer_a9046de8cfacabfdbf380adc36bbd8b09}{read\-Base\-Dist\-Matrix} (std\-::string matrix\-Filename)
+\item 
+void \hyperlink{classtreeComparer_ac9de574de7fc7204f31c95f32cbf8adf}{write\-Base\-Dist\-Matrix} (std\-::string matrix\-Filename)
+\item 
+std\-::pair$<$ std\-::pair$<$ float, \*
+float $>$, std\-::pair$<$ float, \*
+float $>$ $>$ \hyperlink{classtreeComparer_ae6679002343a84e49ecbe254dbbe56ec}{do\-Tcpcc} () const 
+\item 
+std\-::pair$<$ float, float $>$ \hyperlink{classtreeComparer_aa35e905726e481a1d51103dd5f9815c7}{simple\-Triplets} (size\-\_\-t sample\-Freq=1) const 
+\item 
+bool \hyperlink{classtreeComparer_ac29c95118034b2cb9a1a7c2a7b438698}{leaf\-Correspondence} ()
+\item 
+void \hyperlink{classtreeComparer_ae160e4175a3f7d1a9563babe30c4c548}{greedy\-Correspondence} (float dissim\-Threshold, bool redo\-Coords=true)
+\item 
+void \hyperlink{classtreeComparer_a18327588d6bcf43220beedf4a5fa1e14}{random\-Correspondence} ()
+\item 
+void \hyperlink{classtreeComparer_a16b088c494e3c07fb161078959df4f97}{write\-Correspondence} (std\-::string out\-Filename)
+\item 
+void \hyperlink{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}{write\-Full\-Correspondence} (std\-::string out\-Filename)
+\item 
+std\-::vector$<$ float $>$ \hyperlink{classtreeComparer_ad627f4fd68587f567c9647ccca37914c}{rate\-Correspondence} ()
+\item 
+std\-::pair$<$ float, float $>$ \hyperlink{classtreeComparer_a2bacc683c09597ff98d0ce5352053122}{apply\-Noise\-Baseline} (const float noise\-Alpha=0)
+\item 
+std\-::string \hyperlink{classtreeComparer_aed2990051e67d007d168e1b1c51168f3}{report\-Base\-Nodes} () const 
+\item 
+bool \hyperlink{classtreeComparer_a5e381783846840c65126a49847e1e560}{fetch\-Base\-Nodes} (bool do\-Get\-Coords=true)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements the main functionalities required for performing meta-\/leaf matching across trees and calculating tree comparison algorithms across matched-\/trees 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classtreeComparer_a53551cd3430fa547485ea45e714ad3db}{\index{tree\-Comparer@{tree\-Comparer}!tree\-Comparer@{tree\-Comparer}}
+\index{tree\-Comparer@{tree\-Comparer}!treeComparer@{tree\-Comparer}}
+\subsubsection[{tree\-Comparer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tree\-Comparer\-::tree\-Comparer} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree1, }
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree2, }
+\item[{bool}]{verbose}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a53551cd3430fa547485ea45e714ad3db}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree1} & a pointer to the first tree being matched/compared \\
+\hline
+{\em tree2} & a pointer to the second tree being matched/compared \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a40dc7445acfe23391f860f4a84b29f61}{\index{tree\-Comparer@{tree\-Comparer}!tree\-Comparer@{tree\-Comparer}}
+\index{tree\-Comparer@{tree\-Comparer}!treeComparer@{tree\-Comparer}}
+\subsubsection[{tree\-Comparer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tree\-Comparer\-::tree\-Comparer} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree1, }
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree2, }
+\item[{{\bf tree\-Comparer} \&}]{comparer}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a40dc7445acfe23391f860f4a84b29f61}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree1} & a pointer to the first tree being matched/compared \\
+\hline
+{\em tree2} & a pointer to the second tree being matched/compared \\
+\hline
+{\em comparer} & the \hyperlink{classtreeComparer}{tree\-Comparer} object with the datamembers to be copied \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classtreeComparer_a2bacc683c09597ff98d0ce5352053122}{\index{tree\-Comparer@{tree\-Comparer}!apply\-Noise\-Baseline@{apply\-Noise\-Baseline}}
+\index{apply\-Noise\-Baseline@{apply\-Noise\-Baseline}!treeComparer@{tree\-Comparer}}
+\subsubsection[{apply\-Noise\-Baseline}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ float, float $>$ {\bf tree\-Comparer\-::apply\-Noise\-Baseline} (
+\begin{DoxyParamCaption}
+\item[{const float}]{noise\-Alpha = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a2bacc683c09597ff98d0ce5352053122}
+\-Calculates the noise level of the trees defined as the matching distance of each base node to the corresponding one of the matched tree this \char`\"{}noise level\char`\"{} is then used to eliminate the hierarchical structure below that level (all granularities higher than that) under the assumption that there is insufficient matching quality to use that information for tree comparison 
+\begin{DoxyParams}{\-Parameters}
+{\em noise\-Alpha} & noise alpha coefficient. \-Controls the weight of the matching quality on the noise level. \-When 0 no noise restriction will be applied, when 1 the npoise level will be the averaged matchting quality level of the contained base nodes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a pair structutre with the number of clusters remaining at the highest granularity level for each tree after application of the noise simulation 
+\end{DoxyReturn}
+\hypertarget{classtreeComparer_a07954cac24b564553656e9e0c238c3dc}{\index{tree\-Comparer@{tree\-Comparer}!are\-Real\-Base\-Nodes@{are\-Real\-Base\-Nodes}}
+\index{are\-Real\-Base\-Nodes@{are\-Real\-Base\-Nodes}!treeComparer@{tree\-Comparer}}
+\subsubsection[{are\-Real\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf tree\-Comparer\-::are\-Real\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a07954cac24b564553656e9e0c238c3dc}
+returns the flag indicating whether both loaded trees have valid base-\/nodes (meta-\/leaves) with only seed leaf children \begin{DoxyReturn}{\-Returns}
+true if both trees have valid meta-\/leaves, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classtreeComparer_ae6679002343a84e49ecbe254dbbe56ec}{\index{tree\-Comparer@{tree\-Comparer}!do\-Tcpcc@{do\-Tcpcc}}
+\index{do\-Tcpcc@{do\-Tcpcc}!treeComparer@{tree\-Comparer}}
+\subsubsection[{do\-Tcpcc}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ std\-::pair$<$ float, float $>$, std\-::pair$<$ float, float $>$ $>$ {\bf tree\-Comparer\-::do\-Tcpcc} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classtreeComparer_ae6679002343a84e49ecbe254dbbe56ec}
+\-Computes the tree cpcc comparison value between two matched trees whose meta-\/leaf dissimilarity matrix has been previosuly computed. \hypertarget{classtreeComparer_a5e381783846840c65126a49847e1e560}{\index{tree\-Comparer@{tree\-Comparer}!fetch\-Base\-Nodes@{fetch\-Base\-Nodes}}
+\index{fetch\-Base\-Nodes@{fetch\-Base\-Nodes}!treeComparer@{tree\-Comparer}}
+\subsubsection[{fetch\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf tree\-Comparer\-::fetch\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+\item[{bool}]{do\-Get\-Coords = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a5e381783846840c65126a49847e1e560}
+\-Loads the base node \-I\-D information of both trees into the corresponding data members and calculates the mean coordinate of each base-\/node clusterif so indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em do\-Get\-Coords} & tif true mean coordinates for each base node cluster will be computed from cluster mask averaging \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a126c2eda8a641abc1f74b2d734bbb1b7}{\index{tree\-Comparer@{tree\-Comparer}!get\-Base\-Dist\-Matrix@{get\-Base\-Dist\-Matrix}}
+\index{get\-Base\-Dist\-Matrix@{get\-Base\-Dist\-Matrix}!treeComparer@{tree\-Comparer}}
+\subsubsection[{get\-Base\-Dist\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::get\-Base\-Dist\-Matrix} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a126c2eda8a641abc1f74b2d734bbb1b7}
+\-Computes the dissimilarity matrix from the meta-\/leaves mean-\/tracts of one tree to those of the other tree mean tracts should have been previosuly computed and properly transformed to a common space \hypertarget{classtreeComparer_ae160e4175a3f7d1a9563babe30c4c548}{\index{tree\-Comparer@{tree\-Comparer}!greedy\-Correspondence@{greedy\-Correspondence}}
+\index{greedy\-Correspondence@{greedy\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{greedy\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::greedy\-Correspondence} (
+\begin{DoxyParamCaption}
+\item[{float}]{dissim\-Threshold, }
+\item[{bool}]{redo\-Coords = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_ae160e4175a3f7d1a9563babe30c4c548}
+\-Pefrorm base-\/nodes greedy correspondence between trees and get a matching table as output. 
+\begin{DoxyParams}{\-Parameters}
+{\em dissim\-Threshold} & \-A dissimilarity limit for the matching, pairs that match with a dissimilairty higher than the threshold will be regarded as having no valid match \\
+\hline
+{\em redo\-Coords} & if set base-\/node clusters mean-\/coordinate information will be recomputed from cluster mask files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_ac29c95118034b2cb9a1a7c2a7b438698}{\index{tree\-Comparer@{tree\-Comparer}!leaf\-Correspondence@{leaf\-Correspondence}}
+\index{leaf\-Correspondence@{leaf\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{leaf\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf tree\-Comparer\-::leaf\-Correspondence} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_ac29c95118034b2cb9a1a7c2a7b438698}
+\-Pefrorm leaf-\/wise correspondence between trees and get a matching table as output. \-Use only when trees have been built on the same set of seed voxel tractograms \hypertarget{classtreeComparer_ae4ab8def41fb390611c7f9c05058b8de}{\index{tree\-Comparer@{tree\-Comparer}!log@{log}}
+\index{log@{log}!treeComparer@{tree\-Comparer}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_ae4ab8def41fb390611c7f9c05058b8de}
+sets output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a18327588d6bcf43220beedf4a5fa1e14}{\index{tree\-Comparer@{tree\-Comparer}!random\-Correspondence@{random\-Correspondence}}
+\index{random\-Correspondence@{random\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{random\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::random\-Correspondence} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a18327588d6bcf43220beedf4a5fa1e14}
+\-Pefrorm a random base-\/node matching between trees (euclidean cluster distance restrictions will still be applied). used in order to obtain a baseline for the comparison algorithm values to asses robustness and meaningfulness \hypertarget{classtreeComparer_ad627f4fd68587f567c9647ccca37914c}{\index{tree\-Comparer@{tree\-Comparer}!rate\-Correspondence@{rate\-Correspondence}}
+\index{rate\-Correspondence@{rate\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{rate\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ float $>$ {\bf tree\-Comparer\-::rate\-Correspondence} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_ad627f4fd68587f567c9647ccca37914c}
+\-Performs an analyiss of the base node matching and gives several informational outputs to evaluate the quality of the matching \-Among them specially the matchign quality defined as the size-\/normalized tractogram similarity between matched nodes averaged across all basenodes \begin{DoxyReturn}{\-Returns}
+a vector with the matching evaluation outputs in this order\-: mean matchign dissimilarity; weighted matchign dissimilarity (matchign quality); fraction of total leaves matched; mean euclidean distance between matched centers; weighted euclidean dist between matched centers. 
+\end{DoxyReturn}
+\hypertarget{classtreeComparer_a9046de8cfacabfdbf380adc36bbd8b09}{\index{tree\-Comparer@{tree\-Comparer}!read\-Base\-Dist\-Matrix@{read\-Base\-Dist\-Matrix}}
+\index{read\-Base\-Dist\-Matrix@{read\-Base\-Dist\-Matrix}!treeComparer@{tree\-Comparer}}
+\subsubsection[{read\-Base\-Dist\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::read\-Base\-Dist\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{matrix\-Filename}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a9046de8cfacabfdbf380adc36bbd8b09}
+\-Saves a precomputed cross-\/tree meta-\/leaves mean-\/tracts dissimilarity matrix to file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & the filepath to save the matrix data to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_aed2990051e67d007d168e1b1c51168f3}{\index{tree\-Comparer@{tree\-Comparer}!report\-Base\-Nodes@{report\-Base\-Nodes}}
+\index{report\-Base\-Nodes@{report\-Base\-Nodes}!treeComparer@{tree\-Comparer}}
+\subsubsection[{report\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf tree\-Comparer\-::report\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classtreeComparer_aed2990051e67d007d168e1b1c51168f3}
+\-Analyzes the number and size of the base nodes of each tree and returns a report message with the results \begin{DoxyReturn}{\-Returns}
+the report message 
+\end{DoxyReturn}
+\hypertarget{classtreeComparer_aad2741eb4f6a394291c1e2a2572e0e8d}{\index{tree\-Comparer@{tree\-Comparer}!set\-Coords\-From\-File@{set\-Coords\-From\-File}}
+\index{set\-Coords\-From\-File@{set\-Coords\-From\-File}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Coords\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Coords\-From\-File} (
+\begin{DoxyParamCaption}
+\item[{bool}]{coords\-From\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_aad2741eb4f6a394291c1e2a2572e0e8d}
+when set the meta-\/leaves contained seed voxel coordinates will be read from cluster mask files instead of computed 
+\begin{DoxyParams}{\-Parameters}
+{\em coords\-From\-File} & the boolean value to set the m\-\_\-coords\-From\-File flag to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a0374573a06423d3e96e92f8a43ddf8a4}{\index{tree\-Comparer@{tree\-Comparer}!set\-Max\-Phys\-Dist@{set\-Max\-Phys\-Dist}}
+\index{set\-Max\-Phys\-Dist@{set\-Max\-Phys\-Dist}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Max\-Phys\-Dist}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Max\-Phys\-Dist} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{max\-Phys\-Dist}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a0374573a06423d3e96e92f8a43ddf8a4}
+\-Sets the maximum euclidean distance allowed between centres of matched meta-\/leaves (across trees). \-If a negative value is entered it will be set to 0 
+\begin{DoxyParams}{\-Parameters}
+{\em max\-Phys\-Dist} & the max euclidean distance allowed between matched meta-\/leaf centres \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a2c54d8ade854830bd1d50ae4f3719f59}{\index{tree\-Comparer@{tree\-Comparer}!set\-Mean\-Tract\-Folder1@{set\-Mean\-Tract\-Folder1}}
+\index{set\-Mean\-Tract\-Folder1@{set\-Mean\-Tract\-Folder1}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Mean\-Tract\-Folder1}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Mean\-Tract\-Folder1} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{mean\-Tract\-Folder1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a2c54d8ade854830bd1d50ae4f3719f59}
+\-Sets the folder path to find node tracts corresponding to tree 1 
+\begin{DoxyParams}{\-Parameters}
+{\em mean\-Tract\-Folder1} & the path to the folder with tree 1 node tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a89839f15356d52b1a0f40160fab40f20}{\index{tree\-Comparer@{tree\-Comparer}!set\-Mean\-Tract\-Folder2@{set\-Mean\-Tract\-Folder2}}
+\index{set\-Mean\-Tract\-Folder2@{set\-Mean\-Tract\-Folder2}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Mean\-Tract\-Folder2}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Mean\-Tract\-Folder2} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{mean\-Tract\-Folder2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a89839f15356d52b1a0f40160fab40f20}
+\-Sets the folder path to find node tracts corresponding to tree 2 
+\begin{DoxyParams}{\-Parameters}
+{\em mean\-Tract\-Folder2} & the path to the folder with tree 2 node tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a183feb12a318e7ce8059df89a91169ad}{\index{tree\-Comparer@{tree\-Comparer}!set\-Mean\-Tracts\-From\-File@{set\-Mean\-Tracts\-From\-File}}
+\index{set\-Mean\-Tracts\-From\-File@{set\-Mean\-Tracts\-From\-File}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Mean\-Tracts\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Mean\-Tracts\-From\-File} (
+\begin{DoxyParamCaption}
+\item[{bool}]{mean\-Tracts\-From\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a183feb12a318e7ce8059df89a91169ad}
+when set the meta-\/leaves mean tracts will be read from files instead of computed 
+\begin{DoxyParams}{\-Parameters}
+{\em mean\-Tracts\-From\-File} & the boolean value to set the m\-\_\-mean\-Tracts\-From\-File flag to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_aa11418a78e82217f6db7e2cb4a9f59ee}{\index{tree\-Comparer@{tree\-Comparer}!set\-Relative\-Threshold@{set\-Relative\-Threshold}}
+\index{set\-Relative\-Threshold@{set\-Relative\-Threshold}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Relative\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Relative\-Threshold} (
+\begin{DoxyParamCaption}
+\item[{float}]{rel\-Thres}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_aa11418a78e82217f6db7e2cb4a9f59ee}
+sets the threshold (relative to the number of streamlines that were generated per seed voxel on the leaf tracts) that will be applied to meta-\/leaf tracts before computing similarity for leaf matching (in order to avoid tracking noise/artifacts to affect similarities). normalized thershold value will be automatically calculated. 
+\begin{DoxyParams}{\-Parameters}
+{\em rel\-Thres} & the relative threshold value to use \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a1ee6e259efd0135538c0f88251fbdcd0}{\index{tree\-Comparer@{tree\-Comparer}!set\-Single\-Tract\-Folder1@{set\-Single\-Tract\-Folder1}}
+\index{set\-Single\-Tract\-Folder1@{set\-Single\-Tract\-Folder1}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Single\-Tract\-Folder1}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Single\-Tract\-Folder1} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{single\-Tract\-Folder1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a1ee6e259efd0135538c0f88251fbdcd0}
+\-Sets the folder path to find leaf tracts corresponding to tree 1 
+\begin{DoxyParams}{\-Parameters}
+{\em single\-Tract\-Folder1} & the path to the folder with tree 1 leaf tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a8760017af781840b4fa94fb31df6715a}{\index{tree\-Comparer@{tree\-Comparer}!set\-Single\-Tract\-Folder2@{set\-Single\-Tract\-Folder2}}
+\index{set\-Single\-Tract\-Folder2@{set\-Single\-Tract\-Folder2}!treeComparer@{tree\-Comparer}}
+\subsubsection[{set\-Single\-Tract\-Folder2}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::set\-Single\-Tract\-Folder2} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{single\-Tract\-Folder2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeComparer_a8760017af781840b4fa94fb31df6715a}
+\-Sets the folder path to find leaf tracts corresponding to tree 2 
+\begin{DoxyParams}{\-Parameters}
+{\em single\-Tract\-Folder2} & the path to the folder with tree 2 leaf tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_aa35e905726e481a1d51103dd5f9815c7}{\index{tree\-Comparer@{tree\-Comparer}!simple\-Triplets@{simple\-Triplets}}
+\index{simple\-Triplets@{simple\-Triplets}!treeComparer@{tree\-Comparer}}
+\subsubsection[{simple\-Triplets}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ float, float $>$ {\bf tree\-Comparer\-::simple\-Triplets} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{sample\-Freq = {\ttfamily 1}}
+\end{DoxyParamCaption}
+) const}}\label{classtreeComparer_aa35e905726e481a1d51103dd5f9815c7}
+\-Computes the simple triplets comparison value between two matched trees whose meta-\/leaf dissimilarity matrix has been previosuly computed. 
+\begin{DoxyParams}{\-Parameters}
+{\em sample\-Freq} & a sample frequency in case not all the points wish to be analyzed (the process can be quite time consuming). default value (1) uses all possible points and provides the real exact value. \-Higher frequencies provide faster computation at the price of approximated value. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_ac9de574de7fc7204f31c95f32cbf8adf}{\index{tree\-Comparer@{tree\-Comparer}!write\-Base\-Dist\-Matrix@{write\-Base\-Dist\-Matrix}}
+\index{write\-Base\-Dist\-Matrix@{write\-Base\-Dist\-Matrix}!treeComparer@{tree\-Comparer}}
+\subsubsection[{write\-Base\-Dist\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Base\-Dist\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{matrix\-Filename}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_ac9de574de7fc7204f31c95f32cbf8adf}
+\-Reads a previously saved cross-\/tree meta-\/leaves mean-\/tracts dissimilarity matrix from file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & the filepath to read the matrix data from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a16b088c494e3c07fb161078959df4f97}{\index{tree\-Comparer@{tree\-Comparer}!write\-Correspondence@{write\-Correspondence}}
+\index{write\-Correspondence@{write\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{write\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Correspondence} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{out\-Filename}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a16b088c494e3c07fb161078959df4f97}
+\-Write correspondence table (matchign of base-\/nodes across trees) to file \-Base nodes will be identified with relative values, that is, base node position in the base node vector 
+\begin{DoxyParams}{\-Parameters}
+{\em out\-Filename} & the filepath to the write the table to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}{\index{tree\-Comparer@{tree\-Comparer}!write\-Full\-Correspondence@{write\-Full\-Correspondence}}
+\index{write\-Full\-Correspondence@{write\-Full\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{write\-Full\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Full\-Correspondence} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{out\-Filename}
+\end{DoxyParamCaption}
+)}}\label{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}
+\-Write correspondence table (matchign of base-\/nodes across trees) to file \-Base nodes will be identified with absolute values values, that is, node \-I\-Ds within the tree structure 
+\begin{DoxyParams}{\-Parameters}
+{\em out\-Filename} & the filepath to the write the table to \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/tree\-Comparer.\-h\item 
+src/common/tree\-Comparer.\-cpp\end{DoxyCompactItemize}

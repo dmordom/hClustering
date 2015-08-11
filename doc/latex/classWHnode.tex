@@ -1,0 +1,322 @@
+\hypertarget{classWHnode}{\section{\-W\-Hnode \-Class \-Reference}
+\label{classWHnode}\index{\-W\-Hnode@{\-W\-Hnode}}
+}
+
+
+{\ttfamily \#include $<$\-W\-Hnode.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWHnode_a2552b370714ade234e0735baad81515d}{\-W\-Hnode} (node\-I\-D\-\_\-t id\-Init)
+\item 
+\hyperlink{classWHnode_abde4e0469a4d22b94793c5041db50c78}{\-W\-Hnode} (node\-I\-D\-\_\-t id\-Init, std\-::vector$<$ node\-I\-D\-\_\-t $>$children\-Init, size\-\_\-t node\-Size\-Init, dist\-\_\-t distance\-Level\-Init, size\-\_\-t h\-Level\-Init)
+\item 
+\hypertarget{classWHnode_abc37e5644b8b48ab47898478d5fec6da}{\hyperlink{classWHnode_abc37e5644b8b48ab47898478d5fec6da}{$\sim$\-W\-Hnode} ()}\label{classWHnode_abc37e5644b8b48ab47898478d5fec6da}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classWHnode_a1d982582c157b778137c122154473723}{is\-Node} () const 
+\item 
+bool \hyperlink{classWHnode_a802bccb8cdffd673b8d1b21a396e5878}{is\-Leaf} () const 
+\item 
+bool \hyperlink{classWHnode_a2b29bf7de21863c81c87d05b1f266605}{is\-Root} () const 
+\item 
+bool \hyperlink{classWHnode_a645b990796d424dd2f04261d5b037802}{is\-Flagged} () const 
+\item 
+size\-\_\-t \hyperlink{classWHnode_ad8519b89def63d16bccd465419633a4e}{get\-I\-D} () const 
+\item 
+node\-I\-D\-\_\-t \hyperlink{classWHnode_ab66d1a475a608ecf70422481bad8ad99}{get\-Full\-I\-D} () const 
+\item 
+node\-I\-D\-\_\-t \hyperlink{classWHnode_a55c49f56296d4d2d51036bb45bfbab55}{get\-Parent} () const 
+\item 
+size\-\_\-t \hyperlink{classWHnode_aa59d9547bf69a755b4614f723ce3be0c}{get\-Size} () const 
+\item 
+dist\-\_\-t \hyperlink{classWHnode_a00e0771d724e149ae65ba6295cf1b01d}{get\-Dist\-Level} () const 
+\item 
+size\-\_\-t \hyperlink{classWHnode_a5435fb6cfeda89942fc8c3c51ff88110}{get\-H\-Level} () const 
+\item 
+std\-::vector$<$ node\-I\-D\-\_\-t $>$ \hyperlink{classWHnode_aec798406a15b57dbfdb4905f37fc67be}{get\-Children} () const 
+\item 
+void \hyperlink{classWHnode_a9dc9cf98a969f06c90c3230c1278bf6b}{set\-I\-D} (const node\-I\-D\-\_\-t new\-I\-D)
+\item 
+void \hyperlink{classWHnode_a2732c162f9931ba9f420a91a09856cb7}{set\-Parent} (const node\-I\-D\-\_\-t new\-Dad)
+\item 
+void \hyperlink{classWHnode_a83346cd68ffe58e1d8b1a0a97ad55de6}{set\-Size} (const size\-\_\-t new\-Size)
+\item 
+void \hyperlink{classWHnode_a7a21ce48661275bef2d1e26f55363f7c}{set\-H\-Level} (const size\-\_\-t new\-Level)
+\item 
+void \hyperlink{classWHnode_abd2afa949e79a458ea398091d4f9e5dc}{set\-Dist\-Level} (const dist\-\_\-t new\-Level)
+\item 
+void \hyperlink{classWHnode_a668438bcb901a61bf9383e2fc67d41b1}{set\-Children} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ new\-Kids)
+\item 
+void \hyperlink{classWHnode_a9f609fb6d884f81e18129f2f8e316134}{set\-Flag} (const bool new\-Flag)
+\item 
+std\-::string \hyperlink{classWHnode_a2dd60e9c6d84a5aa6200a55628954e1c}{print\-All\-Data} () const 
+\item 
+std\-::string \hyperlink{classWHnode_aa4c36331970b9f903f3e750e7ec8bfa0}{print\-Joint\-Data} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements a hierarchical tree node with several relevant attributes 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWHnode_a2552b370714ade234e0735baad81515d}{\index{\-W\-Hnode@{\-W\-Hnode}!\-W\-Hnode@{\-W\-Hnode}}
+\index{\-W\-Hnode@{\-W\-Hnode}!WHnode@{\-W\-Hnode}}
+\subsubsection[{\-W\-Hnode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hnode\-::\-W\-Hnode} (
+\begin{DoxyParamCaption}
+\item[{node\-I\-D\-\_\-t}]{id\-Init}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHnode_a2552b370714ade234e0735baad81515d}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em id\-Init} & node id initializer \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_abde4e0469a4d22b94793c5041db50c78}{\index{\-W\-Hnode@{\-W\-Hnode}!\-W\-Hnode@{\-W\-Hnode}}
+\index{\-W\-Hnode@{\-W\-Hnode}!WHnode@{\-W\-Hnode}}
+\subsubsection[{\-W\-Hnode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hnode\-::\-W\-Hnode} (
+\begin{DoxyParamCaption}
+\item[{node\-I\-D\-\_\-t}]{id\-Init, }
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$}]{children\-Init, }
+\item[{size\-\_\-t}]{node\-Size\-Init, }
+\item[{dist\-\_\-t}]{distance\-Level\-Init, }
+\item[{size\-\_\-t}]{h\-Level\-Init}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_abde4e0469a4d22b94793c5041db50c78}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em id\-Init} & node id initializer \\
+\hline
+{\em children\-Init} & children id vector initializer \\
+\hline
+{\em node\-Size\-Init} & node size initializer \\
+\hline
+{\em distance\-Level\-Init} & node distance level initializer \\
+\hline
+{\em h\-Level\-Init} & node hierarchical level initializer \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWHnode_aec798406a15b57dbfdb4905f37fc67be}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-Children@{get\-Children}}
+\index{get\-Children@{get\-Children}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-Children}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ node\-I\-D\-\_\-t $>$ {\bf \-W\-Hnode\-::get\-Children} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_aec798406a15b57dbfdb4905f37fc67be}
+returns a vector with the ids of the children of that node \begin{DoxyReturn}{\-Returns}
+children vector 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a00e0771d724e149ae65ba6295cf1b01d}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-Dist\-Level@{get\-Dist\-Level}}
+\index{get\-Dist\-Level@{get\-Dist\-Level}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-Dist\-Level}]{\setlength{\rightskip}{0pt plus 5cm}dist\-\_\-t {\bf \-W\-Hnode\-::get\-Dist\-Level} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a00e0771d724e149ae65ba6295cf1b01d}
+returns distance level at which the element was formed \begin{DoxyReturn}{\-Returns}
+distance 
+\end{DoxyReturn}
+\hypertarget{classWHnode_ab66d1a475a608ecf70422481bad8ad99}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-Full\-I\-D@{get\-Full\-I\-D}}
+\index{get\-Full\-I\-D@{get\-Full\-I\-D}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-Full\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}node\-I\-D\-\_\-t {\bf \-W\-Hnode\-::get\-Full\-I\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_ab66d1a475a608ecf70422481bad8ad99}
+returns full \-I\-D \begin{DoxyReturn}{\-Returns}
+full id indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a5435fb6cfeda89942fc8c3c51ff88110}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-H\-Level@{get\-H\-Level}}
+\index{get\-H\-Level@{get\-H\-Level}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Hnode\-::get\-H\-Level} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a5435fb6cfeda89942fc8c3c51ff88110}
+returns maximum number of nodes between the node and a leaf element \begin{DoxyReturn}{\-Returns}
+hierarchical level 
+\end{DoxyReturn}
+\hypertarget{classWHnode_ad8519b89def63d16bccd465419633a4e}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-I\-D@{get\-I\-D}}
+\index{get\-I\-D@{get\-I\-D}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Hnode\-::get\-I\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_ad8519b89def63d16bccd465419633a4e}
+returns node/leaf \-I\-D \begin{DoxyReturn}{\-Returns}
+id indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a55c49f56296d4d2d51036bb45bfbab55}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-Parent@{get\-Parent}}
+\index{get\-Parent@{get\-Parent}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-Parent}]{\setlength{\rightskip}{0pt plus 5cm}node\-I\-D\-\_\-t {\bf \-W\-Hnode\-::get\-Parent} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a55c49f56296d4d2d51036bb45bfbab55}
+returns parent \-I\-D \begin{DoxyReturn}{\-Returns}
+parent id indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_aa59d9547bf69a755b4614f723ce3be0c}{\index{\-W\-Hnode@{\-W\-Hnode}!get\-Size@{get\-Size}}
+\index{get\-Size@{get\-Size}!WHnode@{\-W\-Hnode}}
+\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Hnode\-::get\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_aa59d9547bf69a755b4614f723ce3be0c}
+returns number of elements contained by the node \begin{DoxyReturn}{\-Returns}
+size 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a645b990796d424dd2f04261d5b037802}{\index{\-W\-Hnode@{\-W\-Hnode}!is\-Flagged@{is\-Flagged}}
+\index{is\-Flagged@{is\-Flagged}!WHnode@{\-W\-Hnode}}
+\subsubsection[{is\-Flagged}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Hnode\-::is\-Flagged} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a645b990796d424dd2f04261d5b037802}
+returns true if object is flagged for pruning \begin{DoxyReturn}{\-Returns}
+flag indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a802bccb8cdffd673b8d1b21a396e5878}{\index{\-W\-Hnode@{\-W\-Hnode}!is\-Leaf@{is\-Leaf}}
+\index{is\-Leaf@{is\-Leaf}!WHnode@{\-W\-Hnode}}
+\subsubsection[{is\-Leaf}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Hnode\-::is\-Leaf} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a802bccb8cdffd673b8d1b21a396e5878}
+returns true if object is a leaf \begin{DoxyReturn}{\-Returns}
+leaf indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a1d982582c157b778137c122154473723}{\index{\-W\-Hnode@{\-W\-Hnode}!is\-Node@{is\-Node}}
+\index{is\-Node@{is\-Node}!WHnode@{\-W\-Hnode}}
+\subsubsection[{is\-Node}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Hnode\-::is\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classWHnode_a1d982582c157b778137c122154473723}
+returns true if object is a node \begin{DoxyReturn}{\-Returns}
+node indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a2b29bf7de21863c81c87d05b1f266605}{\index{\-W\-Hnode@{\-W\-Hnode}!is\-Root@{is\-Root}}
+\index{is\-Root@{is\-Root}!WHnode@{\-W\-Hnode}}
+\subsubsection[{is\-Root}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-W\-Hnode\-::is\-Root} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHnode_a2b29bf7de21863c81c87d05b1f266605}
+returns true if object is the root of the tree \begin{DoxyReturn}{\-Returns}
+root indicator 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a2dd60e9c6d84a5aa6200a55628954e1c}{\index{\-W\-Hnode@{\-W\-Hnode}!print\-All\-Data@{print\-All\-Data}}
+\index{print\-All\-Data@{print\-All\-Data}!WHnode@{\-W\-Hnode}}
+\subsubsection[{print\-All\-Data}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-W\-Hnode\-::print\-All\-Data} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHnode_a2dd60e9c6d84a5aa6200a55628954e1c}
+prints out a string with the node data, in order to implement the operator $<$$<$ \begin{DoxyReturn}{\-Returns}
+a string with the node information 
+\end{DoxyReturn}
+\hypertarget{classWHnode_aa4c36331970b9f903f3e750e7ec8bfa0}{\index{\-W\-Hnode@{\-W\-Hnode}!print\-Joint\-Data@{print\-Joint\-Data}}
+\index{print\-Joint\-Data@{print\-Joint\-Data}!WHnode@{\-W\-Hnode}}
+\subsubsection[{print\-Joint\-Data}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf \-W\-Hnode\-::print\-Joint\-Data} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classWHnode_aa4c36331970b9f903f3e750e7ec8bfa0}
+prints out a string with the node join data, (reduced version of the node data) \begin{DoxyReturn}{\-Returns}
+a string with the node join information 
+\end{DoxyReturn}
+\hypertarget{classWHnode_a668438bcb901a61bf9383e2fc67d41b1}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-Children@{set\-Children}}
+\index{set\-Children@{set\-Children}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-Children}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-Children} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$}]{new\-Kids}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a668438bcb901a61bf9383e2fc67d41b1}
+sets the children vector to the input values 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Kids} & vector with the new children ids \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_abd2afa949e79a458ea398091d4f9e5dc}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-Dist\-Level@{set\-Dist\-Level}}
+\index{set\-Dist\-Level@{set\-Dist\-Level}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-Dist\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-Dist\-Level} (
+\begin{DoxyParamCaption}
+\item[{const dist\-\_\-t}]{new\-Level}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_abd2afa949e79a458ea398091d4f9e5dc}
+sets the distance level field to the specified value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Level} & new distance level \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_a9f609fb6d884f81e18129f2f8e316134}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-Flag@{set\-Flag}}
+\index{set\-Flag@{set\-Flag}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-Flag}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-Flag} (
+\begin{DoxyParamCaption}
+\item[{const bool}]{new\-Flag}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a9f609fb6d884f81e18129f2f8e316134}
+sets the prune flag to the indicated value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Flag} & new value for the prune flag \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_a7a21ce48661275bef2d1e26f55363f7c}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-H\-Level@{set\-H\-Level}}
+\index{set\-H\-Level@{set\-H\-Level}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-H\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-H\-Level} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{new\-Level}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a7a21ce48661275bef2d1e26f55363f7c}
+sets the hierarchical level field to the specified value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Level} & new hierarchical level \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_a9dc9cf98a969f06c90c3230c1278bf6b}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-I\-D@{set\-I\-D}}
+\index{set\-I\-D@{set\-I\-D}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-I\-D} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t}]{new\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a9dc9cf98a969f06c90c3230c1278bf6b}
+sets the \-I\-D field to the specified value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-I\-D} & new \-I\-D \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_a2732c162f9931ba9f420a91a09856cb7}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-Parent@{set\-Parent}}
+\index{set\-Parent@{set\-Parent}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-Parent}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-Parent} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t}]{new\-Dad}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a2732c162f9931ba9f420a91a09856cb7}
+sets the parent id field to the specified value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Dad} & new parent id \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHnode_a83346cd68ffe58e1d8b1a0a97ad55de6}{\index{\-W\-Hnode@{\-W\-Hnode}!set\-Size@{set\-Size}}
+\index{set\-Size@{set\-Size}!WHnode@{\-W\-Hnode}}
+\subsubsection[{set\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Hnode\-::set\-Size} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{new\-Size}
+\end{DoxyParamCaption}
+)}}\label{classWHnode_a83346cd68ffe58e1d8b1a0a97ad55de6}
+sets the size field to the specified value 
+\begin{DoxyParams}{\-Parameters}
+{\em new\-Size} & new size \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-Hnode.\-h\item 
+src/common/\-W\-Hnode.\-cpp\end{DoxyCompactItemize}

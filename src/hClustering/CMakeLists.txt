@@ -1,4 +1,4 @@
-PROJECT( hClustering_1.0 )
+PROJECT( hClustering_2.0 )
 
 cmake_minimum_required( VERSION 2.6 )
 
@@ -26,10 +26,12 @@ ENDIF()
 
 # find and link lipsia library
 FIND_LIBRARY( VISTA NAMES libviaio.a PATHS /../../lib/ )
+FIND_LIBRARY( NIFTI NAMES libniftiio.a  PATHS /usr/lib/ )
+FIND_LIBRARY( LZNZ NAMES libznz.a PATHS /usr/lib/ )
 
 
-MESSAGE( STATUS "Libraries: ${VISTA}" )
-LINK_LIBRARIES( ${VISTA} )
+MESSAGE( STATUS "Libraries: ${VISTA}, ${NIFTI}, ${LZNZ}" )
+LINK_LIBRARIES( ${VISTA}; ${NIFTI};${LZNZ} )
 
 
 # find and link boost packages
@@ -37,56 +39,77 @@ FIND_PACKAGE( Boost 1.39.0 REQUIRED program_options thread filesystem system reg
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 LINK_LIBRARIES ( ${Boost_LIBRARIES} )
 
+find_package( ZLIB REQUIRED )
+if ( ZLIB_FOUND )
+    include_directories( ${ZLIB_INCLUDE_DIRS} )
+    link_libraries(  ${ZLIB_LIBRARIES} )
+endif( ZLIB_FOUND )
 
 FIND_PACKAGE( OpenMP )
 SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}" )
 SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}" )
 
-INCLUDE_DIRECTORIES( /usr/include ../ ../common ../../include )
+INCLUDE_DIRECTORIES( /usr/include ../ ../common ../../include /usr/include/nifti)
 
 SET( COMMON_SRCS
-	../common/cnbTreeBuilder.cpp
-	../common/compactTractChar.cpp
-	../common/compactTract.cpp
-	../common/distBlock.cpp
-	../common/graphTreeBuilder.cpp
-	../common/partitionMatcher.cpp
-	../common/protoNode.cpp
-	../common/randCnbTreeBuilder.cpp
-	../common/treeComparer.cpp
-	../common/treeManager.cpp
-	../common/vistaManager.cpp
-	../common/WFileParser.cpp
-	../common/WHcoord.cpp
-	../common/WHnode.cpp
-	../common/WHtree.cpp
-	../common/WHtreePartition.cpp
-	../common/WHtreeProcesser.cpp
-	../common/WStringUtils.cpp
+    ../common/listedCache.hpp
+    ../common/cnbTreeBuilder.cpp
+    ../common/compactTractChar.cpp
+    ../common/compactTract.cpp
+    ../common/distBlock.cpp
+
+    ../common/distMatComputer.cpp #******
+
+    ../common/fileManager.cpp
+    ../common/fileManagerFactory.cpp
+    ../common/graphTreeBuilder.cpp
+    ../common/image2treeBuilder.cpp
+    ../common/niftiManager.cpp
+    ../common/partitionMatcher.cpp
+    ../common/protoNode.cpp
+    ../common/randCnbTreeBuilder.cpp
+    ../common/roiLoader.cpp
+    ../common/surfProjecter.cpp
+    ../common/treeComparer.cpp
+    ../common/treeManager.cpp
+    ../common/vistaManager.cpp
+    ../common/WFileParser.cpp
+    ../common/WHcoord.cpp
+    ../common/WHnode.cpp
+    ../common/WHtree.cpp
+    ../common/WHtreePartition.cpp
+    ../common/WHtreeProcesser.cpp
+    ../common/WStringUtils.cpp
 )
 
 SET( MAIN_SRCS
-	basetracts.cpp
-	buildctree.cpp
-	buildgraphtree.cpp
-	compact2full.cpp
-	comparetrees.cpp
-	cpcc.cpp
-	fliptracts.cpp
-	fliptree.cpp
-	full2compact.cpp
-	fulltract.cpp
-	matchpartition.cpp
-	pairdist.cpp
-	partitiontree.cpp
-	prunetree.cpp
-	randtracts.cpp
-	treetracts.cpp
+    buildctree.cpp
+    buildrandctree.cpp
+    full2compact.cpp
+    compact2full.cpp
+    vista2cmpct.cpp
+    cmpct2vista.cpp
+    buildgraphtree.cpp
+    treetracts.cpp
+    cpcc.cpp
+    fliptree.cpp
+    partitiontree.cpp
+    processtree.cpp
+    image2tree.cpp
+    matchpartition.cpp
+    comparetrees.cpp
+    tractdist.cpp
+    pairdist.cpp
+    fliptracts.cpp
+    randtracts.cpp
+    surfprojection.cpp
+
+    distMatrix.cpp  #****
 )
 
 foreach( binarysourcefile ${MAIN_SRCS} )
-    string( REPLACE ".cpp" "" binary ${binarysourcefile} )
-    add_executable( ${binary} ${binarysourcefile} ${COMMON_SRCS} )
+    string( REPLACE ".cpp" "" binaryname ${binarysourcefile} )
+    add_executable( ${binaryname} ${binarysourcefile} ${COMMON_SRCS} )
 endforeach( binarysourcefile ${MAIN_SRCS} )
 
 

@@ -1,0 +1,402 @@
+\hypertarget{classWHtreeProcesser}{\section{\-W\-Htree\-Processer \-Class \-Reference}
+\label{classWHtreeProcesser}\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}}
+}
+
+
+{\ttfamily \#include $<$\-W\-Htree\-Processer.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWHtreeProcesser_aa3d3b8dd2d1af65ddfc492c1205d05b1}{\-W\-Htree\-Processer} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree)
+\item 
+\hypertarget{classWHtreeProcesser_a8455d95461bf78af4a03782b6d7d9193}{\hyperlink{classWHtreeProcesser_a8455d95461bf78af4a03782b6d7d9193}{$\sim$\-W\-Htree\-Processer} ()}\label{classWHtreeProcesser_a8455d95461bf78af4a03782b6d7d9193}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ \hyperlink{classWHtreeProcesser_adc480c636fbbb5bdadb94160bf67d1dc}{prune\-Tree} (float condition, size\-\_\-t safe\-Size, const \-H\-T\-P\-R\-O\-C\-\_\-\-M\-O\-D\-E prune\-Type)
+\item 
+std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ \hyperlink{classWHtreeProcesser_a0555e6e464488cb427f2fefce2772f1e}{prune\-Random} (const size\-\_\-t number\-Pruned, unsigned int seed=0)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a87d26ceede0ff0e7c02aa728c735a89c}{collapse\-Tree} (const dist\-\_\-t flat\-Gap, const dist\-\_\-t dist\-Level\-Limit, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a6a8740c021ff7e5c184d4de295022775}{collapse\-Tree\-Linear} (const dist\-\_\-t coefficient, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a6e4315fbfb2b28890035d4d4f2176bc0}{collapse\-Tree\-Square} (const dist\-\_\-t coefficient, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a800173738287bbb762db126db97a1abd}{collapse\-Branch} (const dist\-\_\-t flat\-Gap, const dist\-\_\-t dist\-Level\-Limit, size\-\_\-t root, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a7b892bb3a711622e1a7db9ec1f7d8da5}{flatten\-Selection} (const std\-::list$<$ size\-\_\-t $>$ selection, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a08acf134c0c5de8d3fcafe656891fd3c}{flatten\-Selection} (const std\-::vector$<$ size\-\_\-t $>$ \&selection, const bool keep\-Base\-Nodes)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a318f4cae63a289ed0bb83d0bed866d32}{flatten\-Selection} (const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&selection, const bool keep\-Base\-Nodes)
+\item 
+std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ \hyperlink{classWHtreeProcesser_ad29f534df1c7962c24a9713cf2a8692c}{prune\-Selection} (const std\-::vector$<$ size\-\_\-t $>$ \&selection)
+\item 
+std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ \hyperlink{classWHtreeProcesser_af2d78851b8dba93f9d5116d46d0f6a61}{prune\-Selection} (const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&selection)
+\item 
+void \hyperlink{classWHtreeProcesser_a62fae5d7523c1070037a28e26ebea5b4}{flag\-Selection} (const std\-::vector$<$ size\-\_\-t $>$ \&selection)
+\item 
+void \hyperlink{classWHtreeProcesser_ac3b8141a258aaa8ce9c24a963c8c9787}{flag\-Selection} (const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&selection)
+\item 
+void \hyperlink{classWHtreeProcesser_a85c6078029a21790d971b9844b6e3d42}{flag\-Leaves} (const std\-::vector$<$ size\-\_\-t $>$ \&selection)
+\item 
+void \hyperlink{classWHtreeProcesser_a8a2c9af01167829a700c7636cb49c233}{coarse\-Tree} (const unsigned int coarse\-Ratio)
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a7983329a6fc2c21808248cfe6770d6cb}{base\-Nodes2\-Leaves} ()
+\item 
+void \hyperlink{classWHtreeProcesser_aeb9cb7cd90dfd93c3b34baafd5062df0}{force\-Monotonicity} (double error\-Mult=1)
+\item 
+void \hyperlink{classWHtreeProcesser_a89c480d1eab0e1a5984943a7d1b8e253}{force\-Monotonicity\-Up} ()
+\item 
+void \hyperlink{classWHtreeProcesser_a3ff8b1f12f16b04b24be89dc68f91dfe}{force\-Monotonicity\-Down} ()
+\item 
+size\-\_\-t \hyperlink{classWHtreeProcesser_a5916429f62f1062da9ee91d8e8e576e2}{debinarize} (const bool keep\-Base\-Nodes)
+\item 
+void \hyperlink{classWHtreeProcesser_a1e304707e0f1a65d73864f9affdb5ccb}{write\-Bases} (const std\-::vector$<$ size\-\_\-t $>$ \&base\-Nodes, const std\-::string \&filename) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements methods for dendrogram processing, such as pruning, node collapsing and decimation it operates over the class \hyperlink{classWHtree}{\-W\-Htree}. \-As a result of its operations the tree structure is changed and previous structure cannot be recovered unless a class copy is previously made. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWHtreeProcesser_aa3d3b8dd2d1af65ddfc492c1205d05b1}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!\-W\-Htree\-Processer@{\-W\-Htree\-Processer}}
+\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{\-W\-Htree\-Processer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-Processer\-::\-W\-Htree\-Processer} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtreeProcesser_aa3d3b8dd2d1af65ddfc492c1205d05b1}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree} & a pointer to the tree to be processed \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWHtreeProcesser_a7983329a6fc2c21808248cfe6770d6cb}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!base\-Nodes2\-Leaves@{base\-Nodes2\-Leaves}}
+\index{base\-Nodes2\-Leaves@{base\-Nodes2\-Leaves}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{base\-Nodes2\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::base\-Nodes2\-Leaves} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a7983329a6fc2c21808248cfe6770d6cb}
+converts the base nodes into leaves, pruning out all excess leaves and information \begin{DoxyReturn}{\-Returns}
+new number of leaves of the tree 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a8a2c9af01167829a700c7636cb49c233}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!coarse\-Tree@{coarse\-Tree}}
+\index{coarse\-Tree@{coarse\-Tree}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{coarse\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::coarse\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{coarse\-Ratio}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a8a2c9af01167829a700c7636cb49c233}
+\-Reduces the tree grid size by the ratio specified (as if it had been obtained from an image of lower resolution) 
+\begin{DoxyParams}{\-Parameters}
+{\em coarse\-Ratio} & coarsing ratio \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreeProcesser_a800173738287bbb762db126db97a1abd}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!collapse\-Branch@{collapse\-Branch}}
+\index{collapse\-Branch@{collapse\-Branch}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{collapse\-Branch}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::collapse\-Branch} (
+\begin{DoxyParamCaption}
+\item[{const dist\-\_\-t}]{flat\-Gap, }
+\item[{const dist\-\_\-t}]{dist\-Level\-Limit, }
+\item[{size\-\_\-t}]{root, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a800173738287bbb762db126db97a1abd}
+\-Collapses the nodes of the subtree that have branch lenghts equal or lower to the one indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em flat\-Gap} & branch lenght limit to be collapsed \\
+\hline
+{\em dist\-Level\-Limit} & distance level under which no collapsing will take place \\
+\hline
+{\em root} & root node of the subtree \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a87d26ceede0ff0e7c02aa728c735a89c}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!collapse\-Tree@{collapse\-Tree}}
+\index{collapse\-Tree@{collapse\-Tree}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{collapse\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::collapse\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const dist\-\_\-t}]{flat\-Gap, }
+\item[{const dist\-\_\-t}]{dist\-Level\-Limit, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a87d26ceede0ff0e7c02aa728c735a89c}
+\-Collapses the nodes of the tree that have branch lenghts equal or lower to the one indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em flat\-Gap} & branch lenght limit to be collapsed \\
+\hline
+{\em dist\-Level\-Limit} & distance level under which no collapsing will take place \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a6a8740c021ff7e5c184d4de295022775}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!collapse\-Tree\-Linear@{collapse\-Tree\-Linear}}
+\index{collapse\-Tree\-Linear@{collapse\-Tree\-Linear}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{collapse\-Tree\-Linear}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::collapse\-Tree\-Linear} (
+\begin{DoxyParamCaption}
+\item[{const dist\-\_\-t}]{coefficient, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a6a8740c021ff7e5c184d4de295022775}
+\-Collapses the nodes of the tree that have branch lenghts smoller than the distance level multiplied by the coefficient indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em coefficient} & coefficient for collapsing depending on distance level \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a6e4315fbfb2b28890035d4d4f2176bc0}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!collapse\-Tree\-Square@{collapse\-Tree\-Square}}
+\index{collapse\-Tree\-Square@{collapse\-Tree\-Square}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{collapse\-Tree\-Square}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::collapse\-Tree\-Square} (
+\begin{DoxyParamCaption}
+\item[{const dist\-\_\-t}]{coefficient, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a6e4315fbfb2b28890035d4d4f2176bc0}
+\-Collapses the nodes of the tree that have branch lenghts smoller than the squared distance level multiplied by the coefficient indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em coefficient} & coefficient for collapsing depending on distance level \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a5916429f62f1062da9ee91d8e8e576e2}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!debinarize@{debinarize}}
+\index{debinarize@{debinarize}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{debinarize}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::debinarize} (
+\begin{DoxyParamCaption}
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a5916429f62f1062da9ee91d8e8e576e2}
+calls on private \hyperlink{classWHtree}{\-W\-Htree} member to merge nodes joining binary at the same level into non-\/binary structures 
+\begin{DoxyParams}{\-Parameters}
+{\em keep\-Base\-Nodes} & if set base nodes ( nodes with only single leaves as children) will not be merged \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes collapsed 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a85c6078029a21790d971b9844b6e3d42}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flag\-Leaves@{flag\-Leaves}}
+\index{flag\-Leaves@{flag\-Leaves}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flag\-Leaves}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::flag\-Leaves} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{selection}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a85c6078029a21790d971b9844b6e3d42}
+set flags for pruning all of the leaves indicated 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the leaves to be pruned \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreeProcesser_a62fae5d7523c1070037a28e26ebea5b4}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flag\-Selection@{flag\-Selection}}
+\index{flag\-Selection@{flag\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flag\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::flag\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{selection}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a62fae5d7523c1070037a28e26ebea5b4}
+set flags for pruning all of the subtrees indicated (using only non-\/leaf node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the nodes to be pruned \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreeProcesser_ac3b8141a258aaa8ce9c24a963c8c9787}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flag\-Selection@{flag\-Selection}}
+\index{flag\-Selection@{flag\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flag\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::flag\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&}]{selection}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_ac3b8141a258aaa8ce9c24a963c8c9787}
+set flags for pruning all of the subtrees indicated (using full boolean-\/integer node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the nodes to be pruned \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreeProcesser_a7b892bb3a711622e1a7db9ec1f7d8da5}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flatten\-Selection@{flatten\-Selection}}
+\index{flatten\-Selection@{flatten\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flatten\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::flatten\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::list$<$ size\-\_\-t $>$}]{selection, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a7b892bb3a711622e1a7db9ec1f7d8da5}
+\-Collapses all the nodes of the subtrees indicated (using only non-\/leaf node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & list with the root nodes of the subtree \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a08acf134c0c5de8d3fcafe656891fd3c}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flatten\-Selection@{flatten\-Selection}}
+\index{flatten\-Selection@{flatten\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flatten\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::flatten\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{selection, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a08acf134c0c5de8d3fcafe656891fd3c}
+\-Collapses all the nodes of the subtrees indicated (using only non-\/leaf node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the root nodes of the subtree \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a318f4cae63a289ed0bb83d0bed866d32}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!flatten\-Selection@{flatten\-Selection}}
+\index{flatten\-Selection@{flatten\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{flatten\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Processer\-::flatten\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&}]{selection, }
+\item[{const bool}]{keep\-Base\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a318f4cae63a289ed0bb83d0bed866d32}
+\-Collapses all the nodes of the subtrees indicated (using full boolean-\/integer node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the root nodes of the subtree \\
+\hline
+{\em keep\-Base\-Nodes} & flag to avoid collapsing base nodes (those that have only single-\/leaf children) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of nodes eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_aeb9cb7cd90dfd93c3b34baafd5062df0}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!force\-Monotonicity@{force\-Monotonicity}}
+\index{force\-Monotonicity@{force\-Monotonicity}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{force\-Monotonicity}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::force\-Monotonicity} (
+\begin{DoxyParamCaption}
+\item[{double}]{error\-Mult = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_aeb9cb7cd90dfd93c3b34baafd5062df0}
+calls on private \hyperlink{classWHtree}{\-W\-Htree} member to eliminate non monotonic steps in the tree while keeping as much information as possible. it searches bottom-\/up for non-\/monotonic steps. \-When detected a corrected value for the parent node is computed this value consists of a average between the non-\/monotonic children levels weighted by their sizes in number of leaves and the parent level weighted by the sizes of the remaining monotonic children in orther to avoid infinite loops an error tolerance is included. default value is 1$\ast$\-E-\/5 
+\begin{DoxyParams}{\-Parameters}
+{\em error\-Mult} & multiplier to increase the base error tolerance (default value is 1 makign the tolerance 1$\ast$\-E-\/5, maximum value is 100 making the tolerance 1$\ast$\-E-\/3) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreeProcesser_a3ff8b1f12f16b04b24be89dc68f91dfe}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!force\-Monotonicity\-Down@{force\-Monotonicity\-Down}}
+\index{force\-Monotonicity\-Down@{force\-Monotonicity\-Down}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{force\-Monotonicity\-Down}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::force\-Monotonicity\-Down} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a3ff8b1f12f16b04b24be89dc68f91dfe}
+calls on private \hyperlink{classWHtree}{\-W\-Htree} member to eliminate non monotonic steps in the tree top-\/down, raising the level of parents involved in the non-\/monotonic steps to the children level \hypertarget{classWHtreeProcesser_a89c480d1eab0e1a5984943a7d1b8e253}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!force\-Monotonicity\-Up@{force\-Monotonicity\-Up}}
+\index{force\-Monotonicity\-Up@{force\-Monotonicity\-Up}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{force\-Monotonicity\-Up}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::force\-Monotonicity\-Up} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a89c480d1eab0e1a5984943a7d1b8e253}
+calls on private \hyperlink{classWHtree}{\-W\-Htree} member to eliminate non monotonic steps in the tree bottom-\/up, lowering the level of children involved in the non-\/monotonic steps to the parent level \hypertarget{classWHtreeProcesser_a0555e6e464488cb427f2fefce2772f1e}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!prune\-Random@{prune\-Random}}
+\index{prune\-Random@{prune\-Random}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{prune\-Random}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ {\bf \-W\-Htree\-Processer\-::prune\-Random} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{number\-Pruned, }
+\item[{unsigned int}]{seed = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_a0555e6e464488cb427f2fefce2772f1e}
+\-Prunes the tree from randomly chosen leaves 
+\begin{DoxyParams}{\-Parameters}
+{\em number\-Pruned} & number of leaves to be pruned \\
+\hline
+{\em seed} & seed for the random number generator to choose the leaves to be pruned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+pair with the number of nodes and leaves eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_ad29f534df1c7962c24a9713cf2a8692c}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!prune\-Selection@{prune\-Selection}}
+\index{prune\-Selection@{prune\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{prune\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ {\bf \-W\-Htree\-Processer\-::prune\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{selection}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_ad29f534df1c7962c24a9713cf2a8692c}
+\-Prunes all of the subtrees indicated (using only non-\/leaf node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the nodes to be pruned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+pair with the number of nodes and leaves eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_af2d78851b8dba93f9d5116d46d0f6a61}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!prune\-Selection@{prune\-Selection}}
+\index{prune\-Selection@{prune\-Selection}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{prune\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ {\bf \-W\-Htree\-Processer\-::prune\-Selection} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ node\-I\-D\-\_\-t $>$ \&}]{selection}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_af2d78851b8dba93f9d5116d46d0f6a61}
+\-Prunes all of the subtrees indicated (using full boolean-\/integer node \-I\-D) 
+\begin{DoxyParams}{\-Parameters}
+{\em selection} & vector with the nodes to be pruned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+pair with the number of nodes and leaves eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_adc480c636fbbb5bdadb94160bf67d1dc}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!prune\-Tree@{prune\-Tree}}
+\index{prune\-Tree@{prune\-Tree}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{prune\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ size\-\_\-t, size\-\_\-t $>$ {\bf \-W\-Htree\-Processer\-::prune\-Tree} (
+\begin{DoxyParamCaption}
+\item[{float}]{condition, }
+\item[{size\-\_\-t}]{safe\-Size, }
+\item[{const \-H\-T\-P\-R\-O\-C\-\_\-\-M\-O\-D\-E}]{prune\-Type}
+\end{DoxyParamCaption}
+)}}\label{classWHtreeProcesser_adc480c636fbbb5bdadb94160bf67d1dc}
+\-Prunes the tree according to the options specified 
+\begin{DoxyParams}{\-Parameters}
+{\em condition} & value of the condition to choose when pruning (size of joining cluster, size ratio or joining level) \\
+\hline
+{\em safe\-Size} & maximum size that a cluster can have in order to be pruned, bigger clusters wont be prune regardless of the condition \\
+\hline
+{\em prune\-Type} & type of pruning method (max size, maxlevel, sizeratio) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+pair with the number of nodes and leaves eliminated 
+\end{DoxyReturn}
+\hypertarget{classWHtreeProcesser_a1e304707e0f1a65d73864f9affdb5ccb}{\index{\-W\-Htree\-Processer@{\-W\-Htree\-Processer}!write\-Bases@{write\-Bases}}
+\index{write\-Bases@{write\-Bases}!WHtreeProcesser@{\-W\-Htree\-Processer}}
+\subsubsection[{write\-Bases}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Processer\-::write\-Bases} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{base\-Nodes, }
+\item[{const std\-::string \&}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreeProcesser_a1e304707e0f1a65d73864f9affdb5ccb}
+\-Writes a file with the base nodes (meta-\/leaves) obtained at the end of the homgeneous merging initial stage 
+\begin{DoxyParams}{\-Parameters}
+{\em base\-Nodes} & a vector with the base node \-I\-Ds \\
+\hline
+{\em filename} & the path to the file where the information will be written to \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-Htree\-Processer.\-h\item 
+src/common/\-W\-Htree\-Processer.\-cpp\end{DoxyCompactItemize}

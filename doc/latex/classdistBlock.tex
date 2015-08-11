@@ -1,0 +1,247 @@
+\hypertarget{classdistBlock}{\section{dist\-Block \-Class \-Reference}
+\label{classdistBlock}\index{dist\-Block@{dist\-Block}}
+}
+
+
+{\ttfamily \#include $<$dist\-Block.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classdistBlock_ad112dfd0b69a9718dbed361c089a3688}{dist\-Block} (const std\-::string \&dist\-Block\-Folder\-Init)
+\item 
+\hypertarget{classdistBlock_a67fac7fe21f41c2572671f53aacedf7c}{\hyperlink{classdistBlock_a67fac7fe21f41c2572671f53aacedf7c}{$\sim$dist\-Block} ()}\label{classdistBlock_a67fac7fe21f41c2572671f53aacedf7c}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classdistBlock_a73f05587a7c24c5633e8bac059c0bb07}{size} () const 
+\item 
+size\-\_\-t \hyperlink{classdistBlock_aad774a985739628972fae49bc115a76d}{matrix\-Size} () const 
+\item 
+bool \hyperlink{classdistBlock_ae03172d6b52b60af55e54c5622eb91da}{index\-Ready} () const 
+\item 
+bool \hyperlink{classdistBlock_abd37aefd274a43beab4e51eb024cf0c1}{block\-Ready} () const 
+\item 
+std\-::pair$<$ unsigned int, \*
+unsigned int $>$ \hyperlink{classdistBlock_acba9b8b8807f0759e34845290410bc3a}{block\-I\-D} () const 
+\item 
+unsigned int \hyperlink{classdistBlock_afe2d0f75073eb4fbb4ee4d8b8882018c}{top\-Block} () const 
+\item 
+unsigned int \hyperlink{classdistBlock_ac0a69284e141cda9a7fe7319b8aea9ad}{num\-Blocks} () const 
+\item 
+bool \hyperlink{classdistBlock_ab318e34fc358d76128db4aed07348ace}{read\-Index} ()
+\item 
+void \hyperlink{classdistBlock_a9a06bef34c8519e94e85d11d55c12859}{load\-Block} (std\-::pair$<$ unsigned int, unsigned int $>$ \hyperlink{classdistBlock_acba9b8b8807f0759e34845290410bc3a}{block\-I\-D})
+\item 
+void \hyperlink{classdistBlock_a580cc4324c8a4746d268dcc34267e46f}{load\-Block} (unsigned int block\-I\-D1, unsigned int block\-I\-D2)
+\item 
+void \hyperlink{classdistBlock_a39b2f77c593d441c707563a0e7b48794}{load\-Block} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord1, const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord2)
+\item 
+float \hyperlink{classdistBlock_a92c2104dbc9f43b11152711fb93822cb}{get\-Distance} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord1, const \hyperlink{classWHcoord}{\-W\-Hcoord} \&coord2)
+\item 
+std\-::pair$<$ std\-::pair$<$ \hyperlink{classWHcoord}{\-W\-Hcoord}, \*
+\hyperlink{classWHcoord}{\-W\-Hcoord} $>$, std\-::pair$<$ \hyperlink{classWHcoord}{\-W\-Hcoord}, \*
+\hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $>$ \hyperlink{classdistBlock_a946a3790a0a7a721b51ea8e5c367ab69}{get\-Block\-Range} ()
+\item 
+void \hyperlink{classdistBlock_a1acd41a20026c5043f22cf4fd0f25f46}{write\-Block} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classdistBlock_a7ea7d52c87a9299a8dad891be045a681}{class {\bfseries file\-Manager}}\label{classdistBlock_a7ea7d52c87a9299a8dad891be045a681}
+
+\item 
+\hypertarget{classdistBlock_a9314384ea65b036521db3749c607fac4}{class {\bfseries vista\-Manager}}\label{classdistBlock_a9314384ea65b036521db3749c607fac4}
+
+\item 
+\hypertarget{classdistBlock_abdbb08f5306829a91e8cbf995fa8a06d}{class {\bfseries nifti\-Manager}}\label{classdistBlock_abdbb08f5306829a91e8cbf995fa8a06d}
+
+\item 
+\hypertarget{classdistBlock_abf52fdd711afd7dbae6f82db39029e4c}{class {\bfseries cpcc}}\label{classdistBlock_abf52fdd711afd7dbae6f82db39029e4c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class manages the reading and writing of blocks belonging to a dissimilarity matrix 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classdistBlock_ad112dfd0b69a9718dbed361c089a3688}{\index{dist\-Block@{dist\-Block}!dist\-Block@{dist\-Block}}
+\index{dist\-Block@{dist\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{dist\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf dist\-Block\-::dist\-Block} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{dist\-Block\-Folder\-Init}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classdistBlock_ad112dfd0b69a9718dbed361c089a3688}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em dist\-Block\-Folder\-Init} & folder where the distance matrix blocks are located / will be written to \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classdistBlock_acba9b8b8807f0759e34845290410bc3a}{\index{dist\-Block@{dist\-Block}!block\-I\-D@{block\-I\-D}}
+\index{block\-I\-D@{block\-I\-D}!distBlock@{dist\-Block}}
+\subsubsection[{block\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ unsigned int, unsigned int $>$ {\bf dist\-Block\-::block\-I\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_acba9b8b8807f0759e34845290410bc3a}
+returns the loaded block \-I\-D (a pair of integers indicating position within the full matrix) \begin{DoxyReturn}{\-Returns}
+block \-I\-D integer pair 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_abd37aefd274a43beab4e51eb024cf0c1}{\index{dist\-Block@{dist\-Block}!block\-Ready@{block\-Ready}}
+\index{block\-Ready@{block\-Ready}!distBlock@{dist\-Block}}
+\subsubsection[{block\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf dist\-Block\-::block\-Ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_abd37aefd274a43beab4e51eb024cf0c1}
+returns the block ready flag, if true the distance block has been successfully loaded \begin{DoxyReturn}{\-Returns}
+block ready flag 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_a946a3790a0a7a721b51ea8e5c367ab69}{\index{dist\-Block@{dist\-Block}!get\-Block\-Range@{get\-Block\-Range}}
+\index{get\-Block\-Range@{get\-Block\-Range}!distBlock@{dist\-Block}}
+\subsubsection[{get\-Block\-Range}]{\setlength{\rightskip}{0pt plus 5cm}std\-::pair$<$ std\-::pair$<$ {\bf \-W\-Hcoord}, {\bf \-W\-Hcoord} $>$, std\-::pair$<$ {\bf \-W\-Hcoord}, {\bf \-W\-Hcoord} $>$ $>$ {\bf dist\-Block\-::get\-Block\-Range} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a946a3790a0a7a721b51ea8e5c367ab69}
+returns the ranges of seed coordinates with contained within the currently loaded block assumes that tractogram \-I\-Ds follows same ordering as per seed voxel coordinates (z-\/$>$y-\/$>$x)
+
+\begin{DoxyReturn}{\-Returns}
+a pair of coordinate ranges (for rows and columns) each consisting of a pair of first and last coordinate of range 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_a92c2104dbc9f43b11152711fb93822cb}{\index{dist\-Block@{dist\-Block}!get\-Distance@{get\-Distance}}
+\index{get\-Distance@{get\-Distance}!distBlock@{dist\-Block}}
+\subsubsection[{get\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf dist\-Block\-::get\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{coord1, }
+\item[{const {\bf \-W\-Hcoord} \&}]{coord2}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a92c2104dbc9f43b11152711fb93822cb}
+fetches the distance value between two seed voxel tracts 
+\begin{DoxyParams}{\-Parameters}
+{\em coord1} & seed coordinate of first tract \\
+\hline
+{\em coord2} & seed coordinate of second tract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+distance value 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_ae03172d6b52b60af55e54c5622eb91da}{\index{dist\-Block@{dist\-Block}!index\-Ready@{index\-Ready}}
+\index{index\-Ready@{index\-Ready}!distBlock@{dist\-Block}}
+\subsubsection[{index\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf dist\-Block\-::index\-Ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_ae03172d6b52b60af55e54c5622eb91da}
+returns the index ready flag, if true the matrix index file has been successfully loaded \begin{DoxyReturn}{\-Returns}
+index ready flag 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_a9a06bef34c8519e94e85d11d55c12859}{\index{dist\-Block@{dist\-Block}!load\-Block@{load\-Block}}
+\index{load\-Block@{load\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{load\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Block\-::load\-Block} (
+\begin{DoxyParamCaption}
+\item[{std\-::pair$<$ unsigned int, unsigned int $>$}]{block\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a9a06bef34c8519e94e85d11d55c12859}
+loads the the distance block dissimilarity values and stores them in the corresponding data member 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D} & integer pair with the block \-I\-D that is to be loaded \\
+\hline
+\end{DoxyParams}
+\hypertarget{classdistBlock_a580cc4324c8a4746d268dcc34267e46f}{\index{dist\-Block@{dist\-Block}!load\-Block@{load\-Block}}
+\index{load\-Block@{load\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{load\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Block\-::load\-Block} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{block\-I\-D1, }
+\item[{unsigned int}]{block\-I\-D2}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a580cc4324c8a4746d268dcc34267e46f}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D1} & row position integer of the block \-I\-D \\
+\hline
+{\em block\-I\-D2} & column position integer of the block \-I\-D \\
+\hline
+\end{DoxyParams}
+\hypertarget{classdistBlock_a39b2f77c593d441c707563a0e7b48794}{\index{dist\-Block@{dist\-Block}!load\-Block@{load\-Block}}
+\index{load\-Block@{load\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{load\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Block\-::load\-Block} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{coord1, }
+\item[{const {\bf \-W\-Hcoord} \&}]{coord2}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a39b2f77c593d441c707563a0e7b48794}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. loads the block containing the distance value between two tracts defined by their seed coordinates assumes that tractogram \-I\-Ds follows same ordering as per seed voxel coordinates (z-\/$>$y-\/$>$x) 
+\begin{DoxyParams}{\-Parameters}
+{\em coord1} & seed coordinate of first tract \\
+\hline
+{\em coord2} & seed coordinate of second tract \\
+\hline
+\end{DoxyParams}
+\hypertarget{classdistBlock_aad774a985739628972fae49bc115a76d}{\index{dist\-Block@{dist\-Block}!matrix\-Size@{matrix\-Size}}
+\index{matrix\-Size@{matrix\-Size}!distBlock@{dist\-Block}}
+\subsubsection[{matrix\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf dist\-Block\-::matrix\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_aad774a985739628972fae49bc115a76d}
+returns the size of the complete distance matrix the loaded block is part of in number of rows/columns \begin{DoxyReturn}{\-Returns}
+full matrix size (number of rows/columns) 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_ac0a69284e141cda9a7fe7319b8aea9ad}{\index{dist\-Block@{dist\-Block}!num\-Blocks@{num\-Blocks}}
+\index{num\-Blocks@{num\-Blocks}!distBlock@{dist\-Block}}
+\subsubsection[{num\-Blocks}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf dist\-Block\-::num\-Blocks} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_ac0a69284e141cda9a7fe7319b8aea9ad}
+returns the number of blocks contained in the current distance matrix \begin{DoxyReturn}{\-Returns}
+total number of existing blocks 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_ab318e34fc358d76128db4aed07348ace}{\index{dist\-Block@{dist\-Block}!read\-Index@{read\-Index}}
+\index{read\-Index@{read\-Index}!distBlock@{dist\-Block}}
+\subsubsection[{read\-Index}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf dist\-Block\-::read\-Index} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_ab318e34fc358d76128db4aed07348ace}
+loads the block index that links a position in the block to a specific seed voxel coordinate \begin{DoxyReturn}{\-Returns}
+success bit, if true index was loaded successfully 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_a73f05587a7c24c5633e8bac059c0bb07}{\index{dist\-Block@{dist\-Block}!size@{size}}
+\index{size@{size}!distBlock@{dist\-Block}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf dist\-Block\-::size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_a73f05587a7c24c5633e8bac059c0bb07}
+returns size of of the loaded distance block in number of rows/columns \begin{DoxyReturn}{\-Returns}
+block size (number of rows/columns) 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_afe2d0f75073eb4fbb4ee4d8b8882018c}{\index{dist\-Block@{dist\-Block}!top\-Block@{top\-Block}}
+\index{top\-Block@{top\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{top\-Block}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf dist\-Block\-::top\-Block} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistBlock_afe2d0f75073eb4fbb4ee4d8b8882018c}
+returns the maximum block \-I\-D a block can have in the current distance matrix \begin{DoxyReturn}{\-Returns}
+maximum block \-I\-D of current matrix 
+\end{DoxyReturn}
+\hypertarget{classdistBlock_a1acd41a20026c5043f22cf4fd0f25f46}{\index{dist\-Block@{dist\-Block}!write\-Block@{write\-Block}}
+\index{write\-Block@{write\-Block}!distBlock@{dist\-Block}}
+\subsubsection[{write\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Block\-::write\-Block} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classdistBlock_a1acd41a20026c5043f22cf4fd0f25f46}
+writes the loaded block into the folder specified at object creation 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/dist\-Block.\-h\item 
+src/common/dist\-Block.\-cpp\end{DoxyCompactItemize}

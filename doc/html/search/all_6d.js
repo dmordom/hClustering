@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['m_5fflipvector',['m_flipVector',['../classfileManager.html#a8c46917cc4863c9ad71895d27df3a3f1',1,'fileManager']]],
+  ['m_5ffloatflag',['m_floatFlag',['../classfileManager.html#a1d0dfda9faa7ed11266c35f5024a640f',1,'fileManager']]],
+  ['m_5finlogunits',['m_inLogUnits',['../classcompactTract.html#a089b38c6a33223c24247dd839cf37568',1,'compactTract']]],
+  ['m_5fiofolder',['m_ioFolder',['../classfileManager.html#ac999ca3ac4fe64e4d0ae9a8b62819951',1,'fileManager']]],
+  ['m_5flogflag',['m_logFlag',['../classfileManager.html#a718e251b28be9f876098744cc32833e3',1,'fileManager']]],
+  ['m_5fmaskmatrix',['m_maskMatrix',['../classfileManager.html#a0acb7a592b12b9aa94f1efc0fa8bbccf',1,'fileManager']]],
+  ['m_5fnbnodes',['m_nbNodes',['../classprotoNode.html#a5ebd181f21682d15861f073209672000',1,'protoNode']]],
+  ['m_5fnearnb',['m_nearNb',['../classprotoNode.html#acebd42184bada7a52e3d368a38a1d8cd',1,'protoNode']]],
+  ['m_5fnorm',['m_norm',['../classcompactTract.html#a27eeff3e161d463509b144b3b19eff97',1,'compactTract::m_norm()'],['../classcompactTractChar.html#a69528625445282c25fc2ee39dca7463c',1,'compactTractChar::m_norm()']]],
+  ['m_5fnormready',['m_normReady',['../classcompactTract.html#a85019388d6768104dd27f18ef285326c',1,'compactTract::m_normReady()'],['../classcompactTractChar.html#a61609bace0b492de949e14dd92b886d3',1,'compactTractChar::m_normReady()']]],
+  ['m_5fthresflag',['m_thresFlag',['../classfileManager.html#a92cc74ee728d730f300295224ab356a1',1,'fileManager']]],
+  ['m_5fthresholded',['m_thresholded',['../classcompactTract.html#a73f593f5373a547977675bdb1c5e1c41',1,'compactTract::m_thresholded()'],['../classcompactTractChar.html#a686d5b6ce4dac3c47f837930680e4313',1,'compactTractChar::m_thresholded()']]],
+  ['m_5ftract',['m_tract',['../classcompactTract.html#adc11b75d4726c6bfc7891ef3dbaac133',1,'compactTract::m_tract()'],['../classcompactTractChar.html#a9858a27555168640200c4a24c5ee6609',1,'compactTractChar::m_tract()']]],
+  ['m_5ftree',['m_tree',['../classtreeManager.html#a1420ed75b372cea746cf3ffc45072293',1,'treeManager']]],
+  ['m_5fx',['m_x',['../classWHcoord.html#aff62663740e60363f99fd6951b68e761',1,'WHcoord']]],
+  ['m_5fy',['m_y',['../classWHcoord.html#aebd2a93712cf57652663538972330189',1,'WHcoord']]],
+  ['m_5fz',['m_z',['../classWHcoord.html#a63f1338fd188785c21667d16067abb89',1,'WHcoord']]],
+  ['m_5fzipflag',['m_zipFlag',['../classfileManager.html#ad7198eaa800af79393c3a1b1f0230c2c',1,'fileManager']]],
+  ['matchcolors',['matchColors',['../classpartitionMatcher.html#a104cd76b4cf18c168811d4a43b909c88',1,'partitionMatcher']]],
+  ['matchcoordskernel',['matchCoordsKernel',['../classsurfProjecter.html#af7d99090148eca1dbb368fa799a4fcb9',1,'surfProjecter']]],
+  ['matchcoordsnearestnb',['matchCoordsNearestNb',['../classsurfProjecter.html#afec5301cbf1eaa73889465b7f027c1ae',1,'surfProjecter']]],
+  ['matrixsize',['matrixSize',['../classdistBlock.html#aad774a985739628972fae49bc115a76d',1,'distBlock']]],
+  ['mbytes',['mBytes',['../classcompactTract.html#ab295ffbd32780bdc2401824e82999c9a',1,'compactTract::mBytes()'],['../classcompactTractChar.html#a0fe5bedd0701880d1d71b475874140ba',1,'compactTractChar::mBytes()']]],
+  ['meancoordfrommask',['meanCoordFromMask',['../classfileManager.html#a3af89c1b2da86ca6185234cc9dd8e888',1,'fileManager']]],
+  ['mult',['mult',['../classcompactTract.html#a74d09e9163d2d24df2f8bbfd771190dc',1,'compactTract']]]
+];

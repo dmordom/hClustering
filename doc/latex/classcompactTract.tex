@@ -1,0 +1,375 @@
+\hypertarget{classcompactTract}{\section{compact\-Tract \-Class \-Reference}
+\label{classcompactTract}\index{compact\-Tract@{compact\-Tract}}
+}
+
+
+{\ttfamily \#include $<$compact\-Tract.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcompactTract_a768f98790c79a32ec890c2f8a860b868}{compact\-Tract} ()
+\item 
+\hyperlink{classcompactTract_a0df1b9bb6f933f77cb2a55b549944dec}{compact\-Tract} (std\-::vector$<$ float $>$ tract\-Init)
+\item 
+\hyperlink{classcompactTract_ab370799e5b1892c20e774ece5aae1988}{compact\-Tract} (const \hyperlink{classcompactTract}{compact\-Tract} \&object)
+\item 
+\hyperlink{classcompactTract_ae6dd8d553eecc27217c63338eafa155f}{compact\-Tract} (const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&char\-Tract)
+\item 
+\hyperlink{classcompactTract_a62d9323e06f379909a198409b07b4fb3}{compact\-Tract} (const \hyperlink{classcompactTract}{compact\-Tract} \&tract1, const \hyperlink{classcompactTract}{compact\-Tract} \&tract2, const size\-\_\-t size1, const size\-\_\-t size2)
+\item 
+\hypertarget{classcompactTract_ab110a6e126e45b2507c5639439bbfbc1}{\hyperlink{classcompactTract_ab110a6e126e45b2507c5639439bbfbc1}{$\sim$compact\-Tract} ()}\label{classcompactTract_ab110a6e126e45b2507c5639439bbfbc1}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+\hyperlink{classcompactTract}{compact\-Tract} \& \hyperlink{classcompactTract_ad7b298edef870a8f3e4a5091f8b99f45}{operator=} (const \hyperlink{classcompactTract}{compact\-Tract} \&rhs)
+\item 
+\hyperlink{classcompactTract}{compact\-Tract} \& \hyperlink{classcompactTract_aa985da724455a58222be6f5f39a02dfa}{operator=} (const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&rhs)
+\item 
+size\-\_\-t \hyperlink{classcompactTract_a744d11a1c2273b6d18196af7a9b9a55f}{size} () const 
+\item 
+bool \hyperlink{classcompactTract_a2dfc44d4f3c1b18e7882a55482eca2a0}{norm\-Ready} () const 
+\item 
+bool \hyperlink{classcompactTract_aa430d6306d12eff3be9d9e97bfe592d8}{thresholded} () const 
+\item 
+std\-::vector$<$ float $>$ \hyperlink{classcompactTract_a3f4530bf1e1f7c66a93fbdcaabc297be}{tract} () const 
+\item 
+void \hyperlink{classcompactTract_afedb5432b159636e99491b0d2c0a5a57}{set\-Norm} (double norm)
+\item 
+size\-\_\-t \hyperlink{classcompactTract_a373213a2170988f02d8e7e4ef401e70c}{bytes} () const 
+\item 
+float \hyperlink{classcompactTract_ab295ffbd32780bdc2401824e82999c9a}{m\-Bytes} () const 
+\item 
+void \hyperlink{classcompactTract_ad9d98adcd6cd017fe705dbf834cd0e02}{steal} (\hyperlink{classcompactTract}{compact\-Tract} $\ast$const stolen)
+\item 
+double \hyperlink{classcompactTract_ab3d1a2da0c12374252e4300c5ec2cf06}{tract\-Distance} (const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+double \hyperlink{classcompactTract_a65ab358c76dd77bc8db7525daec85013}{tract\-Distance} (const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&tractogram) const 
+\item 
+double \hyperlink{classcompactTract_a5292a6afd40d42e3686e9beb9d621fd5}{compute\-Norm} ()
+\item 
+void \hyperlink{classcompactTract_a17a59a2cdd6ed1040314ee4998b84f99}{un\-Log} (float log\-Factor)
+\item 
+void \hyperlink{classcompactTract_abf9c31679d523983b6542fce7da0f1d8}{do\-Log} (float log\-Factor)
+\item 
+void \hyperlink{classcompactTract_a3ab03b798e664ce5fb603f95770cafd2}{threshold} (float \hyperlink{classcompactTract_a3ab03b798e664ce5fb603f95770cafd2}{threshold})
+\item 
+void \hyperlink{classcompactTract_a40097474b722b556dccbf1db2bf69125}{add} (const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram)
+\item 
+void \hyperlink{classcompactTract_a722158fc579f23dc3e5ee1714b39b472}{divide} (float divisor)
+\item 
+void \hyperlink{classcompactTract_a74d09e9163d2d24df2f8bbfd771190dc}{mult} (const float coef)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcompactTract_adc11b75d4726c6bfc7891ef3dbaac133}{std\-::vector$<$ float $>$ \hyperlink{classcompactTract_adc11b75d4726c6bfc7891ef3dbaac133}{m\-\_\-tract}}\label{classcompactTract_adc11b75d4726c6bfc7891ef3dbaac133}
+
+\begin{DoxyCompactList}\small\item\em float vector with the compact tractogram data \end{DoxyCompactList}\item 
+\hypertarget{classcompactTract_a27eeff3e161d463509b144b3b19eff97}{double \hyperlink{classcompactTract_a27eeff3e161d463509b144b3b19eff97}{m\-\_\-norm}}\label{classcompactTract_a27eeff3e161d463509b144b3b19eff97}
+
+\begin{DoxyCompactList}\small\item\em norm of the data vector \end{DoxyCompactList}\item 
+\hypertarget{classcompactTract_a73f593f5373a547977675bdb1c5e1c41}{bool \hyperlink{classcompactTract_a73f593f5373a547977675bdb1c5e1c41}{m\-\_\-thresholded}}\label{classcompactTract_a73f593f5373a547977675bdb1c5e1c41}
+
+\begin{DoxyCompactList}\small\item\em thresholded flag (if true, data vector has been thresholded) \end{DoxyCompactList}\item 
+\hypertarget{classcompactTract_a85019388d6768104dd27f18ef285326c}{bool \hyperlink{classcompactTract_a85019388d6768104dd27f18ef285326c}{m\-\_\-norm\-Ready}}\label{classcompactTract_a85019388d6768104dd27f18ef285326c}
+
+\begin{DoxyCompactList}\small\item\em norm ready flag (if true, norm has been precomputed and saved) \end{DoxyCompactList}\item 
+\hypertarget{classcompactTract_a089b38c6a33223c24247dd839cf37568}{bool \hyperlink{classcompactTract_a089b38c6a33223c24247dd839cf37568}{m\-\_\-in\-Log\-Units}}\label{classcompactTract_a089b38c6a33223c24247dd839cf37568}
+
+\begin{DoxyCompactList}\small\item\em log flag (if true, data vector is in logarithmic units) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcompactTract_a7ea7d52c87a9299a8dad891be045a681}{class {\bfseries file\-Manager}}\label{classcompactTract_a7ea7d52c87a9299a8dad891be045a681}
+
+\item 
+\hypertarget{classcompactTract_a9314384ea65b036521db3749c607fac4}{class {\bfseries vista\-Manager}}\label{classcompactTract_a9314384ea65b036521db3749c607fac4}
+
+\item 
+\hypertarget{classcompactTract_abdbb08f5306829a91e8cbf995fa8a06d}{class {\bfseries nifti\-Manager}}\label{classcompactTract_abdbb08f5306829a91e8cbf995fa8a06d}
+
+\item 
+\hypertarget{classcompactTract_aa166ce0e9265255d37c059e22933ad75}{class {\bfseries rand\-Cnb\-Tree\-Builder}}\label{classcompactTract_aa166ce0e9265255d37c059e22933ad75}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class stores the data from a vector-\/compacted probabilistic tractogram in float precision it also keeps track of the thresholded and log-\/transforms status of the data, implements the necessary conversions and the tractogram dissimilarity measures 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classcompactTract_a768f98790c79a32ec890c2f8a860b868}{\index{compact\-Tract@{compact\-Tract}!compact\-Tract@{compact\-Tract}}
+\index{compact\-Tract@{compact\-Tract}!compactTract@{compact\-Tract}}
+\subsubsection[{compact\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract\-::compact\-Tract} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a768f98790c79a32ec890c2f8a860b868}
+\-Constructor \hypertarget{classcompactTract_a0df1b9bb6f933f77cb2a55b549944dec}{\index{compact\-Tract@{compact\-Tract}!compact\-Tract@{compact\-Tract}}
+\index{compact\-Tract@{compact\-Tract}!compactTract@{compact\-Tract}}
+\subsubsection[{compact\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract\-::compact\-Tract} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ float $>$}]{tract\-Init}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classcompactTract_a0df1b9bb6f933f77cb2a55b549944dec}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Init} & a vector with the tractogram data \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_ab370799e5b1892c20e774ece5aae1988}{\index{compact\-Tract@{compact\-Tract}!compact\-Tract@{compact\-Tract}}
+\index{compact\-Tract@{compact\-Tract}!compactTract@{compact\-Tract}}
+\subsubsection[{compact\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract\-::compact\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract} \&}]{object}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_ab370799e5b1892c20e774ece5aae1988}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em object} & a \hyperlink{classcompactTract}{compact\-Tract} object to copy the member data from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_ae6dd8d553eecc27217c63338eafa155f}{\index{compact\-Tract@{compact\-Tract}!compact\-Tract@{compact\-Tract}}
+\index{compact\-Tract@{compact\-Tract}!compactTract@{compact\-Tract}}
+\subsubsection[{compact\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract\-::compact\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract\-Char} \&}]{char\-Tract}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_ae6dd8d553eecc27217c63338eafa155f}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classcompactTract_a62d9323e06f379909a198409b07b4fb3}{\index{compact\-Tract@{compact\-Tract}!compact\-Tract@{compact\-Tract}}
+\index{compact\-Tract@{compact\-Tract}!compactTract@{compact\-Tract}}
+\subsubsection[{compact\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract\-::compact\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract} \&}]{tract1, }
+\item[{const {\bf compact\-Tract} \&}]{tract2, }
+\item[{const size\-\_\-t}]{size1, }
+\item[{const size\-\_\-t}]{size2}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a62d9323e06f379909a198409b07b4fb3}
+\-This constructor function generates a mean tractogram resulting from a merging of two clusters/nodes 
+\begin{DoxyParams}{\-Parameters}
+{\em tract1} & tractogram object from the first node being merged \\
+\hline
+{\em tract2} & tractogram object from the second node being merged \\
+\hline
+{\em size1} & cluster size the first node being merged \\
+\hline
+{\em size2} & cluster size the second node being merged \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcompactTract_a40097474b722b556dccbf1db2bf69125}{\index{compact\-Tract@{compact\-Tract}!add@{add}}
+\index{add@{add}!compactTract@{compact\-Tract}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::add} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a40097474b722b556dccbf1db2bf69125}
+sums the data vector values of the specified tractogram to the current tractogram vector 
+\begin{DoxyParams}{\-Parameters}
+{\em tractogram} & the tractogram object containing the data vector to be added to the current one \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_a373213a2170988f02d8e7e4ef401e70c}{\index{compact\-Tract@{compact\-Tract}!bytes@{bytes}}
+\index{bytes@{bytes}!compactTract@{compact\-Tract}}
+\subsubsection[{bytes}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf compact\-Tract\-::bytes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcompactTract_a373213a2170988f02d8e7e4ef401e70c}
+returns the total size of the \hyperlink{classcompactTract}{compact\-Tract} object in bytes (including the data vector) \begin{DoxyReturn}{\-Returns}
+size in bytes of a \hyperlink{classcompactTract}{compact\-Tract} object 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_a5292a6afd40d42e3686e9beb9d621fd5}{\index{compact\-Tract@{compact\-Tract}!compute\-Norm@{compute\-Norm}}
+\index{compute\-Norm@{compute\-Norm}!compactTract@{compact\-Tract}}
+\subsubsection[{compute\-Norm}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf compact\-Tract\-::compute\-Norm} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a5292a6afd40d42e3686e9beb9d621fd5}
+computes and returns the norm (rooted square-\/sum) of the tractogram and saves it in the tarct object data member if the norm was previously computed will re-\/compute and overwrite \begin{DoxyReturn}{\-Returns}
+the tractogram norm value 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_a722158fc579f23dc3e5ee1714b39b472}{\index{compact\-Tract@{compact\-Tract}!divide@{divide}}
+\index{divide@{divide}!compactTract@{compact\-Tract}}
+\subsubsection[{divide}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::divide} (
+\begin{DoxyParamCaption}
+\item[{float}]{divisor}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a722158fc579f23dc3e5ee1714b39b472}
+divides each tractogram datapoint by the given value 
+\begin{DoxyParams}{\-Parameters}
+{\em divisor} & the value to divide the data by \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_abf9c31679d523983b6542fce7da0f1d8}{\index{compact\-Tract@{compact\-Tract}!do\-Log@{do\-Log}}
+\index{do\-Log@{do\-Log}!compactTract@{compact\-Tract}}
+\subsubsection[{do\-Log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::do\-Log} (
+\begin{DoxyParamCaption}
+\item[{float}]{log\-Factor}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_abf9c31679d523983b6542fce7da0f1d8}
+transforms the tractogram data values doing a base-\/10 logarithm and dividing by the normalization-\/related log\-Factor 
+\begin{DoxyParams}{\-Parameters}
+{\em log\-Factor} & normalization-\/related parameter to properly switch between logarithmic and natural units \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_ab295ffbd32780bdc2401824e82999c9a}{\index{compact\-Tract@{compact\-Tract}!m\-Bytes@{m\-Bytes}}
+\index{m\-Bytes@{m\-Bytes}!compactTract@{compact\-Tract}}
+\subsubsection[{m\-Bytes}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf compact\-Tract\-::m\-Bytes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcompactTract_ab295ffbd32780bdc2401824e82999c9a}
+returns the total size of the \hyperlink{classcompactTract}{compact\-Tract} object in mega\-Bytes (including the data vector) \begin{DoxyReturn}{\-Returns}
+size in mega\-Bytes of a \hyperlink{classcompactTract}{compact\-Tract} object 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_a74d09e9163d2d24df2f8bbfd771190dc}{\index{compact\-Tract@{compact\-Tract}!mult@{mult}}
+\index{mult@{mult}!compactTract@{compact\-Tract}}
+\subsubsection[{mult}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::mult} (
+\begin{DoxyParamCaption}
+\item[{const float}]{coef}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a74d09e9163d2d24df2f8bbfd771190dc}
+multiplies each tractogram datapoint by the given value 
+\begin{DoxyParams}{\-Parameters}
+{\em coef} & coefficient to multiply the data by \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_a2dfc44d4f3c1b18e7882a55482eca2a0}{\index{compact\-Tract@{compact\-Tract}!norm\-Ready@{norm\-Ready}}
+\index{norm\-Ready@{norm\-Ready}!compactTract@{compact\-Tract}}
+\subsubsection[{norm\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf compact\-Tract\-::norm\-Ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classcompactTract_a2dfc44d4f3c1b18e7882a55482eca2a0}
+returns true if the tractogram vector norm has been precomputed and saved in the tract object \begin{DoxyReturn}{\-Returns}
+norm ready boolean flag 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_ad7b298edef870a8f3e4a5091f8b99f45}{\index{compact\-Tract@{compact\-Tract}!operator=@{operator=}}
+\index{operator=@{operator=}!compactTract@{compact\-Tract}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract} \& compact\-Tract\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract} \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_ad7b298edef870a8f3e4a5091f8b99f45}
+= \-Operator 
+\begin{DoxyParams}{\-Parameters}
+{\em rhs} & object to be copied \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_aa985da724455a58222be6f5f39a02dfa}{\index{compact\-Tract@{compact\-Tract}!operator=@{operator=}}
+\index{operator=@{operator=}!compactTract@{compact\-Tract}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract} \& compact\-Tract\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract\-Char} \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_aa985da724455a58222be6f5f39a02dfa}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classcompactTract_afedb5432b159636e99491b0d2c0a5a57}{\index{compact\-Tract@{compact\-Tract}!set\-Norm@{set\-Norm}}
+\index{set\-Norm@{set\-Norm}!compactTract@{compact\-Tract}}
+\subsubsection[{set\-Norm}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::set\-Norm} (
+\begin{DoxyParamCaption}
+\item[{double}]{norm}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classcompactTract_afedb5432b159636e99491b0d2c0a5a57}
+saves a precomputed vector norm value in the tractogram object 
+\begin{DoxyParams}{\-Parameters}
+{\em norm} & the norm data in double precision \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_a744d11a1c2273b6d18196af7a9b9a55f}{\index{compact\-Tract@{compact\-Tract}!size@{size}}
+\index{size@{size}!compactTract@{compact\-Tract}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf compact\-Tract\-::size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classcompactTract_a744d11a1c2273b6d18196af7a9b9a55f}
+returns the size of the compact tract vector \begin{DoxyReturn}{\-Returns}
+tractogram size (number of voxels in the white matter) 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_ad9d98adcd6cd017fe705dbf834cd0e02}{\index{compact\-Tract@{compact\-Tract}!steal@{steal}}
+\index{steal@{steal}!compactTract@{compact\-Tract}}
+\subsubsection[{steal}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::steal} (
+\begin{DoxyParamCaption}
+\item[{{\bf compact\-Tract} $\ast$const}]{stolen}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_ad9d98adcd6cd017fe705dbf834cd0e02}
+swaps the tractogram memory from another tractogram object into this one and copies its data members implemented as a time and memory efficient alternative of the copy constructor if a new object is needed but the old object is not required anymore 
+\begin{DoxyParams}{\-Parameters}
+{\em stolen} & pointer to the tractogram object with the data to be \char`\"{}stolen\char`\"{} \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_a3ab03b798e664ce5fb603f95770cafd2}{\index{compact\-Tract@{compact\-Tract}!threshold@{threshold}}
+\index{threshold@{threshold}!compactTract@{compact\-Tract}}
+\subsubsection[{threshold}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::threshold} (
+\begin{DoxyParamCaption}
+\item[{float}]{threshold}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a3ab03b798e664ce5fb603f95770cafd2}
+thresholds the tractogram data, if the value of a point is less than the given threshold, it is set to 0 
+\begin{DoxyParams}{\-Parameters}
+{\em threshold} & threshold value \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcompactTract_aa430d6306d12eff3be9d9e97bfe592d8}{\index{compact\-Tract@{compact\-Tract}!thresholded@{thresholded}}
+\index{thresholded@{thresholded}!compactTract@{compact\-Tract}}
+\subsubsection[{thresholded}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf compact\-Tract\-::thresholded} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classcompactTract_aa430d6306d12eff3be9d9e97bfe592d8}
+returns true if the tractogram vector data has been thresholded \begin{DoxyReturn}{\-Returns}
+thresholded boolean flag 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_a3f4530bf1e1f7c66a93fbdcaabc297be}{\index{compact\-Tract@{compact\-Tract}!tract@{tract}}
+\index{tract@{tract}!compactTract@{compact\-Tract}}
+\subsubsection[{tract}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ float $>$ {\bf compact\-Tract\-::tract} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classcompactTract_a3f4530bf1e1f7c66a93fbdcaabc297be}
+returns a copy of the tractogram data stored \begin{DoxyReturn}{\-Returns}
+a vector containing the tractogram data 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_ab3d1a2da0c12374252e4300c5ec2cf06}{\index{compact\-Tract@{compact\-Tract}!tract\-Distance@{tract\-Distance}}
+\index{tract\-Distance@{tract\-Distance}!compactTract@{compact\-Tract}}
+\subsubsection[{tract\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf compact\-Tract\-::tract\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classcompactTract_ab3d1a2da0c12374252e4300c5ec2cf06}
+computes the distance (dissimilarity) between this tract and a tract defined by the parameter by default calls to norm\-Dot\-Product(), but implemented to easily change the distance measure used with minimum changes to the source code if planning to use this code/software for functional connectivity analysis/processing, call correlation() instead 
+\begin{DoxyParams}{\-Parameters}
+{\em tractogram} & \hyperlink{classcompactTract}{compact\-Tract} object to compute the distance to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the distance value between the two tracts in double precision 
+\end{DoxyReturn}
+\hypertarget{classcompactTract_a65ab358c76dd77bc8db7525daec85013}{\index{compact\-Tract@{compact\-Tract}!tract\-Distance@{tract\-Distance}}
+\index{tract\-Distance@{tract\-Distance}!compactTract@{compact\-Tract}}
+\subsubsection[{tract\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf compact\-Tract\-::tract\-Distance} (
+\begin{DoxyParamCaption}
+\item[{const {\bf compact\-Tract\-Char} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classcompactTract_a65ab358c76dd77bc8db7525daec85013}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classcompactTract_a17a59a2cdd6ed1040314ee4998b84f99}{\index{compact\-Tract@{compact\-Tract}!un\-Log@{un\-Log}}
+\index{un\-Log@{un\-Log}!compactTract@{compact\-Tract}}
+\subsubsection[{un\-Log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf compact\-Tract\-::un\-Log} (
+\begin{DoxyParamCaption}
+\item[{float}]{log\-Factor}
+\end{DoxyParamCaption}
+)}}\label{classcompactTract_a17a59a2cdd6ed1040314ee4998b84f99}
+transforms the tractogram data values doing a 10$^\wedge$(x$\ast$f) exponential where x is the tract data and f is the normalization-\/related log\-Factor 
+\begin{DoxyParams}{\-Parameters}
+{\em log\-Factor} & normalization-\/related parameter to properly switch between logarithmic and natural units \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/compact\-Tract.\-h\item 
+src/common/compact\-Tract.\-cpp\end{DoxyCompactItemize}

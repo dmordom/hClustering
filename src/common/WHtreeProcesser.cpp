@@ -2,7 +2,7 @@
 //
 // Project: OpenWalnut ( http://www.openwalnut.org )
 //
-// Copyright 2009 OpenWalnut Community, BSV-Leipzig and CNCF-CBS
+// Copyright 2009 OpenWalnut Community, BSV@Uni-Leipzig and CNCF@MPI-CBS
 // For more information see http://www.openwalnut.org/copying
 //
 // This file is part of OpenWalnut.
@@ -20,11 +20,38 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with OpenWalnut. If not, see <http://www.gnu.org/licenses/>.
 //
-// This file is also part of the
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
 // Whole-Brain Connectivity-Based Hierarchical Parcellation Project
 // David Moreno-Dominguez
+// d.mor.dom@gmail.com
 // moreno@cbs.mpg.de
-// www.cbs.mpg.de/~moreno
+// www.cbs.mpg.de/~moreno//
+// This file is also part of OpenWalnut ( http://www.openwalnut.org ).
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
 //
 //---------------------------------------------------------------------------
 
@@ -102,12 +129,12 @@ std::pair< size_t, size_t > WHtreeProcesser::pruneTree( float condition, size_t 
             for( size_t i = 0; i < kids.size(); ++i )
             {
                 size_t brotherSize( m_tree.getNode( kids[i] ).getSize() );
-                if ( brotherSize > biggerSize )
+                if( brotherSize > biggerSize )
                 {
                     biggerSize = brotherSize;
                 }
             }
-            if(  biggerSize > condition )
+            if( biggerSize > condition )
             {
                 leavesIter->setFlag( true );
             }
@@ -134,12 +161,12 @@ std::pair< size_t, size_t > WHtreeProcesser::pruneTree( float condition, size_t 
                 std::vector< nodeID_t > kids( m_tree.getNode( parentID ).getChildren() );
                 for( size_t i = 0; i < kids.size(); ++i )
                 {
-                    if ( kids[i] == nodesIter->getFullID() )
+                    if( kids[i] == nodesIter->getFullID() )
                     {
                         continue;
                     }
                     size_t brotherSize( m_tree.getNode( kids[i] ).getSize() );
-                    if ( brotherSize > biggerSize )
+                    if( brotherSize > biggerSize )
                     {
                         biggerSize = brotherSize;
                     }
@@ -157,7 +184,7 @@ std::pair< size_t, size_t > WHtreeProcesser::pruneTree( float condition, size_t 
             }
         }
 
-        if ( pruneBranch )
+        if( pruneBranch )
         {
             std::list< nodeID_t > worklist;
             worklist.push_back( nodesIter->getFullID() );
@@ -286,7 +313,7 @@ size_t WHtreeProcesser::collapseTreeLinear( const dist_t coefficient, const bool
 {
     if( coefficient <= 0 || coefficient >= 1 )
     {
-        std::cerr << "ERROR @ WHtreeProcesser::collapseTreeLinear(): coefficient must be in the range (0,1)" << std::endl;
+        std::cerr << "ERROR @ WHtreeProcesser::collapseTreeLinear(): coefficient must be in the range (0,1 )" << std::endl;
         return 0;
     }
 
@@ -309,7 +336,7 @@ size_t WHtreeProcesser::collapseTreeSquare( const dist_t coefficient, const bool
 {
     if( coefficient <= 0 || coefficient >= 1 )
     {
-        std::cerr << "ERROR @ WHtreeProcesser::collapseTreeLinear(): coefficient must be in the range (0,1)" << std::endl;
+        std::cerr << "ERROR @ WHtreeProcesser::collapseTreeLinear(): coefficient must be in the range (0,1 )" << std::endl;
         return 0;
     }
 
@@ -412,7 +439,7 @@ void WHtreeProcesser::coarseTree( const unsigned int coarseRatio )
 
     for( std::vector< WHcoord >::const_iterator coordIter = m_tree.m_coordinates.begin(); coordIter != m_tree.m_coordinates.end(); ++coordIter )
     {
-        //std::cout<<*coord_iter<<std::endl;
+        //std::cout <<*coord_iter<< std::endl;
         roimatrix[coordIter->m_x][coordIter->m_y][coordIter->m_z] = true;
         roimap.insert( std::make_pair( *coordIter, count++ ) );
     }
@@ -484,53 +511,85 @@ void WHtreeProcesser::coarseTree( const unsigned int coarseRatio )
 } // end "coarseTree()" -----------------------------------------------------------------
 
 
- size_t WHtreeProcesser::baseNodes2Leaves()
- {
-     if ( !m_tree.testRootBaseNodes() )
-     {
-         std::cerr<< "ERROR @ WHtreeProcesser::baseNodes2Leaves(): base nodes have both leaves and other nodes as children, tree wont be processed"<<std::endl;
+size_t WHtreeProcesser::baseNodes2Leaves()
+{
+    if( !m_tree.testRootBaseNodes() )
+    {
+         std::cerr << "ERROR @ WHtreeProcesser::baseNodes2Leaves(): base nodes have both leaves and other nodes as children,";
+         std::cerr << " tree wont be processed" << std::endl;
          return m_tree.getNumLeaves();
-     }
+    }
 
-     std::vector <size_t> bases( m_tree.getRootBaseNodes() );
-     for ( size_t i = 0; i < bases.size(); ++i )
-     {
+    std::vector <size_t> bases( m_tree.getRootBaseNodes() );
+    for( size_t i = 0; i < bases.size(); ++i )
+    {
          std::vector <size_t> leaves4node( m_tree.getLeaves4node( bases[i] ) );
          // start in j=1 so that we always leave one leaf not pruned
-         for ( size_t j = 1; j < leaves4node.size(); ++j )
+         for( size_t j = 1; j < leaves4node.size(); ++j )
          {
              WHnode* currentLeaf( m_tree.fetchLeaf( leaves4node[j] ) );
              currentLeaf->setFlag( true );
          }
-     }
-     m_tree.cleanup();
-     m_tree.m_treeName += ( "_bases" );
+    }
+    m_tree.cleanup();
+    m_tree.m_treeName += ( "_bases" );
 
-     return m_tree.getNumLeaves();
- } // end "baseNodes2Leaves()" -----------------------------------------------------------------
+    return m_tree.getNumLeaves();
+} // end "baseNodes2Leaves()" -----------------------------------------------------------------
 
- void WHtreeProcesser::forceMonotonicityUp()
- {
-     m_tree.forceMonotonicityUp();
-     return;
- }
+void WHtreeProcesser::forceMonotonicityUp()
+{
+    m_tree.forceMonotonicityUp();
+    return;
+}
 
- void WHtreeProcesser::forceMonotonicityDown()
- {
-     m_tree.forceMonotonicityDown();
-     return;
- }
+void WHtreeProcesser::forceMonotonicityDown()
+{
+    m_tree.forceMonotonicityDown();
+    return;
+}
 
- void WHtreeProcesser::forceMonotonicity()
- {
-     m_tree.forceMonotonicity();
-     return;
- }
+void WHtreeProcesser::forceMonotonicity( double errorMult )
+{
+    m_tree.forceMonotonicity( errorMult );
+    return;
+}
 
- size_t WHtreeProcesser::debinarize( const bool keepBaseNodes )
- {
-     return m_tree.debinarize( keepBaseNodes );
- }
+size_t WHtreeProcesser::debinarize( const bool keepBaseNodes )
+{
+    return m_tree.debinarize( keepBaseNodes );
+}
+
+
+void WHtreeProcesser::writeBases( const std::vector< size_t > &baseNodes, const std::string& filename  ) const
+{
+    std::ofstream outFile( filename.c_str() );
+    if( !outFile )
+    {
+        std::cerr << "ERROR: unable to open out file: \"" << outFile << "\"" << std::endl;
+        exit( -1 );
+    }
+
+    outFile << "#bases" << std::endl;
+    for( std::vector<size_t>::const_iterator nodeIter( baseNodes.begin() ) ; nodeIter != baseNodes.end() ; ++nodeIter )
+    {
+        outFile << *nodeIter << std::endl;
+    }
+    outFile << "#endbases" << std::endl << std::endl;
+
+    outFile << "#pruned" << std::endl;
+    for( std::vector<WHnode>::const_iterator leafIter( m_tree.m_leaves.begin() ) ; leafIter != m_tree.m_leaves.end() ; ++leafIter )
+    {
+        if( leafIter->isFlagged() )
+        {
+            outFile << leafIter->getID() << std::endl;
+        }
+    }
+    outFile << "#endpruned" << std::endl << std::endl;
+
+    return;
+} // end WHtreeProcesser::writeBases() -------------------------------------------------------------------------------------
+
 
 // === PRIVATE MEMBER FUNCTIONS ===
 
@@ -547,41 +606,41 @@ size_t WHtreeProcesser::flattenBranch( size_t root, const bool keepBaseNodes )
 
 size_t WHtreeProcesser::flattenSelection( std::list< size_t > selection, bool keepBaseNodes )
 {
-    if( keepBaseNodes && !m_tree.testRootBaseNodes()  )
+    if( keepBaseNodes && !m_tree.testRootBaseNodes() )
     {
-        std::cerr << "WARNING@ flattenSelection: base nodes have mixed nodes and leaves, flattening will be standard "<< std::endl;
+        std::cerr << "WARNING@ flattenSelection: base nodes have mixed nodes and leaves, flattening will be standard " << std::endl;
         keepBaseNodes = false;
     }
     while( !selection.empty() )
     {
-        size_t thisNode(selection.front());
+        size_t thisNode( selection.front() );
         selection.pop_front();
-        std::vector< nodeID_t > kids( m_tree.getNode(thisNode).getChildren() );
-        for( size_t i=0; i<kids.size(); ++i )
+        std::vector< nodeID_t > kids( m_tree.getNode( thisNode ).getChildren() );
+        for( size_t i = 0; i < kids.size(); ++i )
         {
-            if(kids[i].first)
+            if( kids[i].first )
             {
-                if ( keepBaseNodes &&  (m_tree.getNode(kids[i]).getHLevel() == 1 ) )
+                if( keepBaseNodes &&  ( m_tree.getNode( kids[i] ).getHLevel() == 1 ) )
                 {
                     continue;
                 }
                 else
                 {
-                    m_tree.fetchNode(kids[i].second)->setFlag(true);
-                    selection.push_back(kids[i].second);
+                    m_tree.fetchNode( kids[i].second )->setFlag( true );
+                    selection.push_back( kids[i].second );
                 }
             }
         }
     }
 
-    std::pair< size_t, size_t > pruned(m_tree.cleanup() );
+    std::pair< size_t, size_t > pruned( m_tree.cleanup() );
 
     return pruned.second;
 } // end "flattenSelection()" -----------------------------------------------------------------
 size_t WHtreeProcesser::flattenSelection( const std::vector< size_t > &selection, const bool keepBaseNodes )
 {
-    std::list< size_t > worklist(selection.begin(),selection.end());
-    return flattenSelection(worklist, keepBaseNodes);
+    std::list< size_t > worklist( selection.begin(), selection.end() );
+    return flattenSelection( worklist, keepBaseNodes );
 } // end "flattenSelection()" -----------------------------------------------------------------
 size_t WHtreeProcesser::flattenSelection( const std::vector< nodeID_t > &selection, const bool keepBaseNodes )
 {
@@ -593,19 +652,19 @@ size_t WHtreeProcesser::flattenSelection( const std::vector< nodeID_t > &selecti
             worklist.push_back( iter->second );
         }
     }
-    return flattenSelection(worklist, keepBaseNodes);
+    return flattenSelection( worklist, keepBaseNodes );
 } // end "flattenSelection()" -----------------------------------------------------------------
 
 
 std::pair< size_t, size_t > WHtreeProcesser::pruneSelection( const std::vector< size_t > &selection )
 {
-    flagSelection(selection);
+    flagSelection( selection );
     std::pair< size_t, size_t > pruned( m_tree.cleanup() );
     return pruned;
 } // end "pruneSelection()" -----------------------------------------------------------------
 std::pair< size_t, size_t > WHtreeProcesser::pruneSelection( const std::vector< nodeID_t > &selection )
 {
-    flagSelection(selection);
+    flagSelection( selection );
     std::pair< size_t, size_t > pruned( m_tree.cleanup() );
     return pruned;
 } // end "pruneSelection()" -----------------------------------------------------------------
@@ -675,7 +734,7 @@ void WHtreeProcesser::collapseNode( const size_t thisNodeID, const dist_t coeffi
             {
                 dist_t kidLevel( m_tree.getNode( *kidIter ).getDistLevel() );
 
-                bool doCollapse(false);
+                bool doCollapse( false );
 
                 switch( collapseMode )
                 {

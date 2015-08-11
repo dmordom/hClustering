@@ -1,3 +1,34 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
 
 // std library
 #include <utility>
@@ -7,6 +38,21 @@
 #include <algorithm>
 
 #include "treeManager.h"
+
+treeManager::treeManager( WHtree* const tree, bool verbose ) :
+    m_tree( *tree ), m_logfile( 0 ), m_verbose( verbose ), m_floatFlag( true ), m_zipFlag( false )
+{
+    fileManagerFactory fMFtestFormat;
+    m_niftiMode = fMFtestFormat.isNifti();
+    if( m_tree.getDataGrid() == HC_NIFTI && !m_niftiMode )
+    {
+        m_tree.convert2grid( HC_VISTA );
+    }
+    else if( m_tree.getDataGrid() == HC_VISTA && m_niftiMode )
+    {
+        m_tree.convert2grid( HC_NIFTI );
+    }
+}
 
 void treeManager::writeDebugTree() const
 {
@@ -31,13 +77,6 @@ float treeManager::doCpcc()
         return -1;
     }
 
-    if( m_tree.getDataGrid() != HC_VISTA )
-    {
-        std::cerr
-                        << "Tree coordinates are not in vista format. Only vista is supported for this operation, convert tree coordinates first"
-                        << std::endl;
-        return -1;
-    }
 
     double sumT( 0 ), sumM( 0 ), sqT( 0 ), sqM( 0 ), sumProd( 0 );
     bool firstIteration( true );
@@ -252,59 +291,49 @@ float treeManager::doCpcc()
 
 compactTract treeManager::getMeanTract( const size_t inNode ) const
 {
-    if( m_singleTractFolder.empty() )
+    if( m_leavesTractFolder.empty() )
         throw std::runtime_error(
                         "Single tracts folder has not been specified, please initialize with treeManager::setSingleTractFolder()" );
 
-    if( m_tree.getDataGrid() != HC_VISTA && m_tree.getDataGrid() != HC_NIFTI )
-    {
-        throw std::runtime_error(
-        "Tree coordinates are not in vista nor nifti format. Only vista or nifti is supported for this operation, convert tree coordinates first" );
-    }
 
-    //create vista reader class
-    vistaManager vistaSingle( m_singleTractFolder );
-    vistaSingle.readAsLog();
-    vistaSingle.readAsUnThres();
+
+    //create file reader class
+    fileManagerFactory fileMF( m_leavesTractFolder );
+    fileManager& fileSingle( fileMF.getFM() );
+    fileSingle.readAsLog();
+    fileSingle.readAsUnThres();
 
     //loop through nodes
     compactTract sumTract;
-    std::vector< WHcoord > nodeCoords( m_tree.getCoordinates4node( inNode ) );
-    WHcoord tempCoord( nodeCoords.front() );
-    if( m_tree.getDataGrid() == HC_NIFTI )
-    {
-        tempCoord = nodeCoords.front().nifti2vista( m_tree.getDataSize() );
-    }
-    vistaSingle.readLeafTract( tempCoord, sumTract );
-    sumTract.unLog( m_logFactor ); //to sum tractograms they must be in natrual units
+    std::vector< size_t > nodeLeaves( m_tree.getLeaves4node( inNode) );
+
+    fileSingle.readLeafTract( nodeLeaves.front(), m_tree.m_trackids, m_tree.m_coordinates, &sumTract );
+    sumTract.unLog( m_tree.m_logFactor ); //to sum tractograms they must be in natrual units
 
 
-    for( size_t j = 1; j < nodeCoords.size(); ++j )
+    for( size_t j = 1; j < nodeLeaves.size(); ++j )
     {
         compactTract tempTract;
-        tempCoord = nodeCoords[j];
-        if( m_tree.getDataGrid() == HC_NIFTI )
-        {
-            tempCoord = nodeCoords[j].nifti2vista( m_tree.getDataSize() );
-        }
-        vistaSingle.readLeafTract( tempCoord, tempTract );
-        tempTract.unLog( m_logFactor ); //to sum tractograms they must be in natrual units
+        size_t leafID = nodeLeaves[j];
+
+        fileSingle.readLeafTract( leafID, m_tree.m_trackids, m_tree.m_coordinates, &tempTract );
+        tempTract.unLog( m_tree.m_logFactor ); //to sum tractograms they must be in natrual units
         sumTract.add( tempTract );
     }
-    sumTract.divide( nodeCoords.size() ); // we must divide the sum tract by the number of leaves to obtain a mean tract
-    sumTract.doLog( m_logFactor ); // we want to view it in logarithmic units
+    sumTract.divide( nodeLeaves.size() ); // we must divide the sum tract by the number of leaves to obtain a mean tract
+    sumTract.doLog( m_tree.m_logFactor ); // we want to view it in logarithmic units
 
     return sumTract;
 } // end "getMeanTract()" -----------------------------------------------------------------
 
 
-void treeManager::writeFullTract( const nodeID_t input, bool uFloat, bool doZip )
+void treeManager::writeFullTract( const nodeID_t input )
 {
     std::vector< nodeID_t > inNodes( 1, input );
-    writeFullTract( inNodes, uFloat, doZip );
+    writeFullTract( inNodes );
     return;
 }
-void treeManager::writeFullTract( std::vector< size_t > input, bool uFloat, bool doZip )
+void treeManager::writeFullTract( std::vector< size_t > input )
 {
     std::vector< nodeID_t > inNodes;
     inNodes.reserve(input.size());
@@ -313,19 +342,13 @@ void treeManager::writeFullTract( std::vector< size_t > input, bool uFloat, bool
     {
         inNodes.push_back(std::make_pair(true, input[i]));
     }
-    writeFullTract( inNodes, uFloat, doZip );
+    writeFullTract( inNodes );
     return;
 }
-void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bool doZip )
+void treeManager::writeFullTract( std::vector< nodeID_t > input )
 {
 
-    if( m_tree.getDataGrid() != HC_VISTA )
-    {
-        std::cerr
-                        << "Tree coordinates are not in vista format. Only vista is supported for this operation, convert tree coordinates first"
-                        << std::endl;
-        return;
-    }
+
     if( m_maskFilename.empty() )
     {
         std::cerr << "Location of mask file has not been specified, please initialize with treeManager::setMaskFilename()"
@@ -339,7 +362,7 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
                         << std::endl;
         return;
     }
-    if( m_singleTractFolder.empty() && m_meanTractFolder.empty() )
+    if( m_leavesTractFolder.empty() && m_meanTractFolder.empty() )
     {
         std::cerr << "Neither single tracts nor mean tracts folder has been specified, please initialize with"
                   << " treeManager::setSingleTractFolder() or treeManager::setMeanTractFolder()" << std::endl;
@@ -363,7 +386,7 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
 
     if( !inLeaves.empty() )
     {
-        if( m_singleTractFolder.empty() )
+        if( m_leavesTractFolder.empty() )
         {
             std::cerr
                             << "Single tracts folder has not been specified, please initialize with treeManager::setSingleTractFolder()"
@@ -371,50 +394,49 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
             return;
         }
 
-        //create vista writer class
-        vistaManager vistaSingle( m_singleTractFolder );
-        vistaSingle.readAsLog();
-        vistaSingle.readAsUnThres();
+        fileManagerFactory leavesFileMF( m_leavesTractFolder );
+        fileManager& leavesFM( leavesFileMF.getFM() );
+        leavesFM.readAsLog();
+        leavesFM.readAsUnThres();
 
-        vistaManager vistaFull( m_fullTractFolder );
 
-        if (uFloat)
+        fileManagerFactory fullTractFileMF( m_fullTractFolder );
+        fileManager& fullTractFM( fullTractFileMF.getFM() );
+        if ( m_floatFlag )
         {
-            vistaFull.writeInFloat();
+            fullTractFM.writeInFloat();
         }
         else
         {
-            vistaFull.writeInChar();
+            fullTractFM.writeInChar();
         }
-
-
-        if (doZip)
+        if ( m_zipFlag )
         {
-            vistaFull.storeZipped(); //zip tract files after storing
+            fullTractFM.storeZipped();
         }
         else
         {
-            vistaFull.storeUnzipped(); //dont zip tract files after storing
+            fullTractFM.storeUnzipped();
         }
-        vistaFull.loadMask( m_maskFilename ); //load full tract mask (for writing)
+
+        fullTractFM.loadMaskImage( m_maskFilename ); //load full tract mask (for writing)
 
         //loop through leaves
         for( size_t i = 0; i < inLeaves.size(); ++i )
         {
+            size_t thisLeafID ( inLeaves[i] );
             compactTract leaftract;
-            WHcoord leafCoord( m_tree.getCoordinate4leaf( inLeaves[i] ) );
-            vistaSingle.readLeafTract( leafCoord, leaftract );
-            vistaFull.storeFullTract( leafCoord, leaftract );
-            std::string tractFilename;
-            vistaFull.getFullTractFilename( leafCoord, tractFilename );
+            leavesFM.readLeafTract(  thisLeafID, m_tree.m_trackids, m_tree.m_coordinates, &leaftract );
+            fullTractFM.writeFullLeafTract( thisLeafID, m_tree.m_trackids, m_tree.m_coordinates, leaftract );
+            std::string tractFilename( fullTractFM.getFullLeafTractFilename( thisLeafID, m_tree.m_trackids, m_tree.m_coordinates ) );
             if( m_verbose )
             {
-                std::cout << " Full tract for leaf " << inLeaves[i] << "(" << leafCoord << ") written in \"" << tractFilename
+                std::cout << " Full tract for leaf " << thisLeafID << "(" << m_tree.getCoordinate4leaf( thisLeafID )  << ") written in \"" << tractFilename
                                 << "\"" << std::endl;
             }
             if( m_logfile != 0 )
             {
-                ( *m_logfile ) << " Full tract for leaf " << inLeaves[i] << "(" << leafCoord << ") written in \""
+                ( *m_logfile ) << " Full tract for leaf " << thisLeafID << "(" << m_tree.getCoordinate4leaf( thisLeafID ) << ") written in \""
                                 << tractFilename << "\"" << std::endl;
             }
         }
@@ -452,40 +474,41 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
 
             if( m_verbose )
                 std::cout << "Obtaining mean tractograms directly from file" << std::endl;
-            //create vista writer class
-            vistaManager vistaMean( m_meanTractFolder );
-            vistaMean.readAsLog();
-            vistaMean.readAsUnThres();
+            //create writer class
+            fileManagerFactory nodeFileMF( m_meanTractFolder );
+            fileManager& nodeFM( nodeFileMF.getFM() );
+            nodeFM.readAsLog();
+            nodeFM.readAsUnThres();
 
-            vistaManager vistaFull( m_fullTractFolder );
 
-            if (uFloat)
+            fileManagerFactory nodeFullFileMF( m_fullTractFolder );
+            fileManager& nodeFullMF( nodeFullFileMF.getFM() );
+            if ( m_floatFlag )
             {
-                vistaFull.writeInFloat();
+                nodeFullMF.writeInFloat();
             }
             else
             {
-                vistaFull.writeInChar();
+                nodeFullMF.writeInChar();
             }
-
-            if (doZip)
+            if ( m_zipFlag )
             {
-                vistaFull.storeZipped(); //zip tract files after storing
+                nodeFullMF.storeZipped();
             }
             else
             {
-                vistaFull.storeUnzipped(); //dont zip tract files after storing
+                nodeFullMF.storeUnzipped();
             }
-            vistaFull.loadMask( m_maskFilename ); //load full tract mask (for writing)
+
+            nodeFullMF.loadMaskImage( m_maskFilename ); //load full tract mask (for writing)
 
             //loop through nodes
             for( size_t i = 0; i < inNodes.size(); ++i )
             {
                 compactTract nodetract;
-                vistaMean.readNodeTract( inNodes[i], nodetract );
-                vistaFull.storeFullTract( inNodes[i], nodetract );
-                std::string tractFilename;
-                vistaFull.getFullTractFilename( inNodes[i], tractFilename );
+                nodeFM.readNodeTract( inNodes[i], &nodetract );
+                nodeFullMF.writeFullNodeTract( inNodes[i], nodetract );
+                std::string tractFilename( nodeFullMF.getFullNodeTractFilename( inNodes[i] ) );
                 if( m_verbose )
                 {
                     std::cout << " Full tract for node " << inNodes[i] << " with " << m_tree.getNode( inNodes[i] ).getSize()
@@ -509,28 +532,27 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
             if( inNodes.size() > 1 )
                 m_tree.loadContainedLeaves();
 
-            //create vista writer class
-            vistaManager vistaFull( m_fullTractFolder );
-
-            if (uFloat)
+            //create  writer class
+            fileManagerFactory fullTractFileMF( m_fullTractFolder );
+            fileManager& fullTractFM( fullTractFileMF.getFM() );
+            if ( m_floatFlag )
             {
-                vistaFull.writeInFloat();
+                fullTractFM.writeInFloat();
             }
             else
             {
-                vistaFull.writeInChar();
+                fullTractFM.writeInChar();
             }
-
-
-            if (doZip)
+            if ( m_zipFlag )
             {
-                vistaFull.storeZipped(); //zip tract files after storing
+                fullTractFM.storeZipped(); //zip tract files after storing
             }
             else
             {
-                vistaFull.storeUnzipped(); //dont zip tract files after storing
+                fullTractFM.storeUnzipped(); //dont zip tract files after storing
             }
-            vistaFull.loadMask( m_maskFilename ); //load full tract mask (for writing)
+
+            fullTractFM.loadMaskImage( m_maskFilename ); //load full tract mask (for writing)
 
             time_t startTime( time( NULL ) ), lastTime( time( NULL ) );
 
@@ -542,9 +564,8 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
             {
                 compactTract meanTract( getMeanTract( inNodes[i] ) );
 
-                vistaFull.storeFullTract( inNodes[i], meanTract );
-                std::string tractFilename;
-                vistaFull.getFullTractFilename( inNodes[i], tractFilename );
+                fullTractFM.writeFullNodeTract( inNodes[i], meanTract );
+                std::string tractFilename( fullTractFM.getFullNodeTractFilename( inNodes[i] ) );
 
                 if( reportProgress )
                 {
@@ -598,7 +619,96 @@ void treeManager::writeFullTract( std::vector< nodeID_t > input, bool uFloat, bo
 } // end "writeFullTract()" -----------------------------------------------------------------
 
 
-void treeManager::writeFullBaseNodeTracts( bool uFloat, bool doZip, bool onlyMasks )
+void treeManager::writeClusterMasks( const nodeID_t input )
+{
+    std::vector< size_t > inNodes( input.second );
+    writeClusterMasks( inNodes );
+    return;
+}
+void treeManager::writeClusterMasks( std::vector< nodeID_t > input )
+{
+    std::vector< size_t > inNodes;
+    inNodes.reserve(input.size());
+
+    for( size_t i = 0; i < input.size(); ++i )
+    {
+        inNodes.push_back(input[i].second);
+    }
+    writeClusterMasks( inNodes );
+    return;
+}
+void treeManager::writeClusterMasks( std::vector< size_t > input )
+{
+
+    if( m_verbose )
+        std::cout << "Writing cluster masks" << std::endl;
+
+    fileManagerFactory maskFileMF( m_fullTractFolder );
+    fileManager& maskManager( maskFileMF.getFM() );
+    if( m_zipFlag )
+    {
+        maskManager.storeZipped();
+    }
+    else
+    {
+        maskManager.storeUnzipped();
+    }
+
+    time_t startTime( time( NULL ) ), lastTime( time( NULL ) );
+    size_t progCount( 0 );
+
+
+
+    // write cluster masks
+    for( size_t i = 0; i < input.size(); ++i )
+    {
+        std::vector<std::vector<std::vector<bool> > > maskMatrix( m_tree.getDataSize().m_z,
+                    std::vector<std::vector<bool> > ( m_tree.getDataSize().m_y, std::vector<bool> ( m_tree.getDataSize().m_x, false ) ) );
+
+        std::vector<WHcoord> nodeCoords( m_tree.getCoordinates4node( input[i] ) );
+
+        for( size_t j = 0; j < nodeCoords.size(); ++j )
+        {
+            maskMatrix[nodeCoords[j].m_z][nodeCoords[j].m_y][nodeCoords[j].m_x] = true;
+        }
+
+        std::string maskFilename( maskManager.getClusterMaskFilename( input[i] ) );
+        maskManager.writeMask( maskFilename, maskMatrix );
+        ++progCount;
+
+        if( m_verbose )
+        {
+            time_t currentTime( time( NULL ) );
+            if( currentTime - lastTime > 1 )
+            {
+                // output progress every 2 seconds
+                lastTime = currentTime;
+                size_t currentCount( progCount );
+                float progress = ( currentCount ) * 100. / (input.size() );
+                size_t expected_remain( difftime( currentTime, startTime ) * ( ( 100. - progress ) / progress ) );
+                std::cout << "\r" << ( int )progress << " % Completed (" << currentCount << " node masks)"
+                                << ". Expected remaining time: ";
+                std::cout << expected_remain / 3600 << "h " << ( expected_remain % 3600 ) / 60 << "' " << ( ( expected_remain
+                                % 3600 ) % 60 ) << "\"  " << std::flush;
+            }
+        }
+    }
+
+
+    if( m_verbose )
+    {
+        size_t timeTaken( difftime( time( NULL ), startTime ) );
+        std::cout << "\r100% Completed (" << progCount << " node masks). Time taken: "
+                  << timeTaken / 3600 << "h " << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken
+                                     % 3600 ) % 60 ) << "\"  " << std::endl;
+    }
+
+return;
+} // end "writeClusterMasks()" -----------------------------------------------------------------
+
+
+
+void treeManager::writeFullBaseNodeTracts( bool onlyMasks )
 {
     if( m_fullTractFolder.empty() )
     {
@@ -618,22 +728,20 @@ void treeManager::writeFullBaseNodeTracts( bool uFloat, bool doZip, bool onlyMas
     if( m_verbose )
         std::cout << "Getting tree base nodes" << std::endl;
 
+    if( !m_tree.testRootBaseNodes() )
+    {
+        std::cerr << "ERROR: Base nodes are not all the the lowest level" << std::endl;
+        return;
+    }
     std::vector<size_t> baseNodes = m_tree.getRootBaseNodes();
 
-    for( size_t i = 0; i < baseNodes.size(); ++i )
-    {
-        if( m_tree.getNode( baseNodes[i] ).getHLevel() > 1 )
-        {
-            std::cerr << "ERROR: Base nodes are not all the the lowest level" << std::endl;
-            return;
-        }
-    }
 
     if( m_verbose )
         std::cout << "Writing cluster masks" << std::endl;
 
-    vistaManager maskManager( m_fullTractFolder );
-    if( doZip )
+    fileManagerFactory maskFileMF( m_fullTractFolder );
+    fileManager& maskManager( maskFileMF.getFM() );
+    if( m_zipFlag )
     {
         maskManager.storeZipped();
     }
@@ -660,8 +768,7 @@ void treeManager::writeFullBaseNodeTracts( bool uFloat, bool doZip, bool onlyMas
             maskMatrix[nodeCoords[j].m_z][nodeCoords[j].m_y][nodeCoords[j].m_x] = true;
         }
 
-        std::string maskFilename;
-        maskManager.getClusterMaskFilename( baseNodes[i], &maskFilename );
+        std::string maskFilename( maskManager.getClusterMaskFilename( baseNodes[i] ) );
         maskManager.writeMask( maskFilename, maskMatrix );
         ++progCount;
 
@@ -700,7 +807,7 @@ void treeManager::writeFullBaseNodeTracts( bool uFloat, bool doZip, bool onlyMas
     if( m_verbose )
         std::cout << "Writing base nodes full mean tracts" << std::endl;
 
-    writeFullTract( baseNodes, uFloat, doZip );
+    writeFullTract( baseNodes );
 
 return;
 } // end "writeFullBaseNodeTracts()" -----------------------------------------------------------------
@@ -709,14 +816,8 @@ return;
 
 void treeManager::writeAllNodeTracts( const float memory ) const
 {
-    if( m_tree.getDataGrid() != HC_VISTA )
-    {
-        std::cerr
-                        << "Tree coordinates are not in vista format. Only vista is supported for this operation, convert tree coordinates first"
-                        << std::endl;
-        return;
-    }
-    if( m_singleTractFolder.empty() )
+
+    if( m_leavesTractFolder.empty() )
     {
         std::cerr
                         << "Location of single tracts folder has not been specified, please initialize with treeManager::setMeanTractFolder()"
@@ -738,11 +839,12 @@ void treeManager::writeAllNodeTracts( const float memory ) const
     // compute cache size
     float tractMb( 0 );
     {
-        vistaManager vistaSingle( m_singleTractFolder ); // vista object to read single tractograms
-        vistaSingle.readAsUnThres();
-        vistaSingle.readAsLog();
+        fileManagerFactory leafFileMF( m_leavesTractFolder );
+        fileManager& leafFM( leafFileMF.getFM() ); // object to read single tractograms
+        leafFM.readAsUnThres();
+        leafFM.readAsLog();
         compactTract tempTract;
-        vistaSingle.readLeafTract( m_tree.getCoordinate4leaf( 0 ), tempTract );
+        leafFM.readLeafTract( 0, m_tree.m_trackids, m_tree.m_coordinates, &tempTract );
         tractMb = tempTract.mBytes();
         if( m_verbose )
             std::cout << "Tractogram size is: " << tempTract.size() << " (" << tractMb << " MB)" << std::endl;
@@ -873,7 +975,7 @@ void treeManager::writeMeanTracts( std::vector< size_t > inNodes ) const
         std::cout << "Writing mean tracts for " << inNodes.size() << " nodes, containing a total of " << totalSize
                         << " single voxels..." << std::endl;
 
-    if( m_singleTractFolder.empty() )
+    if( m_leavesTractFolder.empty() )
     {
         std::cerr
                         << "Location of single tracts folder has not been specified, please initialize with treeManager::setMeanTractFolder()"
@@ -888,13 +990,28 @@ void treeManager::writeMeanTracts( std::vector< size_t > inNodes ) const
         return;
     }
 
-    vistaManager vistaMean( m_meanTractFolder );
-    vistaMean.writeInChar();
+    fileManagerFactory meanTractFileMF( m_meanTractFolder );
+    fileManager& meanTractFM( meanTractFileMF.getFM() );
+    if ( m_floatFlag )
+    {
+        meanTractFM.writeInFloat();
+    }
+    else
+    {
+        meanTractFM.writeInChar();
+    }
+    if ( m_zipFlag )
+    {
+        meanTractFM.storeZipped();
+    }
+    else
+    {
+        meanTractFM.storeUnzipped();
+    }
 
     m_tree.sortBySize( &inNodes );
     std::reverse( inNodes.begin(), inNodes.end() ); // put the biggest cluster to be processed first (makes better use of parallelism)
 
-    volatile size_t threadcounter( 0 );
 
     time_t lastTime( time( NULL ) ), startTime( time( NULL ) );
 
@@ -902,7 +1019,7 @@ void treeManager::writeMeanTracts( std::vector< size_t > inNodes ) const
     for( size_t i = 0; i < inNodes.size(); ++i )
     {
         compactTract meanTract( getMeanTract( inNodes[i] ) );
-        vistaMean.writeNodeTract( inNodes[i], meanTract );
+        meanTractFM.writeNodeTract( inNodes[i], meanTract );
 
 #pragma omp critical
         progSize += m_tree.getNode( inNodes[i] ).getSize(); // increment thread counter
@@ -974,26 +1091,34 @@ void treeManager::writeTree() const
 {
     if( m_outputFolder.empty() )
     {
-        std::cerr << "ERROR @ treeBuilder::writeTree(): outputfolder is not set" << std::endl;
+        std::cerr << "ERROR @ treeManager::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
         return;
     }
-    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt" );
-    m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
-    m_tree.writeTreeOldWalnut( m_outputFolder + "/" + m_tree.m_treeName + "_4ow.txt" );
-
+    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt", m_niftiMode );
     if( m_verbose )
     {
         std::cout << "Written standard tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        std::cout << "Written walnut tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_4ow.txt" << std::endl;
     }
     if( m_logfile != 0 )
     {
         ( *m_logfile ) << "Standard tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        ( *m_logfile ) << "Walnut tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_4ow.txt" << std::endl;
     }
 
+    if( m_debug )
+    {
+        m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
+        //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
+        if( m_verbose )
+        {
+            std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+    }
     return;
 } // end treeManager::writeTree() -------------------------------------------------------------------------------------
 
@@ -1003,9 +1128,11 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
 {
     std::vector< size_t >& nodeVectorRef( *nodeVector );
     time_t& lastTimeRef( *lastTime );
-    vistaManager vistaSingle( m_singleTractFolder );
-    vistaSingle.readAsLog();
-    vistaSingle.readAsUnThres();
+
+    fileManagerFactory leavesFileMF( m_leavesTractFolder );
+    fileManager& leavesFM( leavesFileMF.getFM() );
+    leavesFM.readAsLog();
+    leavesFM.readAsUnThres();
 
     volatile size_t threadcounter( 0 ); // keeps track of unfinished generated threads
 
@@ -1037,8 +1164,8 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
         }
         else
         {
-            vistaSingle.readLeafTract( m_tree.getCoordinate4leaf( kids[0].second ), meanTract );
-            meanTract.unLog( m_logFactor );
+            leavesFM.readLeafTract( kids[0].second, m_tree.m_trackids, m_tree.m_coordinates, &meanTract );
+            meanTract.unLog( m_tree.m_logFactor );
         }
         size_t meanSize( ( m_tree.getNode( kids[0] ) ).getSize() );
 
@@ -1063,8 +1190,8 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
             }
             else
             {
-                vistaSingle.readLeafTract( m_tree.getCoordinate4leaf( kids[j].second ), addedTract );
-                addedTract.unLog( m_logFactor );
+                leavesFM.readLeafTract( kids[j].second, m_tree.m_trackids, m_tree.m_coordinates, &addedTract );
+                addedTract.unLog( m_tree.m_logFactor );
             }
             size_t addedSize( ( m_tree.getNode( kids[j] ) ).getSize() );
             compactTract tempTract( addedTract, meanTract, addedSize, meanSize );
@@ -1082,7 +1209,7 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
 #pragma omp atomic
         ++threadcounter; // increment thread counter
         //volatile size_t *tcpointer();
-        boost::thread doWrite( boost::bind( &treeManager::logWriteTract, this, currentNode.getID(), meanTract, m_meanTractFolder,
+        boost::thread doWrite( boost::bind( &treeManager::logWriteTract, this, currentNode.getID(), &meanTract, m_meanTractFolder,
                         &threadcounter ) );
 
 #pragma omp single nowait // only one thread executes output
@@ -1112,63 +1239,35 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
     }
 } // end treeManager::writeNodeTracts() -------------------------------------------------------------------------------------
 
-void treeManager::logWriteTract( const size_t &nodeID, compactTract &tract, const std::string &meanTractFolder,
+void treeManager::logWriteTract( const size_t &nodeID,  compactTract* tractPtr, const std::string &meanTractFolder,
                 volatile size_t* const threadcounter ) const
 {
-    tract.doLog( m_logFactor );
-    vistaManager vistaMean( meanTractFolder );
-    vistaMean.writeInChar();
-    vistaMean.writeNodeTract( nodeID, tract );
+    compactTract& tract( *tractPtr );
+    tract.doLog( m_tree.m_logFactor );
+
+    fileManagerFactory meanTractFileMF( meanTractFolder );
+    fileManager& meanTractFM( meanTractFileMF.getFM() );
+    if ( m_floatFlag )
+    {
+        meanTractFM.writeInFloat();
+    }
+    else
+    {
+        meanTractFM.writeInChar();
+    }
+    if ( m_zipFlag )
+    {
+        meanTractFM.storeZipped();
+    }
+    else
+    {
+        meanTractFM.storeUnzipped();
+    }
+
+    meanTractFM.writeNodeTract( nodeID, tract );
 #pragma omp atomic
     --( *threadcounter );
     return;
 } // end treeManager::logWriteTract() -------------------------------------------------------------------------------------
 
 
-void treeManager::threadCout( const std::string &coutString, volatile size_t* const threadcounter )
-{
-    std::cout << "\r" << coutString << std::flush;
-#pragma omp atomic
-    --( *threadcounter );
-    return;
-} // end treeManager::logWriteTract() -------------------------------------------------------------------------------------
-
-
-void treeManager::recaptureLeaves()
-{
-    std::vector< size_t > baseNodes( m_tree.getRootBaseNodes() );
-    std::vector< compactTract > baseTracts;
-    baseTracts.reserve( baseNodes.size() );
-    std::vector< WHcoord > baseCoords;
-    baseCoords.reserve( baseNodes.size() );
-
-    // get mean tracts and coordinate for base nodes
-    bool allBases( true );
-    for( size_t i = 0; i < baseNodes.size(); ++i )
-    {
-        if( m_tree.getNode( baseNodes[i] ).getHLevel() > 1 )
-        {
-            allBases = false;
-        }
-        baseTracts.push_back( getMeanTract( baseNodes[i] ) );
-        baseCoords.push_back( m_tree.getMeanCoordinate4node( baseNodes[i] ) );
-    }
-    if( !allBases )
-    {
-        std::cerr << "WARNING @ treeManager::recaptureLeaves(): not all Base nodes have hLevel == 1" << std::endl;
-    }
-
-    std::vector< WHcoord > oldDiscarded( m_tree.m_discarded.begin(), m_tree.m_discarded.end() );
-    std::list< WHcoord > newDiscarded, newInserted;
-
-    // loop through discarded voxels
-    for( size_t i = 0; i < oldDiscarded.size(); ++i )
-    {
-        /// find clusters within geaometric distance range
-
-        /// find best match
-
-        /// if distance is lower than node level rejoin
-    }
-    /// insert coordinates, rename leaves and change children info
-} // end treeManager::recaptureLeaves() -------------------------------------------------------------------------------------

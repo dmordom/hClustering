@@ -2,7 +2,7 @@
 //
 // Project: OpenWalnut ( http://www.openwalnut.org )
 //
-// Copyright 2009 OpenWalnut Community, BSV-Leipzig and CNCF-CBS
+// Copyright 2009 OpenWalnut Community, BSV@Uni-Leipzig and CNCF@MPI-CBS
 // For more information see http://www.openwalnut.org/copying
 //
 // This file is part of OpenWalnut.
@@ -20,11 +20,38 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with OpenWalnut. If not, see <http://www.gnu.org/licenses/>.
 //
-// This file is also part of the
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
 // Whole-Brain Connectivity-Based Hierarchical Parcellation Project
 // David Moreno-Dominguez
+// d.mor.dom@gmail.com
 // moreno@cbs.mpg.de
-// www.cbs.mpg.de/~moreno
+// www.cbs.mpg.de/~moreno//
+// This file is also part of OpenWalnut ( http://www.openwalnut.org ).
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
 //
 //---------------------------------------------------------------------------
 
@@ -135,7 +162,7 @@ std::vector<WHcoord> WHcoord::getPhysNbs( const WHcoord dataSize, const unsigned
                     temp.m_z = this->m_z + i;
                     temp.m_y = this->m_y + j;
                     temp.m_x = this->m_x + k;
-                    if( ( temp.m_z < 0) || ( temp.m_y < 0 ) || ( temp.m_x < 0 ) || ( temp.m_z > dataSize.m_z ) ||
+                    if( ( temp.m_z < 0 ) || ( temp.m_y < 0 ) || ( temp.m_x < 0 ) || ( temp.m_z > dataSize.m_z ) ||
                          ( temp.m_y > dataSize.m_y ) ||( temp.m_x > dataSize.m_x ) )
                     {
                         continue; // voxel is out of mask boundaries
@@ -196,23 +223,38 @@ std::string WHcoord::getNameString() const
 
 WHcoord WHcoord::nifti2vista( const WHcoord dataSize ) const
 {
-        WHcoord returnNifti;
-        returnNifti.m_x = this->m_x;
-        returnNifti.m_y = ( dataSize.m_y-1 )-this->m_y;
-        returnNifti.m_z = ( dataSize.m_z-1 )-this->m_z;
-        return returnNifti;
-} // end "nifti2Vista()" -----------------------------------------------------------------
-
-
-WHcoord WHcoord::vista2nifti( const WHcoord dataSize ) const
-{
         WHcoord returnVista;
         returnVista.m_x = this->m_x;
         returnVista.m_y = ( dataSize.m_y-1 )-this->m_y;
         returnVista.m_z = ( dataSize.m_z-1 )-this->m_z;
         return returnVista;
+} // end "nifti2Vista()" -----------------------------------------------------------------
+
+
+
+WHcoord WHcoord::vista2nifti( const WHcoord dataSize ) const
+{
+        WHcoord returnNifti;
+        returnNifti.m_x = this->m_x;
+        returnNifti.m_y = ( dataSize.m_y-1 )-this->m_y;
+        returnNifti.m_z = ( dataSize.m_z-1 )-this->m_z;
+        return returnNifti;
 } // end "vista2Nifti()" -----------------------------------------------------------------
 
+WHcoord WHcoord::surf2vista( const WHcoord dataSize ) const
+{
+        WHcoord returnVista;
+        returnVista.m_x = this->m_x+( ( dataSize.m_x-1.0 )/2.0 );
+        returnVista.m_y = ( ( dataSize.m_y-1.0 )/2.0 )-this->m_y;
+        returnVista.m_z = ( ( dataSize.m_z-1.0 )/2.0 )-this->m_z;
+        return returnVista;
+} // end "surf2vista()" -----------------------------------------------------------------
+
+WHcoord WHcoord::surf2nifti( const WHcoord dataSize ) const
+{
+        WHcoord returnVista = this->surf2vista( dataSize );
+        return returnVista.vista2nifti( dataSize );
+} // end "surf2nifti()" -----------------------------------------------------------------
 
 
 // === MEMBER OPERATORS ===
@@ -237,7 +279,7 @@ std::ostream& operator <<( std::ostream& os, const WHcoord& object )
 {
     os << boost::format( "%03d %03d %03d" ) % object.m_x  % object.m_y  % object.m_z;
     return os;
-} // end "operator <<" -----------------------------------------------------------------
+} // end "operator << " -----------------------------------------------------------------
 
 
 bool operator <( const WHcoord &lhs, const WHcoord &rhs )
@@ -302,6 +344,10 @@ std::string getGridString( const HC_GRID gridType )
     else if( gridType == HC_NIFTI )
     {
         return "nifti";
+    }
+    else if( gridType == HC_SURF )
+    {
+        return "surf";
     }
     else
     {

@@ -1,0 +1,1323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="hClustering_2.0" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildctree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildctree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildctree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildctree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildctree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildctree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildgraphtree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildgraphtree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildgraphtree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildgraphtree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildgraphtree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildgraphtree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildrandctree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildrandctree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildrandctree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="buildrandctree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/buildrandctree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 buildrandctree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="cmpct2vista">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/cmpct2vista" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 cmpct2vista" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="cmpct2vista/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/cmpct2vista" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 cmpct2vista/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="compact2full">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/compact2full" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 compact2full" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="compact2full/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/compact2full" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 compact2full/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="comparetrees">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/comparetrees" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 comparetrees" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="comparetrees/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/comparetrees" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 comparetrees/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="cpcc">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/cpcc" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 cpcc" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="cpcc/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/cpcc" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 cpcc/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="distMatrix">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distMatrix" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distMatrix" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="distMatrix/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distMatrix" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distMatrix/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="fliptracts">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/fliptracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 fliptracts" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="fliptracts/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/fliptracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 fliptracts/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="fliptree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/fliptree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 fliptree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="fliptree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/fliptree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 fliptree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="full2compact">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/full2compact" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 full2compact" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="full2compact/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/full2compact" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 full2compact/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="image2tree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/image2tree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 image2tree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="image2tree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/image2tree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 image2tree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="matchpartition">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/matchpartition" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 matchpartition" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="matchpartition/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/matchpartition" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 matchpartition/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="pairdist">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/pairdist" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 pairdist" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="pairdist/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/pairdist" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 pairdist/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="partitiontree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/partitiontree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 partitiontree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="partitiontree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/partitiontree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 partitiontree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="processtree">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/processtree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 processtree" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="processtree/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/processtree" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 processtree/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="randtracts">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/randtracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 randtracts" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="randtracts/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/randtracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 randtracts/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="surfprojection">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/surfprojection" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 surfprojection" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="surfprojection/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/surfprojection" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 surfprojection/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="tractdist">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/tractdist" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 tractdist" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="tractdist/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/tractdist" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 tractdist/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="treetracts">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/treetracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 treetracts" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="treetracts/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/treetracts" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 treetracts/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="vista2cmpct">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/vista2cmpct" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 vista2cmpct" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="vista2cmpct/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/vista2cmpct" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/.." />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../../include" />
+            <Add directory="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/../common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.6" />
+            <Add directory="/usr/include/c++/4.6/backward" />
+            <Add directory="/usr/include/c++/4.6/x86_64-linux-gnu/." />
+            <Add directory="/usr/include/nifti" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 vista2cmpct/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/buildctree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/buildgraphtree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/buildrandctree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/cmpct2vista.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/compact2full.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/comparetrees.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/cpcc.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/distMatrix.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/fliptracts.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/fliptree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/full2compact.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/image2tree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/matchpartition.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/pairdist.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/partitiontree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/processtree.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/randtracts.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/surfprojection.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/tractdist.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/treetracts.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/vista2cmpct.cpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/listedCache.hpp">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.h">
+      </Unit>
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

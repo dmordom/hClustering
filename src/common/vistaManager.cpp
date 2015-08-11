@@ -1,453 +1,264 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+// This file is also part of OpenWalnut ( http://www.openwalnut.org ).
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 #include "vistaManager.h"
 #include <errno.h>
 
-#define NEWBOOST true
-
 // PUBLIC MEMBERS
 
+/*
 // vistaManager::getTractFilename(): returns tract filename
-void vistaManager::getTractFilename(const WHcoord tractCoord, std::string &filename) const {
-    filename = (m_tractFolder + "/connect_" + tractCoord.getNameString() + ".v");
-    return;
+std::string vistaManager::getLeafTractFilename (const WHcoord& tractCoord ) const
+{
+    std::string filename = str(boost::format( VISTA_LEAF_COMPACT_FNAME ) % tractCoord.getNameString() );
+    std::string filepath = m_ioFolder + "/" + filename + getFileExtension();
+    return filepath;
+}// end vistaManager::getTractFilename() -----------------------------------------------------------------
+*/
+std::string vistaManager::getLeafTractFilename( const size_t tractLeaf, const std::vector< size_t >& indexVector, const std::vector< WHcoord >& coordVector ) const
+{
+    if( coordVector.empty() )
+    {
+        VError( "getLeafTractFilename(): coordVector is empty" );
+    }
+    if( tractLeaf >= coordVector.size() )
+    {
+        VError( "getLeafTractFilename(): leaf ID provided is higher than coordinate vector length" );
+    }
+    WHcoord tractCoord( coordVector[tractLeaf] );   
+    std::string filename = str(boost::format( VISTA_LEAF_COMPACT_FNAME ) % tractCoord.getNameString() );
+    std::string filepath = m_ioFolder + "/" + filename + getFileExtension( ETCompact );
+    return filepath;
 }// end vistaManager::getTractFilename() -----------------------------------------------------------------
 
-// vistaManager::getTractFilename(): returns tract filename
-void vistaManager::getTractFilename(const size_t tractNode, std::string &filename) const {
-    filename = str(boost::format("%s/compact_%06d.v") % m_tractFolder % tractNode);
-    return;
-}// end vistaManager::getTractFilename() -----------------------------------------------------------------
+/*
 // vistaManager::getFullTractFilename(): returns tract filename
-void vistaManager::getFullTractFilename(const WHcoord tractCoord, std::string &filename) const {
-    filename = (m_tractFolder + "/fulltract_" + tractCoord.getNameString() + ".v");
-    return;
+std::string vistaManager::getFullLeafTractFilename(const WHcoord& tractCoord) const
+{
+    std::string filename = str(boost::format( VISTA_LEAF_FULL_FNAME ) % tractCoord.getNameString() );
+    std::string filepath = m_ioFolder + "/" + filename + getFileExtension();
+    return filepath;
+}// end vistaManager::getFullTractFilename() -----------------------------------------------------------------
+*/
+std::string vistaManager::getFullLeafTractFilename( const size_t tractLeaf, const std::vector< size_t >& indexVector, const std::vector< WHcoord >& coordVector ) const
+{
+    if( coordVector.empty() )
+    {
+        VError( "getLeafTractFilename(): coordVector is empty" );
+    }
+    if( tractLeaf >= coordVector.size() )
+    {
+        VError( "getLeafTractFilename(): leaf ID provided is higher than coordinate vector length" );
+    }
+    WHcoord tractCoord( coordVector[tractLeaf] );
+    std::string filename = str(boost::format( VISTA_LEAF_FULL_FNAME ) % tractCoord.getNameString() );
+    std::string filepath = m_ioFolder + "/" + filename + getFileExtension( ETFull );
+    return filepath;
 }// end vistaManager::getFullTractFilename() -----------------------------------------------------------------
 
-void vistaManager::getFullTractFilename(const size_t tractNode, std::string &filename) const {
-    filename = str(boost::format("%s/fulltract_%06d.v") % m_tractFolder % tractNode);
-    return;
-}// end vistaManager::getFullTractFilename() -----------------------------------------------------------------
 
-void vistaManager::getClusterMaskFilename(const size_t node, std::string* filename) const
-{
-    *filename = str(boost::format("%s/cluster_%06d.v") % m_tractFolder % node);
-    return;
-}// end vistaManager::getClusterMaskFilename() -----------------------------------------------------------------
-
-void vistaManager::getClusterMaskFilenameZip(const size_t node, std::string* filename) const
-{
-    getClusterMaskFilename(node, filename);
-    *filename += ".gz";
-    return;
-}// end vistaManager::getClusterMaskFilename() -----------------------------------------------------------------
-
-size_t vistaManager::readClusterMaskNumber (const std::string filename) const
-{
-#if NEWBOOST
-    std::string fileNameStem( boost::filesystem::path(filename).stem().string() );
-#else
-    std::string fileNameStem( boost::filesystem::path(filename).stem() );
-#endif
-    std::string clusterNumberString( fileNameStem.begin()+8, fileNameStem.end() ); // "cluster_" has 8 charachters
-    size_t clusterNumber( boost::lexical_cast<size_t>( clusterNumberString ));
-    return clusterNumber;
-}// end vistaManager::readClusterMaskNumber() -----------------------------------------------------------------
-
-size_t vistaManager::readFullTractNumber (const std::string filename) const
-{
-#if NEWBOOST
-    std::string fileNameStem( boost::filesystem::path(filename).stem().string() );
-#else
-    std::string fileNameStem( boost::filesystem::path(filename).stem() );
-#endif
-    std::string clusterNumberString( fileNameStem.begin()+10, fileNameStem.end() ); // "fulltract_" has 10 charachters
-    size_t clusterNumber( boost::lexical_cast<size_t>( clusterNumberString ));
-    return clusterNumber;
-}// end vistaManager::readClusterMaskFilename() -----------------------------------------------------------------
+// "readVector()": reads a 1D vector
+ValueType vistaManager::readVector(const std::string& vectorFilenameRef, std::vector<float>* vectorPointer) const {
 
 
-// "vistaManager::readLeafTract()": extracts compact tractogram data from a vista file and returns it in compact Tract form
-void vistaManager::readLeafTract (const WHcoord tractCoord, compactTract &tractogram) const {
-    std::string tractFilename;
-    getTractFilename(tractCoord, tractFilename);
-    getTract(tractFilename,tractogram.m_tract);
-    tractogram.m_inLogUnits=m_logFlag;
-    tractogram.m_thresholded=m_thresFlag;
-    return;
-}
-void vistaManager::readLeafTract (const WHcoord tractCoord, compactTractChar &tractogram) const {
-    std::string tractFilename;
-    getTractFilename(tractCoord, tractFilename);
-    getTract(tractFilename,tractogram.m_tract);
-    tractogram.m_thresholded=m_thresFlag;
-    return;
-}//end vistaManager::readLeafTract() -----------------------------------------------------
+    std::vector<float>& vector = *vectorPointer;
+    std::string vectorFilename( vectorFilenameRef );
+    std::string vectorFilenameZipped( vectorFilenameRef );
 
-// "vistaManager::readNodeTract()": extracts compact tractogram data from a vista file and returns it in compact Tract form
-void vistaManager::readNodeTract (const size_t tractNode, compactTract &tractogram) const
-{
-    std::string tractFilename;
-    getTractFilename(tractNode, tractFilename);
-    getTract(tractFilename,tractogram.m_tract);
-    tractogram.m_inLogUnits=m_logFlag;
-    tractogram.m_thresholded=m_thresFlag;
-    return;
-}//end vistaManager::readNodeTract() -----------------------------------------------------
-
-
-void vistaManager::readStringTract (const std::string &tractFilename, compactTract &tractogram) const
-{
-getTract(tractFilename,tractogram.m_tract);
-tractogram.m_inLogUnits=m_logFlag;
-tractogram.m_thresholded=m_thresFlag;
-return;
-}//end vistaManager::readNodeTract() -----------------------------------------------------
-
-
-void vistaManager::writeLeafTract (const WHcoord leaf, const compactTract &tractogram) const {
-    std::string tractFilename;
-    getTractFilename(leaf,tractFilename);
-    const int columns(tractogram.m_tract.size());
-
-    VImage vtract;
-
-    if(m_floatFlag) {
-        vtract = VCreateImage(1,1,columns,VFloatRepn);
-        for (size_t i=0; i<columns; ++i) {
-            VPixel(vtract,0,0,i,VFloat) = tractogram.m_tract[i];
-        }
-    } else {
-        vtract = VCreateImage(1,1,columns,VUByteRepn);
-        for (size_t i=0; i<columns; ++i) {
-            VPixel(vtract,0,0,i,VUByte) = tractogram.m_tract[i]*255;
-        }
-    }
-
-
-    // write tractogram to file
-    if ( ! WriteVImage( (char *)tractFilename.c_str() , vtract ) )
-        VError( "write_Vtract(): Failed to open output tractogram file " );
-
-    // clean up
-    VDestroyImage( vtract );
-
-    return;
-
-}
-void vistaManager::writeLeafTract (const WHcoord leaf, const compactTractChar &tractogram) const {
-    std::string tractFilename;
-    getTractFilename(leaf,tractFilename);
-    const int columns(tractogram.m_tract.size());
-
-    VImage vtract;
-
-    vtract = VCreateImage(1,1,columns,VUByteRepn);
-    for (size_t i=0; i<columns; ++i) {
-        VPixel(vtract,0,0,i,VUByte) = tractogram.m_tract[i];
-    }
-
-    // write tractogram to file
-    if ( ! WriteVImage( (char *)tractFilename.c_str() , vtract ) )
-        VError( "write_Vtract(): Failed to open output tractogram file " );
-
-    // clean up
-    VDestroyImage( vtract );
-
-    return;
-
-}//end vistaManager::writeLeafTract() -----------------------------------------------------
-
-
-// "vistaManager::writeNodeTract()": write tractogram data into vista format file
-void vistaManager::writeNodeTract (const size_t tractNode, const compactTract &tractogram) const {
-
-    std::string tractFilename;
-    getTractFilename(tractNode,tractFilename);
-
-    writeTract(tractFilename, tractogram);
-
-    return;
-
-}//end vistaManager::writeNodeTract() -----------------------------------------------------
-
-void vistaManager::writeTract (const std::string tractFilename, const compactTract &tractogram) const
-{
-        const int columns(tractogram.m_tract.size());
-
-    VImage vtract;
-
-    if(m_floatFlag) {
-        vtract = VCreateImage(1,1,columns,VFloatRepn);
-        for (size_t i=0; i<columns; ++i) {
-            VPixel(vtract,0,0,i,VFloat) = tractogram.m_tract[i];
-        }
-    } else {
-        vtract = VCreateImage(1,1,columns,VUByteRepn);
-        for (size_t i=0; i<columns; ++i) {
-            VPixel(vtract,0,0,i,VUByte) = tractogram.m_tract[i]*255;
-        }
-    }
-
-
-    // write tractogram to file
-    if ( ! WriteVImage( (char *)tractFilename.c_str() , vtract ) )
-        VError( "write_Vtract(): Failed to open output tractogram file " );
-
-    if (m_zipFlag) { // zip file
-        // Variables for calling system commands
-        std::string gzipString("gzip -f ");
-        std::string sysCommand(gzipString + tractFilename);
-        int success(system(sysCommand.c_str()));
-    }
-
-    // clean up
-    VDestroyImage( vtract );
-
-    return;
-
-}//end vistaManager::writeTract() -----------------------------------------------------
-
-
-// "deleteTractFile()": delete tractogram file
-int vistaManager::deleteTractFile ( const size_t tractNode ) const {
-
-    std::string tractFilename;
-    getTractFilename(tractNode,tractFilename);
-
-    // Variables for calling system commands
-    std::string delString("rm -f ");
-    std::string sysCommand(delString +tractFilename);
-
-    // remove file
-    return system(sysCommand.c_str());
-
-}// end vistaManager::deleteTractFile(" -----------------------------------------------------------------
-
-
-
-
-// vistaManager::loadMask(): loads the full tractogram mask in memory
-void vistaManager::loadMask( std::string maskFilename) {
-
-    std::string maskFilenameZipped( maskFilename );
-
-#if NEWBOOST
-    std::string extension( boost::filesystem::path(maskFilename).extension().string() );
-#else
-    std::string extension( boost::filesystem::path(maskFilename).extension() );
-#endif
+    std::string extension( boost::filesystem::path(vectorFilename).extension().string() );
 
 
     if ( extension == ".gz" )
     {
-        maskFilename.resize(maskFilename.size()-3);
-
+        vectorFilename.resize(vectorFilename.size()-3);
         // Variables for calling system commands
-        std::string sysCommand( "gzip -dcf " + maskFilenameZipped + " > " + maskFilename );
+        std::string sysCommand( "gzip -dcf " + vectorFilenameZipped + " > " + vectorFilename );
         int success(system(sysCommand.c_str()));
     }
-    else if ( extension == ".v" )
+    else if ( extension == getFileExtension( ETCompact ) )
     {
     }
     else
     {
-        std::cerr << "File \"" << maskFilenameZipped << "\" has no recognized extension (\"" << extension << "\") stopping." << std::endl;
-        return;
+        std::cerr << "File \"" << vectorFilenameZipped << "\" has no recognized extension (\"" << extension << "\") stopping." << std::endl;
+        return VTError;
     }
 
+    // read vector image
+    VImage vectorImage;
+    if ( ! readVista( (char *)vectorFilename.c_str(), &vectorImage ) )
+        VError( "readVector(): Failed to read vector image" );
 
-    // read mask image
-    VImage mask_image;
-
-
-    if ( ! ReadImage( (char *)maskFilename.c_str(), mask_image ) )
-        VError( "store_Vtract_Image(): Failed to read mask image" );
-
-    VRepnKind maskRepnType(VPixelRepn(mask_image));
-    if (maskRepnType!=VBitRepn && maskRepnType!=VFloatRepn && maskRepnType!=VUByteRepn)
-        VError( "storeFullVtract(): Mask representation type not recognized (neither VFloat nor VUByte nor VBit)" );
-
-    const size_t Bands   = VImageNBands( mask_image );
-    const size_t Rows    = VImageNRows( mask_image );
-    const size_t Columns = VImageNColumns( mask_image );
-
-
-    m_maskMatrix.clear();
-
+    VRepnKind vectorRepnType(VPixelRepn(vectorImage));
+    ValueType vectorValueType;
+    if(vectorRepnType == VUByteRepn )
     {
-        std::vector<bool> column(Columns,false);
-        std::vector<std::vector<bool> >slice(Rows,column);
-        m_maskMatrix.resize(Bands,slice);
+        vectorValueType = VTUINT8;
     }
-    size_t maskSum=0;
-    for (int i=0 ; i<Bands ; ++i) {
-        for (int j=0 ; j<Rows ; ++j) {
-            for (int k=0 ; k<Columns ; ++k) {
+    else if(vectorRepnType == VFloatRepn )
+    {
+        vectorValueType = VTFloat32;
+    }
+    else if(vectorRepnType == VBitRepn )
+    {
+        vectorValueType = VTBit;
+    }
+    else
+    {
+        VError( "readVector(): vector representation type not recognized (neither VFloat nor VUByte)" );
+    }
 
-                if (maskRepnType==VBitRepn)
-                    m_maskMatrix[i][j][k] = VPixel(mask_image,i,j,k,VBit);
-                else if (maskRepnType==VFloatRepn)
-                    m_maskMatrix[i][j][k] = VPixel(mask_image,i,j,k,VFloat);
-                else
-                    m_maskMatrix[i][j][k] = VPixel(mask_image,i,j,k,VUByte);
+    const size_t Bands   = VImageNBands( vectorImage );
+    const size_t Rows    = VImageNRows( vectorImage );
 
-                if(m_maskMatrix[i][j][k])
-                    ++maskSum;
-            }
+    if (Bands!=1 || Rows!= 1)
+        VError("ERROR @ vistaManager::readVector(): vector image must have 1 row and 1 band only");
+
+    const size_t nElements = VImageNColumns(vectorImage);
+    vector.reserve(nElements); // Reserve memory in vector to increase speed
+
+    for (size_t i=0 ; i<nElements ; ++i)
+    {
+        if (vectorRepnType==VFloatRepn)
+        {
+            vector.push_back( VPixel(vectorImage,0,0,i,VFloat) );
         }
-    }
+        else if (vectorRepnType==VUByteRepn)
+        {
+            vector.push_back( (float)VPixel(vectorImage,0,0,i,VUByte) );
+        }
+        else if (vectorRepnType==VBitRepn)
+        {
+            vector.push_back( VPixel(vectorImage,0,0,i,VBit) );
+        }
+        else
+            VError( "readVector(): vector representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+        }
 
     // clean up
-    VDestroyImage( mask_image );
+    VDestroyImage( vectorImage );
 
-    m_flipVector.clear();
-    m_flipVector.resize(maskSum,0);
-    for (size_t i=0; i<maskSum; ++i)
-        m_flipVector[i]=i;
-    size_t indexer(0);
-    for (int i=0 ; i<Bands ; ++i) {
-        for (int j=0 ; j<Rows ; ++j) {
-            size_t valuesPerRow(0);
-            for (int k=0 ; k<Columns ; ++k) {
-                if(m_maskMatrix[i][j][k])
-                    ++valuesPerRow;
-            }
-            std::reverse(m_flipVector.begin()+indexer,m_flipVector.begin()+indexer+valuesPerRow);
-            indexer+=valuesPerRow;
-        }
-    }
+    if (vector.empty())
+        std::cerr<<" WARNING: vector is empty"<<std::endl;
 
     if ( extension == ".gz" )
     {
         // Variables for calling system commands
-        std::string sysCommand( "rm -f " + maskFilename );
+        std::string sysCommand( "rm -f " + vectorFilename );
         int success(system(sysCommand.c_str()));
     }
+    return vectorValueType;
+}// end vistaManager::readVector() -----------------------------------------------------------------
 
-
-}// end vistaManager::loadMask() -----------------------------------------------------------------
-
-
-void vistaManager::writeMask( const std::string maskFilename, const std::vector<std::vector<std::vector<bool> > > &maskMatrix ) const
+// "readMatrix()": reads a 2D matrix
+ValueType vistaManager::readMatrix(const  std::string& matrixFilenameRef, std::vector<std::vector<float> >* matrixPointer ) const
 {
-    if (maskMatrix.empty()) {
-        std::cerr<< "ERROR @ vistaManager::writeMask(): Mask matrix is empty, mask has not been stored" <<std::endl;
-        return;
-    }
+    std::vector<std::vector<float> >& matrix = *matrixPointer;
+    std::string matrixFilename( matrixFilenameRef );
+    std::string matrixFilenameZipped( matrixFilenameRef );
 
-
-    const size_t Bands   = maskMatrix.size();
-    const size_t Rows    = maskMatrix[0].size();
-    const size_t Columns = maskMatrix[0][0].size();
-
-    VImage maskImage;
-
-    maskImage = VCreateImage(Bands,Rows,Columns,VBitRepn);
-
-    VFillImage(maskImage,VAllBands,0);
-
-    for( int i=0 ; i<Bands ; ++i )
-    {
-        for( int j=0 ; j<Rows ; ++j )
-        {
-            for( int k=0 ; k<Columns ; ++k )
-            {
-                if (maskMatrix[i][j][k])
-                {
-                    VPixel(maskImage,i,j,k,VBit) = 1;
-                }
-            }
-        }
-    }
-
-    // write mask to file
-    if ( ! WriteVImage( (char *)maskFilename.c_str() , maskImage ) )
-        VError( "writeMask(): Failed to open output mask file " );
-
-    // clean up
-    VDestroyImage( maskImage );
-
-    if (m_zipFlag) { // zip file
-        // Variables for calling system commands
-        std::string gzipString("gzip -f ");
-        std::string sysCommand(gzipString + maskFilename);
-        int success(system(sysCommand.c_str()));
-    }
-
-    return;
-}// end vistaManager::writeMask() -----------------------------------------------------------------
-
-void vistaManager::readMatrix( std::string matrixFilename, std::vector<std::vector<float> > *matrixPointer ) const
-{
-    std::vector<std::vector<float> > &matrix = *matrixPointer;
-
-    std::string matrixFilenameZipped( matrixFilename );
-
-#if NEWBOOST
     std::string extension( boost::filesystem::path(matrixFilename).extension().string() );
-#else
-    std::string extension( boost::filesystem::path(matrixFilename).extension() );
-#endif
+
 
     if ( extension == ".gz" )
     {
         matrixFilename.resize(matrixFilename.size()-3);
-
         // Variables for calling system commands
         std::string sysCommand( "gzip -dcf " + matrixFilenameZipped + " > " + matrixFilename );
         int success(system(sysCommand.c_str()));
     }
-    else if ( extension == ".v" )
+    else if ( extension == getFileExtension( ETFull ) )
     {
     }
     else
     {
         std::cerr << "File \"" << matrixFilenameZipped << "\" has no recognized extension (\"" << extension << "\") stopping." << std::endl;
-        return;
+        return VTError;
     }
-
 
     // read matrix image
     VImage matrixImage;
-
-
-    if ( ! ReadImage( (char *)matrixFilename.c_str(), matrixImage ) )
+    if ( ! readVista( (char *)matrixFilename.c_str(), &matrixImage ) )
         VError( "loadMatrix(): Failed to read matrix image" );
 
     VRepnKind maskRepnType(VPixelRepn(matrixImage));
-    if (maskRepnType!=VBitRepn && maskRepnType!=VFloatRepn && maskRepnType!=VUByteRepn)
+    ValueType maskValueType;
+    if(maskRepnType == VBitRepn )
+    {
+        maskValueType = VTBit;
+    }
+    else if(maskRepnType == VUByteRepn )
+    {
+        maskValueType = VTUINT8;
+    }
+    else if(maskRepnType == VFloatRepn )
+    {
+        maskValueType = VTFloat32;
+    }
+    else
+    {
         VError( "loadMatrix(): matrix representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+    }
 
     const size_t Bands   = VImageNBands( matrixImage );
-
     if (Bands != 1)
         VError( "loadMatrix(): matrix image has multiple bands" );
 
-
-    const size_t Rows    = VImageNRows( matrixImage );
-    const size_t Columns = VImageNColumns( matrixImage );
-
-
+    const size_t dimy = VImageNRows( matrixImage );
+    const size_t dimx = VImageNColumns( matrixImage );
     matrix.clear();
-
     {
-        std::vector<float> column(Columns,false);
-        matrix.resize(Rows,column);
+        std::vector<float> yvect(dimy,false);
+        matrix.resize(dimx,yvect);
     }
 
-    for (int i=0 ; i<Rows ; ++i) {
-        for (int j=0 ; j<Columns ; ++j) {
+    for (size_t i=0 ; i<dimy ; ++i)
+    {
+        for (size_t j=0 ; j<dimx ; ++j)
+        {
             if (maskRepnType==VBitRepn)
-                matrix[i][j] = VPixel(matrixImage,0,i,j,VBit);
+                matrix[j][i] = VPixel(matrixImage,0,i,j,VBit);
             else if (maskRepnType==VFloatRepn)
-                matrix[i][j] = VPixel(matrixImage,0,i,j,VFloat);
+                matrix[j][i] = VPixel(matrixImage,0,i,j,VFloat);
+            else if (maskRepnType==VUByteRepn)
+                matrix[j][i] = (float)VPixel(matrixImage,0,i,j,VUByte);
             else
-                matrix[i][j] = VPixel(matrixImage,0,i,j,VUByte);
+                VError( "loadMatrix(): matrix representation type not recognized (neither VFloat nor VUByte nor VBit)" );
         }
     }
 
     // clean up
     VDestroyImage( matrixImage );
-
 
     if ( extension == ".gz" )
     {
@@ -455,460 +266,337 @@ void vistaManager::readMatrix( std::string matrixFilename, std::vector<std::vect
         std::string sysCommand( "rm -f " + matrixFilename );
         int success(system(sysCommand.c_str()));
     }
-    return;
-
+    return maskValueType;
 }// end vistaManager::readMatrix() -----------------------------------------------------------------
 
-
-void vistaManager::writeMatrix( const std::string matrixFilename, const std::vector<std::vector<float> > &matrix ) const
+// "readImage()": reads a 3D image
+ValueType vistaManager::readImage( const std::string& imageFilenameRef, std::vector<std::vector<std::vector<float> > >* imagePointer ) const
 {
-    if (matrix.empty()) {
+    std::vector<std::vector<std::vector<float> > >& imageRef( *imagePointer );
+    std::string imageFilename( imageFilenameRef );
+    std::string imageFilenameZipped( imageFilenameRef );
+
+    std::string extension( boost::filesystem::path(imageFilename).extension().string() );
+
+
+    if ( extension == ".gz" )
+    {
+        imageFilename.resize(imageFilename.size()-3);
+
+        // Variables for calling system commands
+        std::string sysCommand( "gzip -dcf " + imageFilenameZipped + " > " + imageFilename );
+        int success(system(sysCommand.c_str()));
+    }
+    else if ( extension == getFileExtension( ETFull ) )
+    {
+    }
+    else
+    {
+        std::cerr << "File \"" << imageFilenameZipped << "\" has no recognized extension (\"" << extension << "\") stopping." << std::endl;
+        return VTError;
+    }
+
+    // read mask image
+    VImage thisImage;
+    if ( ! readVista( (char *)imageFilename.c_str(), &thisImage ) )
+        VError( "readImage(): Failed to read image" );
+
+    VRepnKind ImageRepnType(VPixelRepn(thisImage));
+    ValueType imageValueType;
+    if(ImageRepnType == VBitRepn )
+    {
+        imageValueType = VTBit;
+    }
+    else if(ImageRepnType == VUByteRepn )
+    {
+        imageValueType = VTUINT8;
+    }
+    else if(ImageRepnType == VFloatRepn )
+    {
+        imageValueType = VTFloat32;
+    }
+    else
+    {
+        VError( "readImage(): matrix representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+    }
+
+    const size_t dimz = VImageNBands( thisImage );  // bands are the z coordinate
+    const size_t dimy = VImageNRows( thisImage );  // rows are the y coordinate
+    const size_t dimx = VImageNColumns( thisImage ); // columns are the x coordinate
+    imageRef.clear();
+    {
+        std::vector<float> zvect(dimz,0);
+        std::vector<std::vector<float> >yzmatrix(dimy,zvect);
+        imageRef.resize(dimx,yzmatrix);
+    }
+    for (size_t i=0 ; i<dimz ; ++i)
+    {
+        for (size_t j=0 ; j<dimy ; ++j)
+        {
+            for (size_t k=0 ; k<dimx ; ++k)
+            {
+
+                if (ImageRepnType==VBitRepn)
+                    imageRef[k][j][i] = VPixel(thisImage,i,j,k,VBit);
+                else if (ImageRepnType==VFloatRepn)
+                    imageRef[k][j][i] = VPixel(thisImage,i,j,k,VFloat);
+                else
+                    imageRef[k][j][i] = (float)VPixel(thisImage,i,j,k,VUByte);
+            }
+        }
+    }
+
+    // clean up
+    VDestroyImage( thisImage );
+
+    if ( extension == ".gz" )
+    {
+        // Variables for calling system commands
+        std::string sysCommand( "rm -f " + imageFilename );
+        int success(system(sysCommand.c_str()));
+    }
+    return imageValueType;
+}// end vistaManager::readImage() -----------------------------------------------------------------
+
+
+// "writeVector()": writes a 1D vector
+void vistaManager::writeVector( const std::string& vectorFilename, const ValueType dataValueType, const std::vector<float>& vector, bool doZip ) const
+{
+    if ( vector.empty() )
+    {
+        std::cerr<< "ERROR @ vistaManager::writeVector(): vector is empty, it has not been stored" <<std::endl;
+        return;
+    }
+
+    const size_t Columns = vector.size();
+
+    VRepnKind vectorRepnType;
+    if( dataValueType == VTBit )
+    {
+        vectorRepnType = VBitRepn;
+    }
+    else if(dataValueType == VTUINT8 )
+    {
+        vectorRepnType = VUByteRepn ;
+    }
+    else if(dataValueType == VTFloat32 )
+    {
+        vectorRepnType = VFloatRepn ;
+    }
+    else
+    {
+        VError( "writeVector(): vector representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+    }
+
+    VImage vistaImage;
+    vistaImage = VCreateImage(1,1,Columns,vectorRepnType);
+
+
+    for( size_t i=0 ; i<Columns ; ++i )
+    {
+        if( dataValueType == VTBit )
+        {
+            VPixel(vistaImage,0,0,i,VBit) = ( vector[i] != 0 );
+        }
+        else if(dataValueType == VTUINT8 )
+        {
+            VPixel(vistaImage,0,0,i,VUByte) = (unsigned char)vector[i];
+        }
+        else if(dataValueType == VTFloat32 )
+        {
+            VPixel(vistaImage,0,0,i,VFloat) = vector[i];
+        }
+        else
+        {
+            VError( "writeVector(): vector representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+        }
+    }
+
+    // write vector to file
+    if ( ! writeVista( (char *)vectorFilename.c_str() , vistaImage ) )
+        VError( "writeVector(): Failed to open output vector file " );
+
+    // clean up
+    VDestroyImage( vistaImage );
+
+    if (doZip)
+    { // zip file
+        // Variables for calling system commands
+        std::string gzipString("gzip -f ");
+        std::string sysCommand(gzipString + vectorFilename);
+        int success(system(sysCommand.c_str()));
+    }
+    return;
+}// end vistaManager::writeVector() -----------------------------------------------------------------
+
+
+// "writeMatrix()": writes a 2D matrix
+void vistaManager::writeMatrix( const std::string& matrixFilename, const ValueType dataValueType, const std::vector<std::vector<float> >& matrix, bool doZip ) const
+{
+    if (matrix.empty())
+    {
         std::cerr<< "ERROR @ vistaManager::writeMatrix(): matrix is empty, it has not been stored" <<std::endl;
         return;
     }
 
+    const size_t dimx = matrix.size();
+    const size_t dimy = matrix[0].size();
 
-    const size_t Rows    = matrix.size();
-    const size_t Columns = matrix[0].size();
-
-    VImage matrixImage;
-
-    matrixImage = VCreateImage(1,Rows,Columns,VFloatRepn);
-
-
-
-    for( int i=0 ; i<Rows ; ++i )
+    VRepnKind matrixRepnType;
+    if( dataValueType == VTBit )
     {
-        for( int j=0 ; j<Columns ; ++j )
+        matrixRepnType = VBitRepn;
+    }
+    else if(dataValueType == VTUINT8 )
+    {
+        matrixRepnType = VUByteRepn ;
+    }
+    else if(dataValueType == VTFloat32 )
+    {
+        matrixRepnType = VFloatRepn ;
+    }
+    else
+    {
+        VError( "writeMatrix(): matrix representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+    }
+
+    VImage vistaImage;
+    vistaImage = VCreateImage(1,dimy,dimx,matrixRepnType);
+
+    for( size_t i=0 ; i<dimy ; ++i )
+    {
+        for( size_t j=0 ; j<dimx ; ++j )
         {
-            VPixel(matrixImage,0,i,j,VFloat) = matrix[i][j];
+            if( dataValueType == VTBit )
+            {
+                VPixel(vistaImage,0,i,j,VBit) = ( matrix[j][i] != 0 );
+            }
+            else if(dataValueType == VTUINT8 )
+            {
+                VPixel(vistaImage,0,i,j,VUByte) = (unsigned char)matrix[j][i];
+            }
+            else if(dataValueType == VTFloat32 )
+            {
+                VPixel(vistaImage,0,i,j,VFloat) = matrix[j][i];
+            }
+            else
+            {
+                VError( "writeMatrix(): matrix representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+            }
         }
     }
 
     // write matrix to file
-    if ( ! WriteVImage( (char *)matrixFilename.c_str() , matrixImage ) )
+    if ( ! writeVista( (char *)matrixFilename.c_str() , vistaImage ) )
         VError( "writeMatrix(): Failed to open output matrix file " );
 
     // clean up
-    VDestroyImage( matrixImage );
+    VDestroyImage( vistaImage );
 
-    if (m_zipFlag) { // zip file
+    if (doZip)
+    { // zip file
         // Variables for calling system commands
         std::string gzipString("gzip -f ");
         std::string sysCommand(gzipString + matrixFilename);
         int success(system(sysCommand.c_str()));
     }
-
     return;
 }// end vistaManager::writeMatrix() -----------------------------------------------------------------
 
 
-void vistaManager::readFullTract( const std::string fullTractFilename, compactTract* tractPointer ) const
+// "writeImage()": writes a 3D image
+void vistaManager::writeImage( const std::string& imageFilename, const ValueType dataValueType, const std::vector<std::vector<std::vector<float> > >& image, bool doZip ) const
 {
-    compactTract &tractogram = *tractPointer;
-    if (m_maskMatrix.empty()) {
-        std::cerr<< "ERROR @ vistaManager::readFullTract(): Mask hast not been loaded, tractogram has not been read"<<std::endl;
-        return;
-    }
-
-    VImage fullTractImage;
-
-    if ( ! ReadImage( (char *)fullTractFilename.c_str(), fullTractImage ) )
-        VError( "readFullTract(): Failed to read full tract image" );
-
-    VRepnKind tractRepnType(VPixelRepn(fullTractImage));
-    if ( tractRepnType!=VFloatRepn && tractRepnType!=VUByteRepn)
-        VError( "storeFullVtract(): tract representation type not recognized (neither VFloat nor VUByte)" );
-
-    const size_t Bands   = VImageNBands( fullTractImage );
-    const size_t Rows    = VImageNRows( fullTractImage );
-    const size_t Columns = VImageNColumns( fullTractImage );
-
-    if ( Bands != m_maskMatrix.size() || Rows != m_maskMatrix[0].size() || Columns!= m_maskMatrix[0][0].size() )
-        VError( "storeFullVtract(): mask and full tract dimensions do not match" );
-
-    tractogram.m_inLogUnits = m_logFlag;
-    tractogram.m_norm = 0;
-    tractogram.m_normReady = false;
-    tractogram.m_thresholded = m_thresFlag;
-    tractogram.m_tract.empty();
-    tractogram.m_tract.reserve( getTractSize() );
-
-    for( int i = 0; i < Bands; ++i )
+    if (image.empty())
     {
-        for( int j = 0; j < Rows; ++j )
-        {
-            for( int k = 0; k < Columns; ++k )
-            {
-                if ( m_maskMatrix[i][j][k] )
-                {
-                    if ( tractRepnType == VFloatRepn )
-                    {
-                        tractogram.m_tract.push_back( VPixel( fullTractImage, i, j, k, VFloat ) );
-                    }
-                    else
-                    {
-                        tractogram.m_tract.push_back( VPixel( fullTractImage, i, j, k, VUByte ) );
-                    }
-                }
-            }
-        }
-    }
-
-    // clean up
-    VDestroyImage( fullTractImage );
-
-    return;
-}// end vistaManager::readFullTract() -----------------------------------------------------------------
-
-
-
-// "storeFulltract()": write full image tractogram into vista format file and compress
-void vistaManager::storeFullTract (const size_t tractNode, const compactTract &tractogram) const {
-    std::string tractFilename;
-    getFullTractFilename(tractNode,tractFilename);
-    storeFullTract(tractFilename,tractogram);
-    return;
-}
-void vistaManager::storeFullTract (const WHcoord tractCoord, const compactTract &tractogram) const {
-    std::string tractFilename;
-    getFullTractFilename(tractCoord,tractFilename);
-    storeFullTract(tractFilename,tractogram);
-    return;
-}
-void vistaManager::storeFullTract (const std::string &tractFilename, const compactTract &tractogram) const {
-
-    if (m_maskMatrix.empty()) {
-        std::cerr<< "ERROR @ vistaManager::storeFullTract(): Mask hast not been loaded, file has not been stored"<<std::endl;
+        std::cerr<< "ERROR @ vistaManager::writeImage(): image matrix is empty, image has not been written" <<std::endl;
         return;
     }
 
-    const size_t Bands   = m_maskMatrix.size();
-    const size_t Rows    = m_maskMatrix[0].size();
-    const size_t Columns = m_maskMatrix[0][0].size();
+    const size_t dimx = image.size();
+    const size_t dimy = image[0].size();
+    const size_t dimz = image[0][0].size();
 
-    VImage fullTractImage;
-
-    if(m_floatFlag)
-        fullTractImage = VCreateImage(Bands,Rows,Columns,VFloatRepn);
+    VRepnKind ImageRepnType;
+    if( dataValueType == VTBit )
+    {
+        ImageRepnType = VBitRepn;
+    }
+    else if(dataValueType == VTUINT8 )
+    {
+        ImageRepnType = VUByteRepn ;
+    }
+    else if(dataValueType == VTFloat32 )
+    {
+        ImageRepnType = VFloatRepn ;
+    }
     else
-        fullTractImage = VCreateImage(Bands,Rows,Columns,VUByteRepn);
-
-    VFillImage(fullTractImage,VAllBands,0);
-
-    std::vector<float>::const_iterator tractIter(tractogram.m_tract.begin());
-
-
-    for( int i=0 ; i<Bands ; ++i )
     {
-        for( int j=0 ; j<Rows ; ++j )
-        {
-            for( int k=0 ; k<Columns ; ++k )
-            {
-                if (m_maskMatrix[i][j][k])
-                {
-                    if (tractIter == tractogram.m_tract.end())
-                        VError( "store_Vtract_Image(): Mask and tractogram sizes do not match" );
+        VError( "writeImage(): image representation type not recognized (neither VFloat nor VUByte nor VBit)" );
+    }
 
-                    if (m_floatFlag)
+    VImage vistaImage;
+    vistaImage = VCreateImage(dimz,dimy,dimx,ImageRepnType);
+    VFillImage(vistaImage,VAllBands,0);
+
+    for( size_t i=0 ; i<dimz ; ++i )
+    {
+        for( size_t j=0 ; j<dimy ; ++j )
+        {
+            for( size_t k=0 ; k<dimx ; ++k )
+            {
+                float datapoint = image[k][j][i];
+                if (datapoint)
+                {
+                    if( dataValueType == VTBit )
                     {
-                        VPixel(fullTractImage,i,j,k,VFloat) = *tractIter++;
+                        VPixel(vistaImage,i,j,k,VBit) = 1;
+                    }
+                    else if(dataValueType == VTUINT8 )
+                    {
+                        VPixel(vistaImage,i,j,k,VUByte) = (unsigned char)datapoint;
+                    }
+                    else if(dataValueType == VTFloat32 )
+                    {
+                        VPixel(vistaImage,i,j,k,VFloat) = datapoint;
                     }
                     else
                     {
-                        VPixel(fullTractImage,i,j,k,VUByte) = (*tractIter++)*255;
+                        VError( "writeImage(): image representation type not recognized (neither VFloat nor VUByte nor VBit)" );
                     }
                 }
             }
         }
     }
 
-
-    if (tractIter != tractogram.m_tract.end())
-        VError( "store_Vtract_Image(): Mask and tractogram sizes do not match" );
-
-    // write tractogram to file
-    if ( ! WriteVImage( (char *)tractFilename.c_str() , fullTractImage ) )
-        VError( "store_Vtract_Image(): Failed to open output tractogram file " );
+    // write image to file
+    if ( ! writeVista( (char *)imageFilename.c_str() , vistaImage ) )
+        VError( "writeImage(): Failed to open output image file " );
 
     // clean up
-    VDestroyImage( fullTractImage );
+    VDestroyImage( vistaImage );
 
-    if (m_zipFlag) { // zip file
+    if (doZip)
+    { // zip file
         // Variables for calling system commands
         std::string gzipString("gzip -f ");
-        std::string sysCommand(gzipString + tractFilename);
+        std::string sysCommand(gzipString + imageFilename);
         int success(system(sysCommand.c_str()));
     }
-
     return;
-
-}// end vistaManager::storeFulltract() -----------------------------------------------------------------
-
-void vistaManager::getBlockFilename(const unsigned int blockID1, const unsigned int blockID2, std::string &filename) const {
-    filename = str(boost::format("%s/dist_block_%03d_%03d.v") % m_tractFolder % blockID1 % blockID2);
-    return;
-}// end vistaManager::getBlockFilename() -----------------------------------------------------------------
-
-void vistaManager::readDistBlock (const std::pair<unsigned int,unsigned int> blockID, std::vector<std::vector<float> > &dBlock) const {
-    readDistBlock(blockID.first,blockID.second,dBlock);
-    return;
-}// end vistaManager::readDistBlock() -----------------------------------------------------------------
-
-
-void vistaManager::readDistBlock (const unsigned int blockID1, const unsigned int blockID2, std::vector<std::vector<float> > &dBlock) const {
-    std::string blockFilename;
-    getBlockFilename(blockID1, blockID2, blockFilename);
-
-    VImage blockImage;
-    dBlock.clear();
-
-    if ( ! ReadImage( (char *)blockFilename.c_str(), blockImage ) )
-        VError( "ERROR @ vistaManager::readDistBlock(): Failed to read distance block image" );
-
-    VRepnKind blockRepnType(VPixelRepn(blockImage));
-
-    if (blockRepnType!=VFloatRepn)
-        VError("ERROR @ vistaManager::readDistBlock(): distance block image must be of type float");
-    if (VImageNBands(blockImage)!=1)
-        VError("ERROR @ vistaManager::readDistBlock(): distance block image must have 1 band only");
-    size_t nColumns = VImageNColumns(blockImage);
-    size_t nRows = VImageNRows(blockImage);
-
-    {
-        std::vector<float> tempRow(nColumns,0);
-        dBlock.resize(nRows,tempRow);
-    }
-
-    for (size_t i=0; i<nRows; ++i) {
-        for (size_t j=0; j<nColumns; ++j) {
-            dBlock[i][j] = VPixel(blockImage,0,i,j,VFloat);
-        }
-    }
-
-    // clean up
-    VDestroyImage(blockImage);
-
-    return;
-}// end vistaManager::readDistBlock() -----------------------------------------------------------------
-
-void vistaManager::writeDistBlock (const std::pair<unsigned int,unsigned int> blockID, std::vector<std::vector<float> > &dBlock) {
-    writeDistBlock(blockID.first, blockID.second, dBlock);
-    return;
-}// end vistaManager::writeDistBlock() -----------------------------------------------------------------
-
-void vistaManager::writeDistBlock (const unsigned int blockID1, const unsigned int blockID2, std::vector<std::vector<float> > &dBlock) {
-
-    if( dBlock.empty()){
-        std::cerr<< "ERROR @ vistaManager::writeDistBlock(): block is empty, no file was written"<<std::endl;
-        return;
-    }
-
-    std::string blockFilename;
-    getBlockFilename(blockID1, blockID2, blockFilename);
-
-    size_t rows(dBlock.size());
-    size_t columns(dBlock[0].size());
-
-    VImage blockImage = VCreateImage(1,rows,columns,VFloatRepn);
-    VFillImage(blockImage,VAllBands,0);
-
-    for (size_t i=0; i<rows; ++i) {
-        for (size_t j=0; j<dBlock[i].size(); ++j) {
-            VPixel(blockImage,0,i,j,VFloat) = dBlock[i][j];
-        }
-    }
-
-    // write block to file
-    if ( ! WriteVImage( (char *)blockFilename.c_str() , blockImage ) )
-        VError( "writeDistBlock(): Failed to open output tractogram file " );
-
-    // clean up
-    VDestroyImage( blockImage );
-
-    return;
-
-}// end vistaManager::writeDistBlock() -----------------------------------------------------------------
-
-
-void vistaManager::flipXtract(compactTract &tractogram) {
-
-    if (m_flipVector.empty()) {
-        std::cerr<< "ERROR @ vistaManager::flipXtract(): Mask hast not been loaded, tractogram has not been flipped"<<std::endl;
-        return;
-    }
-    if (m_flipVector.size()!=tractogram.size()) {
-        std::cerr<< "ERROR @ vistaManager::flipXtract(): flip vector and tractogram sizes dont match"<<std::endl;
-        return;
-    }
-
-    compactTract flippedTract(tractogram);
-    flippedTract.m_tract.assign(m_flipVector.size(),0);
-    for (size_t i=0; i<m_flipVector.size(); ++i)
-        flippedTract.m_tract[i]=tractogram.m_tract[m_flipVector[i]];
-
-    tractogram=flippedTract;
-
-    return;
-
-}// end vistaManager::flipXtract() -----------------------------------------------------------------
-
-WHcoord vistaManager::meanCoordFromMask() const
-{
-    if (m_maskMatrix.empty()) {
-        std::cerr<< "ERROR @ vistaManager::storeFullTract(): Mask hast not been loaded, returning 0 coordinate"<<std::endl;
-        return WHcoord();
-    }
-
-    size_t sumX( 0 ), sumY( 0 ), sumZ( 0 ), sumElements( 0 );
-
-    for( int i=0 ; i<m_maskMatrix.size() ; ++i )
-    {
-        for( int j=0 ; j< m_maskMatrix[i].size() ; ++j )
-        {
-            for( int k=0 ; k<m_maskMatrix[i][j].size() ; ++k )
-            {
-                if (m_maskMatrix[i][j][k])
-                {
-                    sumX += k;
-                    sumY += j;
-                    sumZ += i;
-                    ++sumElements;
-                }
-            }
-        }
-    }
-
-    size_t meanX( sumX/sumElements );
-    size_t meanY( sumY/sumElements );
-    size_t meanZ( sumZ/sumElements );
-    WHcoord meanCoord(meanX,meanY,meanZ);
-
-    return meanCoord;
-} // end "meanCoordFromMask()" -----------------------------------------------------------------
+}// end vistaManager::writeImage() -----------------------------------------------------------------
 
 
 
 // PROTECTED MEMBERS
 
 
-// vistaManager::getTract(): extracts compact tractogram data from a vista file and returns it in compact Tract form
-void vistaManager::getTract(const std::string &tractFilename, std::vector<float> &tractogram) const {
 
-    VImage tractImage;
-    tractogram.clear();
+// "readVista()": read Vista image file
+int vistaManager::readVista( const VString& Name, VImage* ImagePointer ) const
+{
 
-    if ( ! ReadImage( (char *)tractFilename.c_str(), tractImage ) )
-        VError( "ERROR @ vistaManager::getTract(): Failed to read mask image" );
-
-    VRepnKind tractRepnType(VPixelRepn(tractImage));
-
-    if (tractRepnType!=VFloatRepn && tractRepnType!=VUByteRepn)
-        VError("ERROR @ vistaManager::getTract(): tractogram image must be of type char or float");
-
-    if (VImageNBands(tractImage)!=1 && VImageNRows(tractImage)!= 1)
-        VError("ERROR @ vistaManager::getTract(): tractogram image must have 1 row and 1 band only");
-
-    size_t nElements = VImageNColumns(tractImage);
-    tractogram.reserve(nElements); // Reserve memory in vector to increase speed
-
-    // Copy tractogram data
-    if (tractRepnType==VUByteRepn) {
-        //it is a seed tractogram in char format
-        for (size_t i=0; i<nElements; ++i)
-            tractogram.push_back(VPixel(tractImage,0,0,i,VUByte)/255.);
-    } else {
-        //it is a node tractogram in float format
-        for (int i=0; i<nElements; ++i)
-            tractogram.push_back(VPixel(tractImage,0,0,i,VFloat));
-    }
-
-    // clean up
-    VDestroyImage(tractImage);
-
-    return;
-
-}
-void vistaManager::getTract(const std::string &tractFilename, std::vector<unsigned char> &tractogram) const {
-
-    VImage tractImage;
-    tractogram.clear();
-
-    if ( ! ReadImage( (char *)tractFilename.c_str(), tractImage ) )
-        VError( "ERROR @ vistaManager::getTract(): Failed to read mask image" );
-
-    VRepnKind tractRepnType(VPixelRepn(tractImage));
-
-    if (tractRepnType!=VUByteRepn)
-        VError("ERROR @ vistaManager::getTract(): tractogram image must be of type char");
-
-    if (VImageNBands(tractImage)!=1 && VImageNRows(tractImage)!= 1)
-        VError("ERROR @ vistaManager::getTract(): tractogram image must have 1 row and 1 band only");
-
-    size_t nElements = VImageNColumns(tractImage);
-    tractogram.reserve(nElements); // Reserve memory in vector to increase speed
-
-    // Copy tractogram data
-    for (size_t i=0; i<nElements; ++i)
-    {
-        tractogram.push_back(VPixel(tractImage,0,0,i,VUByte));
-    }
-
-    // clean up
-    VDestroyImage(tractImage);
-
-    return;
-
-}// end vistaManager::getTract() -----------------------------------------------------------------
-
-
-// "WriteVImage()": write Vista image
-int vistaManager::WriteVImage( const VString Name, VImage &Image )  const {
-
-    VAttrListPosn pos;       /* position in list */
-    VBoolean      success;   /* success flag     */
-    VAttrList list;
-
-    boost::mutex& ioMutex(boost::detail::thread::singleton<boost::mutex>::instance()) ;
-
-    ioMutex.lock();
-    {
-        FILE*  file;      /* output file      */
-        list = VCreateAttrList();
-        VAppendAttr( list, "image", NULL, VImageRepn, Image );
-        /* open file */
-        file = fopen (Name, "w");
-        if (!file) {
-            std::string errorstring( "WriteVImage(): Failed to open output vista file. Code: "+ boost::lexical_cast<std::string>(errno) + " " + strerror(errno) );
-            VError ( errorstring.c_str() );
-        }
-        /* write file */
-        success = VWriteFile (file, list);
-        fclose (file);
-    }
-    ioMutex.unlock();
-
-   if (!success)
-   { VError ("WriteVImage(): Failed to write output file '%s'", Name);
-   }
-
-   /* remove images */
-   for (VFirstAttr (list, &pos); VAttrExists (&pos); VNextAttr (&pos))
-      if (VGetAttrRepn (&pos) == VImageRepn)
-         VSetAttrValue (&pos, NULL, VImageRepn, NULL);
-
-   /* clean-up*/
-   VDestroyAttrList (list);
-
-    return 1;
-
-} // end "WriteVImage()" -----------------------------------------------------------------
-
-
-
-// "ReadImage()": read Vista image file
-int vistaManager::ReadImage( const VString Name, VImage &Image ) const {
-
+    VImage& Image = *ImagePointer;
 
    VAttrList     list;   // attribute list
    VAttrListPosn pos;    // position in list
@@ -935,7 +623,7 @@ int vistaManager::ReadImage( const VString Name, VImage &Image ) const {
 
    if (!list)
    {
-      VError ("ReadImage(): Failed to read input file '%s'", Name);
+      VError ("readVista(): Failed to read input file '%s'", Name);
    }
 
    // extract image
@@ -953,11 +641,11 @@ int vistaManager::ReadImage( const VString Name, VImage &Image ) const {
    }
    if (! (Image) &&  VAttrExists (&pos))
    {
-       VError ("ReadImage(): Input file '%s' contains multiple images",  Name);
+       VError ("readVista(): Input file '%s' contains multiple images",  Name);
    }
    if (! (Image) && !VAttrExists (&pos))
    {
-       VError ("ReadImage(): Input file '%s' does not contain an image", Name);
+       VError ("readVista(): Input file '%s' does not contain an image", Name);
    }
 
    // clean-up
@@ -965,5 +653,49 @@ int vistaManager::ReadImage( const VString Name, VImage &Image ) const {
 
     return 1;
 
-} // end "ReadImage()" -----------------------------------------------------------------
+} // end "readVista()" -----------------------------------------------------------------
+
+
+
+// "writeVista()": write Vista image
+int vistaManager::writeVista( const VString& Name, const VImage& Image )  const {
+
+    VAttrListPosn pos;       /* position in list */
+    VBoolean      success;   /* success flag     */
+    VAttrList list;
+
+    boost::mutex& ioMutex(boost::detail::thread::singleton<boost::mutex>::instance()) ;
+
+    ioMutex.lock();
+    {
+        FILE*  file;      /* output file      */
+        list = VCreateAttrList();
+        VAppendAttr( list, "image", NULL, VImageRepn, Image );
+        /* open file */
+        file = fopen (Name, "w");
+        if (!file) {
+            std::string errorstring( "writeVista(): Failed to open output vista file. Code: "+ boost::lexical_cast<std::string>(errno) + " " + strerror(errno) );
+            VError ( errorstring.c_str() );
+        }
+        /* write file */
+        success = VWriteFile (file, list);
+        fclose (file);
+    }
+    ioMutex.unlock();
+
+   if (!success)
+   { VError ("writeVista(): Failed to write output file '%s'", Name);
+   }
+
+   /* remove images */
+   for (VFirstAttr (list, &pos); VAttrExists (&pos); VNextAttr (&pos))
+      if (VGetAttrRepn (&pos) == VImageRepn)
+         VSetAttrValue (&pos, NULL, VImageRepn, NULL);
+
+   /* clean-up*/
+   VDestroyAttrList (list);
+
+    return 1;
+
+} // end "writeVista()" -----------------------------------------------------------------
 

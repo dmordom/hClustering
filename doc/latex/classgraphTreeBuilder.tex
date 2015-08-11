@@ -1,0 +1,153 @@
+\hypertarget{classgraphTreeBuilder}{\section{graph\-Tree\-Builder \-Class \-Reference}
+\label{classgraphTreeBuilder}\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}}
+}
+
+
+{\ttfamily \#include $<$graph\-Tree\-Builder.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classgraphTreeBuilder_a2b8a0bebe83d79b2517532867561ddc4}{graph\-Tree\-Builder} (std\-::string roi\-Filename, bool verbose=true)
+\item 
+\hypertarget{classgraphTreeBuilder_a74acaeeee3e79fccc564e4a1d05e7d8e}{\hyperlink{classgraphTreeBuilder_a74acaeeee3e79fccc564e4a1d05e7d8e}{$\sim$graph\-Tree\-Builder} ()}\label{classgraphTreeBuilder_a74acaeeee3e79fccc564e4a1d05e7d8e}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classgraphTreeBuilder_ab6ca8385e08fff92e2950fcb3eb8cf23}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+void \hyperlink{classgraphTreeBuilder_a24d65d7b93d3aafc4e46eb7ecf42e682}{set\-Input\-Folder} (const std\-::string \&input\-Folder)
+\item 
+void \hyperlink{classgraphTreeBuilder_a6f847e452aa22bb02f32c819fe514963}{set\-Output\-Folder} (const std\-::string \&output\-Folder)
+\item 
+void \hyperlink{classgraphTreeBuilder_ada2a5011ebfb486347a4d889ba836f95}{set\-Debug\-Output} (bool debug=true)
+\item 
+void \hyperlink{classgraphTreeBuilder_a3af01d8c3ac8d6aa185db427bc7a51f1}{set\-Verbose} (bool verbose=true)
+\item 
+bool \hyperlink{classgraphTreeBuilder_a4db74b061d7078e65d439997eb38ebdb}{ready} () const 
+\item 
+size\-\_\-t \hyperlink{classgraphTreeBuilder_a865d192229372a52b8dd2b009e56c406}{roi\-Size} () const 
+\item 
+void \hyperlink{classgraphTreeBuilder_a3081e1dad8a76051d8453c498e21e09f}{build\-Graph} (const \-T\-G\-\_\-\-G\-R\-A\-P\-H\-T\-Y\-P\-E graph\-Method)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements the main functionalities required for building and saving a graph-\/method-\/based hierarchcial tree from a precomputed distance matrix (using dist\-Blocks program)\-: reads a seed voxel coordinates list, builds a graph hierarchical tree from distance datablocks and writes output files 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classgraphTreeBuilder_a2b8a0bebe83d79b2517532867561ddc4}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!graph\-Tree\-Builder@{graph\-Tree\-Builder}}
+\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{graph\-Tree\-Builder}]{\setlength{\rightskip}{0pt plus 5cm}{\bf graph\-Tree\-Builder\-::graph\-Tree\-Builder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{roi\-Filename, }
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classgraphTreeBuilder_a2b8a0bebe83d79b2517532867561ddc4}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em roi\-Filename} & file containing the list of seed voxels coordinates (from which the tractograms were computed) \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classgraphTreeBuilder_a3081e1dad8a76051d8453c498e21e09f}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!build\-Graph@{build\-Graph}}
+\index{build\-Graph@{build\-Graph}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{build\-Graph}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::build\-Graph} (
+\begin{DoxyParamCaption}
+\item[{const \-T\-G\-\_\-\-G\-R\-A\-P\-H\-T\-Y\-P\-E}]{graph\-Method}
+\end{DoxyParamCaption}
+)}}\label{classgraphTreeBuilder_a3081e1dad8a76051d8453c498e21e09f}
+core function of this class, includes all the necessary tree building steps 
+\begin{DoxyParams}{\-Parameters}
+{\em graph\-Method} & the graph linkage method to be used for tree building, possible options are\-: single, complete, average, weighted, ward \\
+\hline
+\end{DoxyParams}
+\hypertarget{classgraphTreeBuilder_ab6ca8385e08fff92e2950fcb3eb8cf23}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!log@{log}}
+\index{log@{log}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_ab6ca8385e08fff92e2950fcb3eb8cf23}
+sets output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classgraphTreeBuilder_a4db74b061d7078e65d439997eb38ebdb}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!ready@{ready}}
+\index{ready@{ready}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf graph\-Tree\-Builder\-::ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_a4db74b061d7078e65d439997eb38ebdb}
+queries whether the roi file was loaded and therefore the class is ready for tree building \begin{DoxyReturn}{\-Returns}
+the ready flag, if true roi file has been successfully loaded 
+\end{DoxyReturn}
+\hypertarget{classgraphTreeBuilder_a865d192229372a52b8dd2b009e56c406}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!roi\-Size@{roi\-Size}}
+\index{roi\-Size@{roi\-Size}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{roi\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf graph\-Tree\-Builder\-::roi\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_a865d192229372a52b8dd2b009e56c406}
+queriesfor the size of the currently loaded roi (the number of seed voxels from which the tree will be built) \begin{DoxyReturn}{\-Returns}
+the size of the vector containing the seed voxel coordinates 
+\end{DoxyReturn}
+\hypertarget{classgraphTreeBuilder_ada2a5011ebfb486347a4d889ba836f95}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!set\-Debug\-Output@{set\-Debug\-Output}}
+\index{set\-Debug\-Output@{set\-Debug\-Output}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{set\-Debug\-Output}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::set\-Debug\-Output} (
+\begin{DoxyParamCaption}
+\item[{bool}]{debug = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_ada2a5011ebfb486347a4d889ba836f95}
+sets (or resets) the debug output flag in order to write additional result files with detailed information meant for debug purposes 
+\begin{DoxyParams}{\-Parameters}
+{\em debug} & the true/false flag to set the m\-\_\-debug member to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classgraphTreeBuilder_a24d65d7b93d3aafc4e46eb7ecf42e682}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!set\-Input\-Folder@{set\-Input\-Folder}}
+\index{set\-Input\-Folder@{set\-Input\-Folder}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{set\-Input\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::set\-Input\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{input\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_a24d65d7b93d3aafc4e46eb7ecf42e682}
+sets the input folder 
+\begin{DoxyParams}{\-Parameters}
+{\em input\-Folder} & path to the folder where distance block files are located \\
+\hline
+\end{DoxyParams}
+\hypertarget{classgraphTreeBuilder_a6f847e452aa22bb02f32c819fe514963}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!set\-Output\-Folder@{set\-Output\-Folder}}
+\index{set\-Output\-Folder@{set\-Output\-Folder}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{set\-Output\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::set\-Output\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{output\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_a6f847e452aa22bb02f32c819fe514963}
+sets the output folder 
+\begin{DoxyParams}{\-Parameters}
+{\em output\-Folder} & folder where to write the created tree files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classgraphTreeBuilder_a3af01d8c3ac8d6aa185db427bc7a51f1}{\index{graph\-Tree\-Builder@{graph\-Tree\-Builder}!set\-Verbose@{set\-Verbose}}
+\index{set\-Verbose@{set\-Verbose}!graphTreeBuilder@{graph\-Tree\-Builder}}
+\subsubsection[{set\-Verbose}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf graph\-Tree\-Builder\-::set\-Verbose} (
+\begin{DoxyParamCaption}
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classgraphTreeBuilder_a3af01d8c3ac8d6aa185db427bc7a51f1}
+sets (or resets) the verbose output flag in order to wrire progress information on the standard output 
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & the true/false flag to set the m\-\_\-verbose member to \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/graph\-Tree\-Builder.\-h\item 
+src/common/graph\-Tree\-Builder.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,119 @@
+\hypertarget{classpartitionMatcher}{\section{partition\-Matcher \-Class \-Reference}
+\label{classpartitionMatcher}\index{partition\-Matcher@{partition\-Matcher}}
+}
+
+
+{\ttfamily \#include $<$partition\-Matcher.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classpartitionMatcher_a9fe85439b2abf35332a0e9ef2483e79d}{partition\-Matcher} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const ref\-Tree, \hyperlink{classWHtree}{\-W\-Htree} $\ast$const target\-Tree, std\-::string match\-Filename, bool verbose)
+\item 
+\hypertarget{classpartitionMatcher_a79f7a25dba1ffcd5931bb01c35312ac4}{\hyperlink{classpartitionMatcher_a79f7a25dba1ffcd5931bb01c35312ac4}{$\sim$partition\-Matcher} ()}\label{classpartitionMatcher_a79f7a25dba1ffcd5931bb01c35312ac4}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classpartitionMatcher_a1497cdb4681cd224b7830b4363e88c7c}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+std\-::string \hyperlink{classpartitionMatcher_ae0afb1b4f459d4cbe8bc5406c7d24b80}{report\-Base\-Nodes} () const 
+\item 
+void \hyperlink{classpartitionMatcher_aacbb5c069c9cc9a0ef3de75ce1cd6d8d}{find\-Matching\-Partitions} (const float lambda, const size\-\_\-t levle\-Depth=0)
+\item 
+bool \hyperlink{classpartitionMatcher_a104cd76b4cf18c168811d4a43b909c88}{match\-Colors} (bool exclusive=false)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class implements methods in order to read partitions from a reference tree and find the best matching corresponding partitions in a target tree \-The reference and found target partitions will be color-\/matched as best as possible. \-There is also the possibility of only color-\/matching predefined partitions of the target tree to predefined partitions of the reference tree. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classpartitionMatcher_a9fe85439b2abf35332a0e9ef2483e79d}{\index{partition\-Matcher@{partition\-Matcher}!partition\-Matcher@{partition\-Matcher}}
+\index{partition\-Matcher@{partition\-Matcher}!partitionMatcher@{partition\-Matcher}}
+\subsubsection[{partition\-Matcher}]{\setlength{\rightskip}{0pt plus 5cm}{\bf partition\-Matcher\-::partition\-Matcher} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{ref\-Tree, }
+\item[{{\bf \-W\-Htree} $\ast$const}]{target\-Tree, }
+\item[{std\-::string}]{match\-Filename, }
+\item[{bool}]{verbose}
+\end{DoxyParamCaption}
+)}}\label{classpartitionMatcher_a9fe85439b2abf35332a0e9ef2483e79d}
+\-Constructior 
+\begin{DoxyParams}{\-Parameters}
+{\em ref\-Tree} & a pointer to the reference tree \\
+\hline
+{\em target\-Tree} & a pointer to the target tree \\
+\hline
+{\em match\-Filename} & the filepath to the trees base-\/matching file \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classpartitionMatcher_aacbb5c069c9cc9a0ef3de75ce1cd6d8d}{\index{partition\-Matcher@{partition\-Matcher}!find\-Matching\-Partitions@{find\-Matching\-Partitions}}
+\index{find\-Matching\-Partitions@{find\-Matching\-Partitions}!partitionMatcher@{partition\-Matcher}}
+\subsubsection[{find\-Matching\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf partition\-Matcher\-::find\-Matching\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{const float}]{lambda, }
+\item[{const size\-\_\-t}]{levle\-Depth = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classpartitionMatcher_aacbb5c069c9cc9a0ef3de75ce1cd6d8d}
+\-Find matching partitions from the reference tree in the target tree 
+\begin{DoxyParams}{\-Parameters}
+{\em lambda} & the weighting factor for the signature-\/matrix matching, if less than 0 bidirectional seed voxel overlap matchign will be used \\
+\hline
+{\em levle\-Depth} & the hierarchical search depth for best matchign partitions, if not set or set to 0 the search depth will be adaptively decreased as the number of clusters in the search increases in order to optimize computing time \\
+\hline
+\end{DoxyParams}
+\%\%\%\%\%\%\%\%\% \-D\-E\-B\-U\-G \%\%\%\%\%\%\%\%\%\%\%\%
+
+\%\%\%\%\%\%\%\%\% \-E\-N\-D \-D\-E\-B\-U\-G \%\%\%\%\%\%\%\%\%\%\%\% \hypertarget{classpartitionMatcher_a1497cdb4681cd224b7830b4363e88c7c}{\index{partition\-Matcher@{partition\-Matcher}!log@{log}}
+\index{log@{log}!partitionMatcher@{partition\-Matcher}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf partition\-Matcher\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classpartitionMatcher_a1497cdb4681cd224b7830b4363e88c7c}
+sets output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classpartitionMatcher_a104cd76b4cf18c168811d4a43b909c88}{\index{partition\-Matcher@{partition\-Matcher}!match\-Colors@{match\-Colors}}
+\index{match\-Colors@{match\-Colors}!partitionMatcher@{partition\-Matcher}}
+\subsubsection[{match\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf partition\-Matcher\-::match\-Colors} (
+\begin{DoxyParamCaption}
+\item[{bool}]{exclusive = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classpartitionMatcher_a104cd76b4cf18c168811d4a43b909c88}
+\-Match colors across the partitions present in both trees. \-Colors of reference tree will be matched onto target tree. 
+\begin{DoxyParams}{\-Parameters}
+{\em exclusive} & if set, the unmatched clusters of the target tree will be set to white color, otherwise, they will be given random coloring. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+reference colors change flag. \-If true, some clusters of the reference tree were recolored to improve color matching (in cases of multiple-\/to-\/1 match) 
+\end{DoxyReturn}
+\%\%\%\%\%\% \-D\-E\-B\-U\-G \%\%\%\%\%\%
+
+\%\%\%\%\%\% \-E\-N\-D \-D\-E\-B\-U\-G \%\%\%\%\%\%
+
+\%\%\%\%\%\% \-D\-E\-B\-U\-G \%\%\%\%\%\%
+
+\%\%\%\%\%\% \-E\-N\-D \-D\-E\-B\-U\-G \%\%\%\%\%\% \hypertarget{classpartitionMatcher_ae0afb1b4f459d4cbe8bc5406c7d24b80}{\index{partition\-Matcher@{partition\-Matcher}!report\-Base\-Nodes@{report\-Base\-Nodes}}
+\index{report\-Base\-Nodes@{report\-Base\-Nodes}!partitionMatcher@{partition\-Matcher}}
+\subsubsection[{report\-Base\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf partition\-Matcher\-::report\-Base\-Nodes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classpartitionMatcher_ae0afb1b4f459d4cbe8bc5406c7d24b80}
+\-Analyzes the number and size of the base nodes of each tree and returns a report message with the results \begin{DoxyReturn}{\-Returns}
+the report message 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/partition\-Matcher.\-h\item 
+src/common/partition\-Matcher.\-cpp\end{DoxyCompactItemize}

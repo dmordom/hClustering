@@ -1,0 +1,165 @@
+\hypertarget{classrandCnbTreeBuilder}{\section{rand\-Cnb\-Tree\-Builder \-Class \-Reference}
+\label{classrandCnbTreeBuilder}\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}}
+}
+
+
+{\ttfamily \#include $<$rand\-Cnb\-Tree\-Builder.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classrandCnbTreeBuilder_ae28358f042516f8e1f519352161b6be9}{rand\-Cnb\-Tree\-Builder} (std\-::string roi\-Filename, bool verbose=true)
+\item 
+\hypertarget{classrandCnbTreeBuilder_a22f0722e5f294923ae61483c363ebab8}{\hyperlink{classrandCnbTreeBuilder_a22f0722e5f294923ae61483c363ebab8}{$\sim$rand\-Cnb\-Tree\-Builder} ()}\label{classrandCnbTreeBuilder_a22f0722e5f294923ae61483c363ebab8}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classrandCnbTreeBuilder_a3d57d93476df8a8e8f9a89fe07173353}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+void \hyperlink{classrandCnbTreeBuilder_a5e01f648c52cb330c40d4b69d941d6a3}{set\-Input\-Folder} (const std\-::string \&input\-Folder)
+\item 
+void \hyperlink{classrandCnbTreeBuilder_ad7d21f2b66123a5cf187345263bf18a6}{set\-Output\-Folder} (const std\-::string \&output\-Folder)
+\item 
+void \hyperlink{classrandCnbTreeBuilder_a2b4fd48507c87d76438b9af4dde545af}{set\-Debug\-Output} (bool debug=true)
+\item 
+void \hyperlink{classrandCnbTreeBuilder_a5b800b8ed740702d521f069d665d327e}{set\-Verbose} (bool verbose=true)
+\item 
+bool \hyperlink{classrandCnbTreeBuilder_a3a280b2c2a28f1d17c1342237b4a49f6}{ready} () const 
+\item 
+size\-\_\-t \hyperlink{classrandCnbTreeBuilder_aaca3f503cc051278fea5b815d496df6f}{roi\-Size} () const 
+\item 
+void \hyperlink{classrandCnbTreeBuilder_a70e15a6a36eb373ef0a184586e49ede3}{build\-Rand\-Centroid} (const unsigned int nb\-Level, const float memory, const \-T\-C\-\_\-\-G\-R\-O\-W\-T\-Y\-P\-E grow\-Type, const size\-\_\-t base\-Size=0, const bool keep\-Discarded=true)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class simpler version of cbn\-Tree\-Builder to build a centroid method hierarchical tree from small synthetic tractograms yoielding a random dissimilarity matrix (no thresholding and no discarding outliers) reads a seed voxel coordinates list, builds a centroid hierarchical tree from tractography data and writes output files 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classrandCnbTreeBuilder_ae28358f042516f8e1f519352161b6be9}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}}
+\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{rand\-Cnb\-Tree\-Builder}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rand\-Cnb\-Tree\-Builder\-::rand\-Cnb\-Tree\-Builder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{roi\-Filename, }
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classrandCnbTreeBuilder_ae28358f042516f8e1f519352161b6be9}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em roi\-Filename} & file containing the list of seed voxels coordinates (for realistic neighborhood information) \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classrandCnbTreeBuilder_a70e15a6a36eb373ef0a184586e49ede3}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!build\-Rand\-Centroid@{build\-Rand\-Centroid}}
+\index{build\-Rand\-Centroid@{build\-Rand\-Centroid}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{build\-Rand\-Centroid}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::build\-Rand\-Centroid} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{nb\-Level, }
+\item[{const float}]{memory, }
+\item[{const \-T\-C\-\_\-\-G\-R\-O\-W\-T\-Y\-P\-E}]{grow\-Type, }
+\item[{const size\-\_\-t}]{base\-Size = {\ttfamily 0}, }
+\item[{const bool}]{keep\-Discarded = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classrandCnbTreeBuilder_a70e15a6a36eb373ef0a184586e49ede3}
+core function of this class, includes all the necessary tree building steps 
+\begin{DoxyParams}{\-Parameters}
+{\em nb\-Level} & the seed voxel neighborhood level restriction to implement, valid values are\-: 6, 18, 26 (recommended), 32, 92 and 124 \\
+\hline
+{\em memory} & the amount of \-R\-A\-M memory to be used for tractogram cache to speed up building the tree, in \-G\-Bs (recommended value around 50\% of total machine memory) \\
+\hline
+{\em grow\-Type} & defines the type of limit for the initial homogenoeus merging stage. \-T\-C\-\_\-\-G\-R\-O\-W\-N\-U\-M = \# of clusters, \-T\-C\-\_\-\-G\-R\-O\-W\-S\-I\-Z\-E = size of clusters, \-T\-C\-\_\-\-G\-R\-O\-W\-O\-F\-F = skip this stage. \\
+\hline
+{\em base\-Size} & cluster size/number limit to stop the initial homogeneous merging stage. \-If set to 1 or 0 (default) this stage will be skipped \\
+\hline
+{\em keep\-Discarded} & flag to keep track of discarded voxels in a special field in the tree file, default value true \\
+\hline
+\end{DoxyParams}
+\hypertarget{classrandCnbTreeBuilder_a3d57d93476df8a8e8f9a89fe07173353}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!log@{log}}
+\index{log@{log}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_a3d57d93476df8a8e8f9a89fe07173353}
+sets the output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classrandCnbTreeBuilder_a3a280b2c2a28f1d17c1342237b4a49f6}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!ready@{ready}}
+\index{ready@{ready}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf rand\-Cnb\-Tree\-Builder\-::ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_a3a280b2c2a28f1d17c1342237b4a49f6}
+queries whether the roi file was loaded and therefore the class is ready for tree building \begin{DoxyReturn}{\-Returns}
+the ready flag, if true roi file has been successfully loaded 
+\end{DoxyReturn}
+\hypertarget{classrandCnbTreeBuilder_aaca3f503cc051278fea5b815d496df6f}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!roi\-Size@{roi\-Size}}
+\index{roi\-Size@{roi\-Size}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{roi\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf rand\-Cnb\-Tree\-Builder\-::roi\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_aaca3f503cc051278fea5b815d496df6f}
+queriesfor the size of the currently loaded roi (the number of seed voxels from which the tree will be built) \begin{DoxyReturn}{\-Returns}
+the size of the vector containing the seed voxel coordinates 
+\end{DoxyReturn}
+\hypertarget{classrandCnbTreeBuilder_a2b4fd48507c87d76438b9af4dde545af}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!set\-Debug\-Output@{set\-Debug\-Output}}
+\index{set\-Debug\-Output@{set\-Debug\-Output}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{set\-Debug\-Output}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::set\-Debug\-Output} (
+\begin{DoxyParamCaption}
+\item[{bool}]{debug = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_a2b4fd48507c87d76438b9af4dde545af}
+sets (or resets) the debug output flag in order to write additional result files with detailed information meant for debug purposes 
+\begin{DoxyParams}{\-Parameters}
+{\em debug} & the true/false flag to set the m\-\_\-debug member to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classrandCnbTreeBuilder_a5e01f648c52cb330c40d4b69d941d6a3}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!set\-Input\-Folder@{set\-Input\-Folder}}
+\index{set\-Input\-Folder@{set\-Input\-Folder}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{set\-Input\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::set\-Input\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{input\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_a5e01f648c52cb330c40d4b69d941d6a3}
+sets the input folder 
+\begin{DoxyParams}{\-Parameters}
+{\em input\-Folder} & path to the folder where tractogram files are located \\
+\hline
+\end{DoxyParams}
+\hypertarget{classrandCnbTreeBuilder_ad7d21f2b66123a5cf187345263bf18a6}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!set\-Output\-Folder@{set\-Output\-Folder}}
+\index{set\-Output\-Folder@{set\-Output\-Folder}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{set\-Output\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::set\-Output\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{output\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_ad7d21f2b66123a5cf187345263bf18a6}
+sets the output folder 
+\begin{DoxyParams}{\-Parameters}
+{\em output\-Folder} & folder where to write the created tree files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classrandCnbTreeBuilder_a5b800b8ed740702d521f069d665d327e}{\index{rand\-Cnb\-Tree\-Builder@{rand\-Cnb\-Tree\-Builder}!set\-Verbose@{set\-Verbose}}
+\index{set\-Verbose@{set\-Verbose}!randCnbTreeBuilder@{rand\-Cnb\-Tree\-Builder}}
+\subsubsection[{set\-Verbose}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-Cnb\-Tree\-Builder\-::set\-Verbose} (
+\begin{DoxyParamCaption}
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classrandCnbTreeBuilder_a5b800b8ed740702d521f069d665d327e}
+sets (or resets) the verbose output flag in order to wrire progress information on the standard output 
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & the true/false flag to set the m\-\_\-verbose member to \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/rand\-Cnb\-Tree\-Builder.\-h\item 
+src/common/rand\-Cnb\-Tree\-Builder.\-cpp\end{DoxyCompactItemize}

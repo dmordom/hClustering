@@ -1,0 +1,208 @@
+\hypertarget{classlistedCache}{\section{listed\-Cache$<$ \-T $>$ \-Class \-Template \-Reference}
+\label{classlistedCache}\index{listed\-Cache$<$ T $>$@{listed\-Cache$<$ T $>$}}
+}
+
+
+{\ttfamily \#include $<$listed\-Cache.\-hpp$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlistedCache_ab0f705bf294d1bc297d4b9759daa6502}{listed\-Cache} (const size\-\_\-t list\-Size, const size\-\_\-t size\-Limit\-Init=0)
+\item 
+\hypertarget{classlistedCache_a259666475bddc8dca98589b4ed98ec59}{\hyperlink{classlistedCache_a259666475bddc8dca98589b4ed98ec59}{$\sim$listed\-Cache} ()}\label{classlistedCache_a259666475bddc8dca98589b4ed98ec59}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classlistedCache_a69adba97699af42c88429b4ff66a026d}{set\-Limit} (size\-\_\-t size\-Limit)
+\item 
+size\-\_\-t \hyperlink{classlistedCache_ad5a40a3dc88ae8061eb9a4be7ccd279b}{size} () const 
+\item 
+size\-\_\-t \hyperlink{classlistedCache_a81f917a3ca4748284469984c19a5d1d0}{limit} () const 
+\item 
+size\-\_\-t \hyperlink{classlistedCache_ab96879a472161151454d1afed6b97464}{oldest} ()
+\item 
+bool \hyperlink{classlistedCache_a6f025fc099b2a9688971899c8e928ec5}{has} (const size\-\_\-t index)
+\item 
+\-T $\ast$const \hyperlink{classlistedCache_af09e35a73993b500e9740e797db4ee45}{get} (const size\-\_\-t index)
+\item 
+\-T $\ast$const \hyperlink{classlistedCache_aa3ffc76dd61ec63ec396b862bf8d84f0}{get\-No\-Update} (const size\-\_\-t index) const 
+\item 
+\-T $\ast$const \hyperlink{classlistedCache_a4fe463e0e4fec0aa8cc48e005fdf6325}{insert} (const size\-\_\-t index, const \-T \&value)
+\item 
+void \hyperlink{classlistedCache_a5958558d6cb1a31a2f2343ddca20f7e5}{erase} (const size\-\_\-t index)
+\item 
+void \hyperlink{classlistedCache_a92febe1b16ddb282d0f5e2ca9eb1c462}{cleanup} ()
+\item 
+void \hyperlink{classlistedCache_add33fbae1be6a7f3aaa6b052587f1619}{clear} ()
+\item 
+void \hyperlink{classlistedCache_a8d1fd081caa2ea552bd5038a3a38ab69}{shutdown} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\subsubsection*{template$<$typename \-T$>$class listed\-Cache$<$ T $>$}
+
+\-This class implements a time and memory efficient cache list template where once the max size is reached, the entry that was least recently accessed is eliminated when a new item is added. the data is saved in a list for fast adding/deleting, but each item's memory address is saved in a vector (where item \-I\-D = position in the vector) fast keyword search and memory access a separate fifo list keeps track of the last usage order of each item. (items memory adress in the fifo list is also kpt in the lookup vector mentioned before) 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classlistedCache_ab0f705bf294d1bc297d4b9759daa6502}{\index{listed\-Cache@{listed\-Cache}!listed\-Cache@{listed\-Cache}}
+\index{listed\-Cache@{listed\-Cache}!listedCache@{listed\-Cache}}
+\subsubsection[{listed\-Cache}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ {\bf listed\-Cache}$<$ \-T $>$\-::{\bf listed\-Cache} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{list\-Size, }
+\item[{const size\-\_\-t}]{size\-Limit\-Init = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_ab0f705bf294d1bc297d4b9759daa6502}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em list\-Size} & total number of different entries that may at some point be introduced in the cache list (as in number of different possible \-I\-Ds) \\
+\hline
+{\em size\-Limit\-Init} & maximum size (as in maximum number of entries) that the cache list is allowed to have \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classlistedCache_a92febe1b16ddb282d0f5e2ca9eb1c462}{\index{listed\-Cache@{listed\-Cache}!cleanup@{cleanup}}
+\index{cleanup@{cleanup}!listedCache@{listed\-Cache}}
+\subsubsection[{cleanup}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ void {\bf listed\-Cache}$<$ \-T $>$\-::{\bf cleanup} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a92febe1b16ddb282d0f5e2ca9eb1c462}
+if the cache list size is over the specified limit, iteratively erases the least recently accessed elements until the list size matches the limit \hypertarget{classlistedCache_add33fbae1be6a7f3aaa6b052587f1619}{\index{listed\-Cache@{listed\-Cache}!clear@{clear}}
+\index{clear@{clear}!listedCache@{listed\-Cache}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ void {\bf listed\-Cache}$<$ \-T $>$\-::{\bf clear} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_add33fbae1be6a7f3aaa6b052587f1619}
+erases all the elements in the list and resets the tracker vector \hypertarget{classlistedCache_a5958558d6cb1a31a2f2343ddca20f7e5}{\index{listed\-Cache@{listed\-Cache}!erase@{erase}}
+\index{erase@{erase}!listedCache@{listed\-Cache}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ void {\bf listed\-Cache}$<$ \-T $>$\-::{\bf erase} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a5958558d6cb1a31a2f2343ddca20f7e5}
+erases the element entry associated with index 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & an index identifying the entry to be deleted (usually an \-I\-D number) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classlistedCache_af09e35a73993b500e9740e797db4ee45}{\index{listed\-Cache@{listed\-Cache}!get@{get}}
+\index{get@{get}!listedCache@{listed\-Cache}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ \-T$\ast$ const {\bf listed\-Cache}$<$ \-T $>$\-::{\bf get} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_af09e35a73993b500e9740e797db4ee45}
+fetches the object identified by the index parameter and updates its relative usage status in the fifo 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & an index identifying the desired entry (usually an \-I\-D number) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a pointer to the element associated with index 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_aa3ffc76dd61ec63ec396b862bf8d84f0}{\index{listed\-Cache@{listed\-Cache}!get\-No\-Update@{get\-No\-Update}}
+\index{get\-No\-Update@{get\-No\-Update}!listedCache@{listed\-Cache}}
+\subsubsection[{get\-No\-Update}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ \-T$\ast$ const {\bf listed\-Cache}$<$ \-T $>$\-::{\bf get\-No\-Update} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_aa3ffc76dd61ec63ec396b862bf8d84f0}
+fetches the object identified by the index parameter but does not update its relative usage status 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & an index identifying the desired entry (usually an \-I\-D number) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a pointer to the element associated with index 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_a6f025fc099b2a9688971899c8e928ec5}{\index{listed\-Cache@{listed\-Cache}!has@{has}}
+\index{has@{has}!listedCache@{listed\-Cache}}
+\subsubsection[{has}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ bool {\bf listed\-Cache}$<$ \-T $>$\-::{\bf has} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a6f025fc099b2a9688971899c8e928ec5}
+checks whether a specific element is contained in the cache list 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & an index identifying the desired entry (usually an \-I\-D number) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+true if the element is stored in the list, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_a4fe463e0e4fec0aa8cc48e005fdf6325}{\index{listed\-Cache@{listed\-Cache}!insert@{insert}}
+\index{insert@{insert}!listedCache@{listed\-Cache}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ \-T$\ast$ const {\bf listed\-Cache}$<$ \-T $>$\-::{\bf insert} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{index, }
+\item[{const \-T \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a4fe463e0e4fec0aa8cc48e005fdf6325}
+inserts a new object and returns a pointer to the stored value 
+\begin{DoxyParams}{\-Parameters}
+{\em index} & an index identifying the new entry (usually an \-I\-D number) \\
+\hline
+{\em value} & the data of the new entry \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a pointer to the new element inside the cache 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_a81f917a3ca4748284469984c19a5d1d0}{\index{listed\-Cache@{listed\-Cache}!limit@{limit}}
+\index{limit@{limit}!listedCache@{listed\-Cache}}
+\subsubsection[{limit}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ size\-\_\-t {\bf listed\-Cache}$<$ \-T $>$\-::{\bf limit} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a81f917a3ca4748284469984c19a5d1d0}
+returns the maximum number of objects to be stored in cache \mbox{[}after a call to \hyperlink{classlistedCache_a92febe1b16ddb282d0f5e2ca9eb1c462}{cleanup()}\mbox{]} \begin{DoxyReturn}{\-Returns}
+max cache size 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_ab96879a472161151454d1afed6b97464}{\index{listed\-Cache@{listed\-Cache}!oldest@{oldest}}
+\index{oldest@{oldest}!listedCache@{listed\-Cache}}
+\subsubsection[{oldest}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ size\-\_\-t {\bf listed\-Cache}$<$ \-T $>$\-::{\bf oldest} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_ab96879a472161151454d1afed6b97464}
+returns the index of the oldest accessed (least recently accessed) element \begin{DoxyReturn}{\-Returns}
+least recently accessed element \-I\-D 
+\end{DoxyReturn}
+\hypertarget{classlistedCache_a69adba97699af42c88429b4ff66a026d}{\index{listed\-Cache@{listed\-Cache}!set\-Limit@{set\-Limit}}
+\index{set\-Limit@{set\-Limit}!listedCache@{listed\-Cache}}
+\subsubsection[{set\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ void {\bf listed\-Cache}$<$ \-T $>$\-::{\bf set\-Limit} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{size\-Limit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a69adba97699af42c88429b4ff66a026d}
+sets the maximum number of objects to be stored in cache \mbox{[}after a call to \hyperlink{classlistedCache_a92febe1b16ddb282d0f5e2ca9eb1c462}{cleanup()}\mbox{]} 
+\begin{DoxyParams}{\-Parameters}
+{\em size\-Limit} & new max cache size \\
+\hline
+\end{DoxyParams}
+\hypertarget{classlistedCache_a8d1fd081caa2ea552bd5038a3a38ab69}{\index{listed\-Cache@{listed\-Cache}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!listedCache@{listed\-Cache}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ void {\bf listed\-Cache}$<$ \-T $>$\-::{\bf shutdown} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_a8d1fd081caa2ea552bd5038a3a38ab69}
+erases all the elements and frees the memory of the tracker vector, this cache object may not be used any more \hypertarget{classlistedCache_ad5a40a3dc88ae8061eb9a4be7ccd279b}{\index{listed\-Cache@{listed\-Cache}!size@{size}}
+\index{size@{size}!listedCache@{listed\-Cache}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename \-T$>$ size\-\_\-t {\bf listed\-Cache}$<$ \-T $>$\-::{\bf size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classlistedCache_ad5a40a3dc88ae8061eb9a4be7ccd279b}
+returns number of elements currently stored in cache (can be temporarily greater than the size limit) \begin{DoxyReturn}{\-Returns}
+current cache size 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/common/listed\-Cache.\-hpp\end{DoxyCompactItemize}

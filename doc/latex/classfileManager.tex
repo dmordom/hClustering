@@ -1,0 +1,1040 @@
+\hypertarget{classfileManager}{\section{file\-Manager \-Class \-Reference}
+\label{classfileManager}\index{file\-Manager@{file\-Manager}}
+}
+
+
+{\ttfamily \#include $<$file\-Manager.\-h$>$}
+
+\-Inheritance diagram for file\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classfileManager}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classfileManager_ab9d80ed58742b8381b3b49f324e37a35}{file\-Manager} (std\-::string io\-Folder\-Init=\char`\"{}\char`\"{})
+\item 
+\hypertarget{classfileManager_a385e38ba52852423800919ccb084f843}{\hyperlink{classfileManager_a385e38ba52852423800919ccb084f843}{$\sim$file\-Manager} ()}\label{classfileManager_a385e38ba52852423800919ccb084f843}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classfileManager_a67527e457000ba63b0271c7f5bd6a61f}{set\-Folder} (const std\-::string \&io\-Folder)
+\item 
+void \hyperlink{classfileManager_aab7c3fca3510f13d1fad8d23875bf444}{store\-Zipped} ()
+\item 
+void \hyperlink{classfileManager_af8227012ab3602707592d23a75efb3c3}{store\-Unzipped} ()
+\item 
+void \hyperlink{classfileManager_a1fa3f0c6c838f5235ab4603f7eaf4aef}{write\-In\-Float} ()
+\item 
+void \hyperlink{classfileManager_aa8113477a8c33a2f8ef296c3413e7dcd}{write\-In\-Char} ()
+\item 
+void \hyperlink{classfileManager_a6f05bf73e5d5169ce09591f3dc059ffb}{read\-As\-Log} ()
+\item 
+void \hyperlink{classfileManager_ac10757ad2d56b087fbbc73afbf3169cf}{read\-As\-Nat} ()
+\item 
+void \hyperlink{classfileManager_ab6218fede8e71eee369e8a8a0454ee21}{read\-As\-Thres} ()
+\item 
+void \hyperlink{classfileManager_aa3104aa0287e86101388bf337458d6f4}{read\-As\-Un\-Thres} ()
+\item 
+size\-\_\-t \hyperlink{classfileManager_a24452e5e2e161dfba62be488d4ecc114}{get\-Tract\-Size} () const 
+\item 
+std\-::vector$<$ std\-::vector\*
+$<$ std\-::vector$<$ bool $>$ $>$ $>$ \hyperlink{classfileManager_ad77404255f7576fdee1ce329369d4f94}{get\-Mask\-Matrix} () const 
+\item 
+std\-::string \hyperlink{classfileManager_aae49808069aebe457a6be8818488d7c4}{get\-Node\-Tract\-Filename} (const size\-\_\-t tract\-Node) const 
+\item 
+std\-::string \hyperlink{classfileManager_af4f1020afb21f2a1c37b48cf8b694557}{get\-Full\-Node\-Tract\-Filename} (const size\-\_\-t tract\-Node) const 
+\item 
+std\-::string \hyperlink{classfileManager_a0f0c2649d0d3422185ec013324769791}{get\-Block\-Filename} (const unsigned int block\-I\-D1, const unsigned int block\-I\-D2) const 
+\item 
+std\-::string \hyperlink{classfileManager_a96bd86333f1b24dcb5b2110c9bcac38f}{get\-Cluster\-Mask\-Filename} (const size\-\_\-t node) const 
+\item 
+size\-\_\-t \hyperlink{classfileManager_aa15ca3b9edb5d2d3905ee7f5d627230a}{read\-Full\-Node\-Tract\-Number} (const std\-::string filename) const 
+\item 
+size\-\_\-t \hyperlink{classfileManager_a64d3bd1b3ef7192a4f7f02b3840f5fb0}{read\-Cluster\-Mask\-Number} (const std\-::string filename) const 
+\item 
+void \hyperlink{classfileManager_aaeba12c39f82137bcfd6841389df7b26}{flip\-Xtract} (\hyperlink{classcompactTract}{compact\-Tract} $\ast$tractogram\-Pointer) const 
+\item 
+\hyperlink{classWHcoord}{\-W\-Hcoord} \hyperlink{classfileManager_a3af89c1b2da86ca6185234cc9dd8e888}{mean\-Coord\-From\-Mask} () const 
+\item 
+void \hyperlink{classfileManager_aee236bd074126896cc5dc4e1d5c5a2ee}{compact2full} (const std\-::vector$<$ float $>$ \&compact, std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$full\-Tract) const 
+\item 
+void \hyperlink{classfileManager_ab9acd7828868c65f81bad95d2aa3a755}{full2compact} (const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&full\-Tract, std\-::vector$<$ float $>$ $\ast$compact) const 
+\item 
+void \hyperlink{classfileManager_a172ba174ac43ed256cf9aee840291a40}{read\-Node\-Tract} (const size\-\_\-t tract\-Node, \hyperlink{classcompactTract}{compact\-Tract} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a97e3a5cabee00b97bbe0be4b572f49bd}{read\-Leaf\-Tract} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector, \hyperlink{classcompactTract}{compact\-Tract} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_aaf4d7b1f071b2b1a4a1f0b1b3131bb78}{read\-Leaf\-Tract} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector, \hyperlink{classcompactTractChar}{compact\-Tract\-Char} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a88cd843c970cfb52f11138c74eac3195}{read\-Tract} (const std\-::string \&tract\-Filename, \hyperlink{classcompactTract}{compact\-Tract} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_aa9b0f571bf6244d2e4037572a5d68507}{read\-Tract} (const std\-::string \&tract\-Filename, \hyperlink{classcompactTractChar}{compact\-Tract\-Char} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_af58861a36229bbdc5b74e2cc36dd6488}{read\-Tract} (const std\-::string \&tract\-Filename, std\-::vector$<$ float $>$ $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a31d73123ba9e43b2fcafc9985725c47e}{read\-Tract} (const std\-::string \&tract\-Filename, std\-::vector$<$ unsigned char $>$ $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_af81791803dc1116fb55343d070169d1d}{read\-Dist\-Block} (const std\-::pair$<$ unsigned int, unsigned int $>$ block\-I\-D, std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$d\-Block\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a74fc943b2fb2275a209f1470bc55c9d7}{read\-Dist\-Block} (const unsigned int block\-I\-D1, const unsigned int block\-I\-D2, std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$d\-Block\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a96e9ac0dffda9bcd02bba97be94635d6}{read\-Full\-Tract} (const std\-::string full\-Tract\-Filename, \hyperlink{classcompactTract}{compact\-Tract} $\ast$tract\-Pointer) const 
+\item 
+void \hyperlink{classfileManager_a047394d444e2a33def35515da8daebb4}{load\-Mask\-Image} (std\-::string mask\-Filename)
+\item 
+void \hyperlink{classfileManager_add95d10a2323eda445a150304300837c}{write\-Node\-Tract} (const size\-\_\-t tract\-Node, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a08443609e35b7b5e7123cc57d32b2870}{write\-Leaf\-Tract} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&leaf, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a8244ce5c46d19ac66edac97bdb907c16}{write\-Leaf\-Tract} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&leaf, const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_aa35414e6c4512c5570ed073b8336accb}{write\-Leaf\-Tract} (const size\-\_\-t leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a9541b3a31e4a8d22ce4266c8be97dda1}{write\-Leaf\-Tract} (const size\-\_\-t leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_abb98e5c6b28ccadbfccba2d380f60f88}{write\-Leaf\-Tract} (const size\-\_\-t leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a8962f9967225f802d9a1f7f5746a4b69}{write\-Leaf\-Tract} (const size\-\_\-t leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector, const \hyperlink{classcompactTractChar}{compact\-Tract\-Char} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_abc9e289891801cecb4abef1a934a591f}{write\-Tract} (const std\-::string \&tract\-Filename, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_aeb85f3c16621b69a686738463a59b928}{write\-Tract} (const std\-::string \&tract\-Filename, std\-::vector$<$ float $>$ tractogram) const 
+\item 
+void \hyperlink{classfileManager_acdcf3f24fb2ce3970f28b8ffbcafb9ae}{write\-Dist\-Block} (const std\-::pair$<$ unsigned int, unsigned int $>$ block\-I\-D, const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&d\-Block) const 
+\item 
+void \hyperlink{classfileManager_adbe45e18c2b47f84defc35586ed2f87b}{write\-Dist\-Block} (const unsigned int block\-I\-D1, const unsigned int block\-I\-D2, const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&d\-Block) const 
+\item 
+void \hyperlink{classfileManager_a18e9cfa58d91e74abd5dc5e3058fe48c}{write\-Mask} (const std\-::string \&mask\-Filename, const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&mask\-Matrix) const 
+\item 
+void \hyperlink{classfileManager_ae0046132e19b4c681e02cb5634520c73}{write\-Mask} (const std\-::string \&mask\-Filename, const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ bool $>$ $>$ $>$ \&mask\-Matrix) const 
+\item 
+void \hyperlink{classfileManager_a0c021e5c0a8730c12bbb0180610b9b3f}{write\-Full\-Node\-Tract} (const size\-\_\-t tract\-Node, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a52efe93c118c68d81750bd3823ddaf7a}{write\-Full\-Leaf\-Tract} (const size\-\_\-t \&tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_afc5104f7182377e8129cc6a0832f1720}{write\-Full\-Leaf\-Tract} (const size\-\_\-t \&tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+void \hyperlink{classfileManager_a35cd539e7f007cac132ebebe16f7f1d0}{write\-Full\-Tract} (const std\-::string \&tract\-Filename, const \hyperlink{classcompactTract}{compact\-Tract} \&tractogram) const 
+\item 
+int \hyperlink{classfileManager_ab72645f0048c23b4bdba67d8942af1e9}{delete\-Tract\-File} (const size\-\_\-t tract\-Node) const 
+\item 
+virtual std\-::string \hyperlink{classfileManager_af1b2dea2761c3f0018b62077cb032aee}{get\-File\-Extension} (\-Tract\-Ext\-Type ext\-Type) const =0
+\item 
+virtual std\-::string \hyperlink{classfileManager_a24c2bf9055bfe28571866ce7586a3e34}{get\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector=std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$()) const =0
+\item 
+virtual std\-::string \hyperlink{classfileManager_ac64c35e60f2a006b0a4d2af9e50d9029}{get\-Full\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector=std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$()) const =0
+\item 
+virtual \-Value\-Type \hyperlink{classfileManager_aca16ebeace21a25c0f76bfc4c75595d3}{read\-Vector} (const std\-::string \&vector\-Filename, std\-::vector$<$ float $>$ $\ast$vector\-Pointer) const =0
+\item 
+virtual \-Value\-Type \hyperlink{classfileManager_a940f90e44c4e483659f4527e6ffa9e95}{read\-Matrix} (const std\-::string \&matrix\-Filename, std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$matrix\-Pointer) const =0
+\item 
+virtual \-Value\-Type \hyperlink{classfileManager_a256980984836386e38f1fb3b5557a7f2}{read\-Image} (const std\-::string \&image\-Filename, std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$image\-Pointer) const =0
+\item 
+virtual void \hyperlink{classfileManager_ad32c0c3e00f03a9338f1404b1e123e19}{load\-Header} (const std\-::string \&filename, bool display=false)=0
+\item 
+virtual void \hyperlink{classfileManager_a510ef89d143c23e69c4b7c4a56325a1d}{write\-Vector} (const std\-::string \&vector\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ float $>$ \&vector, bool do\-Zip=false) const =0
+\item 
+virtual void \hyperlink{classfileManager_a60181a9ff9cf6f6d228b209d9050b21e}{write\-Matrix} (const std\-::string \&matrix\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&matrix, bool do\-Zip=false) const =0
+\item 
+virtual void \hyperlink{classfileManager_ae987e2c6a109c8bfd494f98b192969a0}{write\-Image} (const std\-::string \&image\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&image, bool do\-Zip=false) const =0
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classfileManager_ac999ca3ac4fe64e4d0ae9a8b62819951}{std\-::string \hyperlink{classfileManager_ac999ca3ac4fe64e4d0ae9a8b62819951}{m\-\_\-io\-Folder}}\label{classfileManager_ac999ca3ac4fe64e4d0ae9a8b62819951}
+
+\begin{DoxyCompactList}\small\item\em string with the tractogram folder \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_ad7198eaa800af79393c3a1b1f0230c2c}{bool \hyperlink{classfileManager_ad7198eaa800af79393c3a1b1f0230c2c}{m\-\_\-zip\-Flag}}\label{classfileManager_ad7198eaa800af79393c3a1b1f0230c2c}
+
+\begin{DoxyCompactList}\small\item\em flag indicating if stored tractograms will be zipped or not \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_a1d0dfda9faa7ed11266c35f5024a640f}{bool \hyperlink{classfileManager_a1d0dfda9faa7ed11266c35f5024a640f}{m\-\_\-float\-Flag}}\label{classfileManager_a1d0dfda9faa7ed11266c35f5024a640f}
+
+\begin{DoxyCompactList}\small\item\em flag indicating tractograms will be written in char or float format \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_a718e251b28be9f876098744cc32833e3}{bool \hyperlink{classfileManager_a718e251b28be9f876098744cc32833e3}{m\-\_\-log\-Flag}}\label{classfileManager_a718e251b28be9f876098744cc32833e3}
+
+\begin{DoxyCompactList}\small\item\em flag indicating whether read tracts will be marked as being in log units or natural \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_a92cc74ee728d730f300295224ab356a1}{bool \hyperlink{classfileManager_a92cc74ee728d730f300295224ab356a1}{m\-\_\-thres\-Flag}}\label{classfileManager_a92cc74ee728d730f300295224ab356a1}
+
+\begin{DoxyCompactList}\small\item\em flag indicating whether read tracts will be marked as being thresholded or not \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_a0acb7a592b12b9aa94f1efc0fa8bbccf}{std\-::vector$<$ std\-::vector\*
+$<$ std\-::vector$<$ bool $>$ $>$ $>$ \hyperlink{classfileManager_a0acb7a592b12b9aa94f1efc0fa8bbccf}{m\-\_\-mask\-Matrix}}\label{classfileManager_a0acb7a592b12b9aa94f1efc0fa8bbccf}
+
+\begin{DoxyCompactList}\small\item\em image mask indicating if the voxels in the image are part of the compressed tractograms \end{DoxyCompactList}\item 
+\hypertarget{classfileManager_a8c46917cc4863c9ad71895d27df3a3f1}{std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classfileManager_a8c46917cc4863c9ad71895d27df3a3f1}{m\-\_\-flip\-Vector}}\label{classfileManager_a8c46917cc4863c9ad71895d27df3a3f1}
+
+\begin{DoxyCompactList}\small\item\em vector with the positions of x-\/flipped elements \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class handles reading and writing of images, matrices and tractograms 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classfileManager_ab9d80ed58742b8381b3b49f324e37a35}{\index{file\-Manager@{file\-Manager}!file\-Manager@{file\-Manager}}
+\index{file\-Manager@{file\-Manager}!fileManager@{file\-Manager}}
+\subsubsection[{file\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf file\-Manager\-::file\-Manager} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{io\-Folder\-Init = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, explicit\mbox{]}}}}\label{classfileManager_ab9d80ed58742b8381b3b49f324e37a35}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em io\-Folder\-Init} & input-\/output folder for the reading and writign of files \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classfileManager_aee236bd074126896cc5dc4e1d5c5a2ee}{\index{file\-Manager@{file\-Manager}!compact2full@{compact2full}}
+\index{compact2full@{compact2full}!fileManager@{file\-Manager}}
+\subsubsection[{compact2full}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::compact2full} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ float $>$ \&}]{compact, }
+\item[{std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$}]{full\-Tract}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aee236bd074126896cc5dc4e1d5c5a2ee}
+blows a compact tractogram vector tract into a full 3\-D image matrix 
+\begin{DoxyParams}{\-Parameters}
+{\em compact} & the compact tractogram vector to be blown \\
+\hline
+{\em full\-Tract} & a pointer to the 3\-D image matrix to hold the blown up tractogram \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_ab72645f0048c23b4bdba67d8942af1e9}{\index{file\-Manager@{file\-Manager}!delete\-Tract\-File@{delete\-Tract\-File}}
+\index{delete\-Tract\-File@{delete\-Tract\-File}!fileManager@{file\-Manager}}
+\subsubsection[{delete\-Tract\-File}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf file\-Manager\-::delete\-Tract\-File} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_ab72645f0048c23b4bdba67d8942af1e9}
+deletes the file corresponding to the indicated node tractogram 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & \-I\-D of the node corresponding to the tractogram to be deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+return integer indicating success or failure of the executed system command 
+\end{DoxyReturn}
+\hypertarget{classfileManager_aaeba12c39f82137bcfd6841389df7b26}{\index{file\-Manager@{file\-Manager}!flip\-Xtract@{flip\-Xtract}}
+\index{flip\-Xtract@{flip\-Xtract}!fileManager@{file\-Manager}}
+\subsubsection[{flip\-Xtract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::flip\-Xtract} (
+\begin{DoxyParamCaption}
+\item[{{\bf compact\-Tract} $\ast$}]{tractogram\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aaeba12c39f82137bcfd6841389df7b26}
+rearranges a compact tractogram to correspond with a 3\-D image flip in the x-\/axis 
+\begin{DoxyParams}{\-Parameters}
+{\em tractogram\-Pointer} & a pointer to the tract to be flipped (data will be changed) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_ab9acd7828868c65f81bad95d2aa3a755}{\index{file\-Manager@{file\-Manager}!full2compact@{full2compact}}
+\index{full2compact@{full2compact}!fileManager@{file\-Manager}}
+\subsubsection[{full2compact}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::full2compact} (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&}]{full\-Tract, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{compact}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_ab9acd7828868c65f81bad95d2aa3a755}
+compacts a full 3\-D image tractogram into a compact tractogram vector 
+\begin{DoxyParams}{\-Parameters}
+{\em full\-Tract} & the full 3\-D image tractogram vector to be compacted \\
+\hline
+{\em compact} & a pointer to the vector to hold the compacted tractogram \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a0f0c2649d0d3422185ec013324769791}{\index{file\-Manager@{file\-Manager}!get\-Block\-Filename@{get\-Block\-Filename}}
+\index{get\-Block\-Filename@{get\-Block\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Block\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf file\-Manager\-::get\-Block\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{block\-I\-D1, }
+\item[{const unsigned int}]{block\-I\-D2}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a0f0c2649d0d3422185ec013324769791}
+returns the filename of the distance matrix block defined by the block location \-I\-Ds inside the matrix 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D1} & the block row \-I\-D \\
+\hline
+{\em block\-I\-D2} & the block column \-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a string indicating the filename corresponding to that block 
+\end{DoxyReturn}
+\hypertarget{classfileManager_a96bd86333f1b24dcb5b2110c9bcac38f}{\index{file\-Manager@{file\-Manager}!get\-Cluster\-Mask\-Filename@{get\-Cluster\-Mask\-Filename}}
+\index{get\-Cluster\-Mask\-Filename@{get\-Cluster\-Mask\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Cluster\-Mask\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf file\-Manager\-::get\-Cluster\-Mask\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{node}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a96bd86333f1b24dcb5b2110c9bcac38f}
+returns the filename of the cluster mask (an image with the voxels of contained leafs set to 1) by the block node \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em node} & the cluster node \-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a string indicating the filename corresponding to that cluster mask 
+\end{DoxyReturn}
+\hypertarget{classfileManager_af1b2dea2761c3f0018b62077cb032aee}{\index{file\-Manager@{file\-Manager}!get\-File\-Extension@{get\-File\-Extension}}
+\index{get\-File\-Extension@{get\-File\-Extension}!fileManager@{file\-Manager}}
+\subsubsection[{get\-File\-Extension}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\-::string {\bf file\-Manager\-::get\-File\-Extension} (
+\begin{DoxyParamCaption}
+\item[{\-Tract\-Ext\-Type}]{ext\-Type}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_af1b2dea2761c3f0018b62077cb032aee}
+returns a string with the filename extension to be used in reading/writing files \begin{DoxyReturn}{\-Returns}
+the filename extension string 
+\end{DoxyReturn}
+
+
+\-Implemented in \hyperlink{classniftiManager_adedd75842b52a100303f7a953290d080}{nifti\-Manager}, and \hyperlink{classvistaManager_a5e52fed6323e11f13b5952bdb44ee6de}{vista\-Manager}.
+
+\hypertarget{classfileManager_ac64c35e60f2a006b0a4d2af9e50d9029}{\index{file\-Manager@{file\-Manager}!get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}}
+\index{get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Full\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\-::string {\bf file\-Manager\-::get\-Full\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector = {\ttfamily std\-:\-:vector$<$~{\bf \-W\-Hcoord}~$>$()}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_ac64c35e60f2a006b0a4d2af9e50d9029}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_ae47648397db80c5b0630cf1b0f29c560}{nifti\-Manager}, and \hyperlink{classvistaManager_abe8c9c35fd44694320e07d56c8c7cc1a}{vista\-Manager}.
+
+\hypertarget{classfileManager_af4f1020afb21f2a1c37b48cf8b694557}{\index{file\-Manager@{file\-Manager}!get\-Full\-Node\-Tract\-Filename@{get\-Full\-Node\-Tract\-Filename}}
+\index{get\-Full\-Node\-Tract\-Filename@{get\-Full\-Node\-Tract\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Full\-Node\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf file\-Manager\-::get\-Full\-Node\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_af4f1020afb21f2a1c37b48cf8b694557}
+returns the filename of the full node tractogram defined by the \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & the node \-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a string indicating the filename corresponding to that full tractogram 
+\end{DoxyReturn}
+\hypertarget{classfileManager_a24c2bf9055bfe28571866ce7586a3e34}{\index{file\-Manager@{file\-Manager}!get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}}
+\index{get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}virtual std\-::string {\bf file\-Manager\-::get\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector = {\ttfamily std\-:\-:vector$<$~{\bf \-W\-Hcoord}~$>$()}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_a24c2bf9055bfe28571866ce7586a3e34}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_ac3bb3fa42b34aefa6f6c70ba5e1c834b}{nifti\-Manager}, and \hyperlink{classvistaManager_a407d30a5fffffe195fdcb6c6c7915603}{vista\-Manager}.
+
+\hypertarget{classfileManager_ad77404255f7576fdee1ce329369d4f94}{\index{file\-Manager@{file\-Manager}!get\-Mask\-Matrix@{get\-Mask\-Matrix}}
+\index{get\-Mask\-Matrix@{get\-Mask\-Matrix}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Mask\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ bool $>$ $>$ $>$ {\bf file\-Manager\-::get\-Mask\-Matrix} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_ad77404255f7576fdee1ce329369d4f94}
+returns the pre-\/loaded white matter mask image) \begin{DoxyReturn}{\-Returns}
+white matter mask 
+\end{DoxyReturn}
+\hypertarget{classfileManager_aae49808069aebe457a6be8818488d7c4}{\index{file\-Manager@{file\-Manager}!get\-Node\-Tract\-Filename@{get\-Node\-Tract\-Filename}}
+\index{get\-Node\-Tract\-Filename@{get\-Node\-Tract\-Filename}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Node\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf file\-Manager\-::get\-Node\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aae49808069aebe457a6be8818488d7c4}
+returns the filename of the compact node tractogram defined by the \-I\-D 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & the node \-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a string indicating the filename corresponding to that compact tractogram 
+\end{DoxyReturn}
+\hypertarget{classfileManager_a24452e5e2e161dfba62be488d4ecc114}{\index{file\-Manager@{file\-Manager}!get\-Tract\-Size@{get\-Tract\-Size}}
+\index{get\-Tract\-Size@{get\-Tract\-Size}!fileManager@{file\-Manager}}
+\subsubsection[{get\-Tract\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf file\-Manager\-::get\-Tract\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_a24452e5e2e161dfba62be488d4ecc114}
+returns size of compact tract according to white matter mask (needs mask to be pre-\/loaded) \begin{DoxyReturn}{\-Returns}
+tractogram size (number of voxels in the white matter) 
+\end{DoxyReturn}
+\hypertarget{classfileManager_ad32c0c3e00f03a9338f1404b1e123e19}{\index{file\-Manager@{file\-Manager}!load\-Header@{load\-Header}}
+\index{load\-Header@{load\-Header}!fileManager@{file\-Manager}}
+\subsubsection[{load\-Header}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf file\-Manager\-::load\-Header} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename, }
+\item[{bool}]{display = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_ad32c0c3e00f03a9338f1404b1e123e19}
+loads an image header and displayes its data in the standard output if so specified (only implemented in nifti mode) 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & file path to the image file containing the header \\
+\hline
+{\em display} & if set the header info will be displayed in standard output, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_aaac5db54ecdac481fdddf94a5fbdf574}{nifti\-Manager}, and \hyperlink{classvistaManager_aa154ab71f5179e8de436a29387a14ed6}{vista\-Manager}.
+
+\hypertarget{classfileManager_a047394d444e2a33def35515da8daebb4}{\index{file\-Manager@{file\-Manager}!load\-Mask\-Image@{load\-Mask\-Image}}
+\index{load\-Mask\-Image@{load\-Mask\-Image}!fileManager@{file\-Manager}}
+\subsubsection[{load\-Mask\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::load\-Mask\-Image} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{mask\-Filename}
+\end{DoxyParamCaption}
+)}}\label{classfileManager_a047394d444e2a33def35515da8daebb4}
+loads a 3\-D image usually to be used as white matter mask for tractogram conversion if workingin nifti mode it also keeps the image header to use when writing further files 
+\begin{DoxyParams}{\-Parameters}
+{\em mask\-Filename} & the filepath where the 3\-D file is located \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a3af89c1b2da86ca6185234cc9dd8e888}{\index{file\-Manager@{file\-Manager}!mean\-Coord\-From\-Mask@{mean\-Coord\-From\-Mask}}
+\index{mean\-Coord\-From\-Mask@{mean\-Coord\-From\-Mask}!fileManager@{file\-Manager}}
+\subsubsection[{mean\-Coord\-From\-Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Hcoord} {\bf file\-Manager\-::mean\-Coord\-From\-Mask} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a3af89c1b2da86ca6185234cc9dd8e888}
+calculates the mean coordinate (in euclidean space) of the pre-\/loaded image (must be a binary mask to work properly) used to calculate a cluster euclidean center from a mask of its leaf voxels \begin{DoxyReturn}{\-Returns}
+\hyperlink{classWHcoord}{\-W\-Hcoord} object with the coordinates of the calculated center 
+\end{DoxyReturn}
+\hypertarget{classfileManager_a6f05bf73e5d5169ce09591f3dc059ffb}{\index{file\-Manager@{file\-Manager}!read\-As\-Log@{read\-As\-Log}}
+\index{read\-As\-Log@{read\-As\-Log}!fileManager@{file\-Manager}}
+\subsubsection[{read\-As\-Log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-As\-Log} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_a6f05bf73e5d5169ce09591f3dc059ffb}
+sets the the log flag in order to consider read tracts to be in logarithmic units \hypertarget{classfileManager_ac10757ad2d56b087fbbc73afbf3169cf}{\index{file\-Manager@{file\-Manager}!read\-As\-Nat@{read\-As\-Nat}}
+\index{read\-As\-Nat@{read\-As\-Nat}!fileManager@{file\-Manager}}
+\subsubsection[{read\-As\-Nat}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-As\-Nat} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_ac10757ad2d56b087fbbc73afbf3169cf}
+resets the the log flag in order to consider read tracts to be in natural units \hypertarget{classfileManager_ab6218fede8e71eee369e8a8a0454ee21}{\index{file\-Manager@{file\-Manager}!read\-As\-Thres@{read\-As\-Thres}}
+\index{read\-As\-Thres@{read\-As\-Thres}!fileManager@{file\-Manager}}
+\subsubsection[{read\-As\-Thres}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-As\-Thres} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_ab6218fede8e71eee369e8a8a0454ee21}
+sets the the threshold flag in order to consider read tracts to be thresholded \hypertarget{classfileManager_aa3104aa0287e86101388bf337458d6f4}{\index{file\-Manager@{file\-Manager}!read\-As\-Un\-Thres@{read\-As\-Un\-Thres}}
+\index{read\-As\-Un\-Thres@{read\-As\-Un\-Thres}!fileManager@{file\-Manager}}
+\subsubsection[{read\-As\-Un\-Thres}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-As\-Un\-Thres} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_aa3104aa0287e86101388bf337458d6f4}
+resets the the threshold flag in order to consider read tracts to be non-\/thresholded \hypertarget{classfileManager_a64d3bd1b3ef7192a4f7f02b3840f5fb0}{\index{file\-Manager@{file\-Manager}!read\-Cluster\-Mask\-Number@{read\-Cluster\-Mask\-Number}}
+\index{read\-Cluster\-Mask\-Number@{read\-Cluster\-Mask\-Number}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Cluster\-Mask\-Number}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf file\-Manager\-::read\-Cluster\-Mask\-Number} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a64d3bd1b3ef7192a4f7f02b3840f5fb0}
+extracts the numeric \-I\-D of a node from a cluster mask filename 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & the cluster mask filename \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a size\-\_\-t value indicating the \-I\-D of the node corresponding to that cluster mask filename 
+\end{DoxyReturn}
+\hypertarget{classfileManager_af81791803dc1116fb55343d070169d1d}{\index{file\-Manager@{file\-Manager}!read\-Dist\-Block@{read\-Dist\-Block}}
+\index{read\-Dist\-Block@{read\-Dist\-Block}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Dist\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Dist\-Block} (
+\begin{DoxyParamCaption}
+\item[{const std\-::pair$<$ unsigned int, unsigned int $>$}]{block\-I\-D, }
+\item[{std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$}]{d\-Block\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_af81791803dc1116fb55343d070169d1d}
+reads a distance matrix block and returns it in matrix (vector of vectors) form 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D} & a pair with the row and column block \-I\-Ds in the matrix \\
+\hline
+{\em d\-Block\-Pointer} & a pointer to the matrix to hold the read block \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a74fc943b2fb2275a209f1470bc55c9d7}{\index{file\-Manager@{file\-Manager}!read\-Dist\-Block@{read\-Dist\-Block}}
+\index{read\-Dist\-Block@{read\-Dist\-Block}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Dist\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Dist\-Block} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{block\-I\-D1, }
+\item[{const unsigned int}]{block\-I\-D2, }
+\item[{std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$}]{d\-Block\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a74fc943b2fb2275a209f1470bc55c9d7}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_aa15ca3b9edb5d2d3905ee7f5d627230a}{\index{file\-Manager@{file\-Manager}!read\-Full\-Node\-Tract\-Number@{read\-Full\-Node\-Tract\-Number}}
+\index{read\-Full\-Node\-Tract\-Number@{read\-Full\-Node\-Tract\-Number}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Full\-Node\-Tract\-Number}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf file\-Manager\-::read\-Full\-Node\-Tract\-Number} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string}]{filename}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aa15ca3b9edb5d2d3905ee7f5d627230a}
+extracts the numeric \-I\-D of a node from a full node tractogram filename 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & the tractogram filename \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+a size\-\_\-t value indicating the \-I\-D of the node corresponding to that tract filename 
+\end{DoxyReturn}
+\hypertarget{classfileManager_a96e9ac0dffda9bcd02bba97be94635d6}{\index{file\-Manager@{file\-Manager}!read\-Full\-Tract@{read\-Full\-Tract}}
+\index{read\-Full\-Tract@{read\-Full\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Full\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Full\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string}]{full\-Tract\-Filename, }
+\item[{{\bf compact\-Tract} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a96e9ac0dffda9bcd02bba97be94635d6}
+reads a 3\-D image tractogram file and returns it in \hyperlink{classcompactTract}{compact\-Tract} object 
+\begin{DoxyParams}{\-Parameters}
+{\em full\-Tract\-Filename} & the filepath where the tractogram file is located \\
+\hline
+{\em tract\-Pointer} & a pointer to the tractogram object to hold the read tract \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a256980984836386e38f1fb3b5557a7f2}{\index{file\-Manager@{file\-Manager}!read\-Image@{read\-Image}}
+\index{read\-Image@{read\-Image}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Image}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Value\-Type {\bf file\-Manager\-::read\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$}]{image\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_a256980984836386e38f1fb3b5557a7f2}
+reads a 3\-D image from file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image file \\
+\hline
+{\em image\-Pointer} & a pointer to the image structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implemented in \hyperlink{classniftiManager_ad3a7ba158c081b0aef51e8773fd17902}{nifti\-Manager}, and \hyperlink{classvistaManager_a63e720f7d61fe55af1aebad4602f450e}{vista\-Manager}.
+
+\hypertarget{classfileManager_a97e3a5cabee00b97bbe0be4b572f49bd}{\index{file\-Manager@{file\-Manager}!read\-Leaf\-Tract@{read\-Leaf\-Tract}}
+\index{read\-Leaf\-Tract@{read\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector, }
+\item[{{\bf compact\-Tract} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a97e3a5cabee00b97bbe0be4b572f49bd}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the tractogram leaf \-I\-D \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates \\
+\hline
+{\em tract\-Pointer} & a pointer to the tractogram object to hold the read tract \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_aaf4d7b1f071b2b1a4a1f0b1b3131bb78}{\index{file\-Manager@{file\-Manager}!read\-Leaf\-Tract@{read\-Leaf\-Tract}}
+\index{read\-Leaf\-Tract@{read\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector, }
+\item[{{\bf compact\-Tract\-Char} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aaf4d7b1f071b2b1a4a1f0b1b3131bb78}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_a940f90e44c4e483659f4527e6ffa9e95}{\index{file\-Manager@{file\-Manager}!read\-Matrix@{read\-Matrix}}
+\index{read\-Matrix@{read\-Matrix}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Value\-Type {\bf file\-Manager\-::read\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$}]{matrix\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_a940f90e44c4e483659f4527e6ffa9e95}
+reads a 2\-D matrix from file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image file \\
+\hline
+{\em matrix\-Pointer} & a pointer to the matrix structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implemented in \hyperlink{classniftiManager_a1578e4cf10becfda948ab29c2f2c6ae3}{nifti\-Manager}, and \hyperlink{classvistaManager_a11963066feafb09ce08be36a81d4b218}{vista\-Manager}.
+
+\hypertarget{classfileManager_a172ba174ac43ed256cf9aee840291a40}{\index{file\-Manager@{file\-Manager}!read\-Node\-Tract@{read\-Node\-Tract}}
+\index{read\-Node\-Tract@{read\-Node\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Node\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Node\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node, }
+\item[{{\bf compact\-Tract} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a172ba174ac43ed256cf9aee840291a40}
+extracts node compact tractogram data from file and returns it in \hyperlink{classcompactTract}{compact\-Tract} object 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & the tractogram node \-I\-D \\
+\hline
+{\em tract\-Pointer} & a pointer to the tractogram object to hold the read tract \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a88cd843c970cfb52f11138c74eac3195}{\index{file\-Manager@{file\-Manager}!read\-Tract@{read\-Tract}}
+\index{read\-Tract@{read\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{{\bf compact\-Tract} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a88cd843c970cfb52f11138c74eac3195}
+reads a tractogram file and returns it in \hyperlink{classcompactTract}{compact\-Tract} or vector object properly normalized according to datatype 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Filename} & the filepath where the tractogram file is located \\
+\hline
+{\em tract\-Pointer} & a pointer to the tractogram object or vector to hold the read tract \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_aa9b0f571bf6244d2e4037572a5d68507}{\index{file\-Manager@{file\-Manager}!read\-Tract@{read\-Tract}}
+\index{read\-Tract@{read\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{{\bf compact\-Tract\-Char} $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aa9b0f571bf6244d2e4037572a5d68507}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_af58861a36229bbdc5b74e2cc36dd6488}{\index{file\-Manager@{file\-Manager}!read\-Tract@{read\-Tract}}
+\index{read\-Tract@{read\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_af58861a36229bbdc5b74e2cc36dd6488}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_a31d73123ba9e43b2fcafc9985725c47e}{\index{file\-Manager@{file\-Manager}!read\-Tract@{read\-Tract}}
+\index{read\-Tract@{read\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::read\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{std\-::vector$<$ unsigned char $>$ $\ast$}]{tract\-Pointer}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a31d73123ba9e43b2fcafc9985725c47e}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_aca16ebeace21a25c0f76bfc4c75595d3}{\index{file\-Manager@{file\-Manager}!read\-Vector@{read\-Vector}}
+\index{read\-Vector@{read\-Vector}!fileManager@{file\-Manager}}
+\subsubsection[{read\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}virtual \-Value\-Type {\bf file\-Manager\-::read\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{vector\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_aca16ebeace21a25c0f76bfc4c75595d3}
+reads a 1\-D vector from file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image file \\
+\hline
+{\em vector\-Pointer} & a pointer to the standard vector to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implemented in \hyperlink{classniftiManager_a7f22a704c5b047b56ca8481f35e47fe3}{nifti\-Manager}, and \hyperlink{classvistaManager_a3b7961506874a82c9cd03d63f9453ef6}{vista\-Manager}.
+
+\hypertarget{classfileManager_a67527e457000ba63b0271c7f5bd6a61f}{\index{file\-Manager@{file\-Manager}!set\-Folder@{set\-Folder}}
+\index{set\-Folder@{set\-Folder}!fileManager@{file\-Manager}}
+\subsubsection[{set\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::set\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{io\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_a67527e457000ba63b0271c7f5bd6a61f}
+sets the input/output folder 
+\begin{DoxyParams}{\-Parameters}
+{\em io\-Folder} & input-\/output folder for the file manager \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_af8227012ab3602707592d23a75efb3c3}{\index{file\-Manager@{file\-Manager}!store\-Unzipped@{store\-Unzipped}}
+\index{store\-Unzipped@{store\-Unzipped}!fileManager@{file\-Manager}}
+\subsubsection[{store\-Unzipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::store\-Unzipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_af8227012ab3602707592d23a75efb3c3}
+resets the the zip flag in order not to zip the files upon writing \hypertarget{classfileManager_aab7c3fca3510f13d1fad8d23875bf444}{\index{file\-Manager@{file\-Manager}!store\-Zipped@{store\-Zipped}}
+\index{store\-Zipped@{store\-Zipped}!fileManager@{file\-Manager}}
+\subsubsection[{store\-Zipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::store\-Zipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_aab7c3fca3510f13d1fad8d23875bf444}
+sets the the zip flag in order to zip the files upon writing \hypertarget{classfileManager_acdcf3f24fb2ce3970f28b8ffbcafb9ae}{\index{file\-Manager@{file\-Manager}!write\-Dist\-Block@{write\-Dist\-Block}}
+\index{write\-Dist\-Block@{write\-Dist\-Block}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Dist\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Dist\-Block} (
+\begin{DoxyParamCaption}
+\item[{const std\-::pair$<$ unsigned int, unsigned int $>$}]{block\-I\-D, }
+\item[{const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&}]{d\-Block}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_acdcf3f24fb2ce3970f28b8ffbcafb9ae}
+writes a distance matrix block matrix to file 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D} & a pair with the row and column block \-I\-D in the matrix \\
+\hline
+{\em d\-Block} & the matrix holding the block data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_adbe45e18c2b47f84defc35586ed2f87b}{\index{file\-Manager@{file\-Manager}!write\-Dist\-Block@{write\-Dist\-Block}}
+\index{write\-Dist\-Block@{write\-Dist\-Block}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Dist\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Dist\-Block} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{block\-I\-D1, }
+\item[{const unsigned int}]{block\-I\-D2, }
+\item[{const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&}]{d\-Block}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_adbe45e18c2b47f84defc35586ed2f87b}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em block\-I\-D1} & the row block \-I\-D in the matrix \\
+\hline
+{\em block\-I\-D2} & the column block \-I\-D in the matrix \\
+\hline
+{\em d\-Block} & the matrix holding the block data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a52efe93c118c68d81750bd3823ddaf7a}{\index{file\-Manager@{file\-Manager}!write\-Full\-Leaf\-Tract@{write\-Full\-Leaf\-Tract}}
+\index{write\-Full\-Leaf\-Tract@{write\-Full\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Full\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Full\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t \&}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a52efe93c118c68d81750bd3823ddaf7a}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_afc5104f7182377e8129cc6a0832f1720}{\index{file\-Manager@{file\-Manager}!write\-Full\-Leaf\-Tract@{write\-Full\-Leaf\-Tract}}
+\index{write\-Full\-Leaf\-Tract@{write\-Full\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Full\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Full\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t \&}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_afc5104f7182377e8129cc6a0832f1720}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a0c021e5c0a8730c12bbb0180610b9b3f}{\index{file\-Manager@{file\-Manager}!write\-Full\-Node\-Tract@{write\-Full\-Node\-Tract}}
+\index{write\-Full\-Node\-Tract@{write\-Full\-Node\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Full\-Node\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Full\-Node\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a0c021e5c0a8730c12bbb0180610b9b3f}
+convert node compact tract into full image tractogram and write to file 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & \-I\-D of the node corresponding to the tractogram to be written \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a35cd539e7f007cac132ebebe16f7f1d0}{\index{file\-Manager@{file\-Manager}!write\-Full\-Tract@{write\-Full\-Tract}}
+\index{write\-Full\-Tract@{write\-Full\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Full\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Full\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a35cd539e7f007cac132ebebe16f7f1d0}
+convert compact tract into full image tractogram and write to file 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Filename} & file path where to write the output tractogram file \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_ae987e2c6a109c8bfd494f98b192969a0}{\index{file\-Manager@{file\-Manager}!write\-Image@{write\-Image}}
+\index{write\-Image@{write\-Image}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Image}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf file\-Manager\-::write\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&}]{image, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_ae987e2c6a109c8bfd494f98b192969a0}
+writes a 3\-D image to file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em image} & the 3\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_a6dfbfd975d86ecc2a6d47bf64ff9ccdc}{nifti\-Manager}, and \hyperlink{classvistaManager_aa8e39454f414a5ae46ad3e57dca12f0e}{vista\-Manager}.
+
+\hypertarget{classfileManager_aa8113477a8c33a2f8ef296c3413e7dcd}{\index{file\-Manager@{file\-Manager}!write\-In\-Char@{write\-In\-Char}}
+\index{write\-In\-Char@{write\-In\-Char}!fileManager@{file\-Manager}}
+\subsubsection[{write\-In\-Char}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-In\-Char} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_aa8113477a8c33a2f8ef296c3413e7dcd}
+resets the the float flag in order to write tracts/images with unsigned char data type \hypertarget{classfileManager_a1fa3f0c6c838f5235ab4603f7eaf4aef}{\index{file\-Manager@{file\-Manager}!write\-In\-Float@{write\-In\-Float}}
+\index{write\-In\-Float@{write\-In\-Float}!fileManager@{file\-Manager}}
+\subsubsection[{write\-In\-Float}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-In\-Float} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classfileManager_a1fa3f0c6c838f5235ab4603f7eaf4aef}
+sets the the float flag in order to write tracts/images with float data type \hypertarget{classfileManager_a08443609e35b7b5e7123cc57d32b2870}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{leaf, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a08443609e35b7b5e7123cc57d32b2870}
+writes a leaf tractogram to file 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf} & seed voxel coordinate corresponding to the tract to be written \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a8244ce5c46d19ac66edac97bdb907c16}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const {\bf \-W\-Hcoord} \&}]{leaf, }
+\item[{const {\bf compact\-Tract\-Char} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a8244ce5c46d19ac66edac97bdb907c16}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_aa35414e6c4512c5570ed073b8336accb}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aa35414e6c4512c5570ed073b8336accb}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a9541b3a31e4a8d22ce4266c8be97dda1}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const {\bf compact\-Tract\-Char} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a9541b3a31e4a8d22ce4266c8be97dda1}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_abb98e5c6b28ccadbfccba2d380f60f88}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_abb98e5c6b28ccadbfccba2d380f60f88}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_a8962f9967225f802d9a1f7f5746a4b69}{\index{file\-Manager@{file\-Manager}!write\-Leaf\-Tract@{write\-Leaf\-Tract}}
+\index{write\-Leaf\-Tract@{write\-Leaf\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Leaf\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Leaf\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector, }
+\item[{const {\bf compact\-Tract\-Char} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a8962f9967225f802d9a1f7f5746a4b69}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_a18e9cfa58d91e74abd5dc5e3058fe48c}{\index{file\-Manager@{file\-Manager}!write\-Mask@{write\-Mask}}
+\index{write\-Mask@{write\-Mask}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Mask}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Mask} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{mask\-Filename, }
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&}]{mask\-Matrix}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_a18e9cfa58d91e74abd5dc5e3058fe48c}
+writes a a binary 3\-D image to file 
+\begin{DoxyParams}{\-Parameters}
+{\em mask\-Filename} & output filepath where the mask will be stored \\
+\hline
+{\em mask\-Matrix} & 3\-D matrix holding the image data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_ae0046132e19b4c681e02cb5634520c73}{\index{file\-Manager@{file\-Manager}!write\-Mask@{write\-Mask}}
+\index{write\-Mask@{write\-Mask}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Mask}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Mask} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{mask\-Filename, }
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ bool $>$ $>$ $>$ \&}]{mask\-Matrix}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_ae0046132e19b4c681e02cb5634520c73}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_a60181a9ff9cf6f6d228b209d9050b21e}{\index{file\-Manager@{file\-Manager}!write\-Matrix@{write\-Matrix}}
+\index{write\-Matrix@{write\-Matrix}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf file\-Manager\-::write\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&}]{matrix, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_a60181a9ff9cf6f6d228b209d9050b21e}
+writes a 2\-D matrix to file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em matrix} & the 2\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_a562c2d1e7e6f5f26ebc5f37ca0c14df8}{nifti\-Manager}, and \hyperlink{classvistaManager_a4baeb675badeccc95fba918d43ff8b46}{vista\-Manager}.
+
+\hypertarget{classfileManager_add95d10a2323eda445a150304300837c}{\index{file\-Manager@{file\-Manager}!write\-Node\-Tract@{write\-Node\-Tract}}
+\index{write\-Node\-Tract@{write\-Node\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Node\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Node\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Node, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_add95d10a2323eda445a150304300837c}
+writes a node tractogram to file 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Node} & \-I\-D of the node corresponding to the tract to be written \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_abc9e289891801cecb4abef1a934a591f}{\index{file\-Manager@{file\-Manager}!write\-Tract@{write\-Tract}}
+\index{write\-Tract@{write\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{const {\bf compact\-Tract} \&}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_abc9e289891801cecb4abef1a934a591f}
+writes a node tractogram to file 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Filename} & output filepath where the tragtogram will be stored \\
+\hline
+{\em tractogram} & tractogram object holding the tractogram data to be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classfileManager_aeb85f3c16621b69a686738463a59b928}{\index{file\-Manager@{file\-Manager}!write\-Tract@{write\-Tract}}
+\index{write\-Tract@{write\-Tract}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf file\-Manager\-::write\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{tract\-Filename, }
+\item[{std\-::vector$<$ float $>$}]{tractogram}
+\end{DoxyParamCaption}
+) const}}\label{classfileManager_aeb85f3c16621b69a686738463a59b928}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classfileManager_a510ef89d143c23e69c4b7c4a56325a1d}{\index{file\-Manager@{file\-Manager}!write\-Vector@{write\-Vector}}
+\index{write\-Vector@{write\-Vector}!fileManager@{file\-Manager}}
+\subsubsection[{write\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf file\-Manager\-::write\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ float $>$ \&}]{vector, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{classfileManager_a510ef89d143c23e69c4b7c4a56325a1d}
+writes a 1\-D vector to file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em vector} & the 1\-D vector holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classniftiManager_ac6b71cac86988cf30cb3a7eb2eeb5baa}{nifti\-Manager}, and \hyperlink{classvistaManager_a1863d9fa2c828230530c811c75bd335a}{vista\-Manager}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/file\-Manager.\-h\item 
+src/common/file\-Manager.\-cpp\end{DoxyCompactItemize}

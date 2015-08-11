@@ -1,0 +1,314 @@
+\hypertarget{classWHtreePartition}{\section{\-W\-Htree\-Partition \-Class \-Reference}
+\label{classWHtreePartition}\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}}
+}
+
+
+{\ttfamily \#include $<$\-W\-Htree\-Partition.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classWHtreePartition_a1c16d2118b3528ac8b63259ee246b9f4}{\-W\-Htree\-Partition} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree)
+\item 
+\hypertarget{classWHtreePartition_af86d3bc059ffd4d1c7cfdd830ca1d2c2}{\hyperlink{classWHtreePartition_af86d3bc059ffd4d1c7cfdd830ca1d2c2}{$\sim$\-W\-Htree\-Partition} ()}\label{classWHtreePartition_af86d3bc059ffd4d1c7cfdd830ca1d2c2}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classWHtreePartition_a41e4826046825e0b68058c280200f34b}{scan\-Optimal\-Partitions} (const size\-\_\-t level\-Depth, std\-::vector$<$ float $>$ $\ast$partition\-Values\-Pointer, std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$patition\-Vector\-Pointer, const bool verbose=false)
+\item 
+void \hyperlink{classWHtreePartition_afa47e3d1387084c43e835875749757a2}{scan\-Hoz\-Partitions} (std\-::vector$<$ float $>$ $\ast$partition\-Values\-Pointer, std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$patition\-Vector\-Pointer, const bool verbose=false)
+\item 
+size\-\_\-t \hyperlink{classWHtreePartition_a43ab6fca3a8e5bfec19590e79b4513cd}{filter\-Max\-Partitions} (const unsigned int filter\-Radius, std\-::vector$<$ float $>$ $\ast$part\-Val\-Point, std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$part\-Vector\-Point)
+\item 
+void \hyperlink{classWHtreePartition_a126a4d6ebcb8f55def510b0a0d8946a5}{write\-Partition\-Set} (std\-::string part\-File\-Name, const std\-::vector$<$ float $>$ \&partition\-Values, const std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ \&patition\-Vector)
+\item 
+void \hyperlink{classWHtreePartition_ac6d7c1ee277fc5306653ae496936b8f5}{level2granularity} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$partition) const 
+\item 
+void \hyperlink{classWHtreePartition_ab504f8c4556354f0f0f2a853be1657fc}{level2granularity} (std\-::vector$<$ size\-\_\-t $>$ $\ast$partition) const 
+\item 
+float \hyperlink{classWHtreePartition_aace1381451e4ac85f8d0d082f8b9f52d}{partition\-Classic} (float comp\-Value, std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const partition, const \-H\-T\-\_\-\-P\-A\-R\-T\-M\-O\-D\-E mode, const \-H\-T\-\_\-\-C\-O\-N\-D\-I\-T\-I\-O\-N condition, const bool exclude\-Leaves, const size\-\_\-t root) const 
+\item 
+float \hyperlink{classWHtreePartition_a7f779a38a2126adf454ffb8b0c993457}{partition\-Optimized} (float comp\-Value, std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const partition, const \-H\-T\-\_\-\-P\-A\-R\-T\-M\-O\-D\-E2 mode, const \-H\-T\-\_\-\-C\-O\-N\-D\-I\-T\-I\-O\-N condition, const bool exclude\-Leaves, const size\-\_\-t root, const size\-\_\-t level\-Depth) const 
+\item 
+float \hyperlink{classWHtreePartition_aaa16abb4386beb28bfbad3cbf2ed4745}{partition\-Sharp} (const float comp\-Value, std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const partition, const bool exclude\-Leaves, const size\-\_\-t root, const bool normalized) const 
+\item 
+float \hyperlink{classWHtreePartition_a14fe5c86374ee9c0247c92867bd1f84c}{partition\-Smooth} (const float comp\-Value, std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const partition, const bool exclude\-Leaves, const size\-\_\-t root) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class operates over the class \hyperlink{classWHtree}{\-W\-Htree} to extract partitions and analyze partition quality it may change some non-\/essential members of the tree class such as saved selected partitions but the tree structure is never modified. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classWHtreePartition_a1c16d2118b3528ac8b63259ee246b9f4}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!\-W\-Htree\-Partition@{\-W\-Htree\-Partition}}
+\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{\-W\-Htree\-Partition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-W\-Htree\-Partition\-::\-W\-Htree\-Partition} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classWHtreePartition_a1c16d2118b3528ac8b63259ee246b9f4}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree} & a pointer to the tree to be partitioned \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classWHtreePartition_a43ab6fca3a8e5bfec19590e79b4513cd}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!filter\-Max\-Partitions@{filter\-Max\-Partitions}}
+\index{filter\-Max\-Partitions@{filter\-Max\-Partitions}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{filter\-Max\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-Partition\-::filter\-Max\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{filter\-Radius, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{part\-Val\-Point, }
+\item[{std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$}]{part\-Vector\-Point}
+\end{DoxyParamCaption}
+)}}\label{classWHtreePartition_a43ab6fca3a8e5bfec19590e79b4513cd}
+\-Filter a set of partitions across granularity levels in orther to keep only local maxima within a certain granularity \char`\"{}radius\char`\"{} 
+\begin{DoxyParams}{\-Parameters}
+{\em filter\-Radius} & radius (in granularity steps) within to keep the local maxima \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em part\-Val\-Point} & pointer to the partition value vector to be decimated \\
+\hline
+{\em part\-Vector\-Point} & pointer to the partition vector to be decimated \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxyReturn}{\-Returns}
+the index of the partition with the absolute maximum of quality vaule 
+\end{DoxyReturn}
+\hypertarget{classWHtreePartition_ac6d7c1ee277fc5306653ae496936b8f5}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!level2granularity@{level2granularity}}
+\index{level2granularity@{level2granularity}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{level2granularity}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Partition\-::level2granularity} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$}]{partition}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_ac6d7c1ee277fc5306653ae496936b8f5}
+obtain the partition corresponding to the second lowest level of granularity of a tree (using full boolean-\/integer node \-I\-D) that is, those those clusters correspondign to nodes having only one branching in between them and single leaves 
+\begin{DoxyParams}{\-Parameters}
+{\em partition} & vector where the return partition is saved \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreePartition_ab504f8c4556354f0f0f2a853be1657fc}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!level2granularity@{level2granularity}}
+\index{level2granularity@{level2granularity}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{level2granularity}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Partition\-::level2granularity} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$ $\ast$}]{partition}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_ab504f8c4556354f0f0f2a853be1657fc}
+obtain the partition corresponding to the second lowest level of granularity of a tree (using only non-\/leaf node \-I\-D) that is, those those clusters correspondign to nodes having only one branching in between them and single leaves 
+\begin{DoxyParams}{\-Parameters}
+{\em partition} & vector where the return partition is saved \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreePartition_aace1381451e4ac85f8d0d082f8b9f52d}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!partition\-Classic@{partition\-Classic}}
+\index{partition\-Classic@{partition\-Classic}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{partition\-Classic}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-Partition\-::partition\-Classic} (
+\begin{DoxyParamCaption}
+\item[{float}]{comp\-Value, }
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{partition, }
+\item[{const \-H\-T\-\_\-\-P\-A\-R\-T\-M\-O\-D\-E}]{mode, }
+\item[{const \-H\-T\-\_\-\-C\-O\-N\-D\-I\-T\-I\-O\-N}]{condition, }
+\item[{const bool}]{exclude\-Leaves, }
+\item[{const size\-\_\-t}]{root}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_aace1381451e4ac85f8d0d082f8b9f52d}
+\-Gets a classic partition for the tree (those where clusters are further subdivided until a condition is met, based on number of clusters, level or biggest cluster size) 
+\begin{DoxyParams}{\-Parameters}
+{\em comp\-Value} & comparison value to select partition \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition} & vector where to save the partition \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em mode} & tipe of data on which to base the partition (distance, size h. level) \\
+\hline
+{\em condition} & condition on which to build the partition (condition value or number of clusters) \\
+\hline
+{\em exclude\-Leaves} & if set base nodes will not be further partitioned \\
+\hline
+{\em root} & root of the subtree where to find the aprtition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+value at wich partition was found 
+\end{DoxyReturn}
+\hypertarget{classWHtreePartition_a7f779a38a2126adf454ffb8b0c993457}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!partition\-Optimized@{partition\-Optimized}}
+\index{partition\-Optimized@{partition\-Optimized}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{partition\-Optimized}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-Partition\-::partition\-Optimized} (
+\begin{DoxyParamCaption}
+\item[{float}]{comp\-Value, }
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{partition, }
+\item[{const \-H\-T\-\_\-\-P\-A\-R\-T\-M\-O\-D\-E2}]{mode, }
+\item[{const \-H\-T\-\_\-\-C\-O\-N\-D\-I\-T\-I\-O\-N}]{condition, }
+\item[{const bool}]{exclude\-Leaves, }
+\item[{const size\-\_\-t}]{root, }
+\item[{const size\-\_\-t}]{level\-Depth}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_a7f779a38a2126adf454ffb8b0c993457}
+\-Gets an optimized partition for the tree (those where a partition characteristic must be cosnidered for several partitions and levels at a time to decide which subset of the tree to continue navigating, until a condition is met) 
+\begin{DoxyParams}{\-Parameters}
+{\em comp\-Value} & comparison value to select partition \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition} & vector where to save the partition \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em mode} & tipe of data on which to base the partition ( spread-\/separation index, minimum size difference, maximum allowed intra cluster distance, maximum allowed weighted intra cluster distance, minimum required inter cluster distance, minimum required weighted inter cluster distance) \\
+\hline
+{\em condition} & condition on which to build the partition (condition value or number of clusters) \\
+\hline
+{\em exclude\-Leaves} & if set base nodes will not be further partitioned \\
+\hline
+{\em root} & root of the subtree where to find the aprtition \\
+\hline
+{\em level\-Depth} & number of levels down where to search for the best branching decision \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+value at wich partition was found 
+\end{DoxyReturn}
+\hypertarget{classWHtreePartition_aaa16abb4386beb28bfbad3cbf2ed4745}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!partition\-Sharp@{partition\-Sharp}}
+\index{partition\-Sharp@{partition\-Sharp}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{partition\-Sharp}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-Partition\-::partition\-Sharp} (
+\begin{DoxyParamCaption}
+\item[{const float}]{comp\-Value, }
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{partition, }
+\item[{const bool}]{exclude\-Leaves, }
+\item[{const size\-\_\-t}]{root, }
+\item[{const bool}]{normalized}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_aaa16abb4386beb28bfbad3cbf2ed4745}
+\-Finds clusters with sharp boundaries (long branches) the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em comp\-Value} & comparison value to select partition \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition} & vector where to save the partition \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em exclude\-Leaves} & if set base nodes will not be further partitioned \\
+\hline
+{\em root} & root of the subtree where to find the aprtition \\
+\hline
+{\em normalized} & flag to indicate whether the absolute length of the brancghwes should be considered of if they should be normalized by distance level in the tree \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+value at wich partition was found 
+\end{DoxyReturn}
+\hypertarget{classWHtreePartition_a14fe5c86374ee9c0247c92867bd1f84c}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!partition\-Smooth@{partition\-Smooth}}
+\index{partition\-Smooth@{partition\-Smooth}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{partition\-Smooth}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf \-W\-Htree\-Partition\-::partition\-Smooth} (
+\begin{DoxyParamCaption}
+\item[{const float}]{comp\-Value, }
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$ $\ast$const}]{partition, }
+\item[{const bool}]{exclude\-Leaves, }
+\item[{const size\-\_\-t}]{root}
+\end{DoxyParamCaption}
+) const}}\label{classWHtreePartition_a14fe5c86374ee9c0247c92867bd1f84c}
+\-Finds regions without sharp inner boundaries the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em comp\-Value} & comparison value to select partition \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition} & vector where to save the partition \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em exclude\-Leaves} & if set base nodes will not be further partitioned \\
+\hline
+{\em root} & root of the subtree where to find the aprtition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+value at wich partition was found 
+\end{DoxyReturn}
+\hypertarget{classWHtreePartition_afa47e3d1387084c43e835875749757a2}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!scan\-Hoz\-Partitions@{scan\-Hoz\-Partitions}}
+\index{scan\-Hoz\-Partitions@{scan\-Hoz\-Partitions}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{scan\-Hoz\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Partition\-::scan\-Hoz\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ float $>$ $\ast$}]{partition\-Values\-Pointer, }
+\item[{std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$}]{patition\-Vector\-Pointer, }
+\item[{const bool}]{verbose = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classWHtreePartition_afa47e3d1387084c43e835875749757a2}
+\-Obtain the partition quality values for the classic partitions at each granulairty of the tree 
+\begin{DoxyRetVals}{\-Return values}
+{\em partition\-Values\-Pointer} & pointer to the vector where to save the partition quality values \\
+\hline
+{\em patition\-Vector\-Pointer} & pointer to the vector where to save the partition actual partitions \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & flag to activate debug output \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreePartition_a41e4826046825e0b68058c280200f34b}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!scan\-Optimal\-Partitions@{scan\-Optimal\-Partitions}}
+\index{scan\-Optimal\-Partitions@{scan\-Optimal\-Partitions}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{scan\-Optimal\-Partitions}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Partition\-::scan\-Optimal\-Partitions} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{level\-Depth, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{partition\-Values\-Pointer, }
+\item[{std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ $\ast$}]{patition\-Vector\-Pointer, }
+\item[{const bool}]{verbose = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classWHtreePartition_a41e4826046825e0b68058c280200f34b}
+\-Obtain the partition quality values for the optimized (inter vs weighted intra cluster distance) partitions at each granulairty of the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em level\-Depth} & number of levels down where to search for the best branching decision \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{\-Return values}
+{\em partition\-Values\-Pointer} & pointer to the vector where to save the partition quality values \\
+\hline
+{\em patition\-Vector\-Pointer} & pointer to the vector where to save the partition actual partitions \\
+\hline
+\end{DoxyRetVals}
+
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & flag to activate debug output \\
+\hline
+\end{DoxyParams}
+\hypertarget{classWHtreePartition_a126a4d6ebcb8f55def510b0a0d8946a5}{\index{\-W\-Htree\-Partition@{\-W\-Htree\-Partition}!write\-Partition\-Set@{write\-Partition\-Set}}
+\index{write\-Partition\-Set@{write\-Partition\-Set}!WHtreePartition@{\-W\-Htree\-Partition}}
+\subsubsection[{write\-Partition\-Set}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-W\-Htree\-Partition\-::write\-Partition\-Set} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{part\-File\-Name, }
+\item[{const std\-::vector$<$ float $>$ \&}]{partition\-Values, }
+\item[{const std\-::vector$<$ std\-::vector$<$ size\-\_\-t $>$ $>$ \&}]{patition\-Vector}
+\end{DoxyParamCaption}
+)}}\label{classWHtreePartition_a126a4d6ebcb8f55def510b0a0d8946a5}
+write a set of partitions and their quality values to a text file 
+\begin{DoxyParams}{\-Parameters}
+{\em part\-File\-Name} & file name where to write the partition selection \\
+\hline
+{\em partition\-Values} & partition value vector to be written \\
+\hline
+{\em patition\-Vector} & partition vector to be written \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/\-W\-Htree\-Partition.\-h\item 
+src/common/\-W\-Htree\-Partition.\-cpp\end{DoxyCompactItemize}

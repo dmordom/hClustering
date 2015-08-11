@@ -1,0 +1,138 @@
+\hypertarget{classimage2treeBuilder}{\section{image2tree\-Builder \-Class \-Reference}
+\label{classimage2treeBuilder}\index{image2tree\-Builder@{image2tree\-Builder}}
+}
+
+
+{\ttfamily \#include $<$image2tree\-Builder.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classimage2treeBuilder_ab5d100bbecff8229b65d0eebd5eebbb9}{image2tree\-Builder} (std\-::string image\-Filename, std\-::string tree\-Filename, bool verbose, std\-::string base\-Filename=\char`\"{}\char`\"{})
+\item 
+\hypertarget{classimage2treeBuilder_a7c10057ecb35688a2b1f863c69880268}{\hyperlink{classimage2treeBuilder_a7c10057ecb35688a2b1f863c69880268}{$\sim$image2tree\-Builder} ()}\label{classimage2treeBuilder_a7c10057ecb35688a2b1f863c69880268}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classimage2treeBuilder_aec5a721192a8877235d8f812bc14233b}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+bool \hyperlink{classimage2treeBuilder_a7fa10f2a07579de457e6ed72eb457d74}{in\-Ready} () const 
+\item 
+bool \hyperlink{classimage2treeBuilder_a6ed4d0d7e24ef0bd27420ed7e0f76f5b}{out\-Ready} () const 
+\item 
+void \hyperlink{classimage2treeBuilder_ab8ca31b7689f43d83cc99d5f5e4870a5}{set\-Output\-Folder} (std\-::string output\-Folder)
+\item 
+void \hyperlink{classimage2treeBuilder_ae220bed5b7258d043bfc71898a322a1a}{set\-Verbose} (bool verbose=true)
+\item 
+size\-\_\-t \hyperlink{classimage2treeBuilder_a25a05d644b6cc1a8c24a9ab79ddbcb39}{roi\-Size} () const 
+\item 
+void \hyperlink{classimage2treeBuilder_ad3d44dd5922373f15d7c8d2424490dc6}{import\-Image\-Part} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class implements methods in order to accept a 3\-D partition label image and use this information to assign each base-\/node (meta-\/leaf) of a hierarchical tree to one of the partition clusters, then create a new tree with the same base nodes as the orginal but with only one partition in the hierarchical structure\-: the most similar to the one defined in the 3\-D partition label image. \-This single-\/partition tree can then be used to perform tree-\/comparison statistics between the original tree and the single-\/partition tree. 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classimage2treeBuilder_ab5d100bbecff8229b65d0eebd5eebbb9}{\index{image2tree\-Builder@{image2tree\-Builder}!image2tree\-Builder@{image2tree\-Builder}}
+\index{image2tree\-Builder@{image2tree\-Builder}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{image2tree\-Builder}]{\setlength{\rightskip}{0pt plus 5cm}{\bf image2tree\-Builder\-::image2tree\-Builder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{image\-Filename, }
+\item[{std\-::string}]{tree\-Filename, }
+\item[{bool}]{verbose, }
+\item[{std\-::string}]{base\-Filename = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classimage2treeBuilder_ab5d100bbecff8229b65d0eebd5eebbb9}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file containing the 3\-D image with the partition labels \\
+\hline
+{\em tree\-Filename} & file containing the tree with the base-\/nodes that must be matched to the partition \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+{\em base\-Filename} & the file containing the base node information, leave empty if bases should simply be extracted from tree structure \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classimage2treeBuilder_ad3d44dd5922373f15d7c8d2424490dc6}{\index{image2tree\-Builder@{image2tree\-Builder}!import\-Image\-Part@{import\-Image\-Part}}
+\index{import\-Image\-Part@{import\-Image\-Part}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{import\-Image\-Part}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf image2tree\-Builder\-::import\-Image\-Part} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classimage2treeBuilder_ad3d44dd5922373f15d7c8d2424490dc6}
+carries out the base-\/node matching and partition tree generation process \hypertarget{classimage2treeBuilder_a7fa10f2a07579de457e6ed72eb457d74}{\index{image2tree\-Builder@{image2tree\-Builder}!in\-Ready@{in\-Ready}}
+\index{in\-Ready@{in\-Ready}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{in\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf image2tree\-Builder\-::in\-Ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_a7fa10f2a07579de457e6ed72eb457d74}
+checks if all necessary data has been loaded \begin{DoxyReturn}{\-Returns}
+input ready flag, if true all is ready to generate the partition tree 
+\end{DoxyReturn}
+\hypertarget{classimage2treeBuilder_aec5a721192a8877235d8f812bc14233b}{\index{image2tree\-Builder@{image2tree\-Builder}!log@{log}}
+\index{log@{log}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf image2tree\-Builder\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_aec5a721192a8877235d8f812bc14233b}
+sets output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classimage2treeBuilder_a6ed4d0d7e24ef0bd27420ed7e0f76f5b}{\index{image2tree\-Builder@{image2tree\-Builder}!out\-Ready@{out\-Ready}}
+\index{out\-Ready@{out\-Ready}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{out\-Ready}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf image2tree\-Builder\-::out\-Ready} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_a6ed4d0d7e24ef0bd27420ed7e0f76f5b}
+returns true if the new tree has been sucessfully generated \begin{DoxyReturn}{\-Returns}
+output ready flag, if true all partition tree has been sucessfully generated 
+\end{DoxyReturn}
+\hypertarget{classimage2treeBuilder_a25a05d644b6cc1a8c24a9ab79ddbcb39}{\index{image2tree\-Builder@{image2tree\-Builder}!roi\-Size@{roi\-Size}}
+\index{roi\-Size@{roi\-Size}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{roi\-Size}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf image2tree\-Builder\-::roi\-Size} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_a25a05d644b6cc1a8c24a9ab79ddbcb39}
+queriesfor the size of the currently loaded roi (the number of seed voxels from which the tree will be built) \begin{DoxyReturn}{\-Returns}
+the size of the vector containing the seed voxel coordinates 
+\end{DoxyReturn}
+\hypertarget{classimage2treeBuilder_ab8ca31b7689f43d83cc99d5f5e4870a5}{\index{image2tree\-Builder@{image2tree\-Builder}!set\-Output\-Folder@{set\-Output\-Folder}}
+\index{set\-Output\-Folder@{set\-Output\-Folder}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{set\-Output\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf image2tree\-Builder\-::set\-Output\-Folder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{output\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_ab8ca31b7689f43d83cc99d5f5e4870a5}
+sets the output folder 
+\begin{DoxyParams}{\-Parameters}
+{\em output\-Folder} & folder where to write the created tree files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classimage2treeBuilder_ae220bed5b7258d043bfc71898a322a1a}{\index{image2tree\-Builder@{image2tree\-Builder}!set\-Verbose@{set\-Verbose}}
+\index{set\-Verbose@{set\-Verbose}!image2treeBuilder@{image2tree\-Builder}}
+\subsubsection[{set\-Verbose}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf image2tree\-Builder\-::set\-Verbose} (
+\begin{DoxyParamCaption}
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classimage2treeBuilder_ae220bed5b7258d043bfc71898a322a1a}
+sets (or resets) the verbose output flag in order to wrire progress information on the standard output 
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & the true/false flag to set the m\-\_\-verbose member to \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/image2tree\-Builder.\-h\item 
+src/common/image2tree\-Builder.\-cpp\end{DoxyCompactItemize}

@@ -1,3 +1,35 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 
 // std library
 #include <vector>
@@ -12,84 +44,75 @@
 #include "cnbTreeBuilder.h"
 #include "WHtreeProcesser.h"
 
-#define DEBUG false
 
-
-bool cnbTreeBuilder::readRoi( std::string filename )
+CnbTreeBuilder::CnbTreeBuilder( const std::string& roiFilename, const float thresholdRatio, const float maxNbDist, bool verbose,  bool noLog )
 {
-    m_roi.clear();
+    m_verbose = verbose;
+    m_roiLoaded = false;
+    m_treeReady = false;
+    m_debug = false;
+    m_logfile = 0;
+    m_numComps = 0;
+    m_ncHits = 0;
+    m_ncMiss = 0;
+    m_lcHits = 0;
+    m_lcMiss = 0;
 
-    WFileParser parser( filename );
-    if( !parser.readFile() )
+    fileManagerFactory fMFtestFormat;
+    m_niftiMode = fMFtestFormat.isNifti();
+    RoiLoader roiLoader( m_niftiMode );
+    m_roiLoaded = roiLoader.readRoi( roiFilename, &m_datasetGrid, &m_datasetSize, &m_numStreamlines, &m_roi, &m_trackids );
+    std::cout << "Roi loaded, " << m_roi.size() << " seed voxels" << std::endl;
+
+    if( maxNbDist <= 0 || maxNbDist > 1 )
     {
-        std::cerr << "ERROR @ treeBuilder::readRoi(): Parser error" << std::endl;
-        return false;
+        std::cerr << "WARNING @ cnbTreeBuilder::cnbTreeBuilder(): maximum closest neighbor distance provided (" << maxNbDist << ") is out of bounds (0,1], using a value of 1.0" << std::endl;
+        m_maxNbDist = 1;
     }
-    std::vector< std::string > lines = parser.getRawLines();
-    if( lines.size() == 0 )
+    else
     {
-        std::cerr << "ERROR @ treeBuilder::readRoi(): File is empty" << std::endl;
-        return false;
+        m_maxNbDist = maxNbDist;
     }
 
+    if( noLog )
     {
-        std::vector< std::vector< std::string > > datasetStrings = parser.getLinesForTagSeparated( "imagesize" );
-        if( datasetStrings.size() == 0 )
+        m_logFactor = 0;
+    }
+    else
+    {
+        if( m_numStreamlines == 0 )
         {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset size was not found in tree file" << std::endl;
-            return false;
-        }
-        if( datasetStrings.size() > 1 )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset attribute had multiple lines" << std::endl;
-            return false;
-        }
-        WHcoord datasetSize( boost::lexical_cast< coord_t >( datasetStrings[0][0] ), boost::lexical_cast< coord_t >(
-                        datasetStrings[0][1] ), boost::lexical_cast< coord_t >( datasetStrings[0][2] ) );
-        std::string gridString( datasetStrings[0][3] );
-        if( gridString == getGridString( HC_VISTA ) )
-        {
-            m_datasetGrid = HC_VISTA;
-        }
-        else if( gridString == getGridString( HC_NIFTI ) )
-        {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): " << gridString << " format not supported, only " << getGridString(
-                            HC_VISTA ) << " format supported" << std::endl;
-            return false;
+            std::cerr << "WARNING @ cnbTreeBuilder::cnbTreeBuilder(): provided a number of stramlines per voxel of 0, interpreting it as requesting no logarithmic normalization of tracts (input tracts must also be in natural units)" << std::endl;
+            m_logFactor = 0;
         }
         else
         {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): Dataset grid type string \"" << gridString
-                            << "\" could not be identified" << std::endl;
-            return false;
+            m_logFactor = log10( m_numStreamlines );
         }
-        m_datasetSize = datasetSize;
     }
+
+    if( thresholdRatio <= 0 || thresholdRatio >= 1 )
     {
-        std::vector< std::vector< std::string > > coordStrings = parser.getLinesForTagSeparated( "roi" );
-        if( coordStrings.size() == 0 )
+        if( thresholdRatio != 0 )
         {
-            std::cerr << "ERROR @ treeBuilder::readRoi(): no roi coordinates in roi file (lacking #roi tag?)" << std::endl;
-            return false;
+            std::cerr << "WARNING @ cnbTreeBuilder::cnbTreeBuilder(): threshold ratio provided (" << thresholdRatio << ") is out of bounds [0,1), using a value of 0.0 (no thresholding)" << std::endl;
         }
-        m_roi.reserve( coordStrings.size() );
-        for( size_t i = 0; i < coordStrings.size(); ++i )
-        {
-            WHcoord tempCoord( boost::lexical_cast< coord_t >( coordStrings[i][0] ), boost::lexical_cast< coord_t >(
-                            coordStrings[i][1] ), boost::lexical_cast< coord_t >( coordStrings[i][2] ) );
-            m_roi.push_back( tempCoord );
-        }
+        m_tractThreshold = 0;
     }
-    std::sort( m_roi.begin(), m_roi.end() );
-    m_roiLoaded = true;
-    if( m_verbose )
-        std::cout << "Roi loaded, " << m_roi.size() << " seed voxels" << std::endl;
-    return true;
-} // end treeBuilder::readRoi() -------------------------------------------------------------------------------------
+    else if ( m_logFactor == 0 )
+    {
+        m_tractThreshold = thresholdRatio; // if using natural units the normalized tract threshold is the same as the threshold ratio
+    }
+    else
+    {
+        m_tractThreshold = log10( m_numStreamlines * thresholdRatio ) / m_logFactor; // if using log units the threshold must be calculated
+    }
 
 
-void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memory, const std::string meanTractFolder,
-                                   bool keepDiscarded, TC_GROWTYPE growType, size_t baseSize )
+}
+
+void CnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memory, const TC_GROWTYPE growType,
+                                    const size_t baseSize, const bool keepDiscarded )
 {
     m_numComps = 0;
 
@@ -109,26 +132,29 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
     if( m_verbose )
     {
         std::cout << "Farthest nearest neighbour distance allowed: " << m_maxNbDist << std::endl;
-        std::cout << "Tractogram threshold: " << m_tractThreshold << std::endl;
+        std::cout << "Tractogram threshold (in log units): " << m_tractThreshold << std::endl;
         std::cout << "Tractogram log factor: " << m_logFactor << std::endl;
     }
     if( m_logfile != 0 )
     {
         ( *m_logfile ) << "Farthest nearest neighbour distance allowed: " << m_maxNbDist << std::endl;
-        ( *m_logfile ) << "Tractogram threshold: " << m_tractThreshold << std::endl;
+        ( *m_logfile ) << "Tractogram threshold (in log units): " << m_tractThreshold << std::endl;
         ( *m_logfile ) << "Tractogram log factor: " << m_logFactor << std::endl;
     }
 
-    // vista io classes
-    vistaManager vistaSingle( m_inputFolder ); // vista object to read single tractograms
-    vistaSingle.readAsUnThres();
-    vistaSingle.readAsLog();
-    vistaSingle.storeUnzipped();
-    vistaManager vistaNatMean( meanTractFolder ); // to read/write tractograms in float, natural units and unthresholded  (to be merged later)
-    vistaNatMean.writeInFloat();
-    vistaNatMean.readAsUnThres();
-    vistaNatMean.readAsNat();
-    vistaNatMean.storeUnzipped();
+    // file io classes
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM()); // file object to read single tractograms
+    fileSingle.readAsUnThres();
+    fileSingle.readAsLog();
+    fileSingle.storeUnzipped();
+
+    fileManagerFactory fileNatMeanMF(m_tempFolder);
+    fileManager& fileNatMean(fileNatMeanMF.getFM());  // to read/write tractograms in float, natural units and unthresholded  (to be merged later)
+    fileNatMean.writeInFloat();
+    fileNatMean.readAsUnThres();
+    fileNatMean.readAsNat();
+    fileNatMean.storeUnzipped();
 
     // vectors for hierarchical and neighborhood information
     std::vector< protoNode > protoLeaves, protoNodes;
@@ -141,9 +167,9 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
     {
         compactTract tempTract;
         compactTractChar tempTractChar;
-        vistaSingle.readLeafTract( m_roi[0], tempTract );
+        fileSingle.readLeafTract( 0, m_trackids, m_roi, &tempTract );
         tractMb = tempTract.mBytes();
-        vistaSingle.readLeafTract( m_roi[0], tempTractChar );
+        fileSingle.readLeafTract( 0, m_trackids, m_roi, &tempTractChar );
         leafTractMb = tempTractChar.mBytes();
         if( m_verbose )
         {
@@ -171,17 +197,21 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
     computeNorms();
 
     // initialize neighborhood info for all seed voxels
-    std::list< WHcoord > discarded = initialize( nbLevel, cacheSize*leafCacheRatio, protoLeaves );
+    std::list< WHcoord > discarded = initialize( nbLevel, cacheSize*leafCacheRatio, &protoLeaves );
     std::list< size_t > baseNodes;
 
 
     { // ------- Tree build up ----------
+        std::cout << "Starting tree build-up" << std::endl;
         // supernode, keeps track of the current top nodes in the hierarchy
         std::multimap< dist_t, nodeID_t > priorityNodes;
         std::set< size_t > currentNodes;
 
         size_t activeSize( 1 ), prioritySize( 1 );
         bool growingStage( true );
+        bool clust10k( true );
+        bool lastIsNewline ( true );
+
         if( growType == TC_GROWOFF || baseSize <= 1 )
         {
             growingStage = false;
@@ -213,7 +243,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
         time_t lastTime( time( NULL ) ), loopStart( time( NULL ) ); // time object
         size_t maxNbs( 0 ); // to keep track of maximum number of neighbours in an iteration during the program
         std::stringstream eventStream;
-        volatile size_t natCount( 0 ), threadCount( 0 ); // to keep track of running children threads
+        volatile size_t threadCount( 0 ); // to keep track of running children threads
 
         m_ncHits = 0;
         m_ncMiss = 0;
@@ -222,7 +252,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
 
 #if DEBUG
-        if( m_verbose )
+        if( verbose )
         {
             std::cout<< "P Size: "<< prioritySize << std::endl;
             std::cout<< "A Size: "<< activeSize << std::endl;
@@ -239,10 +269,10 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             {
 
                 // get nodes to join
-                WHnode* node2join1( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
-                protoNode* protoNode2join1( getProtoNode( node2join1->getFullID(), protoLeaves, protoNodes ) );
-                WHnode* node2join2( fetchNode( protoNode2join1->nearNb(), leaves, nodes ) );
-                protoNode* protoNode2join2( getProtoNode( node2join2->getFullID(), protoLeaves, protoNodes ) );
+                WHnode* node2join1( fetchNode( priorityNodes.begin()->second, &leaves, &nodes ) );
+                protoNode* protoNode2join1( fetchProtoNode( node2join1->getFullID(), &protoLeaves, &protoNodes ) );
+                WHnode* node2join2( fetchNode( protoNode2join1->nearNb(), &leaves, &nodes ) );
+                protoNode* protoNode2join2( fetchProtoNode( node2join2->getFullID(), &protoLeaves, &protoNodes ) );
                 dist_t newDist( priorityNodes.begin()->first );
                 size_t newID( nodes.size() );
                 size_t newSize( node2join1->getSize() + node2join2->getSize() );
@@ -302,37 +332,32 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
                 if( node2join1->isNode() )
                 {
-                    while( natCount != 0 ) // wait in case a nat tract is being written from last iteration
-                        boost::this_thread::sleep( boost::posix_time::microseconds( 50 ) );
-                    vistaNatMean.readNodeTract( node2join1->getID(), tract1 );
+
+                    fileNatMean.readNodeTract( node2join1->getID(), &tract1 );
                     // delete meantract, boost::bind creates a self contained function object,
                     // so ts ok if the function takes everything by reference
-#pragma omp atomic
-                    ++threadCount; // increment thread counter
-                    boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, node2join1->getID(),
-                                                         &vistaNatMean, &threadCount ) );
+
+                    boost::thread delThread( boost::bind( &CnbTreeBuilder::deleteTract, this, node2join1->getID(),
+                                                         &fileNatMean, &threadCount ) );
                 }
                 else
                 {
-                    vistaSingle.readLeafTract( m_roi[node2join1->getID()], tract1 );
+                    fileSingle.readLeafTract( node2join1->getID(), m_trackids, m_roi, &tract1 );
                     tract1.unLog( m_logFactor );
                 }
 
                 if( node2join2->isNode() )
                 {
-                    while( natCount != 0 ) // wait in case a nat tract is being written from last iteration
-                        boost::this_thread::sleep( boost::posix_time::microseconds( 50 ) );
-                    vistaNatMean.readNodeTract( node2join2->getID(), tract2 );
+                    fileNatMean.readNodeTract( node2join2->getID(), &tract2 );
                     // delete meantract, boost::bind creates a self contained function object,
                     // so ts ok if the function takes everything by reference
-#pragma omp atomic
-                    ++threadCount; // increment thread counter
-                    boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, node2join2->getID(),
-                                                         &vistaNatMean, &threadCount ) );
+
+                    boost::thread delThread( boost::bind( &CnbTreeBuilder::deleteTract, this, node2join2->getID(),
+                                                         &fileNatMean, &threadCount ) );
                 }
                 else
                 {
-                    vistaSingle.readLeafTract( m_roi[node2join2->getID()], tract2 );
+                    fileSingle.readLeafTract( node2join2->getID(), m_trackids, m_roi, &tract2 );
                     tract2.unLog( m_logFactor );
                 }
 
@@ -406,13 +431,13 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                 // get mean tractogram, write it to file in natural units, log it, threshold it, compute norm and put in cache
                 compactTract* newTract;
                 compactTract tempTract( tract1, tract2, node2join1->getSize(), node2join2->getSize() );
-#pragma omp atomic
-                ++natCount;
-                boost::thread writeThread( boost::bind( &cnbTreeBuilder::writeTract, this, newID, tempTract, &vistaNatMean,
-                                                       &natCount ) );
+
+                fileNatMean.writeNodeTract( newID, tempTract );
+
+
                 tempTract.doLog( m_logFactor );
                 tempTract.threshold( m_tractThreshold );
-                m_nodeNorms.push_back( tempTract.getNorm() );
+                m_nodeNorms.push_back( tempTract.computeNorm() );
 
 #pragma omp critical( nodesCache )
                 newTract = nodesCache.insert( newID, compactTract() );
@@ -426,7 +451,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
                 for( std::map< nodeID_t, dist_t >::iterator nbIter( newNbNodes.begin() ); nbIter != newNbNodes.end(); ++nbIter )
                 {
-                    nbTractVect.push_back( loadTract( nbIter->first, &vistaSingle, &vistaNatMean, &leavesCache, &nodesCache, natCount ) );
+                    nbTractVect.push_back( loadTract( nbIter->first, &fileSingle, &fileNatMean, &leavesCache, &nodesCache ) );
                 }
 
                 // get distances to all neighbours
@@ -474,7 +499,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                     }
 
                     // update neighbourhood in neighbour node object
-                    protoNode* newProtoNb( getProtoNode( nbIter->first, protoLeaves, protoNodes ) );
+                    protoNode* newProtoNb( fetchProtoNode( nbIter->first, &protoLeaves, &protoNodes ) );
 
                     bool nbhoodChanged( false );
                     nbhoodChanged = ( newProtoNb->updateActivhood( node2join1->getFullID(), node2join2->getFullID(),
@@ -542,9 +567,16 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                 if( ( newNbNodes.empty() ) )
                 {
                     if( m_verbose && ( newSize != m_roi.size() ) )
-                        std::cout << std::endl << "Node (1-" << newID << ") with " << newSize
+                    {
+                        if( !lastIsNewline )
+                        {
+                            std::cout << std::endl;
+                        }
+                        std::cout << "Node (1-" << newID << ") with " << newSize
                                   << " leaves has no more neighbours it wont be further considered for clustering."
                                   << std::endl;
+                        lastIsNewline = true;
+                    }
 
                     eventStream << "Node (1-" << newID << ") with " << newSize << " leaves is isolated" << std::endl;
 
@@ -559,38 +591,41 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                     // if it is the biggest root node
                     if( newSize > ( m_roi.size() / 2 ) )
                     {
-                        // store last tract in output folder
-                        while( natCount > 1 )
-                        {
-                            boost::this_thread::sleep( boost::posix_time::microseconds( 25 ) );
-                        }
-                        compactTract rootTract;
-                        vistaNatMean.readNodeTract( newID, rootTract );
-                        rootTract.doLog( m_logFactor );
-                        vistaManager vistaLast( m_outputFolder );
-                        vistaLast.writeInFloat();
-                        vistaLast.storeUnzipped();
-                        vistaLast.writeNodeTract( newID, rootTract );
-
                         if( m_verbose && ( newSize != m_roi.size() ) )
+                        {
                             std::cout << "This node contains " << newSize * 100. / m_roi.size() << "% of the total leaves,"
                                       << " it will be kept as the root of the tree, remaining isolated nodes will be eliminated"
                                       << std::endl;
+                        }
 
-                        // if it is a small isolated cluster prune all its leaves
+                        if( m_debug )
+                        {
+                            // store last tract in output folder
+                            compactTract rootTract;
+                            fileNatMean.readNodeTract( newID, &rootTract );
+                            rootTract.doLog( m_logFactor );
+
+                            fileManagerFactory fileLastMF(m_outputFolder);
+                            fileManager& fileLast(fileLastMF.getFM());
+                            fileLast.writeInFloat();
+                            fileLast.storeUnzipped();
+                            fileLast.writeNodeTract( newID, rootTract );
+                        }
+
+                        // delete saved tracts
+                        boost::thread delThread( boost::bind( &CnbTreeBuilder::deleteTract, this, newID, &fileNatMean, &threadCount ) );
                     }
                     else
                     {
                         if( m_verbose && ( newSize > m_roi.size() / 20 ) )
+                        {
                             std::cout << "WARNING: " << newSize * 100 / m_roi.size() << "% of the total leaves are on this isolated node"
                                       << " that cant be further integrated in the tree, the corresponding branch will be eliminated from results"
                                       << std::endl;
+                        }
 
                         // delete saved tracts
-#pragma omp atomic
-                        ++threadCount; // increment thread counter
-                        boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, newID, &vistaNatMean,
-                                                             &threadCount ) );
+                        boost::thread delThread( boost::bind( &CnbTreeBuilder::deleteTract, this, newID, &fileNatMean, &threadCount ) );
 
                         std::list< nodeID_t > worklist;
                         worklist.push_back( std::make_pair( true, newID ) );
@@ -598,7 +633,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                         {
                             nodeID_t currentID( worklist.front() );
                             worklist.pop_front();
-                            WHnode* currentNode = fetchNode( currentID, leaves, nodes );
+                            WHnode* currentNode = fetchNode( currentID, &leaves, &nodes );
                             currentNode->setFlag( true );
                             std::vector< nodeID_t > currentKids( currentNode->getChildren() );
                             worklist.insert( worklist.end(), currentKids.begin(), currentKids.end() );
@@ -646,9 +681,30 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                             message << ( expectedRemain % 3600 ) % 60 << "\". ";
                         }
                         std::cout << message.str() <<std::flush;
+                        lastIsNewline = false;
                     }
-                } // end m_verbose
+                } // end verbose
 
+                if( growingStage && clust10k && ( currentNodes.size() + priorityNodes.size() <= 10000 ) )
+                {
+                    clust10k = false;
+                    std::vector< size_t > bases10k;
+                    for( std::multimap< dist_t, nodeID_t >::iterator priorityIter( priorityNodes.begin() ); priorityIter != priorityNodes.end(); ++priorityIter )
+                    {
+                        if(priorityIter->second.first)
+                        {
+                            bases10k.push_back(priorityIter->second.second);
+                        }
+                    }
+                    bases10k.insert( bases10k.end(), currentNodes.begin(), currentNodes.end() );
+                    std::sort(bases10k.begin(),bases10k.end());
+                    if( m_debug )
+                    {
+                        WHtree dummyTree;
+                        WHtreeProcesser treeProcesser( &dummyTree );
+                        treeProcesser.writeBases( bases10k, m_outputFolder + "/baselist_nmt_10k.txt" );
+                    }
+                }
 
                 if( growingStage && ( growType == TC_GROWNUM ) && ( currentNodes.size() + priorityNodes.size() <= baseSize ) )
                 {
@@ -698,7 +754,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                 }
 
 #if DEBUG
-                if( m_verbose )
+                if( verbose )
                 {
                     std::cout<< "P Size: "<< prioritySize << std::endl;
                     std::cout<< "A Size: "<< activeSize << std::endl;
@@ -789,7 +845,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                 }
 
 #if DEBUG
-                if( m_verbose )
+                if( verbose )
                 {
                     std::cout<< "Pnumber: "<< priorityNodes.size() << std::endl;
                     std::cout<< "Cnumber: "<< currentNodes.size() << std::endl;
@@ -800,12 +856,17 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
         } // end upper big loop
 
+        while( threadCount != 0 ) // wait until all threads have finished
+        {
+            boost::this_thread::sleep( boost::posix_time::microseconds( 100 ) );
+        }
+
         if( !priorityNodes.empty() )
         {
             std::cerr << "WARNING @ treeBuilder::buildCentroid(): after finish, supernode is not empty" << std::endl;
-            WHnode* leftNode( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
+            WHnode* leftNode( fetchNode( priorityNodes.begin()->second, &leaves, &nodes ) );
             std::cerr << "Node info: " << leftNode << std::endl;
-            protoNode* leftProtoNode( getProtoNode( leftNode->getFullID(), protoLeaves, protoNodes ) );
+            protoNode* leftProtoNode( fetchProtoNode( leftNode->getFullID(), &protoLeaves, &protoNodes ) );
             std::cerr << "Protonode info: " << leftProtoNode << std::endl;
             m_tree.writeTreeDebug( m_outputFolder + "/treeWarningDebug.txt" );
         }
@@ -820,7 +881,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             size_t numValidTopNodes( 0 );
             for( std::vector< nodeID_t >::iterator iter( topNodes.begin() ); iter != topNodes.end(); ++iter )
             {
-                WHnode* thisTopNode( fetchNode( *iter, leaves, nodes ) );
+                WHnode* thisTopNode( fetchNode( *iter, &leaves, &nodes ) );
                 thisTopNode->setParent( rootNode.getFullID() );
                 if( !thisTopNode->isFlagged() )
                 {
@@ -838,7 +899,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
         }
         else
         {
-            fetchNode( topNodes.front(), leaves, nodes )->setParent( std::make_pair( false, 0 ) );
+            fetchNode( topNodes.front(), &leaves, &nodes )->setParent( std::make_pair( false, 0 ) );
         }
 
         // empty protoNode vectors
@@ -861,8 +922,7 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             std::cout << "Total correlations: " << m_numComps << std::endl;
         }
 
-        while( threadCount != 0 ) // wait until all threads have finished
-            boost::this_thread::sleep( boost::posix_time::microseconds( 100 ) );
+
 
         if( m_logfile != 0 )
         {
@@ -880,11 +940,10 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
     time_t procStart( time( NULL ) ); // time object
 
-    if( m_verbose )
-        std::cout << "Setting up and cleaning tree..." << std::endl;
+    std::cout << "Setting up and cleaning tree..." << std::endl;
     {
-        std::string treeName( "centroid" + boost::lexical_cast< std::string >( nbLevel ) );
-        WHtree thisTree( treeName, m_datasetSize, leaves, nodes, m_roi, discarded, m_datasetGrid );
+        std::string treeName( "centroid" + string_utils::toString( nbLevel ) );
+        WHtree thisTree( treeName, m_datasetGrid, m_datasetSize, m_numStreamlines, m_logFactor, leaves, nodes, m_trackids, m_roi, discarded );
         m_tree = thisTree;
         std::vector< WHnode > emptyL, emptyN;
         leaves.swap( emptyL );
@@ -926,8 +985,12 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << m_tree.getReport() << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
-        writeTree();
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
+            writeTree();
+        }
+
         m_tree.forceMonotonicity();
 
         if( m_verbose )
@@ -939,8 +1002,11 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-        writeTree();
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
+            writeTree();
+        }
 
         m_tree.debinarize( false );
 
@@ -953,7 +1019,8 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
+
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
         writeTree();
     }
     else
@@ -962,31 +1029,48 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 
         baseNodes.sort();
         std::vector< size_t > baseVector( baseNodes.begin(), baseNodes.end() );
-        writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
 
-        if( m_verbose )
-        {
-            std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-        }
 
-        if( m_verbose )
+        if( m_debug )
         {
-            std::cout << m_tree.getReport() << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << m_tree.getReport() << std::endl;
-        }
+            WHtreeProcesser treeProcesser(&m_tree);
+            treeProcesser.writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
+            if( m_verbose )
+            {
+                std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
+            }
+            if( m_logfile != 0 )
+            {
+                ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
+            }
+            if( m_verbose )
+            {
+                std::cout << m_tree.getReport() << std::endl;
+            }
+            if( m_logfile != 0 )
+            {
+                ( *m_logfile ) << m_tree.getReport() << std::endl;
+            }
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
+            writeTree();
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
-        writeTree();
+            WHtree treeUp(m_tree);
+            WHtree treeDown(m_tree);
 
-        WHtree treeUp(m_tree);
-        WHtree treeDown(m_tree);
+            treeUp.forceMonotonicityUp();
+            WHtreeProcesser processerUp( &treeUp );
+            processerUp.flattenSelection(baseNodes, false);
+            treeUp.debinarize( true );
+            treeUp.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Up" );
+            treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt", m_niftiMode );
+
+            treeDown.forceMonotonicityDown();
+            WHtreeProcesser processerDown( &treeDown );
+            processerDown.flattenSelection(baseNodes, false);
+            treeDown.debinarize( true );
+            treeDown.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Down" );
+            treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt", m_niftiMode );
+        }
 
 
         m_tree.forceMonotonicity();
@@ -1000,10 +1084,11 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-        writeTree();
-
-
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
+            writeTree();
+        }
 
         WHtreeProcesser processer( &m_tree );
         processer.flattenSelection(baseNodes, false);
@@ -1018,8 +1103,11 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << "BaseNodes flattened,  and tree pruned" << m_tree.getReport( false ) << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bases" );
-        writeTree();
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_granlimit" );
+            writeTree();
+        }
 
         if( !keepDiscarded )
         {
@@ -1038,14 +1126,15 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
             ( *m_logfile ) << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
         }
 
-        m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
         writeTree();
 
         if( m_tree.testRootBaseNodes() )
         {
             baseVector = m_tree.getRootBaseNodes();
             std::sort( baseVector.begin(), baseVector.end() );
-            writeBases( baseVector, m_outputFolder + "/baselist.txt" );
+            WHtreeProcesser treeProcesser( &m_tree );
+            treeProcesser.writeBases( baseVector, m_outputFolder + "/baselist.txt" );
 
             if( m_verbose )
             {
@@ -1067,24 +1156,6 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                 ( *m_logfile ) << "Final tree is not a pure basenode tree" << std::endl;
             }
         }
-
-
-
-
-        treeUp.forceMonotonicityUp();
-        WHtreeProcesser processerUp( &treeUp );
-        processerUp.flattenSelection(baseNodes, false);
-        treeUp.debinarize( true );
-        treeUp.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Up" );
-        treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt" );
-
-        treeDown.forceMonotonicityDown();
-        WHtreeProcesser processerDown( &treeDown );
-        processerDown.flattenSelection(baseNodes, false);
-        treeDown.debinarize( true );
-        treeDown.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Down" );
-        treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt" );
-
     }
 
     int timeTaken = difftime( time( NULL ), procStart );
@@ -1103,37 +1174,47 @@ void cnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
 } // end cnbTreeBuilder::buildcentroid() -------------------------------------------------------------------------------------
 
 
-void cnbTreeBuilder::writeTree() const
+void CnbTreeBuilder::writeTree() const
 {
     if( ( !m_treeReady ) || m_outputFolder.empty() )
     {
-        std::cerr << "ERROR @ treeBuilder::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
+        std::cerr << "ERROR @ CnbTreeBuilder::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
         return;
     }
-    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt" );
-    m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
-    //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
-
+    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt", m_niftiMode );
     if( m_verbose )
     {
         std::cout << "Written standard tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
     if( m_logfile != 0 )
     {
         ( *m_logfile ) << "Standard tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
 
+    if( m_debug )
+    {
+        m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
+        //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
+        if( m_verbose )
+        {
+            std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+    }
     return;
 } // end treeBuilder::writeTree() -------------------------------------------------------------------------------------
 
 
-protoNode* cnbTreeBuilder::getProtoNode( const nodeID_t &thisNode, std::vector< protoNode > &protoLeaves,
-                std::vector< protoNode > &protoNodes ) const
+protoNode* CnbTreeBuilder::fetchProtoNode( const nodeID_t& thisNode, std::vector< protoNode >* protoLeavesPointer, std::vector< protoNode >* protoNodesPointer ) const
 {
+    std::vector< protoNode >& protoLeaves = *protoLeavesPointer;
+    std::vector< protoNode >& protoNodes = *protoNodesPointer;
+
     if( thisNode.first )
     {
         return &( protoNodes[thisNode.second] );
@@ -1144,8 +1225,11 @@ protoNode* cnbTreeBuilder::getProtoNode( const nodeID_t &thisNode, std::vector< 
     }
 }
 
-WHnode* cnbTreeBuilder::fetchNode( const nodeID_t &thisNode, std::vector< WHnode > &leaves, std::vector< WHnode > &nodes ) const
+WHnode* CnbTreeBuilder::fetchNode( const nodeID_t& thisNode, std::vector< WHnode >* leavesPointer, std::vector< WHnode >* nodesPointer ) const
 {
+    std::vector< WHnode >& leaves = *leavesPointer;
+    std::vector< WHnode >& nodes = *nodesPointer;
+
     if( thisNode.first )
     {
         return &( nodes[thisNode.second] );
@@ -1156,40 +1240,33 @@ WHnode* cnbTreeBuilder::fetchNode( const nodeID_t &thisNode, std::vector< WHnode
     }
 }
 
-void cnbTreeBuilder::computeNorms()
+void CnbTreeBuilder::computeNorms()
 {
     // loop  through all the seed voxels and compute tractogram norms
-    if( m_verbose )
-        std::cout << "Precomputing tractogram norms" << std::endl;
+    std::cout << "Precomputing tractogram norms" << std::endl;
     time_t loopStart( time( NULL ) ), lastTime( time( NULL ) );
     m_leafNorms.assign( m_roi.size(), 0 );
     size_t progCount( 0 );
-    vistaManager vistaSingle( m_inputFolder );
-    vistaSingle.readAsUnThres();
-    vistaSingle.readAsLog();
 
-    size_t threads( omp_get_num_procs() * 5 );
 
-    // loop through voxels (use parallel threads
-    for( size_t i = 0; i < m_roi.size(); i+=threads )
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM());
+    fileSingle.readAsUnThres();
+    fileSingle.readAsLog();
+
+#pragma omp parallel for schedule( static )
+    for( size_t i = 0; i < m_roi.size(); ++i )
     {
-        size_t topper( std::min( threads, ( m_roi.size() - i ) ) );
-        std::vector< compactTractChar > tractVect( topper, compactTractChar() );
+        compactTractChar thisTract;
 
-        for( size_t j = 0; j < topper ; ++j )
-        {
-            vistaSingle.readLeafTract( m_roi[i+j], tractVect[j] );
-        }
+        fileSingle.readLeafTract( i, m_trackids, m_roi, &thisTract );
+        thisTract.threshold( m_tractThreshold );
+        m_leafNorms[i] = thisTract.computeNorm();
 
-        #pragma omp parallel for schedule( static )
-        for( size_t j = 0; j < topper; ++j )
-        {
-            tractVect[j].threshold( m_tractThreshold );
-            m_leafNorms[i+j] = tractVect[j].getNorm();
-        } // end parallel for
+#pragma omp atomic
+        ++progCount;
 
-        progCount+=topper;
-
+#pragma omp single nowait // only one thread executes output
         if( m_verbose )
         {
             time_t currentTime( time( NULL ) );
@@ -1214,7 +1291,7 @@ void cnbTreeBuilder::computeNorms()
                 message << ( elapsedTime % 3600 ) % 60 << "\". ";
                 std::cout << message.str() <<std::flush;
             }
-        } // end m_verbose
+        } // end verbose
     } // end  for
 
 
@@ -1229,11 +1306,24 @@ void cnbTreeBuilder::computeNorms()
         ( *m_logfile ) << "Norms computed. Time taken: " << timeTaken / 3600 << "h ";
         ( *m_logfile ) << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
     }
+
+    if( m_verbose )
+    {
+        for( size_t i = 0; i < m_leafNorms.size(); ++i )
+        {
+            if( m_leafNorms[i] == 0)
+            {
+                std::cerr << "track " << i << " has norm 0" <<std::endl;
+            }
+        }
+    }
 } // end treeBuilder::computeNorms() -------------------------------------------------------------------------------------
 
-std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, const size_t &cacheSize,
-                std::vector< protoNode > &protoLeaves )
+std::list< WHcoord > CnbTreeBuilder::initialize( const unsigned int nbLevel, const size_t cacheSize, std::vector< protoNode >* protoLeavesPointer )
 {
+    std::cout << "Initializing seed neighbor dissimilarity information" << std::endl;
+    std::vector< protoNode >& protoLeaves = *protoLeavesPointer;
+
     // Translate neighborhood level
     unsigned int nbLevel1( 0 ), nbLevel2( 0 ); // nbhood level indicators
     switch( nbLevel )
@@ -1274,30 +1364,32 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
 
     protoLeaves.clear();
     protoLeaves.reserve( m_roi.size() );
-    vistaManager vistaSingle( m_inputFolder );
-    vistaSingle.readAsUnThres();
-    vistaSingle.readAsLog();
+
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM());
+    fileSingle.readAsUnThres();
+    fileSingle.readAsLog();
     listedCache< compactTractChar > cache( m_roi.size(), cacheSize );
     volatile size_t threadCount( 0 );
 
     //initialize proto-leaves
     time_t loopStart( time( NULL ) ), lastTime( time( NULL ) );
-    for( size_t i = 0; i < m_roi.size(); ++i )
+    for( size_t roiID = 0; roiID < m_roi.size(); ++roiID )
     {
         bool discard( true ); // discard voxel flag
-        compactTractChar* thisTract( cache.get( i ) );
+        compactTractChar* thisTract( cache.get( roiID ) );
 
         if( thisTract == 0 )
         { // if tract was not in cche, get it from file
             compactTractChar tempTract;
-            vistaSingle.readLeafTract( m_roi[i], tempTract );
+            fileSingle.readLeafTract( roiID, m_trackids, m_roi, &tempTract );
             tempTract.threshold( m_tractThreshold );
-            tempTract.setNorm( m_leafNorms[i] );
-            thisTract = cache.insert( i, compactTractChar() );
+            tempTract.setNorm( m_leafNorms[roiID] );
+            thisTract = cache.insert( roiID, compactTractChar() );
             thisTract->steal( &tempTract );
         }
         // get coordinates of neighbouring voxels
-        std::vector< WHcoord > nbCoords( m_roi[i].getPhysNbs( m_datasetSize, nbLevel1 ) );
+        std::vector< WHcoord > nbCoords( m_roi[roiID].getPhysNbs( m_datasetSize, nbLevel1 ) );
         // dicard coordinates that are not part of the roi
         {
             std::vector< WHcoord >::iterator cleanIter( nbCoords.begin() );
@@ -1339,7 +1431,7 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
                 {
                     cleanIter = nbAllCoordslist.erase( cleanIter );
                 }
-                else if( *cleanIter == m_roi[i] ) // nb seed is the current seed
+                else if( *cleanIter == m_roi[roiID] ) // nb seed is the current seed
                 {
                     cleanIter = nbAllCoordslist.erase( cleanIter );
                 }
@@ -1352,9 +1444,16 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
             nbCoords.assign(nbAllCoordslist.begin(),nbAllCoordslist.end());
         }
 
+        //convert vector of neighbor coordinates to vector of neighbor ids
+        std::vector< size_t > nbIDs;
+        nbIDs.reserve( nbCoords.size() );
+        for( size_t i = 0; i < nbCoords.size(); ++i )
+        {
+            nbIDs.push_back( roimap[nbCoords[i]] );
+        }
         // get neighborhood information
         std::map< size_t, dist_t > nbLeaves; // variable to keep the current seed voxel neighbours
-        discard = scanNbs( i, thisTract, &nbLeaves, nbCoords, protoLeaves, roimap, &cache );
+        discard = scanNbs( roiID, thisTract, protoLeaves, nbIDs, &nbLeaves, &cache );
 
         if( !discard )
         { // it is a valid seed voxel
@@ -1388,10 +1487,10 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
             if( currentTime - lastTime > 1 )
             {
                 lastTime = currentTime;
-                float progress( i * 100. / m_roi.size() );
+                float progress( roiID * 100. / m_roi.size() );
                 size_t elapsedTime( difftime( currentTime, loopStart ) );
                 std::stringstream message;
-                message << "\r" << static_cast<int>( progress ) << " % of leaves initialized (" << i << "). ";
+                message << "\r" << static_cast<int>( progress ) << " % of leaves initialized (" << roiID << "). ";
                 if( progress > 0 )
                 {
                     size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );
@@ -1405,9 +1504,9 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
                 message << ( elapsedTime % 3600 ) % 60 << "\". ";
                 std::cout << message.str() <<std::flush;
             }
-        } // end m_verbose
+        } // end verbose
 
-        cache.erase( i ); //we wont need this tract anymore
+        cache.erase( roiID ); //we wont need this tract anymore
         cache.cleanup(); // if cache is full, delete overflowed tracts
     } // end big loop
 
@@ -1454,6 +1553,7 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
     // eliminate the discarded coordinates and corresponding proto leaves form the vector
     {
         std::vector< WHcoord >::iterator roiIter( m_roi.begin() );
+        std::vector< size_t >::iterator trackidIter( m_trackids.begin() );
         std::vector< protoNode >::iterator protoIter( protoLeaves.begin() );
         std::vector< double >::iterator normIter( m_leafNorms.begin() );
 
@@ -1465,12 +1565,14 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
                 roiIter = m_roi.erase( roiIter );
                 protoIter = protoLeaves.erase( protoIter );
                 normIter = m_leafNorms.erase( normIter );
+                trackidIter = m_trackids.erase( trackidIter );
             }
             else
             {
                 ++roiIter;
                 ++protoIter;
                 ++normIter;
+                ++trackidIter;
             }
         }
     }
@@ -1496,82 +1598,85 @@ std::list< WHcoord > cnbTreeBuilder::initialize( const unsigned int &nbLevel, co
 } // end treeBuilder::initialize() -------------------------------------------------------------------------------------
 
 
-bool cnbTreeBuilder::scanNbs( const size_t &currentSeedID, const compactTractChar* const currentTract,
-                std::map< size_t, dist_t > *nbLeavesPoint, std::vector< WHcoord > &nbCoords, std::vector< protoNode > &protoLeaves,
-                std::map< WHcoord, size_t > &roimap, listedCache< compactTractChar > *cachePoint )
+bool CnbTreeBuilder::scanNbs( const size_t currentSeedID,
+                              const compactTractChar* const currentTract,
+                              const std::vector< protoNode >& protoLeaves,
+                              const std::vector< size_t >& nbIDs,
+                              std::map< size_t, dist_t >* nbLeavesPointer,
+                              listedCache< compactTractChar >* cachePointer )
 {
-    std::map< size_t, dist_t > &nbLeaves = *nbLeavesPoint;
-    listedCache< compactTractChar > &cache = *cachePoint;
+    std::map< size_t, dist_t >& nbLeaves = *nbLeavesPointer;
+    listedCache< compactTractChar >& cache = *cachePointer;
 
-    vistaManager vistaSingle( m_inputFolder ); // vista object to read tractograms
-    vistaSingle.readAsUnThres();
-    vistaSingle.readAsLog();
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM());
+    fileSingle.readAsUnThres();
+    fileSingle.readAsLog();
 
     bool discard( true );
 
     std::vector< compactTractChar* > tractVect;
-    tractVect.reserve( nbCoords.size() );
+    tractVect.reserve( nbIDs.size() );
     std::vector< std::pair< size_t, dist_t > > distPairVect;
-    distPairVect.reserve( nbCoords.size() );
+    distPairVect.reserve( nbIDs.size() );
 
 
     // first loop obtains tractograms for non computed distances and recovers the ones already computed
-    for( int j = 0; j < nbCoords.size(); ++j )
+    for( int j = 0; j < nbIDs.size(); ++j )
     {
-        size_t nbID( roimap[nbCoords[j]] );
+        size_t thisNbID( nbIDs[j] );
 
-        if( m_roi[currentSeedID] < nbCoords[j] )
+        if( currentSeedID < thisNbID )
         { // neighbour voxel has not yet been processed
             compactTractChar* tractPointer;
             //#pragma omp critical( cache )
-            tractPointer = cache.get( nbID );
+            tractPointer = cache.get( thisNbID );
 
             if( tractPointer == 0 )
             { // if tract was not in cache, get it from file
                 compactTractChar nbTract; // get neighbour tract
-                vistaSingle.readLeafTract( nbCoords[j], nbTract );
+                fileSingle.readLeafTract( thisNbID, m_trackids, m_roi, &nbTract );
                 nbTract.threshold( m_tractThreshold );
-                nbTract.setNorm( m_leafNorms[nbID] );
+                nbTract.setNorm( m_leafNorms[thisNbID] );
                 //#pragma omp critical( cache ) // we insert it this way so that a copy of the tractogram doesnt have to be made
-                tractPointer = cache.insert( nbID, compactTractChar() );
+                tractPointer = cache.insert( thisNbID, compactTractChar() );
                 tractPointer->steal( &nbTract );
             }
             tractVect.push_back( tractPointer );
-            distPairVect.push_back( std::make_pair( nbID, 2 ) );
+            distPairVect.push_back( std::make_pair( thisNbID, 2 ) );
         }
         else
         { // neighbour was already processed as seed voxel
-            if( nbID >= protoLeaves.size() )
+            if( thisNbID >= protoLeaves.size() )
             {
                 //#pragma omp critical( error )
                 {
-                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << nbCoords[j] << std::endl;
-                    std::cerr<< "nbID: " <<  nbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
+                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << m_roi[thisNbID] << std::endl;
+                    std::cerr<< "nbID: " <<  thisNbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
                     throw std::runtime_error( "ERROR @ treeBuilder::buildCentroid(): neighbor is not in protoLeaves vector" );
                 }
             }
-            else if( protoLeaves[nbID].isDiscarded() )
+            else if( protoLeaves[thisNbID].isDiscarded() )
             { // seed voxel was discarded, skip
                 continue;
             }
 
-            std::map< nodeID_t, dist_t >::iterator searchIter( protoLeaves[nbID].m_nbNodes.find( std::make_pair( false,
-                                                                                                                currentSeedID ) ) );
-            if( searchIter == protoLeaves[nbID].m_nbNodes.end() )
+            std::map< nodeID_t, dist_t >::const_iterator searchIter( protoLeaves[thisNbID].m_nbNodes.find( std::make_pair( false, currentSeedID ) ) );
+            if( searchIter == protoLeaves[thisNbID].m_nbNodes.end() )
             {
                 //#pragma omp critical( error )
                 {
                     std::cerr<< "nb was supposedly already processed but seed is not found in nb data " << std::endl;
-                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << nbCoords[j] << std::endl;
-                    std::cerr<< "SeedID: " <<  currentSeedID << ". nbID: " <<  nbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
-                    std::cerr<< "nbInfo: " <<   protoLeaves[nbID] << std::endl;
+                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << m_roi[thisNbID] << std::endl;
+                    std::cerr<< "SeedID: " <<  currentSeedID << ". nbID: " <<  thisNbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
+                    std::cerr<< "nbInfo: " <<   protoLeaves[thisNbID] << std::endl;
 
                     throw std::runtime_error( "ERROR @ treeBuilder::scanNbs(): neighborhood data not found" );
                 }
             }
             //#pragma omp critical( leaves )
             {
-                nbLeaves.insert( std::make_pair( nbID, searchIter->second ) ); // save the pair neighbour-distance
+                nbLeaves.insert( std::make_pair( thisNbID, searchIter->second ) ); // save the pair neighbour-distance
                 if( searchIter->second <= m_maxNbDist )
                 { // neighbour is valid -> seed is valid
                     discard = false;
@@ -1606,76 +1711,37 @@ bool cnbTreeBuilder::scanNbs( const size_t &currentSeedID, const compactTractCha
 } // end treeBuilder::scanNbs() -------------------------------------------------------------------------------------
 
 
-void cnbTreeBuilder::writeTract( const size_t &nodeID, const compactTract &tract, const vistaManager* const vistaMngr,
-                volatile size_t* threadcounter ) const
+void CnbTreeBuilder::deleteTract( const size_t &nodeID, const fileManager* const fileMngrPointer, volatile size_t* threadcounterPointer ) const
 {
-    vistaMngr->writeNodeTract( nodeID, tract );
 #pragma omp atomic
-    --( *threadcounter );
-    return;
-} // end cnbTreeBuilder::writeTract() -------------------------------------------------------------------------------------
+    ++( *threadcounterPointer );
 
-void cnbTreeBuilder::deleteTract( const size_t &nodeID, const vistaManager* const vistaMngr, volatile size_t* threadcounter ) const
-{
-    vistaMngr->deleteTractFile( nodeID );
+    fileMngrPointer->deleteTractFile( nodeID );
+
 #pragma omp atomic
-    --( *threadcounter );
+    --( *threadcounterPointer );
     return;
 } // end cnbTreeBuilder::deleteTract() -------------------------------------------------------------------------------------
 
-void cnbTreeBuilder::writeBases( const std::vector< size_t > &baseNodes, const std::string filename ) const
-{
-    std::ofstream outFile( filename.c_str() );
-    if( !outFile )
-    {
-        std::cerr << "ERROR: unable to open out file: \"" << outFile << "\"" << std::endl;
-        exit( -1 );
-    }
 
-    outFile << "#bases" << std::endl;
-    for( std::vector<size_t>::const_iterator nodeIter( baseNodes.begin() ) ; nodeIter != baseNodes.end() ; ++nodeIter )
-    {
-        outFile << *nodeIter << std::endl;
-    }
-    outFile << "#endbases" << std::endl << std::endl;
-
-    outFile << "#pruned" << std::endl;
-    for( std::vector<WHnode>::const_iterator leafIter( m_tree.m_leaves.begin() ) ; leafIter != m_tree.m_leaves.end() ; ++leafIter )
-    {
-        if( leafIter->isFlagged() )
-        {
-            outFile << leafIter->getID() << std::endl;
-        }
-    }
-    outFile << "#endpruned" << std::endl << std::endl;
-
-    return;
-} // end cnbTreeBuilder::writeBases() -------------------------------------------------------------------------------------
-
-compactTract* cnbTreeBuilder::loadNodeTract( const size_t nodeID,
-                                     const vistaManager* const nodeMngr,
-                                     listedCache< compactTract > *nodesCache,
-                                     const volatile size_t &natCount )
+compactTract* CnbTreeBuilder::loadNodeTract( const size_t nodeID,
+                                             const fileManager* const nodeMngrPointer,
+                                             listedCache< compactTract >* nodesCachePointer)
 {
 
         compactTract* newNbTract( 0 );
 
         #pragma omp critical( nodesCache )
-        newNbTract = nodesCache->get( nodeID );
+        newNbTract = nodesCachePointer->get( nodeID );
         if( newNbTract == 0 )
         { //tractogram is not in cache, it must be in file then
             compactTract nbTractogram;
-            //                        while(tempCount>1) // wait in case a temp tract is being written from last iteration
-            while( natCount > 1 )
-            {
-                boost::this_thread::sleep( boost::posix_time::microseconds( 25 ) );
-            }
-            nodeMngr->readNodeTract( nodeID, nbTractogram );
+            nodeMngrPointer->readNodeTract( nodeID, &nbTractogram );
             nbTractogram.doLog( m_logFactor );
             nbTractogram.threshold( m_tractThreshold );
             nbTractogram.setNorm( m_nodeNorms[nodeID] );
             #pragma omp critical( nodesCache )
-            newNbTract = nodesCache->insert( nodeID, compactTract() );
+            newNbTract = nodesCachePointer->insert( nodeID, compactTract() );
             newNbTract->steal( &nbTractogram );
             #pragma omp atomic
             ++m_ncMiss;
@@ -1690,21 +1756,21 @@ compactTract* cnbTreeBuilder::loadNodeTract( const size_t nodeID,
 } // end cnbTreeBuilder::loadNodeTract() -------------------------------------------------------------------------------------
 
 
-compactTractChar* cnbTreeBuilder::loadLeafTract( const size_t leafID,
-                                 const vistaManager* const leafMngr,
-                                 listedCache< compactTractChar > *leavesCache)
+compactTractChar* CnbTreeBuilder::loadLeafTract( const size_t leafID,
+                                 const fileManager* const leafMngrPointer,
+                                 listedCache< compactTractChar >* leavesCachePointer)
 {
         compactTractChar* newNbTract( 0 );
         #pragma omp critical( leavesCache )
-        newNbTract = leavesCache->get( leafID );
+        newNbTract = leavesCachePointer->get( leafID );
         if( newNbTract == 0 )
         { //tractogram is not in cache, it must be in file then
             compactTractChar nbTractogram;
-            leafMngr->readLeafTract( m_roi[leafID], nbTractogram );
+            leafMngrPointer->readLeafTract( leafID, m_trackids, m_roi, &nbTractogram );
             nbTractogram.threshold( m_tractThreshold );
             nbTractogram.setNorm( m_leafNorms[leafID] );
             #pragma omp critical( leavesCache )
-            newNbTract = leavesCache->insert( leafID, compactTractChar() );
+            newNbTract = leavesCachePointer->insert( leafID, compactTractChar() );
             newNbTract->steal( &nbTractogram );
             #pragma omp atomic
             ++m_lcMiss;
@@ -1717,1166 +1783,21 @@ compactTractChar* cnbTreeBuilder::loadLeafTract( const size_t leafID,
         return newNbTract;
 } // end cnbTreeBuilder::loadLeafTract() -------------------------------------------------------------------------------------
 
-void* cnbTreeBuilder::loadTract( const nodeID_t nodeID,
-                                 const vistaManager* const leafMngr,
-                                 const vistaManager* const nodeMngr,
-                                 listedCache< compactTractChar > *leavesCache,
-                                 listedCache< compactTract > *nodesCache,
-                                 const volatile size_t &natCounter )
+void* CnbTreeBuilder::loadTract( const nodeID_t nodeID,
+                                 const fileManager* const leafMngrPointer,
+                                 const fileManager* const nodeMngrPointer,
+                                 listedCache< compactTractChar >* leavesCachePointer,
+                                 listedCache< compactTract >* nodesCachePointer )
 {
     if( nodeID.first )
     {
-        return loadNodeTract( nodeID.second, nodeMngr, nodesCache, natCounter );
+        return loadNodeTract( nodeID.second, nodeMngrPointer, nodesCachePointer );
     }
     else
     {
-        return loadLeafTract( nodeID.second, leafMngr, leavesCache );
+        return loadLeafTract( nodeID.second, leafMngrPointer, leavesCachePointer );
     }
 
 } // end cnbTreeBuilder::loadTract() -------------------------------------------------------------------------------------
-
-
-void cnbTreeBuilder::buildC2( const unsigned int nbLevel, const float memory, const std::string meanTractFolder,
-                bool keepDiscarded, TC_GROWTYPE growType, size_t baseSize )
-{
-    m_numComps = 0;
-
-    if( !m_roiLoaded )
-    {
-        std::cerr << "ERROR @ treeBuilder::buildCentroid(): voxel roi is not loaded" << std::endl;
-        return;
-    }
-
-    if( m_inputFolder.empty() || m_outputFolder.empty() )
-    {
-        std::cerr << "ERROR @ treeBuilder::buildCentroid(): Location of single tracts or output folder has not been specified,"
-                  << " please initialize with treeBuilder::setInputFolder() and treeBuilder::setOutputFolder()" << std::endl;
-        return;
-    }
-
-    if( m_verbose )
-    {
-        std::cout << "Farthest nearest neighbour distance allowed: " << m_maxNbDist << std::endl;
-        std::cout << "Tractogram threshold: " << m_tractThreshold << std::endl;
-        std::cout << "Tractogram log factor: " << m_logFactor << std::endl;
-    }
-    if( m_logfile != 0 )
-    {
-        ( *m_logfile ) << "Farthest nearest neighbour distance allowed: " << m_maxNbDist << std::endl;
-        ( *m_logfile ) << "Tractogram threshold: " << m_tractThreshold << std::endl;
-        ( *m_logfile ) << "Tractogram log factor: " << m_logFactor << std::endl;
-    }
-
-    // vista io classes
-    vistaManager vistaSingle( m_inputFolder ); // vista object to read single tractograms
-    vistaSingle.readAsUnThres();
-    vistaSingle.readAsLog();
-    vistaSingle.storeUnzipped();
-    vistaManager vistaNatMean( meanTractFolder ); // to read/write tractograms in float, natural units and unthresholded  (to be merged later)
-    vistaNatMean.writeInFloat();
-    vistaNatMean.readAsUnThres();
-    vistaNatMean.readAsNat();
-    vistaNatMean.storeUnzipped();
-
-    // vectors for hierarchical and neighborhood information
-    std::vector< protoNode > protoLeaves, protoNodes;
-    std::vector< WHnode > leaves, nodes;
-
-    // compute cache size
-    float tractMb( 0 ), leafTractMb( 0 );
-    size_t cacheSize( 0 );
-    float leafCacheRatio( 1 );
-    {
-        compactTract tempTract;
-        compactTractChar tempTractChar;
-        vistaSingle.readLeafTract( m_roi[0], tempTract );
-        tractMb = tempTract.mBytes();
-        vistaSingle.readLeafTract( m_roi[0], tempTractChar );
-        leafTractMb = tempTractChar.mBytes();
-        if( m_verbose )
-        {
-            std::cout << "Tractogram size is: " << tempTract.size() << " (" << tractMb << " MB)" << std::endl;
-            std::cout << "Leaf tractogram size is: " << leafTractMb << " MB" << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Tractogram size:\t" << tempTract.size() << " (" << tractMb << " MB)" << std::endl;
-            ( *m_logfile ) << "Leaf tractogram size is: " << leafTractMb << " MB" << std::endl;
-        }
-        cacheSize = ( memory * 1024 / ( tractMb * 2 ) );
-        leafCacheRatio = ( tractMb / leafTractMb );
-        if( m_verbose )
-        {
-            std::cout << "Cache size is: " << cacheSize << " tracts. ("<< static_cast<size_t>(cacheSize*leafCacheRatio) <<" leaf tracts)" << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Cache size:\t" << cacheSize << " tracts. ("<< static_cast<size_t>(cacheSize*leafCacheRatio) <<" leaf tracts)" << std::endl;
-        }
-    }
-
-    // precompute seed voxel norms
-    computeNorms();
-
-    // initialize neighborhood info for all seed voxels
-    std::list< WHcoord > discarded = initialize( nbLevel, cacheSize*leafCacheRatio, protoLeaves );
-    std::list< size_t > baseNodes;
-
-
-    { // ------- Tree build up ----------
-        // supernode, keeps track of the current top nodes in the hierarchy
-        std::multimap< dist_t, nodeID_t > priorityNodes;
-        std::set< size_t > currentNodes;
-
-        size_t activeSize( 1 ), prioritySize( 1 );
-        bool growingStage( true );
-        if( growType == TC_GROWOFF || baseSize <= 1 )
-        {
-            growingStage = false;
-            activeSize = protoLeaves.size();
-            prioritySize = protoLeaves.size();
-        }
-
-        leaves.reserve( protoLeaves.size() );
-        nodes.reserve( protoLeaves.size() );
-
-        m_nodeNorms.clear();
-        m_nodeNorms.reserve( protoLeaves.size() );
-        size_t doneLeavesCounter( 0 );
-        WHnode rootNode( std::make_pair( false, 0 ) ); // node where to keep all isolated clusters
-        rootNode.setSize( 0 );
-
-        std::vector< std::multimap< dist_t, nodeID_t >::iterator > priorityLeafIndex( protoLeaves.size(), priorityNodes.end() );
-        std::vector< std::multimap< dist_t, nodeID_t >::iterator > priorityNodeIndex( protoLeaves.size(), priorityNodes.end() );
-        for( size_t i = 0; i < protoLeaves.size(); ++i )
-        {
-            priorityLeafIndex[i] = priorityNodes.insert( std::make_pair( protoLeaves[i].nearDist(), std::make_pair( false, i ) ) );
-            WHnode newLeaf( std::make_pair( false, i ) );
-            leaves.push_back( newLeaf );
-        }
-
-        listedCache< compactTractChar > leavesCache( protoLeaves.size(), cacheSize*leafCacheRatio );
-        listedCache< compactTract > nodesCache( protoLeaves.size(), cacheSize );
-
-        time_t lastTime( time( NULL ) ), loopStart( time( NULL ) ); // time object
-        size_t maxNbs( 0 ); // to keep track of maximum number of neighbours in an iteration during the program
-        std::stringstream eventStream;
-        volatile size_t natCount( 0 ), threadCount( 0 ); // to keep track of running children threads
-
-        m_ncHits = 0;
-        m_ncMiss = 0;
-        m_lcHits = 0;
-        m_lcMiss = 0;
-
-
-#if DEBUG
-        if( m_verbose )
-        {
-            std::cout<< "P Size: "<< prioritySize << std::endl;
-            std::cout<< "A Size: "<< activeSize << std::endl;
-            std::cout<< "Pnumber: "<< priorityNodes.size() << std::endl;
-            std::cout<< "Cnumber: "<< currentNodes.size() << std::endl;
-        }
-#endif
-
-
-        while( !priorityNodes.empty() || currentNodes.size() > 1 )
-        {
-
-            while( !priorityNodes.empty() )
-            {
-
-                // get nodes to join
-                WHnode* node2join1( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
-                protoNode* protoNode2join1( getProtoNode( node2join1->getFullID(), protoLeaves, protoNodes ) );
-                WHnode* node2join2( fetchNode( protoNode2join1->nearNb(), leaves, nodes ) );
-                protoNode* protoNode2join2( getProtoNode( node2join2->getFullID(), protoLeaves, protoNodes ) );
-                dist_t newDist( priorityNodes.begin()->first );
-                size_t newID( nodes.size() );
-                size_t newSize( node2join1->getSize() + node2join2->getSize() );
-                size_t newHLevel( std::max( node2join1->getHLevel(), node2join2->getHLevel() ) + 1 );
-
-                //std::cout<<std::endl<<node2join1->printAllData()<<std::endl<<*protoNode2join1<<std::endl;
-                //std::cout<<node2join2->printAllData()<<std::endl<<*protoNode2join2<<std::endl;
-
-                // if no priority node has an active neighbour, go to the next phase
-                if( newDist == noNbDist )
-                {
-                    break;
-                }
-
-#if DEBUG
-                // test if information is consistent
-                {
-                    bool thereIsError( false );
-                    // data from priorityNodes vector and protonode1 dont match, there has been an error
-                    if( ( newDist != protoNode2join1->nearDist() ) || ( protoNode2join1->nearNb() != node2join2->getFullID() ) || ( node2join1->getFullID() == node2join2->getFullID() ) )
-                    {
-                        thereIsError = true;
-                    }
-                    // if data doest match with protonode 2:
-                    else if( ( newDist != protoNode2join2->nearDist() ) || ( protoNode2join2->nearNb() != node2join1->getFullID() )  )
-                    {
-                        // if not anymore on growing stage, or priority and active sizes are equal, it means an error
-                        if ( !growingStage || prioritySize == activeSize )
-                        {
-                            thereIsError = true;
-                        }
-                        // otherwise its only an error if it is not on the neighborhood
-                        else if( protoNode2join2->m_nbNodes.find( node2join1->getFullID() ) == protoNode2join2->m_nbNodes.end() )
-                        {
-                            thereIsError = true;
-                        }
-                    }
-
-                    if (thereIsError)
-                    {
-                        std::cerr << "NewDist: " << newDist << std::endl;
-                        std::cerr << "Priority nodes: " << priorityNodes.size() << std::endl;
-                        std::cerr << "Current nodes: " << currentNodes.size() << std::endl;
-                        std::cerr << "Done nodes size: " << nodes.size() << std::endl;
-                        std::cerr << "protoNode2join1: " << *protoNode2join1 << std::endl;
-                        std::cerr << "Node2join1: " << node2join1->printAllData() << std::endl;
-                        std::cerr << "protoNode2join2: " << *protoNode2join2 << std::endl;
-                        std::cerr << "Node2join2: " << node2join2->printAllData() << std::endl;
-                        m_tree.writeTreeDebug( m_outputFolder + "/treeErrorDebug.txt" );
-                        throw std::runtime_error( "ERROR @ treeBuilder::buildCentroid(): closest distance in prioritynodes does not agree with protoNode inner data" );
-                    }
-                }
-#endif
-
-                //get stored unloged tractograms
-                compactTract tract1, tract2;
-
-                if( node2join1->isNode() )
-                {
-                    while( natCount != 0 ) // wait in case a nat tract is being written from last iteration
-                        boost::this_thread::sleep( boost::posix_time::microseconds( 50 ) );
-                    vistaNatMean.readNodeTract( node2join1->getID(), tract1 );
-                    // delete meantract, boost::bind creates a self contained function object,
-                    // so ts ok if the function takes everything by reference
-#pragma omp atomic
-                    ++threadCount; // increment thread counter
-                    boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, node2join1->getID(),
-                                                         &vistaNatMean, &threadCount ) );
-                }
-                else
-                {
-                    vistaSingle.readLeafTract( m_roi[node2join1->getID()], tract1 );
-                    tract1.unLog( m_logFactor );
-                }
-
-                if( node2join2->isNode() )
-                {
-                    while( natCount != 0 ) // wait in case a nat tract is being written from last iteration
-                        boost::this_thread::sleep( boost::posix_time::microseconds( 50 ) );
-                    vistaNatMean.readNodeTract( node2join2->getID(), tract2 );
-                    // delete meantract, boost::bind creates a self contained function object,
-                    // so ts ok if the function takes everything by reference
-#pragma omp atomic
-                    ++threadCount; // increment thread counter
-                    boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, node2join2->getID(),
-                                                         &vistaNatMean, &threadCount ) );
-                }
-                else
-                {
-                    vistaSingle.readLeafTract( m_roi[node2join2->getID()], tract2 );
-                    tract2.unLog( m_logFactor );
-                }
-
-                if( node2join1->isNode() )
-                {
-#pragma omp critical( nodesCache )
-                    nodesCache.erase( node2join1->getID() );
-                }
-                else
-                {
-                    #pragma omp atomic
-                    ++doneLeavesCounter;
-                    #pragma omp critical( leavesCache )
-                    leavesCache.erase( node2join1->getID() );
-                }
-
-                if( node2join2->isNode() )
-                {
-                    #pragma omp critical( nodesCache )
-                    nodesCache.erase( node2join2->getID() );
-                }
-                else
-                {
-                    #pragma omp atomic
-                    ++doneLeavesCounter;
-                    #pragma omp critical( leavesCache )
-                    leavesCache.erase( node2join2->getID() );
-                }
-
-
-                // initialize data members of new node object
-                std::pair< nodeID_t, dist_t > newNearNb( noNbID, noNbDist );
-                std::map< nodeID_t, dist_t > newNbNodes;
-                bool newIsActive( newSize <= activeSize );
-
-
-                // eliminate children entries from current and priority vectors
-                priorityNodes.erase( priorityNodes.begin() );
-                if( node2join2->isNode() )
-                {
-                    if (node2join2->getSize() > prioritySize )
-                    {
-                        currentNodes.erase( node2join2->getID() );
-                    }
-                    else
-                    {
-                        priorityNodes.erase( priorityNodeIndex[node2join2->getID()] );
-                    }
-                }
-                else
-                {
-                    priorityNodes.erase( priorityLeafIndex[node2join2->getID()] );
-                }
-
-                // update parent of joining nodes
-                node2join1->setParent( std::make_pair( true, newID ) );
-                node2join2->setParent( std::make_pair( true, newID ) );
-
-                // start new protonode (merging nbhood tables)
-                newNbNodes.insert( protoNode2join1->m_nbNodes.begin(), protoNode2join1->m_nbNodes.end() );
-                newNbNodes.insert( protoNode2join2->m_nbNodes.begin(), protoNode2join2->m_nbNodes.end() );
-                newNbNodes.erase( node2join1->getFullID() );
-                newNbNodes.erase( node2join2->getFullID() );
-                protoNode2join1->clearNbhood();
-                protoNode2join1->inactivate();
-                protoNode2join2->clearNbhood();
-                protoNode2join2->inactivate();
-                maxNbs = std::max( maxNbs, newNbNodes.size() );
-
-
-                // get mean tractogram, write it to file in natural units, log it, threshold it, compute norm and put in cache
-                compactTract natNewTract( tract1, tract2, node2join1->getSize(), node2join2->getSize() );
-                #pragma omp atomic
-                ++natCount;
-                boost::thread writeThread( boost::bind( &cnbTreeBuilder::writeTract, this, newID, natNewTract, &vistaNatMean,
-                                                       &natCount ) );
-                natNewTract.doLog( m_logFactor );
-                natNewTract.threshold( m_tractThreshold );
-                m_nodeNorms.push_back( natNewTract.getNorm() );
-                compactTract* logNewTract(&natNewTract);
-                if( !growingStage )
-                {
-                    logNewTract = nodesCache.insert( newID, compactTract() );
-                    logNewTract->steal( &natNewTract );
-                }
-
-
-
-                // load tracts from all neighbors
-                std::vector< void* >nbTractVect;
-                nbTractVect.reserve( newNbNodes.size() );
-
-
-                if ( newIsActive )
-                {
-                    for( std::map< nodeID_t, dist_t >::iterator nbIter( newNbNodes.begin() ); nbIter != newNbNodes.end(); ++nbIter )
-                    {
-                        nbTractVect.push_back( loadTract( nbIter->first, &vistaSingle, &vistaNatMean, &leavesCache, &nodesCache, natCount ) );
-                    }
-                }
-
-                // get distances to all neighbours
-                #pragma omp parallel for schedule( static )
-                for( size_t i = 0; i < newNbNodes.size(); ++i )
-                {
-                    std::map< nodeID_t, dist_t >::iterator nbIter( newNbNodes.begin() );
-                    for( int j = 0; j < i; ++j )
-                        ++nbIter;
-
-                    bool nbIsNode( nbIter->first.first );
-                    size_t nbId( nbIter->first.second );
-                    dist_t newNbDist( 0 );
-                    bool isNbActive( false );
-
-                    // if the new node created is active we must compute new distances to neighbors
-                    if ( newIsActive )
-                    {
-                        if( nbIsNode )
-                        { //nb is a node
-                            if( protoNodes[nbId].isActive() )
-                            {
-                                isNbActive = true;
-                            }
-
-                            // update distance
-                            newNbDist=( logNewTract->tractDistance( * static_cast< compactTract* >( nbTractVect[i] ) ) );
-                        }
-                        else
-                        { //its a leaf
-                            isNbActive = true;
-
-                            // update distance
-                            newNbDist=( logNewTract->tractDistance( * static_cast< compactTractChar* >( nbTractVect[i] ) ) );
-                        }
-                        #pragma omp atomic
-                        m_numComps++;
-                        #pragma omp critical (nearnb)
-                        if( isNbActive && newNbDist < newNearNb.second )
-                        {
-                            newNearNb.second = newNbDist;
-                            newNearNb.first = nbIter->first;
-                        }
-                    }
-                    else
-                    {
-                        // if the new node created is not active we dont need to update the distances yet
-                        newNbDist = noNbDist;
-                    }
-
-                    nbIter->second = newNbDist;
-
-                    // update neighbourhood in neighbour node object
-                    protoNode* newProtoNb( getProtoNode( nbIter->first, protoLeaves, protoNodes ) );
-
-                    bool nbhoodChanged( false );
-                    nbhoodChanged = ( newProtoNb->updateActivhood( node2join1->getFullID(), node2join2->getFullID(),
-                                                                     std::make_pair( true, newID ),newNbDist, newIsActive, protoNodes  ) );
-
-                    if( nbhoodChanged )
-                    {
-                        //if nearest distance has changed and it is a node in the priority vector update priority vector entry
-                        #pragma omp critical( supernode )
-                        {
-                            if ( !nbIsNode )
-                            {
-                                priorityNodes.erase( priorityLeafIndex[nbId] );
-                                priorityLeafIndex[nbId] = priorityNodes.insert( std::make_pair( newProtoNb->nearDist(), nbIter->first ) );
-                            }
-                            else if( nodes[nbId].getSize() <= prioritySize )
-                            {
-                                priorityNodes.erase( priorityNodeIndex[nbId] );
-                                priorityNodeIndex[nbId] = priorityNodes.insert( std::make_pair( newProtoNb->nearDist(), nbIter->first ) );
-                            }
-
-                        }
-                    }
-                } // end parallel for
-
-                // set cache sizes, and clean up if overflowed, (50% of the memory for leaves and 50% for nodes unless all leaves are done)
-                if( leavesCache.limit() != 0 )
-                {
-                    size_t leavesCacheSize(1);
-                    if( growingStage )
-                    {
-                        leavesCacheSize = std::min( leaves.size() - doneLeavesCounter, static_cast<size_t>(leafCacheRatio * cacheSize) );
-
-                    }
-                    else
-                    {
-                        leavesCacheSize = std::min( leaves.size() - doneLeavesCounter, static_cast<size_t>(leafCacheRatio * cacheSize / 2) );
-
-                    }
-                    leavesCache.setLimit( leavesCacheSize );
-                    if( leavesCacheSize == 0 )
-                    {
-                        leavesCache.shutdown();
-                    }
-                    else
-                    {
-                        leavesCache.cleanup(); // clean leaves cache
-                    }
-                    nodesCache.setLimit( cacheSize - (leavesCacheSize/leafCacheRatio) + 1 );
-                }
-                nodesCache.cleanup();
-
-
-                // insert new node object
-                std::vector< nodeID_t > newKids( 1, node2join1->getFullID() );
-                newKids.push_back( node2join2->getFullID() );
-                WHnode newNode( std::make_pair( true, newID ), newKids, newSize, newDist, newHLevel );
-                nodes.push_back( newNode );
-
-                // insert new protoNode object
-                protoNode newProtoNode( newNearNb, newNbNodes, newIsActive );
-                protoNodes.push_back( newProtoNode );
-
-                // if new node is isolated
-                if( ( newNbNodes.empty() ) )
-                {
-                    if( m_verbose && ( newSize != m_roi.size() ) )
-                        std::cout << std::endl << "Node (1-" << newID << ") with " << newSize
-                                  << " leaves has no more neighbours it wont be further considered for clustering."
-                                  << std::endl;
-
-                    eventStream << "Node (1-" << newID << ") with " << newSize << " leaves is isolated" << std::endl;
-
-                    // update top node
-                    rootNode.setID( std::make_pair( true, newID + 1 ) );
-                    rootNode.setHLevel( std::max( newHLevel + 1, rootNode.getHLevel() ) );
-                    rootNode.setSize( rootNode.getSize() + newSize );
-                    std::vector< nodeID_t > topKids( rootNode.getChildren() );
-                    topKids.push_back( std::make_pair( true, newID ) );
-                    rootNode.setChildren( topKids );
-
-                    // if it is the biggest root node
-                    if( newSize > ( m_roi.size() / 2 ) )
-                    {
-                        // store last tract in output folder
-                        while( natCount > 1 )
-                        {
-                            boost::this_thread::sleep( boost::posix_time::microseconds( 25 ) );
-                        }
-                        compactTract rootTract;
-                        vistaNatMean.readNodeTract( newID, rootTract );
-                        rootTract.doLog( m_logFactor );
-                        vistaManager vistaLast( m_outputFolder );
-                        vistaLast.writeInFloat();
-                        vistaLast.storeUnzipped();
-                        vistaLast.writeNodeTract( newID, rootTract );
-
-                        if( m_verbose && ( newSize != m_roi.size() ) )
-                            std::cout << "This node contains " << newSize * 100. / m_roi.size() << "% of the total leaves,"
-                                      << " it will be kept as the root of the tree, remaining isolated nodes will be eliminated"
-                                      << std::endl;
-
-                        // if it is a small isolated cluster prune all its leaves
-                    }
-                    else
-                    {
-                        if( m_verbose && ( newSize > m_roi.size() / 20 ) )
-                            std::cout << "WARNING: " << newSize * 100 / m_roi.size() << "% of the total leaves are on this isolated node"
-                                      << " that cant be further integrated in the tree, the corresponding branch will be eliminated from results"
-                                      << std::endl;
-
-                        // delete saved tracts
-                        #pragma omp atomic
-                        ++threadCount; // increment thread counter
-                        boost::thread delThread( boost::bind( &cnbTreeBuilder::deleteTract, this, newID, &vistaNatMean,
-                                                             &threadCount ) );
-
-                        std::list< nodeID_t > worklist;
-                        worklist.push_back( std::make_pair( true, newID ) );
-                        while( !worklist.empty() )
-                        {
-                            nodeID_t currentID( worklist.front() );
-                            worklist.pop_front();
-                            WHnode* currentNode = fetchNode( currentID, leaves, nodes );
-                            currentNode->setFlag( true );
-                            std::vector< nodeID_t > currentKids( currentNode->getChildren() );
-                            worklist.insert( worklist.end(), currentKids.begin(), currentKids.end() );
-                        }
-                    }
-                }
-                else
-                {
-                    //add new node to corresponding vector
-                    if( newSize > prioritySize )
-                    {
-                        currentNodes.insert( newID );
-                    }
-                    else
-                    {
-                        priorityNodeIndex[newID] = priorityNodes.insert( std::make_pair( newNearNb.second, std::make_pair( true, newID ) ) );
-                    }
-                }
-
-                if( m_verbose )
-                {
-                    time_t currentTime( time( NULL ) );
-                    if( currentTime - lastTime > 1 )
-                    {
-                        lastTime = currentTime;
-                        float progress = nodes.size() * 100. / ( leaves.size() - 1. );
-                        size_t elapsedTime( difftime( currentTime, loopStart ) );
-                        std::stringstream message;
-                        message << "\r" << static_cast<int>( progress ) << " % of tree built (";
-                        message << nodes.size() << " nodes built. " << priorityNodes.size() + currentNodes.size() <<" current";
-                        if( growingStage )
-                        {
-                            message<< ". P: "<< prioritySize <<". A: " << activeSize;
-                        }
-                        message <<"). ";
-                        message << "Elapsed: ";
-                        message << elapsedTime / 3600 << "h " << ( elapsedTime % 3600 ) / 60 << "' ";
-                        message << ( elapsedTime % 3600 ) % 60 << "\". ";
-                        if( progress > 0 )
-                        {
-                            size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );
-                            message << "Remaining: ";
-                            message << expectedRemain / 3600 << "h ";
-                            message << ( expectedRemain % 3600 ) / 60 << "' ";
-                            message << ( expectedRemain % 3600 ) % 60 << "\". ";
-                        }
-                        std::cout << message.str() <<std::flush;
-                    }
-                } // end m_verbose
-
-
-                if( growingStage && ( growType == TC_GROWNUM ) && ( currentNodes.size() + priorityNodes.size() <= baseSize ) )
-                {
-                    growingStage = false;
-                    activeSize = protoLeaves.size();
-                    prioritySize = protoLeaves.size();
-                    baseNodes.clear();
-                    for( std::multimap< dist_t, nodeID_t >::iterator priorityIter( priorityNodes.begin() ); priorityIter != priorityNodes.end(); ++priorityIter )
-                    {
-                        if(priorityIter->second.first)
-                        {
-                            baseNodes.push_back(priorityIter->second.second);
-                        }
-                    }
-                    baseNodes.insert( baseNodes.end(), currentNodes.begin(), currentNodes.end() );
-                    break;
-                }
-            } // end inner big loop (priority size)
-
-
-            // If only one node remains, tree is finished
-            if( priorityNodes.empty() && currentNodes.size() == 1)
-            {
-                break;
-            }
-
-            if( growingStage )
-            {
-                if ( !priorityNodes.empty()  )
-                {
-                    ++activeSize;
-                }
-                else if( !currentNodes.empty() )
-                {
-                    ++prioritySize;
-                    if( ( growType == TC_GROWSIZE ) && ( prioritySize >= baseSize ) )
-                    {
-                        growingStage = false;
-                        prioritySize = protoLeaves.size();
-                        activeSize = protoLeaves.size();
-                        for( std::multimap< dist_t, nodeID_t >::iterator priorityIter( priorityNodes.begin() ); priorityIter != priorityNodes.end(); )
-                        {
-                            if(priorityIter->second.first)
-                            {
-                                baseNodes.push_back(priorityIter->second.second);
-                            }
-                        }
-                        baseNodes.insert( baseNodes.end(), currentNodes.begin(), currentNodes.end() );
-                    }
-                    else
-                    {
-                        activeSize = prioritySize;
-                    }
-                }
-
-#if DEBUG
-                if( m_verbose )
-                {
-                    std::cout<< "P Size: "<< prioritySize << std::endl;
-                    std::cout<< "A Size: "<< activeSize << std::endl;
-                }
-#endif
-
-            }
-
-
-
-
-            if ( growingStage || !currentNodes.empty() )
-            {
-
-                time_t lastTime2( time( NULL ) );
-                time_t firstLoopSt( time( NULL ) );
-                size_t reDistanceCount(0);
-
-                // activate or deactivate clusters given new active size
-                for( std::set< size_t >::const_iterator currentIter( currentNodes.begin() ); currentIter != currentNodes.end(); ++currentIter )
-                {
-                    size_t thisID( *currentIter );
-                    size_t thisSize( nodes[thisID].getSize() );
-
-
-                    if( thisSize <= activeSize )
-                    {
-                        // if node was not active when stored, we must recompute the distances
-                        if( !protoNodes[thisID].isActive() )
-                        {
-
-                            std::map< nodeID_t, dist_t > &thisNbNodes = protoNodes[thisID].m_nbNodes;
-                            std::pair< nodeID_t, dist_t > &thisNearNb = protoNodes[thisID].m_nearNb;
-
-                            //get this tract
-                            compactTract* thisTract( loadNodeTract( thisID, &vistaNatMean, &nodesCache, natCount ) );
-
-                            // load tracts from all neighbors with distances > 1
-                            std::vector< void* >nbTractVect( thisNbNodes.size(), 0 );
-                            for( size_t i = 0; i < thisNbNodes.size(); ++i )
-                            {
-                                std::map< nodeID_t, dist_t >::iterator nbIter( thisNbNodes.begin() );
-                                for( int j = 0; j < i; ++j )
-                                {
-                                    ++nbIter;
-                                }
-
-                                if( nbIter->second <= 1 )
-                                {
-                                    continue;
-                                }
-                                nbTractVect[i] = ( loadTract( nbIter->first, &vistaSingle, &vistaNatMean, &leavesCache, &nodesCache, natCount ) );
-                            }
-
-                            // get new distances
-                            #pragma omp parallel for schedule( dynamic )
-                            for( size_t i = 0; i < thisNbNodes.size(); ++i )
-                            {
-                                std::map< nodeID_t, dist_t >::iterator nbIter( thisNbNodes.begin() );
-                                for( int j = 0; j < i; ++j )
-                                {
-                                    ++nbIter;
-                                }
-
-                                if( nbIter->second < 1 )
-                                {
-                                    continue;
-                                }
-
-                                bool nbIsNode( nbIter->first.first );
-                                size_t nbId( nbIter->first.second );
-                                dist_t thisNbDist( 0 );
-
-                                // get nb tractogram
-                                if( nbIsNode )
-                                { //nb is a node
-                                    thisNbDist=( thisTract->tractDistance( * static_cast< compactTract* >( nbTractVect[i] ) ) );
-                                }
-                                else
-                                { //its a leaf
-                                    thisNbDist=( thisTract->tractDistance( * static_cast< compactTractChar* >( nbTractVect[i] ) ) );
-                                }
-                                #pragma omp atomic
-                                m_numComps++;
-
-                                // update distance in neighbour node object
-                                protoNode* thisProtoNb( getProtoNode( nbIter->first, protoLeaves, protoNodes ) );
-
-                                thisProtoNb->updateDist( std::make_pair( true, thisID ),thisNbDist  );
-
-
-                            } // end parallel for
-
-                        }
-
-                        protoNodes[thisID].reactivate();
-                    }
-                    else
-                    {
-                        protoNodes[thisID].inactivate();
-                    }
-                    ++reDistanceCount;
-
-
-                    if( m_verbose )
-                    {
-                        time_t currentTime( time( NULL ) );
-                        if( currentTime - lastTime2 > 1 )
-                        {
-                            lastTime2 = currentTime;
-                            float progress = reDistanceCount * 100. / ( currentNodes.size() );
-                            size_t elapsedTime( difftime( currentTime, firstLoopSt ) );
-                            std::stringstream message;
-                            message << "\r" << static_cast<int>( progress ) << " %. ";
-                            message << "Elapsed: ";
-                            message << elapsedTime / 3600 << "h " << ( elapsedTime % 3600 ) / 60 << "' ";
-                            message << ( elapsedTime % 3600 ) % 60 << "\". ";
-                            if( progress > 0 )
-                            {
-                                size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );
-                                message << "Remaining: ";
-                                message << expectedRemain / 3600 << "h ";
-                                message << ( expectedRemain % 3600 ) / 60 << "' ";
-                                message << ( expectedRemain % 3600 ) % 60 << "\". ";
-                            }
-                            std::cout << message.str() <<std::flush;
-                        }
-                    } // end m_verbose
-
-                    // clean up if overflowed
-                    leavesCache.cleanup(); // clean leaves cache
-                    nodesCache.cleanup(); // clean nodes cache
-                } // end for
-
-
-                //update nearest neighbors for nodes already in the priority list, save changed entries in a temporal list
-                std::list< std::pair< dist_t, nodeID_t > > tempPnodes;
-                for( std::multimap< dist_t, nodeID_t >::iterator priorityIter( priorityNodes.begin() ); priorityIter != priorityNodes.end(); )
-                {
-                    bool elementChanged( false );
-                    bool isNode( priorityIter->second.first );
-                    size_t thisNodeID(priorityIter->second.second );
-                    if( isNode )
-                    {
-                        elementChanged = protoNodes[thisNodeID].updateActive( protoNodes );
-                        if( elementChanged )
-                        {
-                            tempPnodes.push_back( std::make_pair( protoNodes[thisNodeID].nearDist(), priorityIter->second ) );
-                        }
-                    }
-                    else
-                    {
-                        elementChanged = protoLeaves[thisNodeID].updateActive( protoNodes );
-                        if( elementChanged )
-                        {
-                            tempPnodes.push_back( std::make_pair( protoLeaves[thisNodeID].nearDist(), priorityIter->second ) );
-                        }
-                    }
-                    // if the entry changed delete it
-                    if( elementChanged )
-                    {
-                        priorityNodes.erase( priorityIter++ );
-                    }
-                    else
-                    {
-                        ++priorityIter;
-                    }
-                }
-                //insert updated elements on the priority map
-                for( std::list< std::pair< dist_t, nodeID_t > >::const_iterator tempIter( tempPnodes.begin() ); tempIter != tempPnodes.end(); ++tempIter )
-                {
-                    bool isNode( tempIter->second.first );
-                    size_t thisNodeID(tempIter->second.second );
-                    if( isNode )
-                    {
-                        priorityNodeIndex[thisNodeID] = priorityNodes.insert( *tempIter );
-                    }
-                    else
-                    {
-                        priorityLeafIndex[thisNodeID] = priorityNodes.insert( *tempIter );
-                    }
-                }
-                tempPnodes.clear();
-                //update nearest neighbors for nodes in the current list and move into the priority list if necessary
-                for( std::set< size_t >::const_iterator currentIter( currentNodes.begin() ); currentIter != currentNodes.end(); )
-                {
-                    size_t thisNodeID( *currentIter );
-                    size_t thisSize( nodes[thisNodeID].getSize() );
-                    protoNodes[thisNodeID].updateActive( protoNodes );
-                    if( thisSize <= prioritySize )
-                    {
-                        priorityNodeIndex[thisNodeID] = priorityNodes.insert( std::make_pair( protoNodes[thisNodeID].nearDist(), std::make_pair( true, thisNodeID) ) );
-                        currentNodes.erase( currentIter++ );
-                    }
-                    else
-                    {
-                        ++currentIter;
-                    }
-                }
-
-#if DEBUG
-                if( m_verbose )
-                {
-                    std::cout<< "Pnumber: "<< priorityNodes.size() << std::endl;
-                    std::cout<< "Cnumber: "<< currentNodes.size() << std::endl;
-                }
-#endif
-            }
-
-
-        } // end upper big loop
-
-        if( !priorityNodes.empty() )
-        {
-            std::cerr << "WARNING @ treeBuilder::buildCentroid(): after finish, supernode is not empty" << std::endl;
-            WHnode* leftNode( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
-            std::cerr << "Node info: " << leftNode << std::endl;
-            protoNode* leftProtoNode( getProtoNode( leftNode->getFullID(), protoLeaves, protoNodes ) );
-            std::cerr << "Protonode info: " << leftProtoNode << std::endl;
-            m_tree.writeTreeDebug( m_outputFolder + "/treeWarningDebug.txt" );
-        }
-
-        nodesCache.shutdown();
-
-        // fix last node
-        rootNode.setDistLevel( 1 );
-        std::vector< nodeID_t > topNodes( rootNode.getChildren() );
-        if( topNodes.size() > 1 )
-        {
-            size_t numValidTopNodes( 0 );
-            for( std::vector< nodeID_t >::iterator iter( topNodes.begin() ); iter != topNodes.end(); ++iter )
-            {
-                WHnode* thisTopNode( fetchNode( *iter, leaves, nodes ) );
-                thisTopNode->setParent( rootNode.getFullID() );
-                if( !thisTopNode->isFlagged() )
-                {
-                    rootNode.setDistLevel( thisTopNode->getDistLevel() );
-                    ++numValidTopNodes;
-                }
-            }
-            if( numValidTopNodes != 1 )
-            {
-                std::cerr << "WARNING @ treeBuilder::buildCentroid(): more than one valid top node" << std::endl;
-                std::cerr << "Root node info: " << rootNode << std::endl;
-                m_tree.writeTreeDebug( m_outputFolder + "/treeWarningDebug.txt" );
-            }
-            nodes.push_back( rootNode );
-        }
-        else
-        {
-            fetchNode( topNodes.front(), leaves, nodes )->setParent( std::make_pair( false, 0 ) );
-        }
-
-        // empty protoNode vectors
-        {
-            std::vector< protoNode > emptyL, emptyN;
-            protoLeaves.swap( emptyL );
-            protoNodes.swap( emptyN );
-        }
-
-        if( m_verbose )
-        {
-            int timeTaken = difftime( time( NULL ), loopStart );
-            std::cout << "\r" << std::flush << "100% of of tree built. Time taken: " << timeTaken / 3600 << "h " << ( timeTaken
-                            % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
-            std::cout << "maximum number of neighbours in one iteration: " << maxNbs << std::endl;
-            std::cout << "Node cache. Hits: " << m_ncHits << ". Misses: " << m_ncMiss << std::endl;
-            std::cout << "Leaf cache. Hits: " << m_lcHits << ". Misses: " << m_lcMiss << std::endl;
-            std::cout << "Total Hits: " << m_lcHits + m_ncHits << ". Total Misses: " << m_lcMiss
-                            + m_ncMiss << std::endl;
-            std::cout << "Total correlations: " << m_numComps << std::endl;
-        }
-
-        while( threadCount != 0 ) // wait until all threads have finished
-            boost::this_thread::sleep( boost::posix_time::microseconds( 100 ) );
-
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << eventStream.str();
-            ( *m_logfile ) << "Max #Nbs during construction: " << maxNbs << std::endl;
-            ( *m_logfile ) << "Node cache hits: " << m_ncHits << std::endl;
-            ( *m_logfile ) << "Node cache misses: " << m_ncMiss << std::endl;
-            ( *m_logfile ) << "Leaf cache hits: " << m_lcHits << std::endl;
-            ( *m_logfile ) << "Leaf cache misses: " << m_lcMiss << std::endl;
-            ( *m_logfile ) << "Total hits: " << m_lcHits + m_ncHits << std::endl;
-            ( *m_logfile ) << "Total misses: " << m_lcMiss + m_ncMiss << std::endl;
-            ( *m_logfile ) << "Total correlations: " << m_numComps << std::endl;
-        }
-    } // end tree build up -------------
-
-    time_t procStart( time( NULL ) ); // time object
-
-        if( m_verbose )
-            std::cout << "Setting up and cleaning tree..." << std::endl;
-        {
-            std::string treeName( "centroid" + boost::lexical_cast< std::string >( nbLevel ) );
-            WHtree thisTree( treeName, m_datasetSize, leaves, nodes, m_roi, discarded, m_datasetGrid );
-            m_tree = thisTree;
-            std::vector< WHnode > emptyL, emptyN;
-            leaves.swap( emptyL );
-            nodes.swap( emptyN );
-        }
-
-        if( !m_tree.check() )
-        {
-            m_tree.writeTreeDebug( m_outputFolder + "/treeErrorDebug.txt" );
-            throw std::runtime_error( "ERROR @ treeBuilder::buildCentroid(): resulting tree is not valid" );
-        }
-
-        if ( baseNodes.empty() )
-        {
-            std::pair< size_t, size_t > numPruned( m_tree.cleanup() );
-            if( m_verbose )
-            {
-                std::cout << "Done. An additional " << numPruned.first << " leaves and " << numPruned.second
-                          << " nodes were discarded" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Pruned nodes:\t" << numPruned.second << std::endl;
-                ( *m_logfile ) << "Total discarded leaves:\t" << m_tree.m_discarded.size() << std::endl;
-            }
-            if( !keepDiscarded )
-            {
-                m_tree.m_discarded.clear();
-            }
-
-            m_treeReady = true;
-
-            if( m_verbose )
-            {
-                std::cout << m_tree.getReport() << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << m_tree.getReport() << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
-            writeTree();
-            m_tree.forceMonotonicity();
-
-            if( m_verbose )
-            {
-                std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-            writeTree();
-
-            m_tree.debinarize( false );
-
-            if( m_verbose )
-            {
-                std::cout << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
-            writeTree();
-        }
-        else
-        {
-            m_treeReady = true;
-
-            baseNodes.sort();
-            std::vector< size_t > baseVector( baseNodes.begin(), baseNodes.end() );
-            writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
-
-            if( m_verbose )
-            {
-                std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-            }
-
-            if( m_verbose )
-            {
-                std::cout << m_tree.getReport() << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << m_tree.getReport() << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
-            writeTree();
-
-            WHtree treeUp(m_tree);
-            WHtree treeDown(m_tree);
-
-
-            m_tree.forceMonotonicity();
-
-            if( m_verbose )
-            {
-                std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-            writeTree();
-
-
-
-            WHtreeProcesser processer( &m_tree );
-            processer.flattenSelection(baseNodes, false);
-
-
-            if( m_verbose )
-            {
-                std::cout << "BaseNodes flattened, and tree pruned" << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "BaseNodes flattened,  and tree pruned" << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bases" );
-            writeTree();
-
-            if( !keepDiscarded )
-            {
-                m_tree.m_discarded.clear();
-            }
-
-            m_tree.debinarize( true );
-
-
-            if( m_verbose )
-            {
-                std::cout << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
-            writeTree();
-
-            if( m_tree.testRootBaseNodes() )
-            {
-                baseVector = m_tree.getRootBaseNodes();
-                std::sort( baseVector.begin(), baseVector.end() );
-                writeBases( baseVector, m_outputFolder + "/baselist.txt" );
-
-                if( m_verbose )
-                {
-                    std::cout << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-                }
-                if( m_logfile != 0 )
-                {
-                    ( *m_logfile ) << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-                }
-            }
-            else
-            {
-                if( m_verbose )
-                {
-                    std::cout << "Final tree is not a pure basenode tree" << std::endl;
-                }
-                if( m_logfile != 0 )
-                {
-                    ( *m_logfile ) << "Final tree is not a pure basenode tree" << std::endl;
-                }
-            }
-
-
-
-
-            treeUp.forceMonotonicityUp();
-            WHtreeProcesser processerUp( &treeUp );
-            processerUp.flattenSelection(baseNodes, false);
-            treeUp.debinarize( true );
-            treeUp.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Up" );
-            treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt" );
-
-            treeDown.forceMonotonicityDown();
-            WHtreeProcesser processerDown( &treeDown );
-            processerDown.flattenSelection(baseNodes, false);
-            treeDown.debinarize( true );
-            treeDown.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Down" );
-            treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt" );
-
-        }
-
-        int timeTaken = difftime( time( NULL ), procStart );
-        if( m_verbose )
-        {
-            std::cout << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
-            std::cout << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
-            ( *m_logfile ) << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
-        }
-
-    return;
-} // end cnbTreeBuilder::buildC2() -------------------------------------------------------------------------------------
 
 

@@ -1,3 +1,37 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+// This file is also part of OpenWalnut ( http://www.openwalnut.org ).
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
+
 // std library
 #include <vector>
 #include <utility>
@@ -7,6 +41,15 @@
 #include "distBlock.h"
 
 // PUBLIC FUNCTIONS
+
+distBlock::distBlock( const std::string& distBlockFolderInit ): m_indexReady( false ),
+                                                                m_blockReady( false ),
+                                                                m_maxBlockID( 0 ),
+                                                                m_distBlockFolder( distBlockFolderInit ),
+                                                                m_blockID( std::make_pair( 0, 0 ) )
+{
+    m_indexReady = readIndex();
+}
 
 bool distBlock::readIndex()
 {
@@ -18,8 +61,7 @@ bool distBlock::readIndex()
     m_blockReady = false;
     m_maxBlockID = 0;
 
-    std::string indexFilename;
-    getIndexFilename( &indexFilename );
+    std::string indexFilename( getIndexFilename() );
 
     WFileParser parser( indexFilename );
     if( !parser.readFile() )
@@ -52,7 +94,6 @@ bool distBlock::readIndex()
             m_maxBlockID = tempPair.first;
     }
 
-    m_indexReady = true;
     return true;
 } // end "readIndex()" -----------------------------------------------------------------
 
@@ -82,8 +123,9 @@ void distBlock::loadBlock( unsigned int blockID1, unsigned int blockID2 )
         }
 
         // load distanceblock
-        vistaManager vMngr( m_distBlockFolder );
-        vMngr.readDistBlock( blockID1, blockID2, m_block );
+        fileManagerFactory fileMF( m_distBlockFolder );
+        fileManager& fileMngr( fileMF.getFM() );
+        fileMngr.readDistBlock( blockID1, blockID2, &m_block );
         m_blockID = std::make_pair( blockID1, blockID2 );
         m_blockIndex1.clear();
         m_blockIndex2.clear();
@@ -104,14 +146,14 @@ void distBlock::loadBlock( unsigned int blockID1, unsigned int blockID2 )
     return;
 } // end "loadblock()" -----------------------------------------------------------------
 
-void distBlock::loadBlock( WHcoord coord1, WHcoord coord2 )
+void distBlock::loadBlock( const WHcoord& coord1, const WHcoord& coord2 )
 {
     std::pair< unsigned int, unsigned int > blockID = whichBlock( coord1, coord2 );
     loadBlock( blockID );
     return;
 } // end "loadblock()" -----------------------------------------------------------------
 
-float distBlock::getDistance( WHcoord coord1, WHcoord coord2 )
+float distBlock::getDistance( const WHcoord& coord1, const WHcoord& coord2 )
 {
     unsigned int index1( 0 ), index2( 0 );
 
@@ -183,8 +225,9 @@ void distBlock::writeBlock()
     }
     else
     {
-        vistaManager vMngr( m_distBlockFolder );
-        vMngr.writeDistBlock( m_blockID, m_block );
+        fileManagerFactory fileMF( m_distBlockFolder );
+        fileManager& fMngr( fileMF.getFM() );
+        fMngr.writeDistBlock( m_blockID, m_block );
     }
     return;
 } // end "writeBlock()" -----------------------------------------------------------------
@@ -192,13 +235,13 @@ void distBlock::writeBlock()
 
 // PRIVATE FUNCTIONS
 
-void distBlock::getIndexFilename( std::string* indexFilename )
+std::string distBlock::getIndexFilename()
 {
-    *indexFilename = m_distBlockFolder + "/roi_index.txt";
-    return;
+    std::string indexFilename = m_distBlockFolder + "/" + MATRIX_INDEX_FILENAME;
+    return indexFilename;
 } // end "getIndexFilename()" -----------------------------------------------------------------
 
-std::pair< unsigned int, unsigned int > distBlock::whichBlock( WHcoord coord1, WHcoord coord2 )
+std::pair< unsigned int, unsigned int > distBlock::whichBlock( const WHcoord& coord1, const WHcoord& coord2 )
 {
     unsigned int rowBlockID, colBlockID;
     std::map< WHcoord, std::pair< unsigned int, unsigned int > >::iterator findIter( m_fullIndex.find( coord1 ) );

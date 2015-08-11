@@ -1,0 +1,292 @@
+\hypertarget{classvistaManager}{\section{vista\-Manager \-Class \-Reference}
+\label{classvistaManager}\index{vista\-Manager@{vista\-Manager}}
+}
+
+
+{\ttfamily \#include $<$vista\-Manager.\-h$>$}
+
+\-Inheritance diagram for vista\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvistaManager}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classvistaManager_a458979d81ecf1e53518c881f68300430}{vista\-Manager} (std\-::string io\-Folder=\char`\"{}\char`\"{})
+\item 
+\hyperlink{classvistaManager_a58fc280642b2269abf444f78267ed813}{$\sim$vista\-Manager} ()
+\item 
+std\-::string \hyperlink{classvistaManager_a5e52fed6323e11f13b5952bdb44ee6de}{get\-File\-Extension} (\-Tract\-Ext\-Type ext\-Type) const 
+\item 
+std\-::string \hyperlink{classvistaManager_a407d30a5fffffe195fdcb6c6c7915603}{get\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector=std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$()) const 
+\item 
+std\-::string \hyperlink{classvistaManager_abe8c9c35fd44694320e07d56c8c7cc1a}{get\-Full\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector) const 
+\item 
+\-Value\-Type \hyperlink{classvistaManager_a3b7961506874a82c9cd03d63f9453ef6}{read\-Vector} (const std\-::string \&vector\-Filename, std\-::vector$<$ float $>$ $\ast$vector\-Pointer) const 
+\item 
+\-Value\-Type \hyperlink{classvistaManager_a11963066feafb09ce08be36a81d4b218}{read\-Matrix} (const std\-::string \&matrix\-Filename, std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$matrix\-Pointer) const 
+\item 
+\-Value\-Type \hyperlink{classvistaManager_a63e720f7d61fe55af1aebad4602f450e}{read\-Image} (const std\-::string \&image\-Filename, std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$image\-Pointer) const 
+\item 
+void \hyperlink{classvistaManager_aa154ab71f5179e8de436a29387a14ed6}{load\-Header} (const std\-::string \&filename, bool display=false)
+\item 
+void \hyperlink{classvistaManager_a1863d9fa2c828230530c811c75bd335a}{write\-Vector} (const std\-::string \&vector\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ float $>$ \&vector, bool do\-Zip=false) const 
+\item 
+void \hyperlink{classvistaManager_a4baeb675badeccc95fba918d43ff8b46}{write\-Matrix} (const std\-::string \&matrix\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&matrix, bool do\-Zip=false) const 
+\item 
+void \hyperlink{classvistaManager_aa8e39454f414a5ae46ad3e57dca12f0e}{write\-Image} (const std\-::string \&image\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&image, bool do\-Zip=false) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This class handles reading and writing of images, matrices and tractograms in vista format 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classvistaManager_a458979d81ecf1e53518c881f68300430}{\index{vista\-Manager@{vista\-Manager}!vista\-Manager@{vista\-Manager}}
+\index{vista\-Manager@{vista\-Manager}!vistaManager@{vista\-Manager}}
+\subsubsection[{vista\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vista\-Manager\-::vista\-Manager} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{io\-Folder = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, explicit\mbox{]}}}}\label{classvistaManager_a458979d81ecf1e53518c881f68300430}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em io\-Folder} & input-\/output folder for the reading and writing of files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classvistaManager_a58fc280642b2269abf444f78267ed813}{\index{vista\-Manager@{vista\-Manager}!$\sim$vista\-Manager@{$\sim$vista\-Manager}}
+\index{$\sim$vista\-Manager@{$\sim$vista\-Manager}!vistaManager@{vista\-Manager}}
+\subsubsection[{$\sim$vista\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vista\-Manager\-::$\sim$vista\-Manager} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classvistaManager_a58fc280642b2269abf444f78267ed813}
+\-Destructor 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classvistaManager_a5e52fed6323e11f13b5952bdb44ee6de}{\index{vista\-Manager@{vista\-Manager}!get\-File\-Extension@{get\-File\-Extension}}
+\index{get\-File\-Extension@{get\-File\-Extension}!vistaManager@{vista\-Manager}}
+\subsubsection[{get\-File\-Extension}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf vista\-Manager\-::get\-File\-Extension} (
+\begin{DoxyParamCaption}
+\item[{\-Tract\-Ext\-Type}]{ext\-Type}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{classvistaManager_a5e52fed6323e11f13b5952bdb44ee6de}
+returns a string with the filename extension to be used in reading/writing files \begin{DoxyReturn}{\-Returns}
+the filename extension string 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_af1b2dea2761c3f0018b62077cb032aee}{file\-Manager}.
+
+\hypertarget{classvistaManager_abe8c9c35fd44694320e07d56c8c7cc1a}{\index{vista\-Manager@{vista\-Manager}!get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}}
+\index{get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}!vistaManager@{vista\-Manager}}
+\subsubsection[{get\-Full\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf vista\-Manager\-::get\-Full\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_abe8c9c35fd44694320e07d56c8c7cc1a}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, , when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ac64c35e60f2a006b0a4d2af9e50d9029}{file\-Manager}.
+
+\hypertarget{classvistaManager_a407d30a5fffffe195fdcb6c6c7915603}{\index{vista\-Manager@{vista\-Manager}!get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}}
+\index{get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}!vistaManager@{vista\-Manager}}
+\subsubsection[{get\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf vista\-Manager\-::get\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector = {\ttfamily std\-:\-:vector$<$~{\bf \-W\-Hcoord}~$>$()}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a407d30a5fffffe195fdcb6c6c7915603}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, , when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a24c2bf9055bfe28571866ce7586a3e34}{file\-Manager}.
+
+\hypertarget{classvistaManager_aa154ab71f5179e8de436a29387a14ed6}{\index{vista\-Manager@{vista\-Manager}!load\-Header@{load\-Header}}
+\index{load\-Header@{load\-Header}!vistaManager@{vista\-Manager}}
+\subsubsection[{load\-Header}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf vista\-Manager\-::load\-Header} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename, }
+\item[{bool}]{display = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{classvistaManager_aa154ab71f5179e8de436a29387a14ed6}
+$\ast$$\ast$\-T\-H\-I\-S \-F\-U\-N\-C\-T\-I\-O\-N \-I\-S \-N\-O\-T \-I\-M\-P\-L\-E\-M\-E\-N\-T\-E\-D \-I\-N \-V\-I\-S\-T\-A \-M\-O\-D\-E$\ast$$\ast$ 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & file path to the image file containing the header \\
+\hline
+{\em display} & if set the header info will be displayed in standard output, , default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ad32c0c3e00f03a9338f1404b1e123e19}{file\-Manager}.
+
+\hypertarget{classvistaManager_a63e720f7d61fe55af1aebad4602f450e}{\index{vista\-Manager@{vista\-Manager}!read\-Image@{read\-Image}}
+\index{read\-Image@{read\-Image}!vistaManager@{vista\-Manager}}
+\subsubsection[{read\-Image}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf vista\-Manager\-::read\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$}]{image\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a63e720f7d61fe55af1aebad4602f450e}
+reads a 3\-D image from file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image file \\
+\hline
+{\em image\-Pointer} & a pointer to the image structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_a256980984836386e38f1fb3b5557a7f2}{file\-Manager}.
+
+\hypertarget{classvistaManager_a11963066feafb09ce08be36a81d4b218}{\index{vista\-Manager@{vista\-Manager}!read\-Matrix@{read\-Matrix}}
+\index{read\-Matrix@{read\-Matrix}!vistaManager@{vista\-Manager}}
+\subsubsection[{read\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf vista\-Manager\-::read\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$}]{matrix\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a11963066feafb09ce08be36a81d4b218}
+reads a 2\-D matrix from file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image file \\
+\hline
+{\em matrix\-Pointer} & a pointer to the matrix structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_a940f90e44c4e483659f4527e6ffa9e95}{file\-Manager}.
+
+\hypertarget{classvistaManager_a3b7961506874a82c9cd03d63f9453ef6}{\index{vista\-Manager@{vista\-Manager}!read\-Vector@{read\-Vector}}
+\index{read\-Vector@{read\-Vector}!vistaManager@{vista\-Manager}}
+\subsubsection[{read\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf vista\-Manager\-::read\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{vector\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a3b7961506874a82c9cd03d63f9453ef6}
+reads a 1\-D vector from file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image file \\
+\hline
+{\em vector\-Pointer} & a pointer to the standard vector to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_aca16ebeace21a25c0f76bfc4c75595d3}{file\-Manager}.
+
+\hypertarget{classvistaManager_aa8e39454f414a5ae46ad3e57dca12f0e}{\index{vista\-Manager@{vista\-Manager}!write\-Image@{write\-Image}}
+\index{write\-Image@{write\-Image}!vistaManager@{vista\-Manager}}
+\subsubsection[{write\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf vista\-Manager\-::write\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&}]{image, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_aa8e39454f414a5ae46ad3e57dca12f0e}
+writes a 3\-D image to file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em image} & the 3\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ae987e2c6a109c8bfd494f98b192969a0}{file\-Manager}.
+
+\hypertarget{classvistaManager_a4baeb675badeccc95fba918d43ff8b46}{\index{vista\-Manager@{vista\-Manager}!write\-Matrix@{write\-Matrix}}
+\index{write\-Matrix@{write\-Matrix}!vistaManager@{vista\-Manager}}
+\subsubsection[{write\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf vista\-Manager\-::write\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&}]{matrix, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a4baeb675badeccc95fba918d43ff8b46}
+writes a 2\-D matrix to file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em matrix} & the 2\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a60181a9ff9cf6f6d228b209d9050b21e}{file\-Manager}.
+
+\hypertarget{classvistaManager_a1863d9fa2c828230530c811c75bd335a}{\index{vista\-Manager@{vista\-Manager}!write\-Vector@{write\-Vector}}
+\index{write\-Vector@{write\-Vector}!vistaManager@{vista\-Manager}}
+\subsubsection[{write\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf vista\-Manager\-::write\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ float $>$ \&}]{vector, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classvistaManager_a1863d9fa2c828230530c811c75bd335a}
+writes a 1\-D vector to file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em vector} & the 1\-D vector holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a510ef89d143c23e69c4b7c4a56325a1d}{file\-Manager}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/vista\-Manager.\-h\item 
+src/common/vista\-Manager.\-cpp\end{DoxyCompactItemize}

@@ -1,3 +1,35 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 #ifndef TREECOMPARER_H
 #define TREECOMPARER_H
 
@@ -27,185 +59,271 @@
 // hClustering
 #include "compactTract.h"
 #include "WHcoord.h"
-#include "distBlock.h"
 #include "WHtree.h"
 #include "listedCache.hpp"
-#include "vistaManager.h"
+#include "fileManagerFactory.h"
 #include "treeManager.h"
 #include "WHtreeProcesser.h"
 
-const bool TREE1 = true;
-const bool TREE2 = false;
 
+#define TREE1 true
+#define TREE2 false
+
+/**
+ * this class implements the main functionalities required for performing meta-leaf matching across trees and calculating tree comparison algorithms across matched-trees
+ */
 class treeComparer
 {
 public:
-    treeComparer( WHtree* const tree1, WHtree* const tree2, bool verbose = true) :
-        m_tree1( *tree1 ), m_tree2( *tree2 ), m_maxPhysDist( 0 ), m_tractThreshold( 0.4 ), m_logFactor( 5.0 ), m_logfile( 0 ),
-        m_realBaseNodes( false ), m_coordsFromFile( false ), m_meanTractsFromFile( false ), m_verbose( verbose )
-    {
-        fetchBaseNodes( false );
-        m_initialSizes = std::make_pair(m_tree1.getNumLeaves(), m_tree2.getNumLeaves());
-    }
-    treeComparer( WHtree* const tree1, WHtree* const tree2, treeComparer &comparer ) :
-      m_verbose( comparer.m_verbose ),
-      m_tree1(*tree1),
-      m_tree2(*tree2),
-      m_singleTractFolder1(comparer.m_singleTractFolder1),
-      m_singleTractFolder2(comparer.m_singleTractFolder2),
-      m_meanTractFolder1(comparer.m_meanTractFolder1),
-      m_meanTractFolder2(comparer.m_meanTractFolder2),
-      m_maxPhysDist(comparer.m_maxPhysDist),
-      m_tractThreshold(comparer.m_tractThreshold),
-      m_logFactor(comparer.m_logFactor),
-      m_logfile(comparer.m_logfile),
-      m_baseNodes1(comparer.m_baseNodes1),
-      m_originalBaseNodes1(comparer.m_originalBaseNodes1),
-      m_baseCoords1(comparer.m_baseCoords1),
-      m_noiseLevels1(comparer.m_noiseLevels1),
-      m_baseNodes2(comparer.m_baseNodes2),
-      m_originalBaseNodes2(comparer.m_originalBaseNodes2),
-      m_baseCoords2(comparer.m_baseCoords2),
-      m_noiseLevels2(comparer.m_noiseLevels2),
-      m_initialSizes(comparer.m_initialSizes),
-      m_baseDistMatrix(comparer.m_baseDistMatrix),
-      m_realBaseNodes(comparer.m_realBaseNodes),
-      m_coordsFromFile(comparer.m_coordsFromFile),
-      m_meanTractsFromFile(comparer.m_meanTractsFromFile),
-      m_fullCorrespondence(comparer.m_fullCorrespondence),
-      m_newCorrespondence(comparer.m_newCorrespondence),
-      m_newCorrespReverse(comparer.m_newCorrespReverse),
-      m_correspDistances(comparer.m_correspDistances)
-    {
-    }
+    /**
+     * Constructor
+     * \param tree1 a pointer to the first tree being matched/compared
+     * \param tree2 a pointer to the second tree being matched/compared
+     * \param verbose the verbose output flag
+     */
+    treeComparer( WHtree* const tree1, WHtree* const tree2, bool verbose );
+    /**
+     * Constructor
+     * \param tree1 a pointer to the first tree being matched/compared
+     * \param tree2 a pointer to the second tree being matched/compared
+     * \param comparer the treeComparer object with the datamembers to be copied
+     */
+    treeComparer( WHtree* const tree1, WHtree* const tree2, treeComparer &comparer );
 
-    ~treeComparer()
-    {
-    }
+    //! Destructor
+    ~treeComparer() {}
 
-    bool setSingleTractFolder1( std::string singleTractFolder1 )
-    {
-        m_singleTractFolder1 = singleTractFolder1;
-    }
+    // === IN-LINE MEMBER FUNCTIONS ===
 
-    bool setSingleTractFolder2( std::string singleTractFolder2 )
-    {
-        m_singleTractFolder2 = singleTractFolder2;
-    }
+    /**
+     * Sets the folder path to find leaf tracts corresponding to tree 1
+     * \param singleTractFolder1 the path to the folder with tree 1 leaf tracts
+     */
+    inline void setSingleTractFolder1( std::string singleTractFolder1 ) { m_singleTractFolder1 = singleTractFolder1; }
 
-    bool setMeanTractFolder1( std::string meanTractFolder1 )
-    {
-        m_meanTractFolder1 = meanTractFolder1;
-    }
+    /**
+     * Sets the folder path to find leaf tracts corresponding to tree 2
+     * \param singleTractFolder2 the path to the folder with tree 2 leaf tracts
+     */
+    inline void setSingleTractFolder2( std::string singleTractFolder2 ) { m_singleTractFolder2 = singleTractFolder2; }
 
-    bool setMeanTractFolder2( std::string meanTractFolder2 )
-    {
-        m_meanTractFolder2 = meanTractFolder2;
-    }
+    /**
+     * Sets the folder path to find node tracts corresponding to tree 1
+     * \param meanTractFolder1 the path to the folder with tree 1 node tracts
+     */
+    inline void setMeanTractFolder1( std::string meanTractFolder1 ) { m_meanTractFolder1 = meanTractFolder1; }
 
-    void setMaxPhysDist( size_t maxPhysDist )
-    {
-        m_maxPhysDist = maxPhysDist;
-    }
-    void log( std::ofstream* const logfile )
-    {
-        m_logfile = logfile;
-    }
-    void setCoordsFromFile( bool coordsFromFile )
-    {
-        m_coordsFromFile = coordsFromFile;
-    }
-    void setMeanTractsFromFile( bool meanTractsFromFile )
-    {
-        m_meanTractsFromFile = meanTractsFromFile;
-    }
+    /**
+     * Sets the folder path to find node tracts corresponding to tree 2
+     * \param meanTractFolder2 the path to the folder with tree 2 node tracts
+     */
+    inline void setMeanTractFolder2( std::string meanTractFolder2 ) { m_meanTractFolder2 = meanTractFolder2; }
 
+    /**
+     * Sets the maximum euclidean distance allowed between centres of matched meta-leaves (across trees). If a negative value is entered it will be set to 0
+     * \param maxPhysDist the max euclidean distance allowed between matched meta-leaf centres
+     */
+    inline void setMaxPhysDist( size_t maxPhysDist ) { m_maxPhysDist = ( maxPhysDist > 0 ) ? maxPhysDist : 0; }
+
+    /**
+     * sets output file stream for the program log file
+     * \param logfile a pointer to the output log file stream
+     */
+    inline void log( std::ofstream* const logfile ) { m_logfile = logfile; }
+
+    /**
+     * when set the meta-leaves contained seed voxel coordinates will be read from cluster mask files instead of computed
+     * \param coordsFromFile the boolean value to set the m_coordsFromFile flag to
+     */
+    inline void setCoordsFromFile( bool coordsFromFile ) { m_coordsFromFile = coordsFromFile; }
+
+    /**
+     * when set the meta-leaves mean tracts will be read from files instead of computed
+     * \param meanTractsFromFile the boolean value to set the m_meanTractsFromFile flag to
+     */
+    inline void setMeanTractsFromFile( bool meanTractsFromFile ) { m_meanTractsFromFile = meanTractsFromFile; }
+
+    /**
+     * returns the flag indicating whether both loaded trees have valid base-nodes (meta-leaves) with only seed leaf children
+     * \return true if both trees have valid meta-leaves, false otherwise
+     */
+    inline bool areRealBaseNodes() const { return m_realBaseNodes; }
+
+
+    // === PUBLIC MEMBER FUNCTIONS ===
+
+    /**
+     * sets the threshold (relative to the number of streamlines that were generated per seed voxel on the leaf tracts) that will be applied to
+     * meta-leaf tracts before computing similarity for leaf matching (in order to avoid tracking noise/artifacts to affect similarities).
+     * normalized thershold value will be automatically calculated.
+     * \param relThres the relative threshold value to use
+     */
+    void setRelativeThreshold( float relThres );
+
+    /**
+     * Computes the dissimilarity matrix from the meta-leaves mean-tracts of one tree to those of the other tree
+     * mean tracts should have been previosuly computed and properly transformed to a common space
+     */
     void getBaseDistMatrix();
+
+    /**
+     * Saves a precomputed cross-tree meta-leaves mean-tracts dissimilarity matrix to file
+     * \param matrixFilename the filepath to save the matrix data to
+     */
     void readBaseDistMatrix( std::string matrixFilename );
+
+    /**
+     * Reads a previously saved cross-tree meta-leaves mean-tracts dissimilarity matrix from file
+     * \param matrixFilename the filepath to read the matrix data from
+     */
     void writeBaseDistMatrix( std::string matrixFilename );
 
-
+    /**
+     * Computes the tree cpcc comparison value between two matched trees whose meta-leaf dissimilarity matrix has been previosuly computed.
+     */
     std::pair< std::pair< float, float >, std::pair< float, float > > doTcpcc() const;
+
+    /**
+     * Computes the simple triplets comparison value between two matched trees whose meta-leaf dissimilarity matrix has been previosuly computed.
+     * \param sampleFreq a sample frequency in case not all the points wish to be analyzed (the process  can be quite time consuming).
+     *        default value (1) uses all possible points and provides the real exact value. Higher frequencies provide faster computation at the price of approximated value.
+     */
     std::pair< float, float > simpleTriplets( size_t sampleFreq = 1 ) const;
 
+    /**
+     * Pefrorm leaf-wise correspondence between trees and get a matching table as output.
+     * Use only when trees have been built on the same set of seed voxel tractograms
+     */
     bool leafCorrespondence();
-    void simpleCorrespondence( float threshold, bool redoCoords = true );
-    void mergedUpCorrespondence();
+
+    /**
+     * Pefrorm base-nodes greedy correspondence between trees and get a matching table as output.
+     * \param dissimThreshold A dissimilarity limit for the matching, pairs that match with a dissimilairty higher than the threshold will be regarded as having no valid match
+     * \param redoCoords if set base-node clusters mean-coordinate information will be recomputed from cluster mask files
+     */
+    void greedyCorrespondence( float dissimThreshold, bool redoCoords = true );
+
+    /**
+     * Pefrorm a random base-node matching between trees (euclidean cluster distance restrictions will still be applied).
+     * used in order to obtain a baseline for the comparison algorithm values to asses robustness and meaningfulness
+     */
     void randomCorrespondence();
+
+    /**
+     * Write correspondence table (matchign of base-nodes across trees) to file
+     * Base nodes will be identified with relative values, that is, base node position in the base node vector
+     * \param outFilename the filepath to the write the table to
+     */
     void writeCorrespondence( std::string outFilename );
+
+    /**
+     * Write correspondence table (matchign of base-nodes across trees) to file
+     * Base nodes will be identified with absolute values values, that is, node IDs within the tree structure
+     * \param outFilename the filepath to the write the table to
+     */
     void writeFullCorrespondence( std::string outFilename );
 
-
+    /**
+     * Performs an analyiss of the base node matching and gives several informational outputs to evaluate the quality of the matching
+     * Among them specially the matchign quality defined as the size-normalized tractogram similarity between matched nodes averaged across all basenodes
+     * \return a vector with the matching evaluation outputs in this order: mean matchign dissimilarity; weighted matchign dissimilarity (matchign quality);
+     *         fraction of total leaves matched; mean euclidean distance between matched centers; weighted euclidean dist between matched centers.
+     */
     std::vector<float> rateCorrespondence();
-    std::pair< float, float > applyNoiseBaseline( const float addedNoise = 0 );
 
+    /**
+     * Calculates the noise level of the trees defined as the matching distance of each base node to the corresponding one of the matched tree
+     * this "noise level" is then used to eliminate the hierarchical structure below that level (all granularities higher than that) under the assumption that
+     * there is insufficient matching quality to use that information for tree comparison
+     * \param noiseAlpha noise alpha coefficient. Controls the weight of the matching quality on the noise level.
+     *        When 0 no noise restriction will be applied, when 1 the npoise level will be the averaged matchting quality level of the contained base nodes.
+     * \return a pair structutre with the number of clusters remaining at the highest granularity level for each tree after application of the noise simulation
+     */
+    std::pair< float, float > applyNoiseBaseline( const float noiseAlpha = 0 );
 
+    /**
+     * Analyzes the number and size of the base nodes of each tree and returns a report message with the results
+     * \return the report message
+     */
     std::string reportBaseNodes() const;
-    bool areRealBaseNodes() const
-    {
-        return m_realBaseNodes;
-    }
 
-    void reduceBaseNodes( size_t number );
+    /**
+     * Loads the base node ID information of both trees into the corresponding data members and calculates the mean coordinate of each base-node clusterif so indicated
+     * \param doGetCoords tif true mean coordinates for each base node cluster will be computed from cluster mask averaging
+     */
+    bool fetchBaseNodes(bool doGetCoords = true);
+
 
 private:
-    bool m_verbose;
-    WHtree &m_tree1;
-    WHtree &m_tree2;
+    // === PRIVATE DATA MEMBERS ===
 
-    std::string m_singleTractFolder1;
-    std::string m_singleTractFolder2;
-    std::string m_meanTractFolder1;
-    std::string m_meanTractFolder2;
-    float m_maxPhysDist;
-    float m_tractThreshold;
-    float m_logFactor;
-    std::ofstream *m_logfile;
+    WHtree &m_tree1;                    //!< A reference to the first tree to be matched and compared
+    WHtree &m_tree2;                    //!< A reference to the second tree to be matched and compared
 
-    std::vector< size_t > m_baseNodes1;
-    std::vector< size_t > m_originalBaseNodes1;
-    std::vector< WHcoord > m_baseCoords1;
-    std::vector< float > m_noiseLevels1;
+    std::string m_singleTractFolder1;   //!< the folder path to find leaf tractograms from tree 1 seed voxels
+    std::string m_singleTractFolder2;   //!< the folder path to find leaf tractograms from tree 2 seed voxels
+    std::string m_meanTractFolder1;     //!< the folder path to find node tractograms from tree 1 warped to common space
+    std::string m_meanTractFolder2;     //!< the folder path to find node tractograms from tree 2 warped to common space
+    float m_maxPhysDist;                //!< the maximum euclidean distance between matched cluster centres to be allowed as a match
+    float m_tractThreshold1;            //!< the threshold to apply to normalized tracts of tree 1 before computing tract dissimilarity (to avoid noise artifacts)
+    float m_tractThreshold2;            //!< the threshold to apply to normalized tracts of tree 2 before computing tract dissimilarity (to avoid noise artifacts)
 
-    std::vector< size_t > m_baseNodes2;
-    std::vector< size_t > m_originalBaseNodes2;
-    std::vector< WHcoord > m_baseCoords2;
-    std::vector< float > m_noiseLevels2;
+    std::ofstream *m_logfile;           //!< A pointer to the output log file stream
 
-    std::pair< size_t, size_t > m_initialSizes;
-    std::vector< std::vector< dist_t > > m_baseDistMatrix;
-    bool m_realBaseNodes;
-    bool m_coordsFromFile;
-    bool m_meanTractsFromFile;
+    std::vector< size_t > m_baseNodes1;         //!< the base node list from tree 1 after tree matching
+    std::vector< size_t > m_originalBaseNodes1; //!< the original base node list from tree 1 before tree matching
+    std::vector< WHcoord > m_baseCoords1;       //!< the mean coordinate of each matched base node cluster of tree 1
+    std::vector< float > m_noiseLevels1;        //!< the matching noise level of each matched base node of tree 1
+
+    std::vector< size_t > m_baseNodes2;         //!< the base node list from tree 2 after tree matching
+    std::vector< size_t > m_originalBaseNodes2; //!< the original base node list from tree 2 before tree matching
+    std::vector< WHcoord > m_baseCoords2;       //!< the mean coordinate of each matched base node cluster of tree 2
+    std::vector< float > m_noiseLevels2;        //!< the matching noise level of each matched base node of tree 2
+
+    std::pair< size_t, size_t > m_initialSizes; //!< original number of leaves for each tree before matching (for comparison computation purposes, unmatched leaves are eliminated after matching)
+    std::vector< std::vector< dist_t > > m_baseDistMatrix;  //!< the distance matrix between base node tracts of tree 1 and tree 2
+    bool m_realBaseNodes;                       //!< if true both trees have valid base nodes
+    bool m_coordsFromFile;                      //! if true cluster coordinate masks will be read from file (instead of computed on the fly)
+    bool m_meanTractsFromFile;                  //! if true mean node tractograms will be read from file (instead of computed on the fly)
+    bool m_verbose;                             //!< The verbose output flag. If true, additional and progress information will be shown through the standard output on execution.
+
+    std::vector< size_t > m_fullCorrespondence; //!< correspondence table between matched base nodes of each tree using absolute node IDs (within each trees tructure)
+    std::vector< size_t > m_newCorrespondence;  //!< updated relative correspondence table between matched base nodes across trees after elimination of unmatched nodes (IDs are relative to base node positiioon in base node vector)
+    std::vector< size_t > m_newCorrespReverse;  //! the correspondence table described below but in the reverse direction (from tree 2 base nodes to tree 1 base nodes)
+    std::vector< std::pair< float, float > > m_correspDistances; //!< correspondence distances (tractogram distance, euclidean distance of cluster centres)
 
 
-    std::vector< size_t > m_fullCorrespondence;
-    std::vector< size_t > m_newCorrespondence;
-    std::vector< size_t > m_newCorrespReverse;
-    std::vector< std::pair< float, float > > m_correspDistances; //correspondence distances (tractogram distance, euclidean distance of cluster centres)
+    // === PRIVATE MEMBER FUNCTIONS ===
 
-
-    bool fetchBaseNodes(bool doGetCoords = true);
+    /**
+     * Load or compute the seed voxels contained in each base node cluster of each tree and calculate the average coordinate from all of them, saving the results in the appropiate data members
+     */
     void getBaseCoords();
 
-    bool mergeNodes( const WHtree &tree1, std::vector< size_t > &merged1, std::vector< std::vector< size_t > > &containedBnodes1,
-                    std::vector< std::vector< size_t > > &targets1, std::vector< size_t > &merged2,
-                    std::vector< std::vector< size_t > > &containedBnodes2, std::vector< std::vector< size_t > > &targets2 );
+    /**
+     * Apply the noise correction (structure simplification below noise level) for the desired tree
+     * \param treeCode a boolean value identifying whether to apply the correction to tree 1 or tree 2
+     * \param noiseAlpha noise alpha coefficient. Controls the weight of the matching quality on the noise level.
+     *        When 0 no noise restriction will be applied, when 1 the npoise level will be the averaged matchting quality level of the contained base nodes.
+     * \return the highest granularity remainign after noise correction (maximum number of clusters in the structure)
+     */
+    size_t noiseBaseline( const bool treeCode, const float noiseAlpha );
 
-    size_t noiseBaseline( const bool treeCode, const float addedNoise );
+    /**
+     * Returns the relative noise ID of a base node (position in the base node vector)
+     * \param absoluteID the absolute ID of the base node in the tree structure
+     * \param baseNodes a reference to the vector containing the base node IDs
+     * \return the highest granularity remainign after noise correction (maximum number of clusters in the structure)
+     */
     size_t findRelativeBasenodeID( size_t absoluteID, const std::vector< size_t > &baseNodes ) const;
 
-
-
-    void getTreeRouteCorresp3G( const WHtree &tree1, const std::string &meanTractFolder1, std::vector< nodeID_t > &baseNodes1,
-                    const WHtree &tree2, const std::string &meanTractFolder2, std::vector< nodeID_t > &baseNodes2, std::vector<
-                                    std::vector< std::pair< nodeID_t, dist_t > > > &correspVector );
-    void getTreeRouteCorresp1G( const WHtree &tree1, const std::string &meanTractFolder1, std::vector< nodeID_t > &baseNodes1,
-                    const WHtree &tree2, const std::string &meanTractFolder2, std::vector< nodeID_t > &baseNodes2, std::vector<
-                                    std::vector< std::pair< nodeID_t, dist_t > > > &correspVector );
-    long int distance2kids( const WHcoord &thatCoord, const compactTract &thatTract, const nodeID_t &thisNode,
-                    const WHtree &thisTree, const vistaManager &nodeVista, std::vector< nodeID_t > &baseNodes,
-                    std::vector< std::pair< nodeID_t, dist_t > > &kidDists );
+    /**
+     * Finds the minimum euclidean distance between a coordinate and a set of coordinates
+     * (in practice between the mean coordinate of a cluster and the seed voxel coordinates of a second cluster)
+     * \param thisCoord the coordinate to compute euclidean distance from
+     * \param nodeCoords the set of seed voxels from which to find the closest one to the coordinate and calculate euclidean distance from
+     * \return the esulting euclidean distance value
+     */
     float minPhysDist( const WHcoord thisCoord, std::vector< WHcoord > nodeCoords );
 };
 

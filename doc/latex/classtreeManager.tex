@@ -1,0 +1,394 @@
+\hypertarget{classtreeManager}{\section{tree\-Manager \-Class \-Reference}
+\label{classtreeManager}\index{tree\-Manager@{tree\-Manager}}
+}
+
+
+{\ttfamily \#include $<$tree\-Manager.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtreeManager_ae7fd0d73d6dd594a8eeb9dd8a4f5fb40}{tree\-Manager} (\hyperlink{classWHtree}{\-W\-Htree} $\ast$const tree, bool verbose)
+\item 
+\hypertarget{classtreeManager_a00514d3e3aa1df70f5e1caa695823b3e}{\hyperlink{classtreeManager_a00514d3e3aa1df70f5e1caa695823b3e}{$\sim$tree\-Manager} ()}\label{classtreeManager_a00514d3e3aa1df70f5e1caa695823b3e}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classtreeManager_afbf5b1746f6138271b30b4bd842a5d1c}{log} (std\-::ofstream $\ast$const logfile)
+\item 
+void \hyperlink{classtreeManager_ad804453bb4285279f8122a613396effb}{set\-Single\-Tract\-Folder} (std\-::string leaves\-Tract\-Folder)
+\item 
+void \hyperlink{classtreeManager_a660316bb69290d9cfe589631d648d57c}{set\-Mean\-Tract\-Folder} (std\-::string mean\-Tract\-Folder)
+\item 
+void \hyperlink{classtreeManager_a7965cdbf1170bc6c467a750eab038b2d}{set\-Mask\-Filename} (std\-::string mask\-Filename)
+\item 
+void \hyperlink{classtreeManager_a545f83635c324513afcdf2e0e00494d0}{set\-Full\-Tract\-Folder} (std\-::string full\-Tract\-Folder)
+\item 
+void \hyperlink{classtreeManager_a8d3e4b90d16d72351916b36b3dc5a253}{set\-Dist\-Matrix\-Folder} (std\-::string dist\-Matrix\-Folder)
+\item 
+void \hyperlink{classtreeManager_a7b88c9f66920d36c844ebb7b60f9a034}{set\-Output\-Folder} (const std\-::string \&output\-Folder)
+\item 
+void \hyperlink{classtreeManager_a953592c0a2aeff6f1d04a1ff7dd9d75a}{set\-Debug\-Output} (bool debug=true)
+\item 
+void \hyperlink{classtreeManager_aec16c4359c316c1a2f099e8473b7f8c6}{set\-Verbose} (bool verbose=true)
+\item 
+void \hyperlink{classtreeManager_a2b891cc795aca197456b17eb348f314e}{store\-Zipped} ()
+\item 
+void \hyperlink{classtreeManager_a9cb02caae81e4689fd8f7a16aaa8bcbb}{store\-Unzipped} ()
+\item 
+void \hyperlink{classtreeManager_ab9d4c3d03ece6c075b366ab32c699aef}{write\-In\-Float} ()
+\item 
+void \hyperlink{classtreeManager_a02d12cbbba50e932d7c9ad8c91020437}{write\-In\-Char} ()
+\item 
+void \hyperlink{classtreeManager_a6fa366041fd3b53b75ecd3e898c23539}{write\-Tree} () const 
+\item 
+void \hyperlink{classtreeManager_a6dc07cc6b0dedad56a63018ccba6c4e1}{write\-Debug\-Tree} () const 
+\item 
+\hyperlink{classcompactTract}{compact\-Tract} \hyperlink{classtreeManager_a67c3a0981747007ff271d34350edb8b8}{get\-Mean\-Tract} (const size\-\_\-t in\-Node) const 
+\item 
+void \hyperlink{classtreeManager_a7695e56e39eee5bec49b34e05125d750}{write\-Mean\-Tracts} (std\-::vector$<$ size\-\_\-t $>$ in\-Nodes) const 
+\item 
+void \hyperlink{classtreeManager_aaf110438d49dd61b5d92eb4321e1f47e}{write\-Mean\-Tracts} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ in\-Nodes) const 
+\item 
+void \hyperlink{classtreeManager_a9efa0b878448f7492a6ff77d76020e75}{write\-All\-Node\-Tracts} (const float memory) const 
+\item 
+void \hyperlink{classtreeManager_aad3ca010348201c64c211ecbf80518a3}{write\-Full\-Tract} (const node\-I\-D\-\_\-t in\-Node)
+\item 
+void \hyperlink{classtreeManager_a4c74c29da7994f632de9e11699a8ca38}{write\-Full\-Tract} (std\-::vector$<$ size\-\_\-t $>$ in\-Nodes)
+\item 
+void \hyperlink{classtreeManager_a1d9df2c97b4bd88c9ab5dca298e4aef8}{write\-Full\-Tract} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ in\-Nodes)
+\item 
+void \hyperlink{classtreeManager_a5cf031b775db12593cbf078846319040}{write\-Cluster\-Masks} (const node\-I\-D\-\_\-t in\-Node)
+\item 
+void \hyperlink{classtreeManager_af04c46177ccbe52ea0937023ef74416c}{write\-Cluster\-Masks} (std\-::vector$<$ size\-\_\-t $>$ in\-Nodes)
+\item 
+void \hyperlink{classtreeManager_a28d22e5769f1165755dcb6798bb08480}{write\-Cluster\-Masks} (std\-::vector$<$ node\-I\-D\-\_\-t $>$ in\-Nodes)
+\item 
+void \hyperlink{classtreeManager_a80aa64daa9d841bc51f5894daef852cd}{write\-Full\-Base\-Node\-Tracts} (bool only\-Masks=false)
+\item 
+float \hyperlink{classtreeManager_acaff7e11b3f14d2558e1939bdf341e50}{do\-Cpcc} ()
+\item 
+void \hyperlink{classtreeManager_aba120f5d98c3187ecf3ef24f80931468}{flip\-X} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtreeManager_a1420ed75b372cea746cf3ffc45072293}{\hyperlink{classWHtree}{\-W\-Htree} \& \hyperlink{classtreeManager_a1420ed75b372cea746cf3ffc45072293}{m\-\_\-tree}}\label{classtreeManager_a1420ed75b372cea746cf3ffc45072293}
+
+\begin{DoxyCompactList}\small\item\em a reference to the tree object to perform the operations on \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements tree related operations dealing with tractograms and distance blocks, such as cpcc computations 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classtreeManager_ae7fd0d73d6dd594a8eeb9dd8a4f5fb40}{\index{tree\-Manager@{tree\-Manager}!tree\-Manager@{tree\-Manager}}
+\index{tree\-Manager@{tree\-Manager}!treeManager@{tree\-Manager}}
+\subsubsection[{tree\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tree\-Manager\-::tree\-Manager} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-W\-Htree} $\ast$const}]{tree, }
+\item[{bool}]{verbose}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}\label{classtreeManager_ae7fd0d73d6dd594a8eeb9dd8a4f5fb40}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em tree} & a pointer to the tree object to work with \\
+\hline
+{\em verbose} & the verbose output flag \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classtreeManager_acaff7e11b3f14d2558e1939bdf341e50}{\index{tree\-Manager@{tree\-Manager}!do\-Cpcc@{do\-Cpcc}}
+\index{do\-Cpcc@{do\-Cpcc}!treeManager@{tree\-Manager}}
+\subsubsection[{do\-Cpcc}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf tree\-Manager\-::do\-Cpcc} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_acaff7e11b3f14d2558e1939bdf341e50}
+computes the cophenetic correlation coefficient of the currently loaded tree and adds it to the corresponding tree data member \begin{DoxyReturn}{\-Returns}
+the cpcc value of the loaded tree 
+\end{DoxyReturn}
+\hypertarget{classtreeManager_aba120f5d98c3187ecf3ef24f80931468}{\index{tree\-Manager@{tree\-Manager}!flip\-X@{flip\-X}}
+\index{flip\-X@{flip\-X}!treeManager@{tree\-Manager}}
+\subsubsection[{flip\-X}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::flip\-X} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_aba120f5d98c3187ecf3ef24f80931468}
+flips the seed voxel coordinates of the currently loaded tree in the \-X axis, used to compare right hemisphere trees with left hemisphere trees \hypertarget{classtreeManager_a67c3a0981747007ff271d34350edb8b8}{\index{tree\-Manager@{tree\-Manager}!get\-Mean\-Tract@{get\-Mean\-Tract}}
+\index{get\-Mean\-Tract@{get\-Mean\-Tract}!treeManager@{tree\-Manager}}
+\subsubsection[{get\-Mean\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compact\-Tract} {\bf tree\-Manager\-::get\-Mean\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{in\-Node}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_a67c3a0981747007ff271d34350edb8b8}
+computes an average tractogram corresponding to a node in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Node} & the \-I\-D of the node to compute the tractogram from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the mean tractogram object 
+\end{DoxyReturn}
+\hypertarget{classtreeManager_afbf5b1746f6138271b30b4bd842a5d1c}{\index{tree\-Manager@{tree\-Manager}!log@{log}}
+\index{log@{log}!treeManager@{tree\-Manager}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::log} (
+\begin{DoxyParamCaption}
+\item[{std\-::ofstream $\ast$const}]{logfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_afbf5b1746f6138271b30b4bd842a5d1c}
+sets output file stream for the program log file 
+\begin{DoxyParams}{\-Parameters}
+{\em logfile} & a pointer to the output log file stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a953592c0a2aeff6f1d04a1ff7dd9d75a}{\index{tree\-Manager@{tree\-Manager}!set\-Debug\-Output@{set\-Debug\-Output}}
+\index{set\-Debug\-Output@{set\-Debug\-Output}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Debug\-Output}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Debug\-Output} (
+\begin{DoxyParamCaption}
+\item[{bool}]{debug = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a953592c0a2aeff6f1d04a1ff7dd9d75a}
+sets (or resets) the debug output flag in order to write additional result files with detailed information meant for debug purposes 
+\begin{DoxyParams}{\-Parameters}
+{\em debug} & the true/false flag to set the m\-\_\-debug member to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a8d3e4b90d16d72351916b36b3dc5a253}{\index{tree\-Manager@{tree\-Manager}!set\-Dist\-Matrix\-Folder@{set\-Dist\-Matrix\-Folder}}
+\index{set\-Dist\-Matrix\-Folder@{set\-Dist\-Matrix\-Folder}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Dist\-Matrix\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Dist\-Matrix\-Folder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{dist\-Matrix\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a8d3e4b90d16d72351916b36b3dc5a253}
+sets the distance matrix folder 
+\begin{DoxyParams}{\-Parameters}
+{\em dist\-Matrix\-Folder} & folder where to find the distance matrix blocks \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a545f83635c324513afcdf2e0e00494d0}{\index{tree\-Manager@{tree\-Manager}!set\-Full\-Tract\-Folder@{set\-Full\-Tract\-Folder}}
+\index{set\-Full\-Tract\-Folder@{set\-Full\-Tract\-Folder}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Full\-Tract\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Full\-Tract\-Folder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{full\-Tract\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a545f83635c324513afcdf2e0e00494d0}
+sets the full tract folder 
+\begin{DoxyParams}{\-Parameters}
+{\em full\-Tract\-Folder} & folder where to write the full 3\-D image tractograms \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a7965cdbf1170bc6c467a750eab038b2d}{\index{tree\-Manager@{tree\-Manager}!set\-Mask\-Filename@{set\-Mask\-Filename}}
+\index{set\-Mask\-Filename@{set\-Mask\-Filename}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Mask\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Mask\-Filename} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{mask\-Filename}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a7965cdbf1170bc6c467a750eab038b2d}
+sets the filename path where to find the white matter tract used when tracking 
+\begin{DoxyParams}{\-Parameters}
+{\em mask\-Filename} & the white matter mask filepath \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a660316bb69290d9cfe589631d648d57c}{\index{tree\-Manager@{tree\-Manager}!set\-Mean\-Tract\-Folder@{set\-Mean\-Tract\-Folder}}
+\index{set\-Mean\-Tract\-Folder@{set\-Mean\-Tract\-Folder}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Mean\-Tract\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Mean\-Tract\-Folder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{mean\-Tract\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a660316bb69290d9cfe589631d648d57c}
+sets the compact mean tract folder for reading / writing 
+\begin{DoxyParams}{\-Parameters}
+{\em mean\-Tract\-Folder} & folder where to read or write compact node tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a7b88c9f66920d36c844ebb7b60f9a034}{\index{tree\-Manager@{tree\-Manager}!set\-Output\-Folder@{set\-Output\-Folder}}
+\index{set\-Output\-Folder@{set\-Output\-Folder}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Output\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Output\-Folder} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{output\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a7b88c9f66920d36c844ebb7b60f9a034}
+sets the output folder 
+\begin{DoxyParams}{\-Parameters}
+{\em output\-Folder} & folder where to write the created files \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_ad804453bb4285279f8122a613396effb}{\index{tree\-Manager@{tree\-Manager}!set\-Single\-Tract\-Folder@{set\-Single\-Tract\-Folder}}
+\index{set\-Single\-Tract\-Folder@{set\-Single\-Tract\-Folder}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Single\-Tract\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Single\-Tract\-Folder} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{leaves\-Tract\-Folder}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_ad804453bb4285279f8122a613396effb}
+sets the single voxel (leaf) tract folder for reading / writing 
+\begin{DoxyParams}{\-Parameters}
+{\em leaves\-Tract\-Folder} & folder where to read or write compact leaf tracts \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_aec16c4359c316c1a2f099e8473b7f8c6}{\index{tree\-Manager@{tree\-Manager}!set\-Verbose@{set\-Verbose}}
+\index{set\-Verbose@{set\-Verbose}!treeManager@{tree\-Manager}}
+\subsubsection[{set\-Verbose}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::set\-Verbose} (
+\begin{DoxyParamCaption}
+\item[{bool}]{verbose = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_aec16c4359c316c1a2f099e8473b7f8c6}
+sets (or resets) the verbose output flag in order to wrire progress information on the standard output 
+\begin{DoxyParams}{\-Parameters}
+{\em verbose} & the true/false flag to set the m\-\_\-verbose member to \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a9cb02caae81e4689fd8f7a16aaa8bcbb}{\index{tree\-Manager@{tree\-Manager}!store\-Unzipped@{store\-Unzipped}}
+\index{store\-Unzipped@{store\-Unzipped}!treeManager@{tree\-Manager}}
+\subsubsection[{store\-Unzipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::store\-Unzipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a9cb02caae81e4689fd8f7a16aaa8bcbb}
+resets the the zip flag in order not to zip the files upon writing \hypertarget{classtreeManager_a2b891cc795aca197456b17eb348f314e}{\index{tree\-Manager@{tree\-Manager}!store\-Zipped@{store\-Zipped}}
+\index{store\-Zipped@{store\-Zipped}!treeManager@{tree\-Manager}}
+\subsubsection[{store\-Zipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::store\-Zipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a2b891cc795aca197456b17eb348f314e}
+sets the the zip flag in order to zip the files upon writing \hypertarget{classtreeManager_a9efa0b878448f7492a6ff77d76020e75}{\index{tree\-Manager@{tree\-Manager}!write\-All\-Node\-Tracts@{write\-All\-Node\-Tracts}}
+\index{write\-All\-Node\-Tracts@{write\-All\-Node\-Tracts}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-All\-Node\-Tracts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-All\-Node\-Tracts} (
+\begin{DoxyParamCaption}
+\item[{const float}]{memory}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_a9efa0b878448f7492a6ff77d76020e75}
+computes and writes to file the average tractograms corresponding to all nodes in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em memory} & the amount of available \-R\-A\-M memory in \-G\-Bs \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a5cf031b775db12593cbf078846319040}{\index{tree\-Manager@{tree\-Manager}!write\-Cluster\-Masks@{write\-Cluster\-Masks}}
+\index{write\-Cluster\-Masks@{write\-Cluster\-Masks}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Cluster\-Masks}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Cluster\-Masks} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t}]{in\-Node}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_a5cf031b775db12593cbf078846319040}
+computes and writes to file 3\-D masks of a node cluster cointained seed voxels mask 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Node} & the \-I\-D of the node to compute the cluster mask from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_af04c46177ccbe52ea0937023ef74416c}{\index{tree\-Manager@{tree\-Manager}!write\-Cluster\-Masks@{write\-Cluster\-Masks}}
+\index{write\-Cluster\-Masks@{write\-Cluster\-Masks}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Cluster\-Masks}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Cluster\-Masks} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_af04c46177ccbe52ea0937023ef74416c}
+computes and writes to file 3\-D masks of a set of nodes' cluster cointained seed voxels masks 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Nodes} & the \-I\-Ds of the nodes to compute the cluster masks from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a28d22e5769f1165755dcb6798bb08480}{\index{tree\-Manager@{tree\-Manager}!write\-Cluster\-Masks@{write\-Cluster\-Masks}}
+\index{write\-Cluster\-Masks@{write\-Cluster\-Masks}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Cluster\-Masks}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Cluster\-Masks} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_a28d22e5769f1165755dcb6798bb08480}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classtreeManager_a6dc07cc6b0dedad56a63018ccba6c4e1}{\index{tree\-Manager@{tree\-Manager}!write\-Debug\-Tree@{write\-Debug\-Tree}}
+\index{write\-Debug\-Tree@{write\-Debug\-Tree}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Debug\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Debug\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_a6dc07cc6b0dedad56a63018ccba6c4e1}
+\-Writes the debug data files from the computed trees to the output folder \hypertarget{classtreeManager_a80aa64daa9d841bc51f5894daef852cd}{\index{tree\-Manager@{tree\-Manager}!write\-Full\-Base\-Node\-Tracts@{write\-Full\-Base\-Node\-Tracts}}
+\index{write\-Full\-Base\-Node\-Tracts@{write\-Full\-Base\-Node\-Tracts}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Full\-Base\-Node\-Tracts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Full\-Base\-Node\-Tracts} (
+\begin{DoxyParamCaption}
+\item[{bool}]{only\-Masks = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_a80aa64daa9d841bc51f5894daef852cd}
+computes and writes to file the full 3\-D image tractograms and cluster seed voxel masks corresponding to the base nodes in the tree (meta-\/leaves) 
+\begin{DoxyParams}{\-Parameters}
+{\em only\-Masks} & if set only the cluster seed voxel masks, and not the tractograms, will be written \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_aad3ca010348201c64c211ecbf80518a3}{\index{tree\-Manager@{tree\-Manager}!write\-Full\-Tract@{write\-Full\-Tract}}
+\index{write\-Full\-Tract@{write\-Full\-Tract}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Full\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Full\-Tract} (
+\begin{DoxyParamCaption}
+\item[{const node\-I\-D\-\_\-t}]{in\-Node}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_aad3ca010348201c64c211ecbf80518a3}
+computes and writes to file the full 3\-D image tractograms corresponding to a node in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Node} & the \-I\-D of the node to compute the tractogram from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a4c74c29da7994f632de9e11699a8ca38}{\index{tree\-Manager@{tree\-Manager}!write\-Full\-Tract@{write\-Full\-Tract}}
+\index{write\-Full\-Tract@{write\-Full\-Tract}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Full\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Full\-Tract} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_a4c74c29da7994f632de9e11699a8ca38}
+computes and writes to file the full 3\-D image tractograms corresponding to a set of nodes in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Nodes} & the vector of node \-I\-Ds to compute the tractograms from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_a1d9df2c97b4bd88c9ab5dca298e4aef8}{\index{tree\-Manager@{tree\-Manager}!write\-Full\-Tract@{write\-Full\-Tract}}
+\index{write\-Full\-Tract@{write\-Full\-Tract}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Full\-Tract}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Full\-Tract} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+)}}\label{classtreeManager_a1d9df2c97b4bd88c9ab5dca298e4aef8}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classtreeManager_a02d12cbbba50e932d7c9ad8c91020437}{\index{tree\-Manager@{tree\-Manager}!write\-In\-Char@{write\-In\-Char}}
+\index{write\-In\-Char@{write\-In\-Char}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-In\-Char}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-In\-Char} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_a02d12cbbba50e932d7c9ad8c91020437}
+resets the the float flag in order to write tracts/images with unsigned char data type \hypertarget{classtreeManager_ab9d4c3d03ece6c075b366ab32c699aef}{\index{tree\-Manager@{tree\-Manager}!write\-In\-Float@{write\-In\-Float}}
+\index{write\-In\-Float@{write\-In\-Float}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-In\-Float}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-In\-Float} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classtreeManager_ab9d4c3d03ece6c075b366ab32c699aef}
+sets the the float flag in order to write tracts/images with float data type \hypertarget{classtreeManager_a7695e56e39eee5bec49b34e05125d750}{\index{tree\-Manager@{tree\-Manager}!write\-Mean\-Tracts@{write\-Mean\-Tracts}}
+\index{write\-Mean\-Tracts@{write\-Mean\-Tracts}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Mean\-Tracts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Mean\-Tracts} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ size\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_a7695e56e39eee5bec49b34e05125d750}
+computes and writes to file average tractogram corresponding to a set of nodes in the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em in\-Nodes} & the vector of node \-I\-Ds to compute the tractograms from \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtreeManager_aaf110438d49dd61b5d92eb4321e1f47e}{\index{tree\-Manager@{tree\-Manager}!write\-Mean\-Tracts@{write\-Mean\-Tracts}}
+\index{write\-Mean\-Tracts@{write\-Mean\-Tracts}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Mean\-Tracts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Mean\-Tracts} (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ node\-I\-D\-\_\-t $>$}]{in\-Nodes}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_aaf110438d49dd61b5d92eb4321e1f47e}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. \hypertarget{classtreeManager_a6fa366041fd3b53b75ecd3e898c23539}{\index{tree\-Manager@{tree\-Manager}!write\-Tree@{write\-Tree}}
+\index{write\-Tree@{write\-Tree}!treeManager@{tree\-Manager}}
+\subsubsection[{write\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Manager\-::write\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classtreeManager_a6fa366041fd3b53b75ecd3e898c23539}
+\-Writes the data files from the computed trees to the output folder 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/tree\-Manager.\-h\item 
+src/common/tree\-Manager.\-cpp\end{DoxyCompactItemize}

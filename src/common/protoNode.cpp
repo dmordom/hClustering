@@ -1,8 +1,41 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
+
 #include <map>
 
 #include "protoNode.h"
 
-bool protoNode::updateNbhood( nodeID_t oldNode1, nodeID_t oldNode2, nodeID_t newNode, dist_t newDist )
+bool protoNode::updateNbhood( const nodeID_t& oldNode1, const nodeID_t& oldNode2, const nodeID_t& newNode, const dist_t newDist )
 {
     // update nbhood table
     m_nbNodes.erase( oldNode1 );
@@ -33,8 +66,8 @@ bool protoNode::updateNbhood( nodeID_t oldNode1, nodeID_t oldNode2, nodeID_t new
     return false;
 } // end "updateNbhood()" -----------------------------------------------------------------
 
-bool protoNode::updateActivhood( const nodeID_t oldNode1, const nodeID_t oldNode2, const nodeID_t newNode, const dist_t newDist,
-                                 const bool isActive, const std::vector< protoNode > &protoNodes )
+bool protoNode::updateActivhood( const nodeID_t& oldNode1, const nodeID_t& oldNode2, const nodeID_t& newNode, const dist_t newDist,
+                                 const bool isActive, const std::vector< protoNode >& protoNodes )
 {
     bool changed( false );
     // update nbhood table
@@ -60,7 +93,7 @@ bool protoNode::updateActivhood( const nodeID_t oldNode1, const nodeID_t oldNode
     return changed;
 } // end "updateActivhood()" -----------------------------------------------------------------
 
-void protoNode::updateDist( const nodeID_t updatedNode, const dist_t updatedDist )
+void protoNode::updateDist( const nodeID_t& updatedNode, const dist_t updatedDist )
 {
     m_nbNodes[updatedNode]=updatedDist;
 } // end "updateDist()" -----------------------------------------------------------------

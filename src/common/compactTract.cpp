@@ -1,22 +1,49 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 
 #include <vector>
 
 #include "compactTract.h"
 
 compactTract::compactTract() :
-    m_norm( 0 ), m_thresholded( false ), m_normReady( false ), m_inLogUnits( true )
-{
-}
+    m_norm( 0 ), m_thresholded( false ), m_normReady( false ), m_inLogUnits( true ) {}
+
 compactTract::compactTract( std::vector< float > tractInit ) :
-    m_tract( tractInit ), m_norm( 0 ), m_thresholded( false ), m_normReady( false ), m_inLogUnits( true )
-{
-}
+    m_tract( tractInit ), m_norm( 0 ), m_thresholded( false ), m_normReady( false ), m_inLogUnits( true ) {}
 
 compactTract::compactTract( const compactTract &object ) :
     m_tract( object.m_tract ), m_norm( object.m_norm ), m_thresholded( object.m_thresholded ),
-    m_normReady( object.m_normReady ), m_inLogUnits( object.m_inLogUnits )
-{
-}
+    m_normReady( object.m_normReady ), m_inLogUnits( object.m_inLogUnits ) {}
 
 compactTract::compactTract( const compactTractChar &charTract ) :
     m_norm( charTract.m_norm / 255. ), m_thresholded( charTract.m_thresholded ), m_normReady( charTract.m_normReady ),
@@ -144,15 +171,21 @@ double compactTract::normDotProduct( const compactTract &tractogram ) const
     if( inProd < 0 )
     {
         if( inProd < -0.0001 )
-            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct(): Negative inner product (" << inProd << ")"
-                            << std::endl;
+        {
+            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct(): Negative inner product (" << inProd << ")" << std::endl;
+        }
         inProd = 0;
     }
     else if( inProd > 1 )
     {
         if( inProd > 1.0001 )
-            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct(): Bad inner product (" << inProd << ")"
-                            << std::endl;
+        {
+            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct(): Bad inner product (" << inProd << ")" << std::endl;
+            std::cerr << "dotprod_sum : " << dotprod_sum << std::endl;
+            std::cerr << "norm 1 : " << this->m_norm << std::endl;
+            std::cerr << "norm_2 : " << tractogram.m_norm << std::endl;
+            exit(0);
+        }
         inProd = 1;
     }
 
@@ -216,8 +249,9 @@ double compactTract::normDotProduct( const compactTractChar &charTract ) const
     else if( inProd > 1 )
     {
         if( inProd > 1.0001 )
-            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct(): Bad inner product (" << inProd << ")"
-                            << std::endl;
+        {
+            std::cerr << std::endl << "WARNING @ compactTract::normInnerProduct( char ): Bad inner product (" << inProd << ")" << std::endl;
+        }
         inProd = 1;
     }
 
@@ -225,7 +259,7 @@ double compactTract::normDotProduct( const compactTractChar &charTract ) const
 } // end "normDotProduct()" -----------------------------------------------------------------
 
 
-double compactTract::getNorm()
+double compactTract::computeNorm()
 {
     if( !this->m_thresholded )
     {
@@ -252,17 +286,12 @@ double compactTract::getNorm()
 
 size_t compactTract::bytes() const
 {
-    size_t elementSize( 0 );
-    if( m_tract.empty() )
+    size_t vectorSize( 0 );
+    if( !( m_tract.empty() ) )
     {
-        float el0( 0 );
-        elementSize = sizeof( el0 );
+        vectorSize = sizeof( m_tract.front() ) * m_tract.size();
     }
-    else
-    {
-        elementSize = sizeof( m_tract.front() );
-    }
-    return ( sizeof( *this ) + ( elementSize * m_tract.size() ) ) * CHAR_BIT / 8.;
+    return ( vectorSize + sizeof( *this ) ) * CHAR_BIT / 8.;
 }
 
 float compactTract::mBytes() const
@@ -291,14 +320,20 @@ void compactTract::unLog( float logFactor )
     else
     {
         for( std::vector< float >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+        {
+            if( *iter == 0 )
+            {
+                continue;
+            }
             *iter = ( pow( 10., ( ( *iter ) * logFactor ) ) );
+        }
         m_inLogUnits = false;
     }
     return;
 } // end "unLog()" -----------------------------------------------------------------
 
 
-// "doLog()": transforms the tractogram doing a base-10 logarithm
+// "doLog()": normalizes the tractogram doing a base-10 logarithm
 void compactTract::doLog( float logFactor )
 {
     if( logFactor == 0 )
@@ -318,7 +353,13 @@ void compactTract::doLog( float logFactor )
     else
     {
         for( std::vector< float >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+        {
+            if( *iter == 0 )
+            {
+                continue;
+            }
             *iter = ( ( log10( *iter ) ) / logFactor );
+        }
         m_inLogUnits = true;
     }
     return;
@@ -377,11 +418,45 @@ void compactTract::add( const compactTract &tractogram )
 // "divide()": divide tractogram by a given value
 void compactTract::divide( const float divisor )
 {
-    for( std::vector< float >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
-        *iter = *iter / divisor;
+    if( divisor == 0 )
+    {
+        throw std::runtime_error( "ERROR @ compactTract::divide(): attempting division by 0" );
+    }
+    else if ( divisor == 1 )
+    {
+        ;
+    }
+    else
+    {
+        for( std::vector< float >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+        {
+            *iter = *iter / divisor;
+        }
+    }
     return;
 } // end "divide()" -----------------------------------------------------------------
 
+// "mult()": divide tractogram by a given value
+
+void compactTract::mult( const float coef )
+{
+    if( coef == 0 )
+    {
+        m_tract.assign( m_tract.size(), 0 );
+    }
+    else if ( coef == 1 )
+    {
+        ;
+    }
+    else
+    {
+        for( std::vector< float >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+        {
+            *iter = *iter * coef;
+        }
+    }
+    return;
+} // end "mult()" -----------------------------------------------------------------
 
 void compactTract::steal( compactTract* const stolen )
 {
@@ -390,6 +465,7 @@ void compactTract::steal( compactTract* const stolen )
     m_thresholded = stolen->m_thresholded;
     m_normReady = stolen->m_normReady;
     m_inLogUnits = stolen->m_inLogUnits;
+    return;
 } // end "steal()" -----------------------------------------------------------------
 
 // member operators
@@ -519,3 +595,30 @@ double compactTract::correlation( const compactTract &tractogram ) const
         return corr;
     }
 } // end "correlation()" -----------------------------------------------------------------
+
+double compactTract::correlation( const compactTractChar &tractogram ) const
+{
+    compactTract tractFloat( tractogram );
+    return correlation( tractFloat );
+} // end "correlation()" -----------------------------------------------------------------
+
+
+// === NON-MEMBER OPERATORS ===
+
+
+
+std::ostream& operator <<( std::ostream& os, const compactTract& object )
+{
+    std::vector< float > tract( object.tract() );
+    size_t counter0 ( 0 );
+    for( size_t i = 0; i < tract.size() && counter0 < 15; ++i )
+    {
+        float datapoint(tract[i]);
+        if(datapoint)
+        {
+            os << datapoint << " ";
+            ++ counter0;
+        }
+    }
+    return os;
+} // end "operator << " -----------------------------------------------------------------

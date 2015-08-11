@@ -1,0 +1,77 @@
+\hypertarget{classRoiLoader}{\section{\-Roi\-Loader \-Class \-Reference}
+\label{classRoiLoader}\index{\-Roi\-Loader@{\-Roi\-Loader}}
+}
+
+
+{\ttfamily \#include $<$roi\-Loader.\-h$>$}
+
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRoiLoader_a539c93d64f31a013bf81e3b5bb912608}{\-Roi\-Loader} (bool nifti\-Mode, bool auto\-Fit\-Grid=true)
+\item 
+\hypertarget{classRoiLoader_a08932453bc8845e2520e11c7d5e2c110}{\hyperlink{classRoiLoader_a08932453bc8845e2520e11c7d5e2c110}{$\sim$\-Roi\-Loader} ()}\label{classRoiLoader_a08932453bc8845e2520e11c7d5e2c110}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classRoiLoader_a1a4ec19f0cf458d4892f9c312b66e431}{read\-Roi} (const std\-::string \&roi\-Filename, \-H\-C\-\_\-\-G\-R\-I\-D $\ast$dataset\-Grid\-Ptr, \hyperlink{classWHcoord}{\-W\-Hcoord} $\ast$dataset\-Size\-Ptr, size\-\_\-t $\ast$num\-Streamlines\-Ptr, std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ $\ast$coordinates\-Ptr, std\-::vector$<$ size\-\_\-t $>$ $\ast$trackids\-Ptr)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class implements a roi loading routine (reading dataset size, track ids and seed coordinates) that will be shared by many classes and programs 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classRoiLoader_a539c93d64f31a013bf81e3b5bb912608}{\index{\-Roi\-Loader@{\-Roi\-Loader}!\-Roi\-Loader@{\-Roi\-Loader}}
+\index{\-Roi\-Loader@{\-Roi\-Loader}!RoiLoader@{\-Roi\-Loader}}
+\subsubsection[{\-Roi\-Loader}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Roi\-Loader\-::\-Roi\-Loader} (
+\begin{DoxyParamCaption}
+\item[{bool}]{nifti\-Mode, }
+\item[{bool}]{auto\-Fit\-Grid = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, explicit\mbox{]}}}}\label{classRoiLoader_a539c93d64f31a013bf81e3b5bb912608}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em nifti\-Mode} & if true working grid is nifti, otherwise, vista \\
+\hline
+{\em auto\-Fit\-Grid} & if true read grid will be automatically reconverted to workign grid if necessary \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classRoiLoader_a1a4ec19f0cf458d4892f9c312b66e431}{\index{\-Roi\-Loader@{\-Roi\-Loader}!read\-Roi@{read\-Roi}}
+\index{read\-Roi@{read\-Roi}!RoiLoader@{\-Roi\-Loader}}
+\subsubsection[{read\-Roi}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf \-Roi\-Loader\-::read\-Roi} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{roi\-Filename, }
+\item[{\-H\-C\-\_\-\-G\-R\-I\-D $\ast$}]{dataset\-Grid\-Ptr, }
+\item[{{\bf \-W\-Hcoord} $\ast$}]{dataset\-Size\-Ptr, }
+\item[{size\-\_\-t $\ast$}]{num\-Streamlines\-Ptr, }
+\item[{std\-::vector$<$ {\bf \-W\-Hcoord} $>$ $\ast$}]{coordinates\-Ptr, }
+\item[{std\-::vector$<$ size\-\_\-t $>$ $\ast$}]{trackids\-Ptr}
+\end{DoxyParamCaption}
+)}}\label{classRoiLoader_a1a4ec19f0cf458d4892f9c312b66e431}
+parses the seed voxel file and saves the coordinates in a vector 
+\begin{DoxyParams}{\-Parameters}
+{\em roi\-Filename} & the file path to the seed voxel coordinate file \\
+\hline
+{\em dataset\-Grid\-Ptr} & a pointer to save the type of coordinate frame (vista, nifti) the input data was stored in \\
+\hline
+{\em dataset\-Size\-Ptr} & a pointer to save the size in voxels of the dataset where the seed voxel coordinates correspond. \\
+\hline
+{\em num\-Streamlines\-Ptr} & a pointer to save the number of streamlines generated per seed voxel. \\
+\hline
+{\em coordinates\-Ptr} & a pointer to save the vector where the seed voxel coordinates are stored \\
+\hline
+{\em trackids\-Ptr} & a pointer to save the vector with the ids of the seed tracts correesponding to each leaf \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the success flag, if true roi file has been successfully loaded 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/roi\-Loader.\-h\item 
+src/common/roi\-Loader.\-cpp\end{DoxyCompactItemize}

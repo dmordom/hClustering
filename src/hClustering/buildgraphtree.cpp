@@ -1,3 +1,66 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+//
+//  buildgraphtree
+//
+//  Build a graph linkage hierarchical tree from a distance matrix built with distBlocks.
+//
+//   --version:       Program version.
+//
+//   -h --help:       Produce extended program help message.
+//
+//   -r --roi-file:   A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
+//
+//   -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward.
+//
+//   -I --inputf:     Input data folder (containing the distance blocks).
+//
+//   -O --outputf:    Output folder where tree files will be written.
+//
+//  [-v --verbose]:   verbose output (recommended).
+//
+//  [--vista]:        Read/write vista (.v) files [default is nifti (.nii) files].
+//
+//  [--debugout]:     write additional detailed outputs meant to be used for debugging.
+//
+//  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
+//
+//
+//  example:
+//
+//  buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v
+//
+//---------------------------------------------------------------------------
+
 // std librabry
 #include <vector>
 #include <string>
@@ -42,24 +105,27 @@ int main( int argc, char *argv[] )
         // program parameters
         std::string roiFilename, inputFolder, outputFolder;
         unsigned int selector(0), threads(0);
-        tgraph_t graphMethod;
+        bool niftiMode( true ), debug( false );
+        TG_GRAPHTYPE graphMethod;
 
         // Declare a group of options that will be allowed only on command line
         boost::program_options::options_description genericOptions("Generic options");
         genericOptions.add_options()
-                ("version,V", "print version string")
-                ("help,h", "produce help message")
-                ("roi-file,r",  boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates")
-                ("graph-method,g",  boost::program_options::value< unsigned int >(&selector), "use N graph method (0=single, 1=complete, 2=average, 3=weighted)")
-                ("verbose,v", "verbose option")
+                ( "version", "Program version" )
+                ( "help,h", "Produce extended program help message" )
+                ( "roi-file,r", boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates." )
+                ( "graph-method,g",  boost::program_options::value< unsigned int >(&selector), "use N graph method (0=single, 1=complete, 2=average, 3=weighted, 4=ward)")
+                ( "inputf,I",  boost::program_options::value< std::string >(&inputFolder), "input data folder (distance blocks)." )
+                ( "outputf,O",  boost::program_options::value< std::string >(&outputFolder), "output folder" )
                 ;
 
         // Declare a group of options that will be allowed both on command line and in config file
         boost::program_options::options_description configOptions("Configuration");
         configOptions.add_options()
-                ("threads,p",  boost::program_options::value< unsigned int >(&threads), "fnumber of processing threads to run the program in parallel, default: all available")
-                ("input,i",  boost::program_options::value< std::string >(&inputFolder), "input data folder (distance matrix)")
-                ("output,o",  boost::program_options::value< std::string >(&outputFolder), "output folder where tree will be written")
+                ( "verbose,v", "[opt] verbose output." )
+                ( "vista", "[opt] use vista file format (default is nifti)." )
+                ( "debugout", "[opt] write additional detailed outputs meant for debug." )
+                ( "pthreads,p",  boost::program_options::value< unsigned int >(&threads), "[opt] number of processing cores to run the program in. Default: all available." )
                 ;
 
         // Hidden options, will be allowed both on command line and in config file, but will not be shown to the user.
@@ -84,50 +150,143 @@ int main( int argc, char *argv[] )
 
 
 
-        if (variableMap.count("help")) {
-            std::cout << visibleOptions << std::endl;
+        if (variableMap.count("help"))
+        {
+            std::cout << "---------------------------------------------------------------------------" << std::endl;
+            std::cout << std::endl;
+            std::cout << " Project: hClustering" << std::endl;
+            std::cout << std::endl;
+            std::cout << " Whole-Brain Connectivity-Based Hierarchical Parcellation Project" << std::endl;
+            std::cout << " David Moreno-Dominguez" << std::endl;
+            std::cout << " d.mor.dom@gmail.com" << std::endl;
+            std::cout << " moreno@cbs.mpg.de" << std::endl;
+            std::cout << " www.cbs.mpg.de/~moreno" << std::endl;
+            std::cout << std::endl;
+            std::cout << " For more reference on the underlying algorithm and research they have been used for refer to:" << std::endl;
+            std::cout << " - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014)." << std::endl;
+            std::cout << "   A hierarchical method for whole-brain connectivity-based parcellation." << std::endl;
+            std::cout << "   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528" << std::endl;
+            std::cout << " - Moreno-Dominguez, D. (2014)." << std::endl;
+            std::cout << "   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography." << std::endl;
+            std::cout << "   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig." << std::endl;
+            std::cout << "   ISBN 978-3-941504-45-5" << std::endl;
+            std::cout << std::endl;
+            std::cout << " hClustering is free software: you can redistribute it and/or modify" << std::endl;
+            std::cout << " it under the terms of the GNU Lesser General Public License as published by" << std::endl;
+            std::cout << " the Free Software Foundation, either version 3 of the License, or" << std::endl;
+            std::cout << " (at your option) any later version." << std::endl;
+            std::cout << " http://creativecommons.org/licenses/by-nc/3.0" << std::endl;
+            std::cout << std::endl;
+            std::cout << " hClustering is distributed in the hope that it will be useful," << std::endl;
+            std::cout << " but WITHOUT ANY WARRANTY; without even the implied warranty of" << std::endl;
+            std::cout << " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the" << std::endl;
+            std::cout << " GNU Lesser General Public License for more details." << std::endl;
+            std::cout << std::endl;
+            std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
+            std::cout << "buildgraphtree" << std::endl << std::endl;
+            std::cout << "Build a graph linkage hierarchical tree from a distance matrix built with distBlocks." << std::endl << std::endl;
+            std::cout << " --version:       Program version." << std::endl << std::endl;
+            std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
+            std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
+            std::cout << " -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward." << std::endl;
+            std::cout << " -I --inputf:     input data folder (containing the distance blocks)." << std::endl << std::endl;
+            std::cout << " -O --outputf:    output folder where tree files will be written." << std::endl << std::endl;
+            std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
+            std::cout << "[--vista]: 	     read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
+            std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
+            std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "example:" << std::endl << std::endl;
+            std::cout << "buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v" << std::endl << std::endl;
             exit(0);
         }
-        if (variableMap.count("version")) {
-            std::cout << progName <<", version 1.0"<<std::endl;
-            exit(0);
-        }
-        if (variableMap.count("verbose")) {
-            std::cout << "verbose output"<<std::endl;
+        if ( variableMap.count( "verbose" ) ) {
+            std::cout << "verbose output" << std::endl;
             verbose=true;
         }
 
-        if (variableMap.count("threads")) {
-            if (threads==1) {
-                std::cout <<"Using a single processor"<< std::endl;
-            } else if(threads==0 || threads>=omp_get_num_procs()){
+        if ( variableMap.count( "pthreads" ) )
+        {
+            if ( threads == 1 )
+            {
+                std::cout << "Using a single processor" << std::endl;
+            }
+            else if( threads == 0 || threads >= omp_get_num_procs() )
+            {
                 threads = omp_get_num_procs();
-                std::cout <<"Using all available processors ("<< threads <<")." << std::endl;
-            } else {
-                std::cout <<"Using a maximum of "<< threads <<" processors "<< std::endl;
+                std::cout << "Using all available processors ( " << threads << " )." << std::endl;
+            }
+            else
+            {
+                std::cout << "Using a maximum of " << threads << " processors " << std::endl;
             }
             omp_set_num_threads( threads );
-        } else {
+        }
+        else
+        {
             threads = omp_get_num_procs();
             omp_set_num_threads( threads );
-            std::cout <<"Using all available processors ("<< threads <<")." << std::endl;
+            std::cout << "Using all available processors ( " << threads << " )." << std::endl;
         }
 
-        if (variableMap.count("roi-file")) {
-            if(!boost::filesystem::is_regular_file(boost::filesystem::path(roiFilename))) {
-                std::cerr << "ERROR: roi file \""<<roiFilename<<"\" is not a regular file"<<std::endl;
+        if ( variableMap.count( "vista" ) )
+        {
+            if( verbose )
+            {
+                std::cout << "Using vista format" << std::endl;
+            }
+            fileManagerFactory fmf;
+            fmf.setVista();
+            niftiMode = false;
+        }
+        else
+        {
+            if( verbose )
+            {
+                std::cout << "Using nifti format" << std::endl;
+            }
+            fileManagerFactory fmf;
+            fmf.setNifti();
+            niftiMode = true;
+        }
+
+        if ( variableMap.count( "debugout" ) )
+        {
+            if( verbose )
+            {
+                std::cout << "Debug output files activated" << std::endl;
+            }
+            debug = true;
+        }
+
+        if ( variableMap.count( "version" ) )
+        {
+            std::cout << progName << ", version 2.0" << std::endl;
+            exit(0);
+        }
+
+        if ( variableMap.count( "roi-file" ) )
+        {
+            if( !boost::filesystem::is_regular_file( boost::filesystem::path( roiFilename ) ) )
+            {
+                std::cerr << "ERROR: roi file \"" <<roiFilename<< "\" is not a regular file" << std::endl;
                 std::cerr << visibleOptions << std::endl;
                 exit(-1);
             }
-            std::cout << "Roi voxels file: "<< roiFilename << std::endl;
-        } else {
-            std::cerr << "ERROR: no roi file stated"<<std::endl;
+            else if( verbose )
+            {
+                std::cout << "Seed voxels roi file: " << roiFilename << std::endl;
+            }
+        }
+        else
+        {
+            std::cerr << "ERROR: no seed voxels roi file stated" << std::endl;
             std::cerr << visibleOptions << std::endl;
             exit(-1);
         }
 
 
-        if (variableMap.count("input")) {
+        if (variableMap.count("inputf")) {
             if(!boost::filesystem::is_directory(boost::filesystem::path(inputFolder))) {
                 std::cerr << "ERROR: input folder \""<<inputFolder<<"\" is not a directory"<<std::endl;
                 std::cerr << visibleOptions << std::endl;
@@ -142,7 +301,7 @@ int main( int argc, char *argv[] )
 
         }
 
-        if (variableMap.count("output")) {
+        if (variableMap.count("outputf")) {
             if(!boost::filesystem::is_directory(boost::filesystem::path(outputFolder))) {
                 std::cerr << "ERROR: output folder \""<<outputFolder<<"\" is not a directory"<<std::endl;
                 std::cerr << visibleOptions << std::endl;
@@ -158,31 +317,46 @@ int main( int argc, char *argv[] )
         }
 
 
-        if (variableMap.count("graph-method")) {
-            if ( (selector!=0)&&(selector!=1)&&(selector!=2)&&(selector!=3) ) {
+        if (variableMap.count("graph-method"))
+        {
+            if ( (selector<0)||(selector>4))
+            {
                 std::cerr << "ERROR: invalid graph method"<<std::endl;
                 std::cerr << visibleOptions << std::endl;
                 exit(-1);
             }
             std::cout << "Graph method. "<< std::flush;
-            if (selector==0) {
+            if (selector==0)
+            {
                 graphMethod = TG_SINGLE;
-                std::cout<<"Single linkage: D(k,i+j) = min[D(i,k),D(j,k)]"<<std::endl;
-            } else if (selector==1) {
-                graphMethod = TG_COMPLETE;
-                std::cout<<"Complete linkage: D(k,i+j) = MAX[D(i,k),D(j,k)]"<<std::endl;
-            } else if (selector==2) {
-                graphMethod = TG_AVERAGE;
-                std::cout<<"Average linkage: D(k,i+j) = [D(i,k)*Size(i),D(j,k)*size(j)]/[size(i)+size(j)]"<<std::endl;
-            } else {
-                graphMethod = TG_WEIGHTED;
-                std::cout<<"Weighted linkage: D(k,i+j) = [D(i,k)+D(i,k)]/2"<<std::endl;
+                std::cout<<"Single linkage: Ds(k,i+j) = min[D(i,k),D(j,k)]"<<std::endl;
             }
-        } else {
+            else if (selector==1)
+            {
+                graphMethod = TG_COMPLETE;
+                std::cout<<"Complete linkage: Dc(k,i+j) = MAX[D(i,k),D(j,k)]"<<std::endl;
+            }
+            else if (selector==2)
+            {
+                graphMethod = TG_AVERAGE;
+                std::cout<<"Average linkage: Da(k,i+j) = [D(i,k)*Size(i),D(j,k)*size(j)]/[size(i)+size(j)]"<<std::endl;
+            }
+            else if (selector==3)
+            {
+                graphMethod = TG_WEIGHTED;
+                std::cout<<"Weighted linkage: Dwg(k,i+j) = [D(i,k)+D(i,k)]/2"<<std::endl;
+            }
+            else
+            {
+                graphMethod = TG_WARD;
+                std::cout<<"Weighted linkage: Dwd(k,i+j) = [(Si*Sj)/(Si+Sj)]*[Da(i,k)-Da(i,i)/2-Da(j,j)/2]"<<std::endl;
+            }
+        }
+        else
+        {
             std::cerr << "ERROR: no graph method stated"<<std::endl;
             std::cerr << visibleOptions << std::endl;
             exit(-1);
-
         }
 
 
@@ -195,6 +369,16 @@ int main( int argc, char *argv[] )
         }
         logFile <<"Start Time:\t"<< ctime(&programStartTime) <<std::endl;
         logFile <<"Working directory:\t"<< workingDir.string() <<std::endl;
+        logFile << "Verbose:\t" << verbose << std::endl;
+        logFile << "Processors used:\t" << threads << std::endl;
+        if( niftiMode )
+        {
+            logFile << "Using nifti file format" << std::endl;
+        }
+        else
+        {
+            logFile << "Using vista file format" << std::endl;
+        }
         logFile <<"Roi file:\t"<< roiFilename <<std::endl;
         logFile <<"Input folder:\t"<< inputFolder <<std::endl;
         logFile <<"Output folder:\t"<< outputFolder <<std::endl;
@@ -211,9 +395,7 @@ int main( int argc, char *argv[] )
             std::cerr << "ERROR: unrecognized graph option"<<std::endl;
             exit(-1);
         }
-
-        logFile <<"Verbose:\t"<< verbose <<std::endl;
-        logFile <<"Processors used:\t"<< threads <<std::endl;
+        logFile << "Debug outputr:\t" << debug << std::endl;
         logFile <<"-------------"<<std::endl;
 
         /////////////////////////////////////////////////////////////////
@@ -224,6 +406,7 @@ int main( int argc, char *argv[] )
         builder.log(&logFile);
         builder.setInputFolder(inputFolder);
         builder.setOutputFolder(outputFolder);
+        builder.setDebugOutput( debug );
         builder.buildGraph(graphMethod);
 
         /////////////////////////////////////////////////////////////////

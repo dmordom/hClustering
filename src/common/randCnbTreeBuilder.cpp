@@ -1,3 +1,35 @@
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 
 // std library
 #include <vector>
@@ -12,94 +44,39 @@
 #include "randCnbTreeBuilder.h"
 #include "WHtreeProcesser.h"
 
-#define DEBUG false
-
-
-bool randCnbTreeBuilder::readRoi( std::string filename )
+randCnbTreeBuilder::randCnbTreeBuilder( std::string roiFilename, bool verbose ):
+    m_roiLoaded( false ), m_treeReady( false ), m_logfile( 0 ), m_maxNbDist( 1.0 ), m_numComps( 0 ), m_debug ( false ), m_verbose( verbose )
 {
-    m_roi.clear();
+    size_t numStreamlines( 0 );
+    fileManagerFactory fMFtestFormat;
+    m_niftiMode = fMFtestFormat.isNifti();
+    RoiLoader roiLoader( m_niftiMode );
+    m_roiLoaded = roiLoader.readRoi( roiFilename, &m_datasetGrid, &m_datasetSize, &numStreamlines, &m_roi, &m_trackids );
 
-    WFileParser parser( filename );
-    if( !parser.readFile() )
-    {
-        std::cerr << "ERROR @ treeBuildRand::readRoi(): Parser error" << std::endl;
-        return false;
-    }
-    std::vector< std::string > lines = parser.getRawLines();
-    if( lines.size() == 0 )
-    {
-        std::cerr << "ERROR @ treeBuildRand::readRoi(): File is empty" << std::endl;
-        return false;
-    }
-
-    {
-        std::vector< std::vector< std::string > > datasetStrings = parser.getLinesForTagSeparated( "imagesize" );
-        if( datasetStrings.size() == 0 )
-        {
-            std::cerr << "ERROR @ treeBuildRand::readRoi(): Dataset size was not found in tree file" << std::endl;
-            return false;
-        }
-        if( datasetStrings.size() > 1 )
-        {
-            std::cerr << "ERROR @ treeBuildRand::readRoi(): Dataset attribute had multiple lines" << std::endl;
-            return false;
-        }
-        WHcoord datasetSize( boost::lexical_cast< coord_t >( datasetStrings[0][0] ), boost::lexical_cast< coord_t >(
-                        datasetStrings[0][1] ), boost::lexical_cast< coord_t >( datasetStrings[0][2] ) );
-        std::string gridString( datasetStrings[0][3] );
-        if( gridString == getGridString( HC_VISTA ) )
-        {
-            m_datasetGrid = HC_VISTA;
-        }
-        else if( gridString == getGridString( HC_NIFTI ) )
-        {
-            std::cerr << "ERROR @ treeBuildRand::readRoi(): " << gridString << " format not supported, only " << getGridString(
-                            HC_VISTA ) << " format supported" << std::endl;
-            return false;
-        }
-        else
-        {
-            std::cerr << "ERROR @ treeBuildRand::readRoi(): Dataset grid type string \"" << gridString
-                            << "\" could not be identified" << std::endl;
-            return false;
-        }
-        m_datasetSize = datasetSize;
-    }
-    {
-        std::vector< std::vector< std::string > > coordStrings = parser.getLinesForTagSeparated( "roi" );
-        if( coordStrings.size() == 0 )
-        {
-            std::cerr << "ERROR @ treeBuildRand::readRoi(): no roi coordinates in roi file (lacking #roi tag?)" << std::endl;
-            return false;
-        }
-        m_roi.reserve( coordStrings.size() );
-        for( size_t i = 0; i < coordStrings.size(); ++i )
-        {
-            WHcoord tempCoord( boost::lexical_cast< coord_t >( coordStrings[i][0] ), boost::lexical_cast< coord_t >(
-                            coordStrings[i][1] ), boost::lexical_cast< coord_t >( coordStrings[i][2] ) );
-            m_roi.push_back( tempCoord );
-        }
-    }
-    std::sort( m_roi.begin(), m_roi.end() );
-    m_roiLoaded = true;
     if( m_verbose )
+    {
         std::cout << "Roi loaded, " << m_roi.size() << " seed voxels" << std::endl;
-    return true;
-} // end treeBuildRand::readRoi() -------------------------------------------------------------------------------------
+    }
+    if( numStreamlines != 0 )
+    {
+        throw std::runtime_error("ERROR @ randCnbTreeBuilder::randCnbTreeBuilder(): random tractogram roi states number of streamlines different than 0");
+    }
 
-void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const float memory,  bool keepDiscarded, TC_GROWTYPE growType, size_t baseSize )
+}
+
+void randCnbTreeBuilder::buildRandCentroid( const unsigned int nbLevel, const float memory, const TC_GROWTYPE growType, const size_t baseSize, const bool keepDiscarded )
 {
     m_numComps = 0;
 
     if( !m_roiLoaded )
     {
-        std::cerr << "ERROR @ treeBuildRand::buildCentroiRand(): voxel roi is not loaded" << std::endl;
+        std::cerr << "ERROR @ randCnbTreeBuilder::buildRandCentroid(): voxel roi is not loaded" << std::endl;
         return;
     }
 
     if( m_inputFolder.empty() || m_outputFolder.empty() )
     {
-        std::cerr << "ERROR @ treeBuildRand::buildCentroiRand(): Location of single tracts or output folder has not been specified,"
+        std::cerr << "ERROR @ randCnbTreeBuilder::buildRandCentroid(): Location of single tracts or output folder has not been specified,"
                   << " please initialize with treeBuildRand::setInputFolder() and treeBuildRand::setOutputFolder()" << std::endl;
         return;
     }
@@ -124,10 +101,11 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
     float tractMb( 0 );
     {
         compactTract tempTract;
-        vistaManager vistaSingle( m_inputFolder ); // vista object to read single tractograms
-        vistaSingle.readAsThres();
-        vistaSingle.readAsLog();
-        vistaSingle.readLeafTract( m_roi[0], tempTract );
+        fileManagerFactory fileSingleMF(m_inputFolder);
+        fileManager& fileSingle(fileSingleMF.getFM()); // file object to read single tractograms
+        fileSingle.readAsThres();
+        fileSingle.readAsLog();
+        fileSingle.readLeafTract( 0, m_trackids, m_roi, &tempTract );
         tractMb = tempTract.mBytes();
         if( m_verbose )
             std::cout << "Tractogram size is: " << tempTract.size() << " (" << tractMb << " MB)" << std::endl;
@@ -152,7 +130,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
     loadTracts();
 
     // initialize neighborhood info for all seed voxels
-    std::list< WHcoord > discarded = initialize( nbLevel, protoLeaves );
+    std::list< WHcoord > discarded = initialize( nbLevel, &protoLeaves );
     std::list< size_t > baseNodes;
 
     std::vector< compactTract > nodeTracts;
@@ -199,14 +177,14 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
         {
             while( !priorityNodes.empty()  )
             {
-                // vista io classes
+                // file io classes
 
 
                 // get nodes to join
-                WHnode* node2join1( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
-                protoNode* protoNode2join1( getProtoNode( node2join1->getFullID(), protoLeaves, protoNodes ) );
-                WHnode* node2join2( fetchNode( protoNode2join1->nearNb(), leaves, nodes ) );
-                protoNode* protoNode2join2( getProtoNode( node2join2->getFullID(), protoLeaves, protoNodes ) );
+                WHnode* node2join1( fetchNode( priorityNodes.begin()->second, &leaves, &nodes ) );
+                protoNode* protoNode2join1( fetchProtoNode( node2join1->getFullID(), &protoLeaves, &protoNodes ) );
+                WHnode* node2join2( fetchNode( protoNode2join1->nearNb(), &leaves, &nodes ) );
+                protoNode* protoNode2join2( fetchProtoNode( node2join2->getFullID(), &protoLeaves, &protoNodes ) );
                 dist_t newDist( priorityNodes.begin()->first );
                 size_t newID( nodes.size() );
                 size_t newSize( node2join1->getSize() + node2join2->getSize() );
@@ -280,9 +258,13 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
 
                         tract1.m_inLogUnits=false;
                         tract1.m_thresholded=false;
+
+
                     }
                     // #pragma omp section // get tracts in natural units for merging, and overwrite mean tracts in char for storage or delete from file
                     {
+
+
                         if( node2join2->isNode() )
                         { //nb is a node
 
@@ -295,7 +277,10 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
 
                         tract2.m_inLogUnits=false;
                         tract2.m_thresholded=false;
+
+
                     }
+
                 }
 
                 // initialize data members of new node object
@@ -347,7 +332,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                         compactTract tempTract( tract1, tract2, node2join1->getSize(), node2join2->getSize() );
                         tempTract.m_inLogUnits=true;
                         tempTract.m_thresholded=true;
-                        tempTract.getNorm();
+                        tempTract.computeNorm();
                         nodeTracts.push_back( compactTract() );
                         nodeTracts.back().steal(&tempTract);
                     } // end section
@@ -397,7 +382,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                     }
 
                     // update neighbourhood in neighbour node object
-                    protoNode* newProtoNb( getProtoNode( nbIter->first, protoLeaves, protoNodes ) );
+                    protoNode* newProtoNb( fetchProtoNode( nbIter->first, &protoLeaves, &protoNodes ) );
 
                     bool nbhoodChanged( false );
                     nbhoodChanged = ( newProtoNb->updateActivhood( node2join1->getFullID(), node2join2->getFullID(),
@@ -479,7 +464,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                         {
                             nodeID_t currentID( worklist.front() );
                             worklist.pop_front();
-                            WHnode* currentNode = fetchNode( currentID, leaves, nodes );
+                            WHnode* currentNode = fetchNode( currentID, &leaves, &nodes );
                             currentNode->setFlag( true );
                             std::vector< nodeID_t > currentKids( currentNode->getChildren() );
                             worklist.insert( worklist.end(), currentKids.begin(), currentKids.end() );
@@ -528,7 +513,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                         }
                         std::cout << message.str() <<std::flush;
                     }
-                } // end m_verbose
+                } // end verbose
 
                 if( growingStage && ( growType == TC_GROWNUM ) && ( currentNodes.size() + priorityNodes.size() <= baseSize ) )
                 {
@@ -579,7 +564,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                 }
 
 #if DEBUG
-                if( m_verbose )
+                if( verbose )
                 {
                     std::cout<< "P Size: "<< prioritySize << std::endl;
                     std::cout<< "A Size: "<< activeSize << std::endl;
@@ -670,7 +655,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
                 }
 
 #if DEBUG
-                if( m_verbose )
+                if( verbose )
                 {
                     std::cout<< "Pnumber: "<< priorityNodes.size() << std::endl;
                     std::cout<< "Cnumber: "<< currentNodes.size() << std::endl;
@@ -684,9 +669,9 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
         if( !priorityNodes.empty() )
         {
             std::cerr << "WARNING @ treeBuildRand::buildCentroiRand(): after finish, supernode is not empty" << std::endl;
-            WHnode* leftNode( fetchNode( priorityNodes.begin()->second, leaves, nodes ) );
+            WHnode* leftNode( fetchNode( priorityNodes.begin()->second, &leaves, &nodes ) );
             std::cerr << "Node info: " << leftNode << std::endl;
-            protoNode* leftProtoNode( getProtoNode( leftNode->getFullID(), protoLeaves, protoNodes ) );
+            protoNode* leftProtoNode( fetchProtoNode( leftNode->getFullID(), &protoLeaves, &protoNodes ) );
             std::cerr << "Protonode info: " << leftProtoNode << std::endl;
             m_tree.writeTreeDebug( m_outputFolder + "/treeWarningDebug.txt" );
         }
@@ -705,7 +690,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
             size_t numValidTopNodes( 0 );
             for( std::vector< nodeID_t >::iterator iter( topNodes.begin() ); iter != topNodes.end(); ++iter )
             {
-                WHnode* thisTopNode( fetchNode( *iter, leaves, nodes ) );
+                WHnode* thisTopNode( fetchNode( *iter, &leaves, &nodes ) );
                 thisTopNode->setParent( rootNode.getFullID() );
                 if( !thisTopNode->isFlagged() )
                 {
@@ -723,7 +708,7 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
         }
         else
         {
-            fetchNode( topNodes.front(), leaves, nodes )->setParent( std::make_pair( false, 0 ) );
+            fetchNode( topNodes.front(), &leaves, &nodes )->setParent( std::make_pair( false, 0 ) );
         }
 
         // empty protoNode vectors
@@ -754,95 +739,100 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
 
     time_t procStart( time( NULL ) ); // time object
 
+    std::cout << "Setting up and cleaning tree..." << std::endl;
+    {
+        std::string treeName( "centroid" + string_utils::toString( nbLevel ) );
+        WHtree thisTree( treeName, m_datasetGrid, m_datasetSize, 0, 0, leaves, nodes, m_trackids, m_roi, discarded );
+        m_tree = thisTree;
+        std::vector< WHnode > emptyL, emptyN;
+        leaves.swap( emptyL );
+        nodes.swap( emptyN );
+    }
 
-    { // ------- Tree cleaning ----------
+    if( !m_tree.check() )
+    {
+        m_tree.writeTreeDebug( m_outputFolder + "/treeErrorDebug.txt" );
+        throw std::runtime_error( "ERROR @ treeBuilder::buildCentroid(): resulting tree is not valid" );
+    }
+
+    if ( baseNodes.empty() )
+    {
+        std::pair< size_t, size_t > numPruned( m_tree.cleanup() );
         if( m_verbose )
-            std::cout << "Setting up and cleaning tree..." << std::endl;
         {
-            std::string treeName( "centroid" + boost::lexical_cast< std::string >( nbLevel ) );
-            WHtree thisTree( treeName, m_datasetSize, leaves, nodes, m_roi, discarded, m_datasetGrid );
-            m_tree = thisTree;
-            std::vector< WHnode > emptyL, emptyN;
-            leaves.swap( emptyL );
-            nodes.swap( emptyN );
+            std::cout << "Done. An additional " << numPruned.first << " leaves and " << numPruned.second
+                      << " nodes were discarded" << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Pruned nodes:\t" << numPruned.second << std::endl;
+            ( *m_logfile ) << "Total discarded leaves:\t" << m_tree.m_discarded.size() << std::endl;
+        }
+        if( !keepDiscarded )
+        {
+            m_tree.m_discarded.clear();
         }
 
-        if( !m_tree.check() )
+        m_treeReady = true;
+
+        if( m_verbose )
         {
-            m_tree.writeTreeDebug( m_outputFolder + "/treeErrorDebug.txt" );
-            throw std::runtime_error( "ERROR @ treeBuildRand::buildCentroiRand(): resulting tree is not valid" );
+            std::cout << m_tree.getReport() << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << m_tree.getReport() << std::endl;
         }
 
-        if ( baseNodes.empty() )
+        if( m_debug )
         {
-            std::pair< size_t, size_t > numPruned( m_tree.cleanup() );
-            if( m_verbose )
-            {
-                std::cout << "Done. An additional " << numPruned.first << " leaves and " << numPruned.second
-                          << " nodes were discarded" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Pruned nodes:\t" << numPruned.second << std::endl;
-                ( *m_logfile ) << "Total discarded leaves:\t" << m_tree.m_discarded.size() << std::endl;
-            }
-            if( !keepDiscarded )
-            {
-                m_tree.m_discarded.clear();
-            }
-
-            m_treeReady = true;
-
-            if( m_verbose )
-            {
-                std::cout << m_tree.getReport() << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << m_tree.getReport() << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
             writeTree();
-
-#if 0
-            m_tree.forceMonotonicity();
-
-            if( m_verbose )
-            {
-                std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-            writeTree();
-
-            m_tree.debinarize( false );
-
-            if( m_verbose )
-            {
-                std::cout << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
-            writeTree();
-#endif
         }
-        else
-        {
-            m_treeReady = true;
 
-            baseNodes.sort();
-            std::vector< size_t > baseVector( baseNodes.begin(), baseNodes.end() );
+        m_tree.forceMonotonicity();
+
+        if( m_verbose )
+        {
+            std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
+        }
+
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
+            writeTree();
+        }
+
+        m_tree.debinarize( false );
+
+        if( m_verbose )
+        {
+            std::cout << "Debinarized, " << m_tree.getReport( false ) << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
+        }
+
+
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
+        writeTree();
+    }
+    else
+    {
+        m_treeReady = true;
+
+        baseNodes.sort();
+        std::vector< size_t > baseVector( baseNodes.begin(), baseNodes.end() );
+
+
+        if( m_debug )
+        {
             writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
-
             if( m_verbose )
             {
                 std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
@@ -851,7 +841,6 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
             {
                 ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
             }
-
             if( m_verbose )
             {
                 std::cout << m_tree.getReport() << std::endl;
@@ -860,153 +849,123 @@ void randCnbTreeBuilder::buildCentroiRand( const unsigned int nbLevel, const flo
             {
                 ( *m_logfile ) << m_tree.getReport() << std::endl;
             }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
             writeTree();
 
-#if 0
             WHtree treeUp(m_tree);
             WHtree treeDown(m_tree);
-
-
-            m_tree.forceMonotonicity();
-
-            if( m_verbose )
-            {
-                std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-            writeTree();
-
-
-
-            WHtreeProcesser processer( &m_tree );
-            processer.flattenSelection(baseNodes, false);
-
-
-            if( m_verbose )
-            {
-                std::cout << "BaseNodes flattened, and tree pruned" << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "BaseNodes flattened,  and tree pruned" << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bases" );
-            writeTree();
-
-            if( !keepDiscarded )
-            {
-                m_tree.m_discarded.clear();
-            }
-
-            m_tree.debinarize( true );
-
-
-            if( m_verbose )
-            {
-                std::cout << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
-            }
-
-            m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
-            writeTree();
-
-            if( m_tree.testRootBaseNodes() )
-            {
-                baseVector = m_tree.getRootBaseNodes();
-                std::sort( baseVector.begin(), baseVector.end() );
-                writeBases( baseVector, m_outputFolder + "/baselist.txt" );
-
-                if( m_verbose )
-                {
-                    std::cout << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-                }
-                if( m_logfile != 0 )
-                {
-                    ( *m_logfile ) << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-                }
-            }
-            else
-            {
-                if( m_verbose )
-                {
-                    std::cout << "Final tree is not a pure basenode tree" << std::endl;
-                }
-                if( m_logfile != 0 )
-                {
-                    ( *m_logfile ) << "Final tree is not a pure basenode tree" << std::endl;
-                }
-            }
 
             treeUp.forceMonotonicityUp();
             WHtreeProcesser processerUp( &treeUp );
             processerUp.flattenSelection(baseNodes, false);
             treeUp.debinarize( true );
-            treeUp.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Up" );
-            treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt" );
+            treeUp.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Up" );
+            treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt", m_niftiMode );
 
             treeDown.forceMonotonicityDown();
             WHtreeProcesser processerDown( &treeDown );
             processerDown.flattenSelection(baseNodes, false);
             treeDown.debinarize( true );
-            treeDown.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) +"_Down" );
-            treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt" );
-
-#endif
-
+            treeDown.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Down" );
+            treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt", m_niftiMode );
         }
 
-        int timeTaken = difftime( time( NULL ), procStart );
+
+        m_tree.forceMonotonicity();
+
         if( m_verbose )
         {
-            std::cout << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
-            std::cout << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
+            std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
         }
         if( m_logfile != 0 )
         {
-            ( *m_logfile ) << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
-            ( *m_logfile ) << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
+            ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
         }
-        return;
-    } // end Tree cleaning -------------
 
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
+            writeTree();
+        }
+
+        WHtreeProcesser processer( &m_tree );
+        processer.flattenSelection(baseNodes, false);
+
+
+        if( m_verbose )
+        {
+            std::cout << "BaseNodes flattened, and tree pruned" << m_tree.getReport( false ) << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "BaseNodes flattened,  and tree pruned" << m_tree.getReport( false ) << std::endl;
+        }
+
+        if( m_debug )
+        {
+            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_granlimit" );
+            writeTree();
+        }
+
+        if( !keepDiscarded )
+        {
+            m_tree.m_discarded.clear();
+        }
+
+        m_tree.debinarize( true );
+
+
+        if( m_verbose )
+        {
+            std::cout << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
+        }
+
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
+        writeTree();
+
+        if( m_tree.testRootBaseNodes() )
+        {
+            baseVector = m_tree.getRootBaseNodes();
+            std::sort( baseVector.begin(), baseVector.end() );
+            writeBases( baseVector, m_outputFolder + "/baselist.txt" );
+
+            if( m_verbose )
+            {
+                std::cout << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
+            }
+            if( m_logfile != 0 )
+            {
+                ( *m_logfile ) << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
+            }
+        }
+        else
+        {
+            if( m_verbose )
+            {
+                std::cout << "Final tree is not a pure basenode tree" << std::endl;
+            }
+            if( m_logfile != 0 )
+            {
+                ( *m_logfile ) << "Final tree is not a pure basenode tree" << std::endl;
+            }
+        }
+    }
+
+    int timeTaken = difftime( time( NULL ), procStart );
     if( m_verbose )
-        std::cout << m_tree.getReport() << std::endl;
+    {
+        std::cout << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
+        std::cout << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
+    }
     if( m_logfile != 0 )
-        ( *m_logfile ) << m_tree.getReport() << std::endl;
-
-    m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin_nmt" );
-    writeTree();
-    m_tree.forceMonotonicity();
-
-    if( m_verbose )
-        std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-    if( m_logfile != 0 )
-        ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-
-    m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) + "_bin" );
-    writeTree();
-    m_tree.debinarize();
-    m_tree.forceMonotonicity();
-    m_tree.debinarize();
-
-    if( m_verbose )
-        std::cout << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-    if( m_logfile != 0 )
-        ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-
-    m_tree.m_treeName = ( "c" + boost::lexical_cast< std::string >( nbLevel ) );
-    writeTree();
+    {
+        ( *m_logfile ) << "Tree processed. time taken: " << timeTaken / 3600 << "h "<<std::flush;
+        ( *m_logfile ) << ( timeTaken % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
+    }
 
     return;
 } // end treeBuildRand::buildCentroiRand() -------------------------------------------------------------------------------------
@@ -1017,32 +976,42 @@ void randCnbTreeBuilder::writeTree() const
 {
     if( ( !m_treeReady ) || m_outputFolder.empty() )
     {
-        std::cerr << "ERROR @ treeBuildRand::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
+        std::cerr << "ERROR @ treeBuilder::writeTree(): Tree is not ready, or outputfolder is not set" << std::endl;
         return;
     }
-    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt" );
-    m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
-    //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
-
+    m_tree.writeTree( m_outputFolder + "/" + m_tree.m_treeName + ".txt", m_niftiMode );
     if( m_verbose )
     {
         std::cout << "Written standard tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
     if( m_logfile != 0 )
     {
         ( *m_logfile ) << "Standard tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << ".txt" << std::endl;
-        ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
-        //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
     }
 
+    if( m_debug )
+    {
+        m_tree.writeTreeDebug( m_outputFolder + "/" + m_tree.m_treeName + "_debug.txt" );
+        //    m_tree.writeTreeOldWalnut(m_outputFolder+"/"+m_tree.m_treeName+"_4ow.txt");
+        if( m_verbose )
+        {
+            std::cout << "Written debug tree file in: " << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        std::cout<<"Written walnut tree file in: "<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << "Debug tree file in:\t" << m_outputFolder << "/" << m_tree.m_treeName << "_debug.txt" << std::endl;
+            //        (*m_logfile)<<"Walnut tree file in:\t"<< m_outputFolder <<"/"<<m_tree.m_treeName<<"_4ow.txt"<<std::endl;
+        }
+    }
     return;
 } // end treeBuildRand::writeTree() -------------------------------------------------------------------------------------
 
-protoNode* randCnbTreeBuilder::getProtoNode( const nodeID_t &thisNode, std::vector< protoNode > &protoLeaves,
-                std::vector< protoNode > &protoNodes ) const
+protoNode* randCnbTreeBuilder::fetchProtoNode( const nodeID_t& thisNode, std::vector< protoNode >* protoLeavesPointer, std::vector< protoNode >* protoNodesPointer ) const
 {
+    std::vector< protoNode >& protoLeaves = *protoLeavesPointer;
+    std::vector< protoNode >& protoNodes = *protoNodesPointer;
+
     if( thisNode.first )
     {
         return &( protoNodes[thisNode.second] );
@@ -1053,8 +1022,11 @@ protoNode* randCnbTreeBuilder::getProtoNode( const nodeID_t &thisNode, std::vect
     }
 }
 
-WHnode* randCnbTreeBuilder::fetchNode( const nodeID_t &thisNode, std::vector< WHnode > &leaves, std::vector< WHnode > &nodes ) const
+WHnode* randCnbTreeBuilder::fetchNode( const nodeID_t& thisNode, std::vector< WHnode >* leavesPointer, std::vector< WHnode >* nodesPointer ) const
 {
+    std::vector< WHnode >& leaves = *leavesPointer;
+    std::vector< WHnode >& nodes = *nodesPointer;
+
     if( thisNode.first )
     {
         return &( nodes[thisNode.second] );
@@ -1076,15 +1048,16 @@ void randCnbTreeBuilder::loadTracts()
     m_leafTracts.assign(m_roi.size(),emptyTract);
 
     size_t progCount( 0 );
-    vistaManager vistaSingle( m_inputFolder );
-    vistaSingle.readAsThres();
-    vistaSingle.readAsLog();
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM());
+    fileSingle.readAsThres();
+    fileSingle.readAsLog();
 
     // loop through voxels (use parallel threads
     for( size_t i = 0; i < m_roi.size(); ++i )
     {
-        vistaSingle.readLeafTract( m_roi[i], m_leafTracts[i] );
-        m_leafTracts[i].getNorm();
+        fileSingle.readLeafTract( i, m_trackids, m_roi, &m_leafTracts[i] );
+        m_leafTracts[i].computeNorm();
 
         ++progCount;
 
@@ -1112,7 +1085,7 @@ void randCnbTreeBuilder::loadTracts()
                 message << ( elapsedTime % 3600 ) % 60 << "\". ";
                 std::cout << message.str() <<std::flush;
             }
-        } // end m_verbose
+        } // end verbose
     } // end parallel for
 
 
@@ -1125,8 +1098,10 @@ void randCnbTreeBuilder::loadTracts()
     }
 } // end treeBuildRand::computeNorms() -------------------------------------------------------------------------------------
 
-std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel, std::vector< protoNode > &protoLeaves )
+std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int nbLevel, std::vector< protoNode >* protoLeavesPointer )
 {
+    std::vector< protoNode >& protoLeaves = *protoLeavesPointer;
+
     // Translate neighborhood level
     unsigned int nbLevel1( 0 ), nbLevel2( 0 ); // nbhood level indicators
     switch( nbLevel )
@@ -1171,12 +1146,12 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
 
     //initialize proto-leaves
     time_t loopStart( time( NULL ) ), lastTime( time( NULL ) );
-    for( size_t i = 0; i < m_roi.size(); ++i )
+    for( size_t roiID = 0; roiID < m_roi.size(); ++roiID )
     {
         bool discard( true ); // discard voxel flag
 
         // get coordinates of neighbouring voxels
-        std::vector< WHcoord > nbCoords( m_roi[i].getPhysNbs( m_datasetSize, nbLevel1 ) );
+        std::vector< WHcoord > nbCoords( m_roi[roiID].getPhysNbs( m_datasetSize, nbLevel1 ) );
         // dicard coordinates that are not part of the roi
         {
             std::vector< WHcoord >::iterator cleanIter( nbCoords.begin() );
@@ -1218,7 +1193,7 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
                 {
                     cleanIter = nbAllCoordslist.erase( cleanIter );
                 }
-                else if( *cleanIter == m_roi[i] ) // nb seed is the current seed
+                else if( *cleanIter == m_roi[roiID] ) // nb seed is the current seed
                 {
                     cleanIter = nbAllCoordslist.erase( cleanIter );
                 }
@@ -1231,9 +1206,17 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
             nbCoords.assign(nbAllCoordslist.begin(),nbAllCoordslist.end());
         }
 
+        //convert vector of neighbor coordinates to vector of neighbor ids
+        std::vector< size_t > nbIDs;
+        nbIDs.reserve( nbCoords.size() );
+        for( size_t i = 0; i < nbCoords.size(); ++i )
+        {
+            nbIDs.push_back( roimap[nbCoords[i]] );
+        }
+
         // get neighborhood information
         std::map< size_t, dist_t > nbLeaves; // variable to keep the current seed voxel neighbours
-        discard = scanNbs( i, m_leafTracts[i], &nbLeaves, nbCoords, protoLeaves, roimap );
+        discard = scanNbs( roiID, &(m_leafTracts[roiID]), protoLeaves, nbIDs, &nbLeaves );
 
         if( !discard )
         { // it is a valid seed voxel
@@ -1268,10 +1251,10 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
             if( currentTime - lastTime > 1 )
             {
                 lastTime = currentTime;
-                float progress( i * 100. / m_roi.size() );
+                float progress( roiID * 100. / m_roi.size() );
                 size_t elapsedTime( difftime( currentTime, loopStart ) );
                 std::stringstream message;
-                message << "\r" << static_cast<int>( progress ) << " % of leaves initialized (" << i << "). ";
+                message << "\r" << static_cast<int>( progress ) << " % of leaves initialized (" << roiID << "). ";
                 if( progress > 0 )
                 {
                     size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );
@@ -1285,7 +1268,7 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
                 message << ( elapsedTime % 3600 ) % 60 << "\". ";
                 std::cout << message.str() <<std::flush;
             }
-        } // end m_verbose
+        } // end verbose
 
     } // end big loop
 
@@ -1372,54 +1355,56 @@ std::list< WHcoord > randCnbTreeBuilder::initialize( const unsigned int &nbLevel
 } // end treeBuildRand::initialize() -------------------------------------------------------------------------------------
 
 
-bool randCnbTreeBuilder::scanNbs( const size_t &currentSeedID, const compactTract &currentTract,
-                std::map< size_t, dist_t > *nbLeavesPoint, std::vector< WHcoord > &nbCoords, std::vector< protoNode > &protoLeaves,
-                std::map< WHcoord, size_t > &roimap )
+bool randCnbTreeBuilder::scanNbs( const size_t currentSeedID,
+                              const compactTract* const currentTract,
+                              const std::vector< protoNode >& protoLeaves,
+                              const std::vector< size_t >& nbIDs,
+                              std::map< size_t, dist_t >* nbLeavesPointer )
 {
-    std::map< size_t, dist_t > &nbLeaves = *nbLeavesPoint;
+    std::map< size_t, dist_t > &nbLeaves = *nbLeavesPointer;
 
     bool discard( true );
 //#pragma omp parallel for schedule( dynamic, 1 ) // loop through neighbours
-    for( int j = 0; j < nbCoords.size(); ++j )
+    for( int j = 0; j < nbIDs.size(); ++j )
     {
         dist_t distvalue( 1 );
-        size_t nbID( roimap[nbCoords[j]] );
+        size_t thisNbID( nbIDs[j] );
 
-        if( m_roi[currentSeedID] < nbCoords[j] )
+        if( currentSeedID < thisNbID )
         { // neighbour voxel has not yet been processed
 //#pragma omp critical( cache )
 
 
-            distvalue = currentTract.tractDistance( m_leafTracts[nbID] );
+            distvalue = currentTract->tractDistance( m_leafTracts[thisNbID] );
 //#pragma omp atomic
             m_numComps++;
         }
         else
         { // neighbour was already processed as seed voxel
-            if( nbID >= protoLeaves.size() )
+            if( thisNbID >= protoLeaves.size() )
             {
 //#pragma omp critical( error )
                 {
-                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << nbCoords[j] << std::endl;
-                    std::cerr<< "nbID: " <<  nbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
+                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << m_roi[thisNbID] << std::endl;
+                    std::cerr<< "nbID: " <<  thisNbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
                     throw std::runtime_error( "ERROR @ treeBuildRand::buildCentroiRand(): neighbor is not in protoLeaves vector" );
                 }
             }
-            else if( protoLeaves[nbID].isDiscarded() )
+            else if( protoLeaves[thisNbID].isDiscarded() )
             { // seed voxel was discarded, skip
                 continue;
             }
 
-            std::map< nodeID_t, dist_t >::iterator searchIter( protoLeaves[nbID].m_nbNodes.find( std::make_pair( false,
+            std::map< nodeID_t, dist_t >::const_iterator searchIter( protoLeaves[thisNbID].m_nbNodes.find( std::make_pair( false,
                             currentSeedID ) ) );
-            if( searchIter == protoLeaves[nbID].m_nbNodes.end() )
+            if( searchIter == protoLeaves[thisNbID].m_nbNodes.end() )
             {
 //#pragma omp critical( error )
                 {
                     std::cerr<< "nb was supposedly already processed but seed is not found in nb data " << std::endl;
-                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << nbCoords[j] << std::endl;
-                    std::cerr<< "SeedID: " <<  currentSeedID << ". nbID: " <<  nbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
-                    std::cerr<< "nbInfo: " <<   protoLeaves[nbID] << std::endl;
+                    std::cerr<< "Seed: " <<  m_roi[currentSeedID] << ". Nb: " << m_roi[thisNbID] << std::endl;
+                    std::cerr<< "SeedID: " <<  currentSeedID << ". nbID: " <<  thisNbID << ". protoLeaves.size(): " << protoLeaves.size() << std::endl;
+                    std::cerr<< "nbInfo: " <<   protoLeaves[thisNbID] << std::endl;
 
                     throw std::runtime_error( "ERROR @ treeBuildRand::buildCentroiRand(): neighborhood data not found" );
                 }
@@ -1429,7 +1414,7 @@ bool randCnbTreeBuilder::scanNbs( const size_t &currentSeedID, const compactTrac
 
 //#pragma omp critical( leaves )
         {
-            nbLeaves.insert( std::make_pair( nbID, distvalue ) ); // save the pair neighbour-distance
+            nbLeaves.insert( std::make_pair( thisNbID, distvalue ) ); // save the pair neighbour-distance
             if( distvalue <= m_maxNbDist ) // neighbour is valid -> seed is valid
                 discard = false;
         }
@@ -1438,7 +1423,7 @@ bool randCnbTreeBuilder::scanNbs( const size_t &currentSeedID, const compactTrac
 } // end randCnbTreeBuilder::scanNbs() -------------------------------------------------------------------------------------
 
 
-void randCnbTreeBuilder::writeBases( const std::vector< size_t > &baseNodes, const std::string filename ) const
+void randCnbTreeBuilder::writeBases( const std::vector< size_t >& baseNodes, const std::string& filename ) const
 {
     std::ofstream outFile( filename.c_str() );
     if( !outFile )

@@ -2,7 +2,7 @@
 //
 // Project: OpenWalnut ( http://www.openwalnut.org )
 //
-// Copyright 2009 OpenWalnut Community, BSV-Leipzig and CNCF-CBS
+// Copyright 2009 OpenWalnut Community, BSV@Uni-Leipzig and CNCF@MPI-CBS
 // For more information see http://www.openwalnut.org/copying
 //
 // This file is part of OpenWalnut.
@@ -20,11 +20,38 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with OpenWalnut. If not, see <http://www.gnu.org/licenses/>.
 //
-// This file is also part of the
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//
+// Project: hClustering
+//
 // Whole-Brain Connectivity-Based Hierarchical Parcellation Project
 // David Moreno-Dominguez
+// d.mor.dom@gmail.com
 // moreno@cbs.mpg.de
-// www.cbs.mpg.de/~moreno
+// www.cbs.mpg.de/~moreno//
+// This file is also part of OpenWalnut ( http://www.openwalnut.org ).
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hClustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
 //
 //---------------------------------------------------------------------------
 
@@ -40,7 +67,6 @@
 
 #include "WHtree.h"
 
-#define NEWBOOST true
 
 
 WHtree::WHtree(): m_loadStatus( false ), m_cpcc( 0 )
@@ -52,10 +78,21 @@ WHtree::WHtree( std::string filename ): m_loadStatus( false ), m_cpcc( 0 )
     readTree( filename );
 }
 
-WHtree::WHtree( std::string treeName, WHcoord datasetSizeInit, std::vector<WHnode> leavesInit, std::vector<WHnode> nodesInit,
-              std::vector<WHcoord> coordInit, std::list<WHcoord> discardInit, HC_GRID datasetGridInit, float cpccInit ):
-    m_loadStatus( false ), m_datasetSize( datasetSizeInit ), m_datasetGrid( datasetGridInit ), m_cpcc( cpccInit ), m_treeName( treeName ),
-    m_leaves( leavesInit ), m_nodes( nodesInit ), m_coordinates( coordInit ), m_discarded( discardInit )
+WHtree::WHtree( std::string treeName, HC_GRID datasetGridInit, WHcoord datasetSizeInit, size_t numStreamlinesInit, float logFactorInit,
+                std::vector< WHnode > leavesInit, std::vector< WHnode > nodesInit, std::vector< size_t > trackidInit,
+                std::vector< WHcoord > coordInit, std::list< WHcoord > discardInit, float cpccInit )
+    : m_loadStatus( false ),
+      m_datasetSize( datasetSizeInit ),
+      m_datasetGrid( datasetGridInit ),
+      m_numStreamlines( numStreamlinesInit ),
+      m_logFactor( logFactorInit ),
+      m_cpcc( cpccInit ),
+      m_treeName( treeName ),
+      m_leaves( leavesInit ),
+      m_nodes( nodesInit ),
+      m_coordinates( coordInit ),
+      m_trackids( trackidInit ),
+      m_discarded( discardInit )
 {
     if( check() )
     {
@@ -63,10 +100,20 @@ WHtree::WHtree( std::string treeName, WHcoord datasetSizeInit, std::vector<WHnod
     }
 }
 
-WHtree::WHtree( const WHtree &object ):
-    m_loadStatus( object.m_loadStatus ), m_datasetSize( object.m_datasetSize ), m_datasetGrid( object.m_datasetGrid ), m_cpcc( object.m_cpcc ),
-    m_treeName( object.m_treeName ), m_leaves( object.m_leaves ), m_nodes( object.m_nodes ), m_coordinates( object.m_coordinates ),
-    m_discarded( object.m_discarded ), m_containedLeaves( object.m_containedLeaves )
+WHtree::WHtree( const WHtree &object )
+    : m_loadStatus( object.m_loadStatus ),
+      m_datasetSize( object.m_datasetSize ),
+      m_datasetGrid( object.m_datasetGrid ),
+      m_numStreamlines( object.m_numStreamlines ),
+      m_logFactor( object.m_logFactor ),
+      m_cpcc( object.m_cpcc ),
+      m_treeName( object.m_treeName ),
+      m_leaves( object.m_leaves ),
+      m_nodes( object.m_nodes ),
+      m_coordinates( object.m_coordinates ),
+      m_trackids( object.m_trackids ),
+      m_discarded( object.m_discarded ),
+      m_containedLeaves( object.m_containedLeaves )
 {
 }
 
@@ -128,7 +175,7 @@ bool WHtree::check() const
             return false;
         }
         std::vector<nodeID_t> kids = getNode( parentID ).getChildren();
-        if( find(kids.begin(), kids.end(), leafIter->getFullID() ) == kids.end() )
+        if( find( kids.begin(), kids.end(), leafIter->getFullID() ) == kids.end() )
         {
             std::cerr << "ERROR @ WHtree::check(): leaf parent doesnt have leaf ID among its children" << std::endl;
             return false;
@@ -175,12 +222,12 @@ bool WHtree::check() const
         }
 
         nodeID_t parentID( nodeIter->getParent() );
-        if( ( !parentID.first) && ( (nodeIter+1 ) != m_nodes.end() ) )
+        if( ( !parentID.first) && ( ( nodeIter+1 ) != m_nodes.end() ) )
         {
             std::cerr << "ERROR @ WHtree::check(): node has a leaf as parent" << std::endl;
             return false;
         }
-        if( ( !nodeIter->isRoot() ) && ( (nodeIter+1) == m_nodes.end() ) )
+        if( ( !nodeIter->isRoot() ) && ( ( nodeIter+1 ) == m_nodes.end() ) )
         {
             std::cerr << "ERROR @ WHtree::check(): last node does not have 0-0 as parent" << std::endl;
             return false;
@@ -260,7 +307,7 @@ const WHnode& WHtree::getNode( const size_t thisNode ) const
     if( thisNode >= m_nodes.size() )
     {
         std::cerr << "ERROR @ WHtree::getNode: index is out of boundaries(" << thisNode << ". total nodes: "
-                  << m_nodes.size() << "), returning first node" <<std::endl;
+                  << m_nodes.size() << "), returning first node" << std::endl;
         return m_nodes.front();
     }
     else
@@ -275,7 +322,7 @@ const WHnode& WHtree::getLeaf( const size_t thisLeaf ) const
     if( thisLeaf >= m_leaves.size() )
     {
         std::cerr << "ERROR @ WHtree::getLeaf: index is out of boundaries (" << thisLeaf << ". total leaves: "
-                  << m_leaves.size() << "), returning first leaf" <<std::endl;
+                  << m_leaves.size() << "), returning first leaf" << std::endl;
         return m_leaves.front();
     }
     else
@@ -595,7 +642,7 @@ std::vector<size_t> WHtree::getBaseNodes( const size_t root ) const
             {
                 if( current->getID() ==root )
                 {
-                    returnVector.push_back( getNode(*listIter).getID() );
+                    returnVector.push_back( getNode( *listIter ).getID() );
                     break;
                 }
                 current = &getNode( current->getParent() );
@@ -640,6 +687,10 @@ std::vector<size_t> WHtree::getRootBaseNodes() const
 bool WHtree::testRootBaseNodes() const
 {
     std::vector<size_t> bases( getRootBaseNodes() );
+    if( bases.empty() )
+    {
+        return false;
+    }
     for( size_t i = 0; i <  bases.size(); ++i )
     {
         if( getNode( bases[i] ).getHLevel() > 1 )
@@ -683,7 +734,8 @@ void WHtree::sortBySize( std::vector<size_t>* nodeVector ) const
     {
         if( nodeVectorRef[i] >= getNumNodes() )
         {
-            std::cerr << "ERROR @ WHtree::sortBySize(): indices out of bounds (" << nodeVectorRef[i] << ". total nodes: " << getNumNodes() << ")" << std::endl;
+            std::cerr << "ERROR @ WHtree::sortBySize(): indices out of bounds (" << nodeVectorRef[i];
+            std::cerr << ". total nodes: " << getNumNodes() << ")" << std::endl;
             return;
         }
     }
@@ -836,6 +888,7 @@ bool WHtree::readTree( const std::string &filename )
     m_nodes.clear();
     m_leaves.clear();
     m_coordinates.clear();
+    m_trackids.clear();
     m_discarded.clear();
 
     WFileParser parser( filename );
@@ -885,6 +938,57 @@ bool WHtree::readTree( const std::string &filename )
     }
 
     {
+        std::vector< std::vector< std::string > > streamNumberStrings = parser.getLinesForTagSeparated( "streams" );
+        if( streamNumberStrings.size() == 0 )
+        {
+            std::cerr << "WARNING @ WHtree::readTree(): tracking streams number was not found in tree file,";
+            std::cerr << " assuming streams=0 for compatibility" << std::endl;
+            m_numStreamlines = 0;
+        }
+        if( streamNumberStrings.size() > 1 )
+        {
+            std::cerr << "ERROR @ WHtree::readTree(): tracking streams number attribute has multiple lines" << std::endl;
+            return false;
+        }
+        if( streamNumberStrings[0].size() > 1 )
+        {
+            std::cerr << "ERROR @ WHtree::readTree(): tracking streams number attribute has multiple elements" << std::endl;
+            return false;
+        }
+        m_numStreamlines = string_utils::fromString< size_t >( streamNumberStrings[0][0] );
+    }
+
+    {
+        std::vector< std::vector< std::string > >logFactorStrings = parser.getLinesForTagSeparated( "logfactor" );
+        if( logFactorStrings.size() == 0 )
+        {
+            std::cerr << "WARNING @ WHtree::readTree(): logarithmic normalization factor was not found in tree file,";
+            std::cerr << " assuming logFactor=0 for compatibility" << std::endl;
+            m_logFactor = 0;
+        }
+        if( logFactorStrings.size() > 1 )
+        {
+            std::cerr << "ERROR @ WHtree::readTree():";
+            std::cerr << "logarithmic normalization factor attribute has multiple lines" << std::endl;
+            return false;
+        }
+        if( logFactorStrings[0].size() > 1 )
+        {
+            std::cerr << "ERROR @ WHtree::readTree(): logarithmic normalization factor attribute has multiple elements" << std::endl;
+            return false;
+        }
+        m_logFactor = string_utils::fromString< float >( logFactorStrings[0][0] );
+
+        if( m_logFactor != 0 && m_numStreamlines != 0 && m_logFactor != log10( m_numStreamlines ) )
+        {
+            std::cerr << "ERROR @ WHtree::readTree(): tracking streams number (";
+            std::cerr << m_numStreamlines << ") and logarithmic normalization factor (";
+            std::cerr << m_logFactor << ") are a missmatch " << std::endl;
+            return false;
+        }
+    }
+
+    {
         std::vector< std::vector< std::string> >coordStrings = parser.getLinesForTagSeparated( "coordinates" );
         m_coordinates.reserve( coordStrings.size() );
         m_leaves.reserve( coordStrings.size() );
@@ -900,7 +1004,34 @@ bool WHtree::readTree( const std::string &filename )
             ++leafCount;
         }
     }
-
+    {
+        std::vector< std::vector< std::string > > indexStrings = parser.getLinesForTagSeparated( "trackindex" );
+        if( indexStrings.empty() )
+        {
+            if( m_datasetGrid == HC_NIFTI )
+            {
+                std::cerr << "ERROR @ WHtree::readTree(): no tract ids in roi file, necessary to work on nifti mode" << std::endl;
+                return false;
+            }
+            else
+            {
+                m_trackids.reserve( m_coordinates.size() );
+                for( size_t i = 0; i < m_coordinates.size(); ++i )
+                {
+                    m_trackids.push_back( i );
+                }
+            }
+        }
+        else
+        {
+            m_trackids.reserve( indexStrings.size() );
+            for( size_t i = 0; i < indexStrings.size(); ++i )
+            {
+                size_t tempIndex( string_utils::fromString< size_t >( indexStrings[i][0] ) );
+                m_trackids.push_back( tempIndex );
+            }
+        }
+    }
     {
         std::vector< std::vector< std::string> >clusterStrings = parser.getLinesForTagSeparated( "clusters" );
         m_nodes.reserve( clusterStrings.size() );
@@ -923,7 +1054,7 @@ bool WHtree::readTree( const std::string &filename )
                 if( kid == 0 )
                 {
                     std::cerr << "ERROR @ WHtree::readTree(): kid id (" <<  iter->first << "-" <<  iter->second << ") was out of boundaries. Nodes: "
-                              << m_nodes.size() <<std::endl;
+                              << m_nodes.size() << std::endl;
                     return false;
                 }
                 tempSize += kid->getSize();
@@ -933,7 +1064,7 @@ bool WHtree::readTree( const std::string &filename )
             ++tempHLevel;
 
             WHnode tempNode( tempID, joiningNodes, tempSize, distance, tempHLevel );
-            //std::cout << tempNode.printAllData()<<std::endl;
+            //std::cout << tempNode.printAllData() << std::endl;
             m_nodes.push_back( tempNode );
             ++nodeCount;
         }
@@ -1006,17 +1137,18 @@ bool WHtree::readTree( const std::string &filename )
 
                 for( size_t j = 0; j < partcolorStrings[i].size(); ++j )
                 {
-                    std::string thisCoordstring( partcolorStrings[i][j]);
+                    std::string thisCoordstring( partcolorStrings[i][j] );
                     if( thisCoordstring.size() != 11 )
                     {
-                        std::cerr << "ERROR @ WHtree::readTree(): partition colors have wrong size (" << thisCoordstring.size() << ") while it should be 11. string: "<< thisCoordstring << std::endl;
+                        std::cerr << "ERROR @ WHtree::readTree(): partition colors have wrong size (" << thisCoordstring.size();
+                        std::cerr << ") while it should be 11. string: " << thisCoordstring << std::endl;
                         m_selectedColors.clear();
                         break;
                     }
 
-                        std::string colorR(thisCoordstring.substr(0,3));
-                        std::string colorG(thisCoordstring.substr(4,3));
-                        std::string colorB(thisCoordstring.substr(8,3));
+                        std::string colorR( thisCoordstring.substr( 0, 3 ) );
+                        std::string colorG( thisCoordstring.substr( 4, 3 ) );
+                        std::string colorB( thisCoordstring.substr( 8, 3 ) );
 
 
                         WHcoord thisColor( string_utils::fromString< coord_t > ( colorR ),
@@ -1030,7 +1162,7 @@ bool WHtree::readTree( const std::string &filename )
 
         if( m_selectedColors.size() != 0 )
         {
-            if ( m_selectedColors.size() != m_selectedPartitions.size() )
+            if( m_selectedColors.size() != m_selectedPartitions.size() )
             {
                 std::cerr << "ERROR @ WHtree::readTree(): partition and colors dimensions dont match. Color field will be left empty" << std::endl;
                 m_selectedColors.clear();
@@ -1039,9 +1171,10 @@ bool WHtree::readTree( const std::string &filename )
             {
                 for( size_t i = 0; i < m_selectedColors.size(); ++i )
                 {
-                    if ( m_selectedColors[i].size() != m_selectedPartitions[i].size() )
+                    if( m_selectedColors[i].size() != m_selectedPartitions[i].size() )
                     {
-                        std::cerr << "ERROR @ WHtree::readTree(): partition and colors dimensions dont match. Color field will be left empty" << std::endl;
+                        std::cerr << "ERROR @ WHtree::readTree(): partition and colors dimensions dont match.";
+                        std::cerr << " Color field will be left empty" << std::endl;
                         m_selectedColors.clear();
                         break;
                     }
@@ -1063,11 +1196,8 @@ bool WHtree::readTree( const std::string &filename )
         return false;
     }
 
-#if NEWBOOST
     m_treeName = boost::filesystem::path( filename ).stem().string();
-#else
-    m_treeName = boost::filesystem::path( filename ).stem();
-#endif
+
 
     m_loadStatus = true;
     return true;
@@ -1075,7 +1205,7 @@ bool WHtree::readTree( const std::string &filename )
 
 
 
-bool WHtree::writeTree( const std::string &filename ) const
+bool WHtree::writeTree( const std::string &filename, const bool niftiMode ) const
 {
     std::ofstream outFile( filename.c_str() );
     if( !outFile )
@@ -1083,24 +1213,56 @@ bool WHtree::writeTree( const std::string &filename ) const
         std::cerr << "ERROR: unable to open out file: \"" << outFile << "\"" << std::endl;
         exit( -1 );
     }
-    outFile << "#imagesize" << std::endl << m_datasetSize << " " << getGridString( HC_VISTA ) << std::endl << "#endimagesize" << std::endl;
+
+    std::string gridString;
+    if( niftiMode )
+    {
+        gridString = getGridString( HC_NIFTI );
+    }
+    else
+    {
+        gridString = getGridString( HC_VISTA );
+    }
+
+    outFile << "#imagesize" << std::endl << m_datasetSize << " " << gridString << std::endl << "#endimagesize" << std::endl;
     outFile << std::endl;
     if( m_cpcc != 0 )
     {
         outFile << "#cpcc" << std::endl << string_utils::toString( m_cpcc ) << std::endl << "#endcpcc" << std::endl << std::endl;
     }
 
+    outFile << "#streams" << std::endl << m_numStreamlines << std::endl << "#endstreams" << std::endl;
+
+    outFile << "#logfactor" << std::endl << m_logFactor << std::endl << "#endlogfactor" << std::endl;
+
     outFile << "#coordinates" << std::endl;
     for( std::vector<WHcoord>::const_iterator coordIter( m_coordinates.begin() ) ; coordIter != m_coordinates.end() ; ++coordIter )
     {
         WHcoord currentCoord( *coordIter );
-        if( m_datasetGrid == HC_NIFTI )
+        if( niftiMode )
         {
-            currentCoord = currentCoord.nifti2vista( m_datasetSize );
+            if( m_datasetGrid == HC_VISTA )
+            {
+                currentCoord = currentCoord.vista2nifti( m_datasetSize );
+            }
+        }
+        else
+        {
+            if( m_datasetGrid == HC_NIFTI )
+            {
+                currentCoord = currentCoord.nifti2vista( m_datasetSize );
+            }
         }
         outFile << currentCoord << std::endl;
     }
     outFile << "#endcoordinates" << std::endl << std::endl;
+
+    outFile << "#trackindex" << std::endl;
+    for( std::vector<size_t>::const_iterator indexIter( m_trackids.begin() ) ; indexIter != m_trackids.end() ; ++indexIter )
+    {
+        outFile << *indexIter << std::endl;
+    }
+    outFile << "#endtrackindex" << std::endl << std::endl;
 
     outFile << "#clusters" << std::endl;
     for( std::vector<WHnode>::const_iterator nodeIter( m_nodes.begin() ) ; nodeIter != m_nodes.end() ; ++nodeIter )
@@ -1113,15 +1275,25 @@ bool WHtree::writeTree( const std::string &filename ) const
     for( std::list<WHcoord>::const_iterator coordIter( m_discarded.begin() ) ; coordIter != m_discarded.end() ; ++coordIter )
     {
         WHcoord currentCoord( *coordIter );
-        if( m_datasetGrid == HC_NIFTI )
+        if( niftiMode )
         {
-            currentCoord = currentCoord.nifti2vista( m_datasetSize );
+            if( m_datasetGrid == HC_VISTA )
+            {
+                currentCoord = currentCoord.vista2nifti( m_datasetSize );
+            }
+        }
+        else
+        {
+            if( m_datasetGrid == HC_NIFTI )
+            {
+                currentCoord = currentCoord.nifti2vista( m_datasetSize );
+            }
         }
         outFile << currentCoord << std::endl;
     }
     outFile << "#enddiscarded" << std::endl;
 
-    if ( m_selectedValues.size() !=0 )
+    if( m_selectedValues.size() !=0 )
     {
         outFile << std::endl << "#partvalues" << std::endl;
         for( size_t i = 0; i < m_selectedValues.size(); ++i )
@@ -1135,13 +1307,13 @@ bool WHtree::writeTree( const std::string &filename ) const
         {
             for( size_t j = 0; j < m_selectedPartitions[i].size(); ++j )
             {
-                outFile <<m_selectedPartitions[i][j]<<" ";
+                outFile <<m_selectedPartitions[i][j]<< " ";
             }
             outFile << std::endl;
         }
         outFile << "#endpartitions" << std::endl;
 
-        if ( m_selectedColors.size() !=0 )
+        if( m_selectedColors.size() !=0 )
         {
             outFile << std::endl << "#partcolors" << std::endl;
             for( size_t i = 0; i < m_selectedColors.size(); ++i )
@@ -1149,7 +1321,11 @@ bool WHtree::writeTree( const std::string &filename ) const
                 for( size_t j = 0; j < m_selectedColors[i].size(); ++j )
                 {
                     WHcoord thisColor( m_selectedColors[i][j] );
-                    outFile << boost::format( "%03d;%03d;%03d " ) % thisColor.m_x  % thisColor.m_y  % thisColor.m_z;
+                    size_t xcolor( thisColor.m_x );
+                    size_t ycolor( thisColor.m_y );
+                    size_t zcolor( thisColor.m_z );
+
+                    outFile << boost::format( "%03d;%03d;%03d " ) % xcolor  % ycolor  % zcolor;
                 }
                 outFile << std::endl;
             }
@@ -1172,19 +1348,21 @@ bool WHtree::writeTreeDebug( const std::string &filename ) const
         exit( -1 );
     }
 
-    outFile << "Dataset size: " << m_datasetSize << " " << getGridString( HC_VISTA ) << std::endl;
+    outFile << "Dataset size: " << m_datasetSize << " " << getGridString( m_datasetGrid ) << std::endl;
 
     if( m_cpcc != 0 )
+    {
         outFile << "CPCC: " <<  string_utils::toString( m_cpcc ) << std::endl << std::endl;
+    }
+
+    outFile << "Streamlines per seed voxel: " << m_numStreamlines << std::endl;
+
+    outFile << "Logarithmic normalization factor: " << m_logFactor << std::endl << std::endl;
 
     outFile << "============LEAVES============" << std::endl << std::endl;
     for( std::vector<WHnode>::const_iterator leafIter( m_leaves.begin() ); leafIter != m_leaves.end(); ++leafIter )
     {
         WHcoord currentCoord( getCoordinate4leaf( leafIter->getID() ) );
-        if( m_datasetGrid == HC_NIFTI )
-        {
-            currentCoord = currentCoord.nifti2vista( m_datasetSize );
-        }
         outFile << "Coord: " << currentCoord << " " <<  leafIter->printAllData() << std::endl;
     }
     outFile << std::endl << std::endl << "============NODES============" << std::endl << std::endl;
@@ -1205,6 +1383,7 @@ bool WHtree::writeTreeOldWalnut( const std::string &filename ) const
         std::cerr << "ERROR: unable to open out file: \"" << outFile << "\"" << std::endl;
         exit( -1 );
     }
+
 
     outFile << "#coordinates" << std::endl;
     for( std::vector<WHcoord>::const_iterator coordIter( m_coordinates.begin() ) ; coordIter != m_coordinates.end() ; ++coordIter )
@@ -1279,9 +1458,11 @@ void WHtree::insertPartitions( const std::vector<std::vector<size_t> > &selected
         {
             for( size_t i = 0; i < selectedColors.size(); ++i )
             {
-                if ( selectedColors[i].size() != selectedPartitions[i].size() )
+                if( selectedColors[i].size() != selectedPartitions[i].size() )
                 {
-                    std::cerr << "ERROR @ WHtree::insertPartitions(): partition and colors dimensions dont match (" << selectedPartitions[i].size() << "-" << selectedColors[i].size() << ") Color field will be left empty" << std::endl;
+                    std::cerr << "ERROR @ WHtree::insertPartitions(): partition and colors dimensions dont match";
+                    std::cerr << " (" << selectedPartitions[i].size() << "-" << selectedColors[i].size();
+                    std::cerr << ") Color field will be left empty" << std::endl;
                     return;
                 }
             }
@@ -1293,7 +1474,6 @@ void WHtree::insertPartitions( const std::vector<std::vector<size_t> > &selected
 
 void WHtree::insertPartColors( const std::vector<std::vector<WHcoord> > &selectedColors )
 {
-
     if( selectedColors.size() != m_selectedPartitions.size() )
     {
         std::cerr << "ERROR @ WHtree::insertPartColors(): inserted partition color set and partition set have different dimensions" << std::endl;
@@ -1302,9 +1482,10 @@ void WHtree::insertPartColors( const std::vector<std::vector<WHcoord> > &selecte
     {
         for( size_t i = 0; i < selectedColors.size(); ++i )
         {
-            if ( selectedColors[i].size() != m_selectedPartitions[i].size() )
+            if( selectedColors[i].size() != m_selectedPartitions[i].size() )
             {
-                std::cerr << "ERROR @ WHtree::insertPartColors(): partition and colors dimensions dont match. Color field will be left empty" << std::endl;
+                std::cerr << "ERROR @ WHtree::insertPartColors(): partition and colors dimensions dont match.";
+                std::cerr << " Color field will be left empty" << std::endl;
                 clearPartColors();
                 return;
             }
@@ -1332,67 +1513,69 @@ void WHtree::clearPartColors()
     return;
 } // end clearPartColors() -------------------------------------------------------------------------------------
 
-std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vector < nodeID_t > &thisPartition, size_t depthLevel, std::vector< std::vector < nodeID_t > > *partitionSet, const bool excludeLeaves )
+std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vector < nodeID_t > &thisPartition,
+                                                                 size_t depthLevel,
+                                                                 std::vector< std::vector < nodeID_t > > *partitionSet,
+                                                                 const bool excludeLeaves )
 {
-
-    if(depthLevel == 0)
+    if( depthLevel == 0 )
     {
         return std::vector< std::vector< unsigned int > >();
     }
 
     std::vector< std::vector < nodeID_t > > addedPartitionSet;
     std::vector< std::vector< unsigned int > > addedIndexTable;
-    addedIndexTable.reserve(thisPartition.size());
-    addedPartitionSet.reserve(thisPartition.size());
+    addedIndexTable.reserve( thisPartition.size() );
+    addedPartitionSet.reserve( thisPartition.size() );
 
-    for(size_t i=0; i<thisPartition.size(); ++i)
+    for( size_t i = 0; i < thisPartition.size(); ++i)
     {
         // if its a base node and flag is set not to divide them, skip
-        if( getNode(thisPartition[i]).getHLevel() == 1 && excludeLeaves)
+        if( getNode( thisPartition[i] ).getHLevel() == 1 && excludeLeaves)
         {
             continue;
         }
         // get branched sub/partition for every cluster
         std::vector<nodeID_t> branch;
         {
-            std::vector<nodeID_t> kids(getNode(thisPartition[i]).getChildren());
-            branch.reserve(kids.size());
-            for(size_t j=0; j<kids.size(); ++j)
+            std::vector<nodeID_t> kids( getNode( thisPartition[i] ).getChildren() );
+            branch.reserve( kids.size() );
+            for( size_t j = 0; j < kids.size(); ++j)
             {
-                branch.push_back(kids[j]);
+                branch.push_back( kids[j] );
             }
         }
         // insert branched partition
         {
-            std::vector < nodeID_t > newPartition(thisPartition);
-            newPartition.erase(newPartition.begin()+i);
-            newPartition.insert(newPartition.begin()+i,branch.begin(),branch.end());
+            std::vector < nodeID_t > newPartition( thisPartition );
+            newPartition.erase( newPartition.begin()+i );
+            newPartition.insert( newPartition.begin()+i, branch.begin(), branch.end() );
 
-            addedPartitionSet.push_back(newPartition);
-            addedIndexTable.push_back(std::vector<unsigned int>(1,i));
+            addedPartitionSet.push_back( newPartition );
+            addedIndexTable.push_back( std::vector<unsigned int>( 1, i ) );
         }
         // obtain further sub-partitions if depth level continues
-        if(depthLevel > 1)
+        if( depthLevel > 1 )
         {
             std::vector< std::vector < nodeID_t > > subPartitionSet;
-            std::vector< std::vector< unsigned int > > subIndexTable( getBranching ( branch, depthLevel-1, &subPartitionSet, excludeLeaves ) );
+            std::vector< std::vector< unsigned int > > subIndexTable( getBranching( branch, depthLevel-1, &subPartitionSet, excludeLeaves ) );
 
             addedPartitionSet.reserve( addedPartitionSet.size() + subPartitionSet.size() );
             addedIndexTable.reserve( addedPartitionSet.size() + subPartitionSet.size() );
 
-            if(subPartitionSet.size() != subIndexTable.size())
+            if( subPartitionSet.size() != subIndexTable.size() )
             {
                 throw std::runtime_error( "ERROR @ WHtree::getBranching(): dimension error on obtained vectors" );
             }
 
-            for(size_t j=0; j<subIndexTable.size(); ++j)
+            for( size_t j = 0; j < subIndexTable.size(); ++j)
             {
-                std::vector < nodeID_t > newPartition(thisPartition);
-                newPartition.erase(newPartition.begin()+i);
-                newPartition.insert(newPartition.begin()+i,subPartitionSet[j].begin(),subPartitionSet[j].end());
+                std::vector < nodeID_t > newPartition( thisPartition );
+                newPartition.erase( newPartition.begin()+i );
+                newPartition.insert( newPartition.begin()+i, subPartitionSet[j].begin(), subPartitionSet[j].end() );
                 addedPartitionSet.push_back( newPartition );
 
-                std::vector< unsigned int > newIndexEntry(1,i);
+                std::vector< unsigned int > newIndexEntry( 1, i );
                 newIndexEntry.insert( newIndexEntry.end(), subIndexTable[j].begin(), subIndexTable[j].end() );
                 addedIndexTable.push_back( newIndexEntry );
             }
@@ -1400,12 +1583,14 @@ std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vect
     } //end for loop
 
     // add the obtained partitions to the vector
-    partitionSet->insert(partitionSet->end(), addedPartitionSet.begin(), addedPartitionSet.end() );
+    partitionSet->insert( partitionSet->end(), addedPartitionSet.begin(), addedPartitionSet.end() );
 
     return addedIndexTable;
 } // end getBranching() -------------------------------------------------------------------------------------
 
-std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vector < size_t > &thisPartition, size_t depthLevel, std::vector< std::vector < size_t > > *partitionSet )
+std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vector < size_t > &thisPartition,
+                                                                 size_t depthLevel,
+                                                                 std::vector< std::vector < size_t > > *partitionSet )
 {
     if( !partitionSet->empty() )
     {
@@ -1415,31 +1600,31 @@ std::vector< std::vector< unsigned int > > WHtree::getBranching( const std::vect
     std::vector<nodeID_t> partFullId;
     std::vector< std::vector < nodeID_t > > partitionFullIdSet;
 
-    partFullId.reserve(thisPartition.size());
+    partFullId.reserve( thisPartition.size() );
     for( size_t i = 0; i < thisPartition.size(); ++i )
     {
-        partFullId.push_back(std::make_pair(true,thisPartition[i]));
+        partFullId.push_back( std::make_pair( true, thisPartition[i] ) );
     }
 
-    std::vector< std::vector< unsigned int > > indexTable( getBranching(partFullId, depthLevel, &partitionFullIdSet, true) );
+    std::vector< std::vector< unsigned int > > indexTable( getBranching( partFullId, depthLevel, &partitionFullIdSet, true ) );
 
     partitionSet->reserve( partitionFullIdSet.size() );
     for( size_t i = 0; i < partitionFullIdSet.size(); ++i )
     {
         std::vector<size_t> thisSet;
-        thisSet.reserve(partitionFullIdSet[i].size());
+        thisSet.reserve( partitionFullIdSet[i].size() );
         for( size_t j = 0; j < partitionFullIdSet[i].size(); ++j )
         {
-            if(partitionFullIdSet[i][j].first)
+            if( partitionFullIdSet[i][j].first)
             {
-                thisSet.push_back(partitionFullIdSet[i][j].second);
+                thisSet.push_back( partitionFullIdSet[i][j].second );
             }
             else
             {
-                std::cerr << "WARNING @  WHtree::getBranching(), leaves were returned"<< std::endl;
+                std::cerr << "WARNING @  WHtree::getBranching(), leaves were returned" << std::endl;
             }
         }
-        partitionSet->push_back(thisSet);
+        partitionSet->push_back( thisSet );
     }
 
     return indexTable;
@@ -1535,7 +1720,7 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
             parentNode->setHLevel( std::max( parentNode->getHLevel(), nodesIter->getHLevel()+1 ) );
         }
     }
-    // loop through nodes and check that there are no hanging nodes (nodes with one or no children) without structural function
+    // loop through nodes and check that there are no hanging nodes ( nodes with one or no children) without structural function
     for( std::vector<WHnode>::iterator nodesIter( m_nodes.begin() ); nodesIter != m_nodes.end(); ++nodesIter )
     {
         size_t numNewKids( 0 );
@@ -1593,7 +1778,7 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
             const WHnode* searchNode( &getNode( i ) );
             while( searchNode->isFlagged() )  // while parents are set to prune, keep going up the tree until a valid node is reached
             {
-                if(searchNode->isRoot() )
+                if( searchNode->isRoot() )
                 {
                     break; // this was the top node of the tree
                 }
@@ -1679,7 +1864,7 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
         size_t newID( lookupNodeID[nodesIter->getID()] );
 
         size_t newParentID( 0 );
-        if( (nodesIter+1) != m_nodes.end() )
+        if( ( nodesIter+1 ) != m_nodes.end() )
         {
             newParentID = ( lookupParentID[nodesIter->getParent().second] );
         }
@@ -1693,7 +1878,7 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
 
         if( newParentID == 0 ) // if node is top of the tree parent must be set to 0-0
         {
-            if( ( nodesIter+1) != m_nodes.end() ) // this should only happen at the last node
+            if( ( nodesIter+1 ) != m_nodes.end() ) // this should only happen at the last node
             {
                 std::cerr << std::endl << "Node says its root: " << nodesIter->printAllData() << std::endl;
                 std::cerr << "New ID: " << newID << ". New parent ID: " << newParentID << std::endl;
@@ -1724,7 +1909,7 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
     }
     for( std::vector<WHnode>::iterator nodesIter( m_nodes.begin() ); nodesIter != m_nodes.end(); ++nodesIter )
     {
-        if(nodesIter->isRoot() )
+        if( nodesIter->isRoot() )
         {
             continue;
         }
@@ -1746,21 +1931,22 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
         clearPartitions();
     }
 
-    if ( outLookup != 0 ) // if a pointer was passed as argument
+    if( outLookup != 0 ) // if a pointer was passed as argument
     {
         *outLookup = lookupNodeID;
     }
 
+    clearPartitions();
+    clearPartColors();
     return std::make_pair( discardedLeaves, discardedNodes );
 } // end cleanup() -------------------------------------------------------------------------------------
 
 
 size_t WHtree::debinarize( bool keepBaseNodes )
 {
-
-    if ( keepBaseNodes && !testRootBaseNodes() )
+    if( keepBaseNodes && !testRootBaseNodes() )
     {
-        std::cerr << "WARNING@ Debinarize: base nodes have mixed nodes and leaves, debinarize will be standard "<< std::endl;
+        std::cerr << "WARNING@ Debinarize: base nodes have mixed nodes and leaves, debinarize will be standard " << std::endl;
         keepBaseNodes = false;
     }
     const size_t origNumNodes( getNumNodes() );
@@ -1772,7 +1958,7 @@ size_t WHtree::debinarize( bool keepBaseNodes )
     std::vector<size_t> realParentsforNodes( getNumNodes(), 0 );
 
 
-    if ( !keepBaseNodes )
+    if( !keepBaseNodes )
     {
         // first loop through leaves
         for( unsigned int id = 0; id < getNumLeaves(); ++id )
@@ -1879,7 +2065,7 @@ size_t WHtree::debinarize( bool keepBaseNodes )
     size_t nbCount( 0 );
     const size_t invalid( validNode.size()+1 );
     std::vector<size_t> changeLookup( validNode.size(), invalid );
-    for(size_t i = 0; i < validNode.size(); ++i )
+    for( size_t i = 0; i < validNode.size(); ++i )
     {
         if( validNode[i] )
         {
@@ -1927,7 +2113,7 @@ size_t WHtree::debinarize( bool keepBaseNodes )
                 size_t realDad( changeLookup[realParentsforNodes[id]] );
                 if( realDad == invalid )
                 {
-                    std::cerr << "node (1-" << id << ") is valid but has invalid dad, (preDad was 1-" << realParentsforNodes[id] << ")" << std::endl;
+                    std::cerr << "node (1-" << id << ") is valid but has invalid dad, ( preDad was 1-" << realParentsforNodes[id] << ")" << std::endl;
                     throw std::runtime_error( "ERROR @ WHtree::debinarize(): error renaming nb node parents" );
                 }
                 WHnode thisnode( std::make_pair( true, changeLookup[id] ), realChildren[id],
@@ -1944,15 +2130,15 @@ size_t WHtree::debinarize( bool keepBaseNodes )
         // replace old node vector with new one
         m_nodes = nbNodes;
     }
-    m_containedLeaves.clear();
-
+    clearContainedLeaves();
+    clearPartitions();
     // refill hLevel data
     for( unsigned int id = 0; id < getNumNodes(); ++id )
     {
         WHnode* currentNode( fetchNode( id ) );
         std::vector<nodeID_t> currentKids( currentNode->getChildren() );
         size_t currentHLevel( 0 );
-        for(size_t j = 0; j < currentKids.size(); ++j )
+        for( size_t j = 0; j < currentKids.size(); ++j )
         {
             currentHLevel = std::max( currentHLevel, fetchNode( currentKids[j] )->getHLevel()+1 );
         }
@@ -1983,7 +2169,7 @@ void WHtree::forceMonotonicityUp()
         WHnode* currentNode( fetchNode( nodesIter->getID() ) );
         std::vector<nodeID_t> currentKids( currentNode->getChildren() );
 
-        for(size_t j = 0; j < currentKids.size(); ++j )
+        for( size_t j = 0; j < currentKids.size(); ++j )
         {
             WHnode* kid( fetchNode( currentKids[j] ) );
             // if its kid has a higher level than the node, there was a non-monotonic step, and the highest level is kept
@@ -2004,7 +2190,7 @@ void WHtree::forceMonotonicityDown()
         WHnode* currentNode( fetchNode( nodesIter->getID() ) );
         std::vector<nodeID_t> currentKids( currentNode->getChildren() );
 
-        for(size_t j = 0; j < currentKids.size(); ++j )
+        for( size_t j = 0; j < currentKids.size(); ++j )
         {
             WHnode* kid( fetchNode( currentKids[j] ) );
             // if its kid has a higher level than the node, there was a non-monotonic step, and the lowest level is kept
@@ -2017,12 +2203,16 @@ void WHtree::forceMonotonicityDown()
     return;
 } // end forceMonotonicityDown() -------------------------------------------------------------------------------------
 
-void WHtree::forceMonotonicity()
+void WHtree::forceMonotonicity( double errorMult )
 {
-    for( int64_t i=m_nodes.size()-1; i>= 0; )
+    if( errorMult > 100 || errorMult <= 0 )
     {
+        errorMult = 1;
+    }
+    double errorMargin( errorMult * 1E-5 );
 
-
+    for( int64_t i = m_nodes.size()-1; i >= 0; )
+    {
         WHnode* currentNode( fetchNode( m_nodes[i].getID() ) );
         size_t currentSize( currentNode->getSize() );
         dist_t currentLevel( currentNode->getDistLevel() );
@@ -2033,28 +2223,26 @@ void WHtree::forceMonotonicity()
         size_t remainingSize( currentSize );
         bool doCorrect( false );
 
-        for(size_t j = 0; j < currentKids.size(); ++j )
+        for( size_t j = 0; j < currentKids.size(); ++j )
         {
-
-
             WHnode* kid( fetchNode( currentKids[j] ) );
             // if its kid has a higher level than the node, there was a non-monotonic step
-            if( kid->getDistLevel() > currentLevel + 1E-5 )
+            if( kid->getDistLevel() > currentLevel + errorMargin )
             {
                 newLevelSum += kid->getDistLevel() * kid->getSize();
                 remainingSize -= kid->getSize();
                 doCorrect = true;
             }
         }
-        if ( doCorrect )
+        if( doCorrect )
         {
-//            std::cout << i <<" -> "<<std::flush;
+//            std::cout << i << " -> " << std::flush;
 
             double correctedLevel( ( newLevelSum + ( remainingSize * currentLevel )  ) / currentSize );
             // correct level of current node
             currentNode->setDistLevel( correctedLevel );
             // correct level of non-monotonic children nodes
-            for(size_t j = 0; j < currentKids.size(); ++j )
+            for( size_t j = 0; j < currentKids.size(); ++j )
             {
                 WHnode* kid( fetchNode( currentKids[j] ) );
                 // if its kid has a higher level than the node, there was a non-monotonic step, and the highest level must be kept to avoid info loss
@@ -2065,7 +2253,7 @@ void WHtree::forceMonotonicity()
             }
 
             // if node is not root check if corrected level is higher than parent node
-            if ( currentNode->isRoot() )
+            if( currentNode->isRoot() )
             {
                 --i;
             }
@@ -2074,7 +2262,7 @@ void WHtree::forceMonotonicity()
                 WHnode* parentNode( fetchNode( currentNode->getParent() ) );
                 double parentLevel( parentNode->getDistLevel() );
                 // if new level is higher than parent level, go back to parent node id and continue from there
-                if( correctedLevel > parentLevel + 1E-5 )
+                if( correctedLevel > parentLevel + errorMargin )
                 {
                     i = parentNode->getID();
                 }
@@ -2083,9 +2271,7 @@ void WHtree::forceMonotonicity()
                     --i;
                 }
             }
-
-//            std::cout << i <<" : "<<currentLevel<<" -> "<< correctedLevel <<std::endl;
-
+//DEBUG            std::cout << i << " : " <<currentLevel<< " -> " << correctedLevel << std::endl;
         }
         else
         {

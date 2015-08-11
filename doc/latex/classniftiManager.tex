@@ -1,0 +1,286 @@
+\hypertarget{classniftiManager}{\section{nifti\-Manager \-Class \-Reference}
+\label{classniftiManager}\index{nifti\-Manager@{nifti\-Manager}}
+}
+
+
+{\ttfamily \#include $<$nifti\-Manager.\-h$>$}
+
+\-Inheritance diagram for nifti\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classniftiManager}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classniftiManager_a61073824d9db9f8263f68af34854c6a2}{nifti\-Manager} (std\-::string io\-Folder=\char`\"{}\char`\"{})
+\item 
+\hypertarget{classniftiManager_a30a0d32f3c099739c521003623dc4003}{\hyperlink{classniftiManager_a30a0d32f3c099739c521003623dc4003}{$\sim$nifti\-Manager} ()}\label{classniftiManager_a30a0d32f3c099739c521003623dc4003}
+
+\begin{DoxyCompactList}\small\item\em \-Destructor. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{classniftiManager_adedd75842b52a100303f7a953290d080}{get\-File\-Extension} (\-Tract\-Ext\-Type ext\-Type) const 
+\item 
+std\-::string \hyperlink{classniftiManager_ac3bb3fa42b34aefa6f6c70ba5e1c834b}{get\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector=std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$()) const 
+\item 
+std\-::string \hyperlink{classniftiManager_ae47648397db80c5b0630cf1b0f29c560}{get\-Full\-Leaf\-Tract\-Filename} (const size\-\_\-t tract\-Leaf, const std\-::vector$<$ size\-\_\-t $>$ \&index\-Vector, const std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$ \&coord\-Vector=std\-::vector$<$ \hyperlink{classWHcoord}{\-W\-Hcoord} $>$()) const 
+\item 
+\-Value\-Type \hyperlink{classniftiManager_a7f22a704c5b047b56ca8481f35e47fe3}{read\-Vector} (const std\-::string \&vector\-Filename, std\-::vector$<$ float $>$ $\ast$vector\-Pointer) const 
+\item 
+\-Value\-Type \hyperlink{classniftiManager_a1578e4cf10becfda948ab29c2f2c6ae3}{read\-Matrix} (const std\-::string \&matrix\-Filename, std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$matrix\-Pointer) const 
+\item 
+\-Value\-Type \hyperlink{classniftiManager_ad3a7ba158c081b0aef51e8773fd17902}{read\-Image} (const std\-::string \&image\-Filename, std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$image\-Pointer) const 
+\item 
+void \hyperlink{classniftiManager_aaac5db54ecdac481fdddf94a5fbdf574}{load\-Header} (const std\-::string \&filename, bool display=false)
+\item 
+void \hyperlink{classniftiManager_ac6b71cac86988cf30cb3a7eb2eeb5baa}{write\-Vector} (const std\-::string \&vector\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ float $>$ \&vector, bool do\-Zip=false) const 
+\item 
+void \hyperlink{classniftiManager_a562c2d1e7e6f5f26ebc5f37ca0c14df8}{write\-Matrix} (const std\-::string \&matrix\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&matrix, bool do\-Zip=false) const 
+\item 
+void \hyperlink{classniftiManager_a6dfbfd975d86ecc2a6d47bf64ff9ccdc}{write\-Image} (const std\-::string \&image\-Filename, const \-Value\-Type data\-Value\-Type, const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&image, bool do\-Zip=false) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+this class handles reading and writing of images, matrices and tractograms in nifti format 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classniftiManager_a61073824d9db9f8263f68af34854c6a2}{\index{nifti\-Manager@{nifti\-Manager}!nifti\-Manager@{nifti\-Manager}}
+\index{nifti\-Manager@{nifti\-Manager}!niftiManager@{nifti\-Manager}}
+\subsubsection[{nifti\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf nifti\-Manager\-::nifti\-Manager} (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{io\-Folder = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, explicit\mbox{]}}}}\label{classniftiManager_a61073824d9db9f8263f68af34854c6a2}
+\-Constructor 
+\begin{DoxyParams}{\-Parameters}
+{\em io\-Folder} & input-\/output folder for the reading and writing of files \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classniftiManager_adedd75842b52a100303f7a953290d080}{\index{nifti\-Manager@{nifti\-Manager}!get\-File\-Extension@{get\-File\-Extension}}
+\index{get\-File\-Extension@{get\-File\-Extension}!niftiManager@{nifti\-Manager}}
+\subsubsection[{get\-File\-Extension}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf nifti\-Manager\-::get\-File\-Extension} (
+\begin{DoxyParamCaption}
+\item[{\-Tract\-Ext\-Type}]{ext\-Type}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_adedd75842b52a100303f7a953290d080}
+returns a string with the filename extension to be used in reading/writing files \begin{DoxyReturn}{\-Returns}
+the filename extension string 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_af1b2dea2761c3f0018b62077cb032aee}{file\-Manager}.
+
+\hypertarget{classniftiManager_ae47648397db80c5b0630cf1b0f29c560}{\index{nifti\-Manager@{nifti\-Manager}!get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}}
+\index{get\-Full\-Leaf\-Tract\-Filename@{get\-Full\-Leaf\-Tract\-Filename}!niftiManager@{nifti\-Manager}}
+\subsubsection[{get\-Full\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf nifti\-Manager\-::get\-Full\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector = {\ttfamily std\-:\-:vector$<$~{\bf \-W\-Hcoord}~$>$()}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_ae47648397db80c5b0630cf1b0f29c560}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, , when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ac64c35e60f2a006b0a4d2af9e50d9029}{file\-Manager}.
+
+\hypertarget{classniftiManager_ac3bb3fa42b34aefa6f6c70ba5e1c834b}{\index{nifti\-Manager@{nifti\-Manager}!get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}}
+\index{get\-Leaf\-Tract\-Filename@{get\-Leaf\-Tract\-Filename}!niftiManager@{nifti\-Manager}}
+\subsubsection[{get\-Leaf\-Tract\-Filename}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf nifti\-Manager\-::get\-Leaf\-Tract\-Filename} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{tract\-Leaf, }
+\item[{const std\-::vector$<$ size\-\_\-t $>$ \&}]{index\-Vector, }
+\item[{const std\-::vector$<$ {\bf \-W\-Hcoord} $>$ \&}]{coord\-Vector = {\ttfamily std\-:\-:vector$<$~{\bf \-W\-Hcoord}~$>$()}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_ac3bb3fa42b34aefa6f6c70ba5e1c834b}
+\-This is an overloaded member function, provided for convenience. \-It differs from the above function only in what argument(s) it accepts. 
+\begin{DoxyParams}{\-Parameters}
+{\em tract\-Leaf} & the \-I\-D of the leaf corresponding to the desired tract \\
+\hline
+{\em index\-Vector} & vector holding the tract index corresponding to each leaf \-I\-D \\
+\hline
+{\em coord\-Vector} & vector holding the seed voxel coordinates, , when tractogram naming is defined by seed \-I\-D rather than coordinate the vector should be empty (default value) \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a24c2bf9055bfe28571866ce7586a3e34}{file\-Manager}.
+
+\hypertarget{classniftiManager_aaac5db54ecdac481fdddf94a5fbdf574}{\index{nifti\-Manager@{nifti\-Manager}!load\-Header@{load\-Header}}
+\index{load\-Header@{load\-Header}!niftiManager@{nifti\-Manager}}
+\subsubsection[{load\-Header}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf nifti\-Manager\-::load\-Header} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{filename, }
+\item[{bool}]{display = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_aaac5db54ecdac481fdddf94a5fbdf574}
+loads an image header and displayes its data in the standard output if so specified the header information is saved into a data member 
+\begin{DoxyParams}{\-Parameters}
+{\em filename} & file path to the image file containing the header \\
+\hline
+{\em display} & if set the header info will be displayed in standard output, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ad32c0c3e00f03a9338f1404b1e123e19}{file\-Manager}.
+
+\hypertarget{classniftiManager_ad3a7ba158c081b0aef51e8773fd17902}{\index{nifti\-Manager@{nifti\-Manager}!read\-Image@{read\-Image}}
+\index{read\-Image@{read\-Image}!niftiManager@{nifti\-Manager}}
+\subsubsection[{read\-Image}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf nifti\-Manager\-::read\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ $\ast$}]{image\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_ad3a7ba158c081b0aef51e8773fd17902}
+reads a 3\-D image from file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image file \\
+\hline
+{\em image\-Pointer} & a pointer to the image structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_a256980984836386e38f1fb3b5557a7f2}{file\-Manager}.
+
+\hypertarget{classniftiManager_a1578e4cf10becfda948ab29c2f2c6ae3}{\index{nifti\-Manager@{nifti\-Manager}!read\-Matrix@{read\-Matrix}}
+\index{read\-Matrix@{read\-Matrix}!niftiManager@{nifti\-Manager}}
+\subsubsection[{read\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf nifti\-Manager\-::read\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $\ast$}]{matrix\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_a1578e4cf10becfda948ab29c2f2c6ae3}
+reads a 2\-D matrix from file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image file \\
+\hline
+{\em matrix\-Pointer} & a pointer to the matrix structure to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_a940f90e44c4e483659f4527e6ffa9e95}{file\-Manager}.
+
+\hypertarget{classniftiManager_a7f22a704c5b047b56ca8481f35e47fe3}{\index{nifti\-Manager@{nifti\-Manager}!read\-Vector@{read\-Vector}}
+\index{read\-Vector@{read\-Vector}!niftiManager@{nifti\-Manager}}
+\subsubsection[{read\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}\-Value\-Type {\bf nifti\-Manager\-::read\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{std\-::vector$<$ float $>$ $\ast$}]{vector\-Pointer}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_a7f22a704c5b047b56ca8481f35e47fe3}
+reads a 1\-D vector from file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image file \\
+\hline
+{\em vector\-Pointer} & a pointer to the standard vector to hold the read data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the original data type of the read values 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classfileManager_aca16ebeace21a25c0f76bfc4c75595d3}{file\-Manager}.
+
+\hypertarget{classniftiManager_a6dfbfd975d86ecc2a6d47bf64ff9ccdc}{\index{nifti\-Manager@{nifti\-Manager}!write\-Image@{write\-Image}}
+\index{write\-Image@{write\-Image}!niftiManager@{nifti\-Manager}}
+\subsubsection[{write\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf nifti\-Manager\-::write\-Image} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{image\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ std\-::vector$<$ float $>$ $>$ $>$ \&}]{image, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_a6dfbfd975d86ecc2a6d47bf64ff9ccdc}
+writes a 3\-D image to file 
+\begin{DoxyParams}{\-Parameters}
+{\em image\-Filename} & file path to the 3\-D image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em image} & the 3\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_ae987e2c6a109c8bfd494f98b192969a0}{file\-Manager}.
+
+\hypertarget{classniftiManager_a562c2d1e7e6f5f26ebc5f37ca0c14df8}{\index{nifti\-Manager@{nifti\-Manager}!write\-Matrix@{write\-Matrix}}
+\index{write\-Matrix@{write\-Matrix}!niftiManager@{nifti\-Manager}}
+\subsubsection[{write\-Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf nifti\-Manager\-::write\-Matrix} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{matrix\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ std\-::vector$<$ float $>$ $>$ \&}]{matrix, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_a562c2d1e7e6f5f26ebc5f37ca0c14df8}
+writes a 2\-D matrix to file 
+\begin{DoxyParams}{\-Parameters}
+{\em matrix\-Filename} & file path to the 2\-D matrix image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em matrix} & the 2\-D matrix holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a60181a9ff9cf6f6d228b209d9050b21e}{file\-Manager}.
+
+\hypertarget{classniftiManager_ac6b71cac86988cf30cb3a7eb2eeb5baa}{\index{nifti\-Manager@{nifti\-Manager}!write\-Vector@{write\-Vector}}
+\index{write\-Vector@{write\-Vector}!niftiManager@{nifti\-Manager}}
+\subsubsection[{write\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf nifti\-Manager\-::write\-Vector} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{vector\-Filename, }
+\item[{const \-Value\-Type}]{data\-Value\-Type, }
+\item[{const std\-::vector$<$ float $>$ \&}]{vector, }
+\item[{bool}]{do\-Zip = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{classniftiManager_ac6b71cac86988cf30cb3a7eb2eeb5baa}
+writes a 1\-D vector to file 
+\begin{DoxyParams}{\-Parameters}
+{\em vector\-Filename} & file path to the 1\-D vector image to store the data in \\
+\hline
+{\em data\-Value\-Type} & the data type to write the data in \\
+\hline
+{\em vector} & the 1\-D vector holding the data to be written \\
+\hline
+{\em do\-Zip} & if set written files will be gzipped, default value false \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classfileManager_a510ef89d143c23e69c4b7c4a56325a1d}{file\-Manager}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/common/nifti\-Manager.\-h\item 
+src/common/nifti\-Manager.\-cpp\end{DoxyCompactItemize}

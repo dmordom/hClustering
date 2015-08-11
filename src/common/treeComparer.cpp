@@ -1,3 +1,35 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
 
 // std library
 #include <vector>
@@ -8,7 +40,138 @@
 
 #include "treeComparer.h"
 
+
+
+treeComparer::treeComparer( WHtree* const tree1, WHtree* const tree2, bool verbose ) :
+    m_tree1( *tree1 ),
+    m_tree2( *tree2 ),
+    m_maxPhysDist( 0 ),
+    m_tractThreshold1( 0 ),
+    m_tractThreshold2( 0 ),
+    m_logfile( 0 ),
+    m_realBaseNodes( false ),
+    m_coordsFromFile( false ),
+    m_meanTractsFromFile( false ),
+    m_verbose( verbose )
+{
+    if( m_tree1.m_logFactor != m_tree2.m_logFactor )
+    {
+        std::cerr << "WARNING @ treeComparer::treeComparer: trees have different track log factors: tree 1: " << m_tree1.m_logFactor << ". tree 2: " << m_tree2.m_logFactor << std::endl;
+        if( m_tree1.m_numStreamlines ==  m_tree2.m_numStreamlines )
+        {
+            if( m_tree1.m_numStreamlines != 0 )
+            {
+                m_tree1.m_logFactor = log10( m_tree1.m_numStreamlines );
+                m_tree2.m_logFactor = log10( m_tree2.m_numStreamlines );
+                std::cerr << "Trees have same tracking streamlines number. Recomputed track log factors to: tree 1: " << m_tree1.m_logFactor << ". tree 2: " << m_tree2.m_logFactor << std::endl;
+            }
+            else
+            {
+                m_tree1.m_logFactor = 0;
+                m_tree2.m_logFactor = 0;
+                std::cerr << "Both trees have tracking streamlines number = 0. Resetting both track log factors to 0" << std::endl;
+            }
+        }
+        else if( m_tree1.m_logFactor == 0 )
+        {
+            if(  m_tree1.m_numStreamlines != 0 )
+            {
+                m_tree1.m_logFactor = log10( m_tree1.m_numStreamlines );
+                std::cerr << "Reset tree 1 track log factor to: " << m_tree1.m_logFactor << std::endl;
+            }
+            else
+            {
+                m_tree2.m_logFactor = 0;
+                std::cerr << "Reset tree 2 track log factor to: 0" << std::endl;
+            }
+
+        }
+        else if( m_tree2.m_logFactor == 0)
+        {
+            if(  m_tree2.m_numStreamlines != 0 )
+            {
+                m_tree2.m_logFactor = log10( m_tree2.m_numStreamlines );
+                std::cerr << "Reset tree 2 track log factor to: " << m_tree2.m_logFactor << std::endl;
+            }
+            else
+            {
+                m_tree1.m_logFactor = 0;
+                std::cerr << "Reset tree 1 track log factor to: 0" << std::endl;
+            }
+        }
+    }
+    fetchBaseNodes( false );
+    m_initialSizes = std::make_pair(m_tree1.getNumLeaves(), m_tree2.getNumLeaves());
+}
+treeComparer::treeComparer( WHtree* const tree1, WHtree* const tree2, treeComparer &comparer ):
+  m_tree1(*tree1),
+  m_tree2(*tree2),
+  m_singleTractFolder1(comparer.m_singleTractFolder1),
+  m_singleTractFolder2(comparer.m_singleTractFolder2),
+  m_meanTractFolder1(comparer.m_meanTractFolder1),
+  m_meanTractFolder2(comparer.m_meanTractFolder2),
+  m_maxPhysDist(comparer.m_maxPhysDist),
+  m_tractThreshold1(comparer.m_tractThreshold1),
+  m_tractThreshold2(comparer.m_tractThreshold2),
+  m_logfile(comparer.m_logfile),
+  m_baseNodes1(comparer.m_baseNodes1),
+  m_originalBaseNodes1(comparer.m_originalBaseNodes1),
+  m_baseCoords1(comparer.m_baseCoords1),
+  m_noiseLevels1(comparer.m_noiseLevels1),
+  m_baseNodes2(comparer.m_baseNodes2),
+  m_originalBaseNodes2(comparer.m_originalBaseNodes2),
+  m_baseCoords2(comparer.m_baseCoords2),
+  m_noiseLevels2(comparer.m_noiseLevels2),
+  m_initialSizes(comparer.m_initialSizes),
+  m_baseDistMatrix(comparer.m_baseDistMatrix),
+  m_realBaseNodes(comparer.m_realBaseNodes),
+  m_coordsFromFile(comparer.m_coordsFromFile),
+  m_meanTractsFromFile(comparer.m_meanTractsFromFile),
+  m_fullCorrespondence(comparer.m_fullCorrespondence),
+  m_newCorrespondence(comparer.m_newCorrespondence),
+  m_newCorrespReverse(comparer.m_newCorrespReverse),
+  m_correspDistances(comparer.m_correspDistances),
+  m_verbose( comparer.m_verbose )
+{}
 // PUBLIC member functions
+
+void treeComparer::setRelativeThreshold( float thresholdRatio )
+{
+    if( thresholdRatio <= 0 || thresholdRatio >= 1 )
+    {
+        m_tractThreshold1 = 0;
+        m_tractThreshold2 = 0;
+        if( thresholdRatio != 0 )
+        {
+            std::cerr << "WARNING @ treeComparer::setRelativeThreshold(): threshold ratio provided (" << thresholdRatio << ") is out of bounds [0,1), using a value of 0.0 (no thresholding)" << std::endl;
+        }
+    }
+    else
+    {
+        if ( m_tree1.m_logFactor == 0 )
+        {
+            m_tractThreshold1 = thresholdRatio; // if using natural units the normalized tract threshold is the same as the threshold ratio
+        }
+        else
+        {
+            m_tractThreshold1 = log10( m_tree1.m_numStreamlines * thresholdRatio ) / m_tree1.m_logFactor; // if using log units the threshold must be calculated
+        }
+
+        if ( m_tree2.m_logFactor == 0 )
+        {
+            m_tractThreshold2 = thresholdRatio; // if using natural units the normalized tract threshold is the same as the threshold ratio
+        }
+        else
+        {
+            m_tractThreshold2 = log10( m_tree2.m_numStreamlines * thresholdRatio ) / m_tree2.m_logFactor; // if using log units the threshold must be calculated
+        }
+    }
+    if( m_verbose )
+    {
+        std::cout << "Relative threshold: " << thresholdRatio << ". Normalized threshold 1: " << m_tractThreshold1 << ". Normalized threshold 2: " << m_tractThreshold2 <<std::endl;
+    }
+    return;
+}
 
 
 std::pair< float, float >treeComparer::simpleTriplets( size_t sampleFreq ) const
@@ -56,7 +219,7 @@ std::pair< float, float >treeComparer::simpleTriplets( size_t sampleFreq ) const
         loopLength = m_newCorrespondence.size();
     }
 
-    if(m_verbose && sampleFreq != 1 )
+    if( m_verbose && sampleFreq != 1 )
     {
         std::cout << "Subsampling frequency: " << sampleFreq << std::endl;
         loopLength = ( ( size_t )( loopLength / sampleFreq ) ) * sampleFreq;
@@ -144,7 +307,7 @@ std::pair< float, float >treeComparer::simpleTriplets( size_t sampleFreq ) const
                                     << ( ( elapsedTime % 3600 ) % 60 ) << "\". ";
                     std::cout << message.str() << std::flush;
                 }
-            } // endm_verbose
+            } // end m_verbose
         } // end for (j)
     } // end parallel for (i)
 
@@ -363,7 +526,7 @@ std::pair< std::pair< float, float >, std::pair< float, float > > treeComparer::
                                 << "\". ";
                 std::cout << message.str() << std::flush;
             }
-        } // endm_verbose
+        } // end m_verbose
     } // end parallel for (i)
 
 
@@ -513,13 +676,13 @@ bool treeComparer::leafCorrespondence()
     if( m_tree1.getDataGrid() != m_tree2.getDataGrid() )
     {
         std::cout << "Trees are in different coordinate grids: ";
-        if( m_tree1.convert2grid( HC_VISTA ) )
+        if( m_tree1.convert2grid( HC_NIFTI ) )
         {
-            std::cout << "Tree 1 was converted to vista coordinates";
+            std::cout << "Tree 1 was converted to nifti coordinates";
         }
-        if( m_tree2.convert2grid( HC_VISTA ) )
+        if( m_tree2.convert2grid( HC_NIFTI ) )
         {
-            std::cout << "Tree 2 was converted to vista coordinates";
+            std::cout << "Tree 2 was converted to nifti coordinates";
         }
         std::cout << std::endl;
     }
@@ -571,16 +734,16 @@ bool treeComparer::leafCorrespondence()
 } // end "leafCorrespondence()" -----------------------------------------------------------------
 
 
-void treeComparer::simpleCorrespondence( float threshold, bool redoCoords )
+void treeComparer::greedyCorrespondence( float dissimThreshold, bool redoCoords )
 {
 
-    if( threshold > 1 )
+    if( dissimThreshold > 1 )
     {
-        threshold = 1;
+        dissimThreshold = 1;
     }
-    if( threshold < 0.1 )
+    if( dissimThreshold < 0.1 )
     {
-        threshold = 0.1;
+        dissimThreshold = 0.1;
     }
     std::vector< size_t > protoCorrespTable, correspTable;
     std::vector< std::pair< float, float > > correspDistances;
@@ -591,7 +754,7 @@ void treeComparer::simpleCorrespondence( float threshold, bool redoCoords )
     {
         if ( redoCoords )
         {
-            if (m_verbose )
+            if ( m_verbose )
             {
                 std::cout<< "Getting cluster coordinate information..." <<std::endl;
             }
@@ -669,7 +832,7 @@ void treeComparer::simpleCorrespondence( float threshold, bool redoCoords )
         }
 
         // if no more matches are found, stop
-        if( minDist > threshold )
+        if( minDist > dissimThreshold )
             break;
 
         // update correspondence table, reduce lists and clear row and column of distance table
@@ -847,6 +1010,14 @@ void treeComparer::simpleCorrespondence( float threshold, bool redoCoords )
     else
     {
         correspTable = protoCorrespTable;
+
+        for( size_t i = 0; i < protoCorrespTable.size(); ++i )
+        {
+            float tractDist( m_baseDistMatrix[i][protoCorrespTable[i]] );
+            float clusterEucDist(m_baseCoords1[i].getPhysDist(m_baseCoords2[protoCorrespTable[i]]) );
+            correspDistances.resize( m_baseNodes1.size(), std::make_pair( 2, 99 ) );
+            correspDistances[i] = std::make_pair( tractDist , clusterEucDist);
+        }
     }
 
     if( m_verbose )
@@ -1024,19 +1195,13 @@ bool treeComparer::fetchBaseNodes( bool doGetCoords )
 
     m_realBaseNodes = true;
 
-    for( std::vector< size_t >::iterator iter( m_baseNodes1.begin() ); iter != m_baseNodes1.end(); ++iter )
+    if( !m_tree1.testRootBaseNodes() )
     {
-        if( m_tree1.getNode( *iter ).getHLevel() > 1 )
-        {
-            m_realBaseNodes = false;
-        }
+        m_realBaseNodes = false;
     }
-    for( std::vector< size_t >::iterator iter( m_baseNodes2.begin() ); iter != m_baseNodes2.end(); ++iter )
+    if( !m_tree2.testRootBaseNodes() )
     {
-        if( m_tree2.getNode( *iter ).getHLevel() > 1 )
-        {
-            m_realBaseNodes = false;
-        }
+        m_realBaseNodes = false;
     }
 
     if ( m_originalBaseNodes1.empty() )
@@ -1048,7 +1213,6 @@ bool treeComparer::fetchBaseNodes( bool doGetCoords )
         m_originalBaseNodes2 = m_baseNodes2;
     }
 
-
     if ( doGetCoords )
     {
         getBaseCoords();
@@ -1059,19 +1223,30 @@ bool treeComparer::fetchBaseNodes( bool doGetCoords )
 
 void treeComparer::getBaseCoords()
 {
+
+    std::cout << "Obtaining base node coordinates..." << std::endl;
+
     m_baseCoords1.clear();
     m_baseCoords1.resize( m_baseNodes1.size() );
 
-    #pragma omp parallel for
+    std::cout << "loop1..." << std::endl;
+
+
+//    #pragma omp parallel for
     for( size_t i = 0; i < m_baseNodes1.size(); ++i )
     {
         if( m_coordsFromFile )
         {
-            vistaManager clusterMaskmanager( m_meanTractFolder1 );
-            std::string clusterMaskFilename;
-            clusterMaskmanager.getClusterMaskFilenameZip( m_baseNodes1[i], &clusterMaskFilename );
-            clusterMaskmanager.loadMask( clusterMaskFilename );
+            fileManagerFactory clusterFMF( m_meanTractFolder1 );
+            fileManager& clusterMaskmanager( clusterFMF.getFM() );
+            std::string clusterMaskFilename( clusterMaskmanager.getClusterMaskFilename( m_baseNodes1[i] ) );
+            std::stringstream loadmessage;
+            loadmessage << clusterMaskFilename << "...";
+            clusterMaskmanager.loadMaskImage( clusterMaskFilename );
+            loadmessage << "loaded...";
             m_baseCoords1[i]=( clusterMaskmanager.meanCoordFromMask() );
+            loadmessage << "added";
+            std::cout << loadmessage.str() << std::endl;
         }
         else
         {
@@ -1082,22 +1257,33 @@ void treeComparer::getBaseCoords()
     m_baseCoords2.clear();
     m_baseCoords2.resize( m_baseNodes2.size() );
 
-    #pragma omp parallel for
+    std::cout << "loop2..." << std::endl;
+
+
+//    #pragma omp parallel for
     for( size_t i = 0; i < m_baseNodes2.size(); ++i )
     {
         if( m_coordsFromFile )
         {
-            vistaManager clusterMaskmanager( m_meanTractFolder2 );
-            std::string clusterMaskFilename;
-            clusterMaskmanager.getClusterMaskFilenameZip( m_baseNodes2[i], &clusterMaskFilename );
-            clusterMaskmanager.loadMask( clusterMaskFilename );
+            fileManagerFactory clusterFMF( m_meanTractFolder2 );
+            fileManager& clusterMaskmanager( clusterFMF.getFM() );
+            std::string clusterMaskFilename( clusterMaskmanager.getClusterMaskFilename( m_baseNodes2[i] ) );
+            std::stringstream loadmessage;
+            loadmessage << clusterMaskFilename << "...";
+            clusterMaskmanager.loadMaskImage( clusterMaskFilename );
+            loadmessage << "loaded...";
             m_baseCoords2[i]=( clusterMaskmanager.meanCoordFromMask() );
+            loadmessage << "added";
+            std::cout << loadmessage.str() << std::endl;
         }
         else
         {
             m_baseCoords2[i]=( m_tree2.getMeanCoordinate4node( m_baseNodes2[i] ) );
         }
     }
+
+    std::cout << "loops finished..." << std::endl;
+
     return;
 } // end treeComparer::getBaseNodeCoords() -------------------------------------------------------------------------------------
 
@@ -1169,16 +1355,8 @@ void treeComparer::getBaseDistMatrix()
     if( m_baseNodes1.empty() || m_baseNodes2.empty() )
         throw std::runtime_error( "ERROR @ treeComparer::getBaseDistMatrix(): one (or both) of the base node vectors is empty" );
 
-    if( m_maxPhysDist == 0 )
-        throw std::runtime_error( "ERROR @ treeCompare::getBaseDistMatrix(): maximum physical distance was not set" );
 
     m_baseDistMatrix.clear();
-
-    if( m_verbose )
-    {
-        std::cout << "Obtaining base node information" << std::endl;
-        fetchBaseNodes( true );
-    }
 
     std::vector< std::vector< dist_t > > baseDistMatrix;
     {
@@ -1186,10 +1364,19 @@ void treeComparer::getBaseDistMatrix()
         baseDistMatrix.resize( m_baseNodes1.size(), fillvect );
     }
 
+    if( m_verbose )
+    {
+        std::cout << "Obtaining base node information..." << std::endl;
+    }
+    fetchBaseNodes( true );
+    if( m_verbose )
+    {
+        std::cout << "base node information obtained" << std::endl;
+    }
+
+
     if( m_meanTractsFromFile )
     {
-
-
         if( m_verbose )
         {
             std::cout << "Mean tracts will be read from files" << std::endl;
@@ -1198,19 +1385,21 @@ void treeComparer::getBaseDistMatrix()
     else
     {
         if( m_singleTractFolder1.empty() || m_singleTractFolder2.empty() )
+        {
             throw std::runtime_error( "ERROR @ treeCompare::getBaseDistMatrix(): Location of single tracts folders is invalid" );
+        }
 
         if( m_verbose )
         {
             std::cout << "Calculating and writing base node mean tracts" << std::endl;
         }
 
-        treeManager manager1( &m_tree1,m_verbose );
+        treeManager manager1( &m_tree1, m_verbose );
         manager1.setSingleTractFolder( m_singleTractFolder1 );
         manager1.setMeanTractFolder( m_meanTractFolder1 );
         manager1.writeMeanTracts( m_baseNodes1 );
 
-        treeManager manager2( &m_tree2,m_verbose );
+        treeManager manager2( &m_tree2, m_verbose );
         manager2.setSingleTractFolder( m_singleTractFolder2 );
         manager2.setMeanTractFolder( m_meanTractFolder2 );
         manager2.writeMeanTracts( m_baseNodes2 );
@@ -1226,27 +1415,29 @@ void treeComparer::getBaseDistMatrix()
     #pragma omp parallel for schedule(guided)
     for( size_t i = 0; i < m_baseNodes1.size(); ++i )
     {
-        // vista file managers
-        vistaManager nodeVista1( m_meanTractFolder1 );
-        nodeVista1.readAsLog();
-        nodeVista1.readAsUnThres();
-        vistaManager nodeVista2( m_meanTractFolder2 );
-        nodeVista2.readAsLog();
-        nodeVista2.readAsUnThres();
+        // file managers
+        fileManagerFactory nodeFileMF1( m_meanTractFolder1 );
+        fileManager& nodeFM1( nodeFileMF1.getFM() );
+        nodeFM1.readAsLog();
+        nodeFM1.readAsUnThres();
+        fileManagerFactory nodeFileMF2( m_meanTractFolder2 );
+        fileManager& nodeFM2( nodeFileMF2.getFM() );
+        nodeFM2.readAsLog();
+        nodeFM2.readAsUnThres();
 
         // get mean position for base node
         WHcoord baseCoord1( m_baseCoords1[i] );
 
         // base node tract
         compactTract baseTract1;
-        nodeVista1.readNodeTract( m_baseNodes1[i], baseTract1 );
-        baseTract1.threshold( m_tractThreshold );
-        baseTract1.getNorm();
+        nodeFM1.readNodeTract( m_baseNodes1[i], &baseTract1 );
+        baseTract1.threshold( m_tractThreshold1 );
+        baseTract1.computeNorm();
 
         for( size_t j = 0; j < m_baseNodes2.size(); ++j )
         {
             float pDist( baseCoord1.getPhysDist( m_baseCoords2[j] ) );
-            if( pDist > m_maxPhysDist )
+            if( pDist > m_maxPhysDist && m_maxPhysDist > 0 )
             {
                 #pragma omp atomic
                 ++progCount;
@@ -1254,9 +1445,9 @@ void treeComparer::getBaseDistMatrix()
             }
 
             compactTract baseTract2;
-            nodeVista2.readNodeTract( m_baseNodes2[j], baseTract2 );
-            baseTract2.threshold( m_tractThreshold );
-            baseTract2.getNorm();
+            nodeFM2.readNodeTract( m_baseNodes2[j], &baseTract2 );
+            baseTract2.threshold( m_tractThreshold2 );
+            baseTract2.computeNorm();
             baseDistMatrix[i][j] = baseTract1.tractDistance( baseTract2 );
         }
 
@@ -1285,7 +1476,7 @@ void treeComparer::getBaseDistMatrix()
                                 << "\". ";
                 std::cout << message.str() << std::flush;
             }
-        } // endm_verbose
+        } // end m_verbose
     } // end parallel loop
     std::cout << "\r100 % Completed (" << m_baseNodes1.size() << "x" << m_baseNodes2.size() << " distance matrix)" << std::endl;
 
@@ -1295,29 +1486,38 @@ void treeComparer::getBaseDistMatrix()
 
 void treeComparer::writeBaseDistMatrix( std::string matrixFilename )
 {
-    vistaManager vistaMatrix("");
-    vistaMatrix.writeInFloat();
-    vistaMatrix.storeZipped();
-    vistaMatrix.writeMatrix(matrixFilename,m_baseDistMatrix);
+    fileManagerFactory matrixFileMF;
+    fileManager& matrixFM( matrixFileMF.getFM() );
+    matrixFM.writeInFloat();
+    matrixFM.storeZipped();
+    matrixFM.writeMatrix(matrixFilename, VTFloat32 ,m_baseDistMatrix );
     return;
 } // end treeComparer::writeBaseDistMatrix() -------------------------------------------------------------------------------------
 
 void treeComparer::readBaseDistMatrix( std::string matrixFilename )
 {
-    vistaManager vistaMatrix("");
-    vistaMatrix.readMatrix( matrixFilename, &m_baseDistMatrix );
+    fileManagerFactory matrixFileMF;
+    fileManager& matrixFM( matrixFileMF.getFM() );
+    matrixFM.readMatrix( matrixFilename, &m_baseDistMatrix );
     return;
 } // end treeComparer::readBaseDistMatrix() -------------------------------------------------------------------------------------
 
 void treeComparer::randomCorrespondence()
 {
-    m_tree2 = m_tree1;
-    fetchBaseNodes( false );
 
-    std::vector< size_t > correspondence;
-    correspondence.reserve( m_baseNodes1.size() );
+    if (m_baseNodes1.empty() || m_baseCoords1.empty() || m_baseNodes2.empty() || m_baseCoords2.empty() )
+    {
+        std::cout<<"Fetching nodes and coordinates"<<std::endl;
+        fetchBaseNodes( true );
+    }
 
-    std::vector< size_t > values( m_baseNodes1.size(), 0 );
+    std::vector< size_t > oldBaseNodes1( m_baseNodes1 ), oldBaseNodes2( m_baseNodes2 );
+
+    const size_t nomatch( m_initialSizes.second );
+    std::vector< size_t > protoCorrespondence, correspondence;
+    protoCorrespondence.resize( m_baseNodes1.size(), nomatch );
+
+    std::vector< size_t > values( m_baseNodes2.size(), 0 );
     for( size_t i = 0; i < values.size(); ++i )
     {
         values[i] = i;
@@ -1330,19 +1530,227 @@ void treeComparer::randomCorrespondence()
     // uniformly distributed random number generator between 0 and 1
     boost::variate_generator< boost::mt19937, boost::uniform_01< > > u01Prng( igen, boost::uniform_01< >() );
 
-    while( values.size() > 1 )
-    {
-        size_t nextindex( std::floor( u01Prng() * values.size() ) );
-        if( nextindex == values.size() )
-            --nextindex;
+    std::list< size_t > leftNodes1;
+    std::list< size_t > leftNodes2;
 
-        correspondence.push_back( values[nextindex] );
-        values.erase( values.begin() + nextindex );
+    // do it for every base node
+    for (size_t i = 0; i < m_baseNodes1.size(); ++i )
+    {
+        std::vector< size_t > candidateIndexes;
+        candidateIndexes.reserve(m_baseNodes2.size());
+
+        // obtain a list of indexes to basenodes in tree 2 in the vicinity of this basenode of tree 1
+        for(size_t j = 0; j < values.size(); ++j )
+        {
+            float pDist( m_baseCoords1[i].getPhysDist( m_baseCoords2[values[j]] ) );
+            if( pDist <= m_maxPhysDist || m_maxPhysDist == 0 )
+            {
+                candidateIndexes.push_back(j);
+            }
+        }
+
+        // if there are no nodes left on the vicinity, this node will not be matched
+        if( candidateIndexes.empty())
+        {
+            leftNodes1.push_back(m_baseNodes1[i]);
+            continue;
+        }
+
+        // randomly choose a candidate index   ( if there is more than one )
+        if( candidateIndexes.size() == 1 )
+        {
+            protoCorrespondence[i] = ( values[candidateIndexes.front()] );
+            values.erase( values.begin() + candidateIndexes.front() );
+        }
+        else
+        {
+            size_t chosenIndex( std::floor( u01Prng() * candidateIndexes.size() ) );
+            if( chosenIndex == candidateIndexes.size() )
+                --chosenIndex;
+
+            protoCorrespondence[i] = ( values[candidateIndexes[chosenIndex]] );
+            values.erase( values.begin() + candidateIndexes[chosenIndex] );
+        }
     }
 
-    correspondence.push_back( values.front() );
+    m_fullCorrespondence = protoCorrespondence;
+
+
+    //nodes of tree 2 without a match
+    for (size_t i = 0; i < values.size(); ++i )
+    {
+        leftNodes2.push_back(m_baseNodes2[values[i]]);
+    }
+
+
+    ///////////////////////////////////////////////////
+
+
+    std::vector<size_t> nodeLookup1, nodeLookup2;
+    bool deletion( false );
+
+    // delete excess nodes or those without proper match
+    if( !leftNodes1.empty() )
+    {
+
+        std::cout << "Removing " << leftNodes1.size() << " base nodes from tree1...";
+        size_t sizeSum( 0 );
+        for( std::list< size_t >::iterator iter( leftNodes1.begin() ); iter != ( leftNodes1.end() ); ++iter )
+        {
+            std::vector< size_t > leaves2prune( m_tree1.getLeaves4node( *iter ) );
+            sizeSum += leaves2prune.size();
+
+            for( size_t pruneIndex = 0; pruneIndex < leaves2prune.size(); ++pruneIndex )
+            {
+                m_tree1.fetchLeaf( leaves2prune[pruneIndex] )->setFlag( true );
+            }
+        }
+        std::cout << "mean size: " << sizeSum/leftNodes1.size() << " leaves." << std::endl;
+        m_tree1.cleanup( &nodeLookup1 );
+        deletion = true;
+    }
+    else
+    {
+        nodeLookup1.clear();
+        nodeLookup1.reserve( m_tree1.getNumNodes() );
+        for( size_t i = 0; i < m_tree1.getNumNodes(); ++i )
+        {
+            nodeLookup1.push_back( i );
+        }
+    }
+
+
+    if( !leftNodes2.empty() )
+    {
+        std::cout << "Removing " << leftNodes2.size() << " base nodes from tree2...";
+        size_t sizeSum( 0 );
+        for( std::list< size_t >::iterator iter( leftNodes2.begin() ); iter != ( leftNodes2.end() ); ++iter )
+        {
+            std::vector< size_t > leaves2prune( m_tree2.getLeaves4node( *iter ) );
+            sizeSum += leaves2prune.size();
+
+            for( size_t pruneIndex = 0; pruneIndex < leaves2prune.size(); ++pruneIndex )
+            {
+                m_tree2.fetchLeaf( leaves2prune[pruneIndex] )->setFlag( true );
+            }
+        }
+        std::cout << "mean size: " << sizeSum/leftNodes2.size() << " leaves." << std::endl;
+        m_tree2.cleanup( &nodeLookup2 );
+        deletion = true;
+    }
+    else
+    {
+        nodeLookup2.clear();
+        nodeLookup2.reserve( m_tree2.getNumNodes() );
+        for( size_t i = 0; i < m_tree2.getNumNodes(); ++i )
+        {
+            nodeLookup2.push_back( i );
+        }
+    }
+
+    if( deletion ) // one or both of the trees was pruned update ids in matching vector
+    {
+        fetchBaseNodes(false);
+
+        std::cout << "Updating correspondence table..." << std::endl;
+        if( nodeLookup1.size() < protoCorrespondence.size() || nodeLookup2.size() < protoCorrespondence.size() )
+        {
+            std::cerr << "Correspondence vector size: " << protoCorrespondence.size() << ". Lookup1: " << nodeLookup1.size()
+                      << ". Lookup2: " << nodeLookup2.size() << std::endl;
+            throw std::runtime_error( "ERROR @ treeCompare::simpleCorrespondence(): lookups are smaller than correspondence" );
+        }
+        if( m_baseNodes1.size() != m_baseNodes2.size() )
+        {
+            std::cerr << "basenodes1 size: " << m_baseNodes1.size() << ". basenodes2 size: " << m_baseNodes2.size() << std::endl;
+            throw std::runtime_error( "ERROR @ treeCompare::simpleCorrespondence(): new basenodes dimensions dont match" );
+        }
+
+        correspondence.resize( m_baseNodes1.size(), 0 );
+
+        std::cout << "getting new IDs..." << std::endl;
+
+        for( size_t i = 0; i < protoCorrespondence.size(); ++i )
+        {
+            size_t oldRelativeID1( i );
+            size_t oldAbsoluteID1( oldBaseNodes1[oldRelativeID1] );
+            size_t newAbsoluteID1( nodeLookup1[oldAbsoluteID1] );
+
+            size_t oldRelativeID2( protoCorrespondence[oldRelativeID1] );
+            if( oldRelativeID2 == nomatch)
+            {
+                continue; // the node the table referred to has been deleted
+            }
+            size_t oldAbsoluteID2( oldBaseNodes2[oldRelativeID2] );
+            size_t newAbsoluteID2( nodeLookup2[oldAbsoluteID2] );
+
+            if( newAbsoluteID1 >= m_tree1.getNumNodes() || newAbsoluteID2 >= m_tree2.getNumNodes() )
+            {
+                continue; // the node the table referred to has been deleted
+            }
+
+            size_t newRelativeID1( std::find( m_baseNodes1.begin(), m_baseNodes1.end(), newAbsoluteID1 ) - m_baseNodes1.begin() );
+            size_t newRelativeID2( std::find( m_baseNodes2.begin(), m_baseNodes2.end(), newAbsoluteID2 ) - m_baseNodes2.begin() );
+
+            if( newRelativeID1 >= m_baseNodes1.size() || newRelativeID2 >= m_baseNodes2.size() )
+            {
+                std::cerr << "new abs ID1: " << newAbsoluteID1 << ". new abs ID2: " << newAbsoluteID2 << std::endl;
+                throw std::runtime_error( "ERROR @ treeCompare::simpleCorrespondence(): new IDs dont match basenodes" );
+            }
+
+            correspondence[newRelativeID1] = newRelativeID2;
+        }
+
+        if( std::count( correspondence.begin(), correspondence.end(), nomatch) != 0 )
+        {
+            throw std::runtime_error( "ERROR @ treeCompare::simpleCorrespondence(): error in correspondence table" );
+        }
+
+
+    }
+    else
+    {
+        correspondence = protoCorrespondence;
+    }
+
+    if( m_verbose )
+    {
+        std::cout << reportBaseNodes() << std::endl;
+    }
 
     m_newCorrespondence = correspondence;
+
+    m_newCorrespReverse.clear();
+    m_newCorrespReverse.resize(m_newCorrespondence.size(),0);
+    for( size_t i = 0; i < m_newCorrespondence.size(); ++i )
+    {
+        m_newCorrespReverse[m_newCorrespondence[i]]=i;
+    }
+
+
+    //////////////////////////7
+
+
+//    // randomly match unmatched nodes
+//    if(!leftNodes1.empty())
+//    {
+//        std::cout<<"there are "<<leftNodes1.size()<<" unmatched nodes due to physical distance, matching randomly"<<std::endl;
+//        for (size_t i = 0; i < leftNodes1.size()-1; ++i )
+//        {
+
+//            size_t chosen( std::floor( u01Prng() * leftNodes2.size() ) );
+//            if( chosen == leftNodes2.size() )
+//                --chosen;
+
+//            protoCorrespondence[leftNodes1[i]] = ( leftNodes2[chosen] );
+//            leftNodes2.erase( leftNodes2.begin() + chosen );
+//        }
+//        if( leftNodes2.size() != 1 )
+//        {
+//            throw std::runtime_error( "ERROR @ treeCompare::randomCorrespondence(): error while matchign last rogue node" );
+//        }
+//        protoCorrespondence[leftNodes1.back()] = leftNodes2.front();
+//    }
+
 
     return;
 } // end treeComparer::randomCorrespondence() -------------------------------------------------------------------------------------
@@ -1359,7 +1767,7 @@ void treeComparer::writeCorrespondence( std::string filename )
     }
     if( m_baseNodes1.size() != m_newCorrespondence.size() || m_baseNodes1.size() != m_correspDistances.size() )
     {
-        std::cerr<< "ERROR @ treeCompare::writeCorrespondence(): correspondance vector size does not match basenodes vector"<<std::endl;
+        std::cerr<< "ERROR @ treeCompare::writeCorrespondence(): correspondance vector size (" << m_newCorrespondence.size() << ")  or distances (" << m_correspDistances.size() << ") does not match basenodes vector size: "<< m_baseNodes1.size() <<std::endl;
         return;
     }
     std::ofstream outFile( filename.c_str() );
@@ -1465,431 +1873,9 @@ void treeComparer::writeFullCorrespondence( std::string filename )
 
 
 
-void treeComparer::mergedUpCorrespondence()
-{
-    std::vector< size_t > correspTable;
-
-    while( true )
-    {
-        if( m_verbose )
-            std::cout << "Computing base-node distance table by merged up correspondence:" << std::endl;
-
-        getBaseDistMatrix();
-
-        if( m_baseNodes1.size() != m_baseDistMatrix.size() || m_baseNodes2.size() != m_baseDistMatrix[0].size() )
-            throw std::runtime_error(
-                            "ERROR @ treeComparer::getCorrespTable(): distance matrix and base node vector dimensions dont match" );
-
-        // structure of the table:
-        // member 1: relative ID of base nodes of tree 2 matched by this element
-        std::vector< size_t > table1, table2;
-        table1.reserve( m_baseNodes1.size() );
-        table2.reserve( m_baseNodes2.size() );
-
-        // check if there is a match
-
-
-        // GET BEST MATCHES FROM DISTANCE MATRIX ==============
-
-
-        for( size_t i = 0; i < m_baseNodes1.size(); ++i )
-        {
-            dist_t currentDist( 999 );
-            size_t currentMatch( 0 );
-            for( size_t j = 0; j < m_baseNodes2.size(); ++j )
-            {
-                if( m_baseDistMatrix[i][j] < currentDist )
-                {
-                    currentDist = m_baseDistMatrix[i][j];
-                    currentMatch = j;
-                }
-            }
-            if( currentDist > 1 )
-                throw std::runtime_error( "ERROR @ treeComparer::getCorrespTable(): element did not find a match" );
-            table1.push_back( currentMatch );
-        }
-        for( size_t j = 0; j < m_baseNodes2.size(); ++j )
-        {
-            dist_t currentDist( 999 );
-            size_t currentMatch( 0 );
-            for( size_t i = 0; i < m_baseNodes1.size(); ++i )
-            {
-                if( m_baseDistMatrix[i][j] < currentDist )
-                {
-                    currentDist = m_baseDistMatrix[i][j];
-                    currentMatch = i;
-                }
-            }
-            if( currentDist > 1 )
-                throw std::runtime_error( "ERROR @ treeComparer::getCorrespTable(): element did not find a match" );
-            table2.push_back( currentMatch );
-        }
-
-        //   CHECK IF TABLES MATCH ================
-
-        bool tablesMatch( true );
-
-        for( size_t i = 0; i < table1.size(); ++i )
-        {
-            if( table2[table1[i]] != i )
-                tablesMatch = false;
-        }
-        for( size_t i = 0; i < table2.size(); ++i )
-        {
-            if( table1[table2[i]] != i )
-                tablesMatch = false;
-        }
-        if( tablesMatch == false )
-        {
-            std::cout << "Tables dont Match, going for merging process!" << std::endl;
-        }
-        else
-        {
-            std::cout << "Tables Match!" << std::endl;
-            correspTable = table1;
-            break;
-        }
-
-        // MERGE MULTIPLE-TO-ONE TABLE ENTRIES ==============
-
-
-        std::vector< size_t > merged1, merged2; // absolute ids of the new merged nodes
-        std::vector< std::vector< size_t > > containedBnodes1, containedBnodes2; // absolute ids of contained base nodes for each merged node
-        std::vector< std::vector< size_t > > targets1, targets2; // relative ids of targed base nodes for each merged node
-
-        merged1.reserve( table1.size() );
-        containedBnodes1.reserve( table1.size() );
-        targets1.reserve( table1.size() );
-
-        for( size_t i = 0; i < table1.size(); ++i )
-        {
-            merged1.push_back( m_baseNodes1[i] );
-            std::vector< size_t > tempA( 1, m_baseNodes1[i] );
-            containedBnodes1.push_back( tempA );
-            std::vector< size_t > tempB( 1, table1[i] );
-            targets1.push_back( tempB );
-        }
-
-        merged2.reserve( table2.size() );
-        containedBnodes2.reserve( table2.size() );
-        targets2.reserve( table2.size() );
-
-        for( size_t i = 0; i < table2.size(); ++i )
-        {
-            merged2.push_back( m_baseNodes2[i] );
-            std::vector< size_t > tempA( 1, m_baseNodes2[i] );
-            containedBnodes2.push_back( tempA );
-            std::vector< size_t > tempB( 1, table2[i] );
-            targets2.push_back( tempB );
-        }
-
-        size_t iterCount( 0 );
-
-        bool change( true );
-        while( change )
-        { //repeat merging steps iteratively until there are no changes
-            if( m_verbose )
-            {
-                std::cout << "iteration " << iterCount++ << " Table 1: " << std::endl;
-                for( size_t k = 0; k < merged1.size(); ++k )
-                {
-                    if( containedBnodes1[k].empty() )
-                        continue;
-                    std::cout << k << " (" << merged1[k] << "): ";
-                    for( size_t l = 0; l < containedBnodes1[k].size(); ++l )
-                        std::cout << containedBnodes1[k][l] << ",";
-                    std::cout << " --> ";
-                    for( size_t l = 0; l < targets1[k].size(); ++l )
-                        std::cout << targets1[k][l] << ",";
-                    std::cout << std::endl;
-                }
-                std::cout << " Table 2: " << std::endl;
-                for( size_t k = 0; k < merged2.size(); ++k )
-                {
-                    if( containedBnodes2[k].empty() )
-                        continue;
-                    std::cout << k << " (" << merged2[k] << "): ";
-                    for( size_t l = 0; l < containedBnodes2[k].size(); ++l )
-                        std::cout << containedBnodes2[k][l] << ",";
-                    std::cout << " --> ";
-                    for( size_t l = 0; l < targets2[k].size(); ++l )
-                        std::cout << targets2[k][l] << ",";
-                    std::cout << std::endl;
-                }
-            }
-
-            change = false;
-
-            if( mergeNodes( m_tree1, merged1, containedBnodes1, targets1, merged2, containedBnodes2, targets2 ) )
-                change = true;
-            if( mergeNodes( m_tree2, merged2, containedBnodes2, targets2, merged1, containedBnodes1, targets1 ) )
-                change = true;
-        } // end while-change
-
-        if( m_verbose )
-            std::cout << "Merge-up finished" << std::endl;
-
-        //check tables and clean tables
-        std::vector< std::pair< size_t, size_t > > absTable;
-
-        for( size_t i = 0; i < targets1.size(); ++i )
-            if( targets1[i].size() > 1 )
-                throw std::runtime_error( "Table 1 still has multiple targets after merging" );
-        for( size_t i = 0; i < targets2.size(); ++i )
-            if( targets2[i].size() > 1 )
-                throw std::runtime_error( "Table 2 still has multiple targets after merging" );
-
-        for( size_t i = 0; i < merged1.size(); ++i )
-        {
-            if( containedBnodes1[i].empty() )
-                continue;
-            if( targets2[targets1[i][0]][0] != i )
-                throw std::runtime_error( "Table 1 still dont match after merging" );
-
-            absTable.push_back( std::make_pair( merged1[i], merged2[targets1[i][0]] ) );
-        }
-        for( size_t i = 0; i < merged2.size(); ++i )
-        {
-            if( containedBnodes2[i].empty() )
-                continue;
-            if( targets1[targets2[i][0]][0] != i )
-                throw std::runtime_error( "Table 2 still dont match after merging" );
-        }
-        std::sort( absTable.begin(), absTable.end() );
-        std::cout << "Tables match!" << std::endl;
-
-        for( size_t k = 0; k < absTable.size(); ++k )
-        {
-            std::cout << k << ": " << absTable[k].first << " --> " << absTable[k].second << std::endl;
-        }
-
-        // smooth merged nodes
-        //flatten selected nodes
-        {
-            std::vector< size_t > absCorresp1( absTable.size(), 0 );
-            std::vector< size_t > absCorresp2( absTable.size(), 0 );
-            for( std::vector< std::pair< size_t, size_t > >::const_iterator iter( absTable.begin() ); iter != absTable.end(); ++iter )
-            {
-                absCorresp1.push_back( iter->first );
-                absCorresp2.push_back( iter->second );
-            }
-            WHtreeProcesser proc1( &m_tree1 );
-            proc1.flattenSelection( absCorresp1, false );
-            WHtreeProcesser proc2( &m_tree2 );
-            proc2.flattenSelection( absCorresp2, false );
-        }
-
-        m_baseNodes1.clear();
-        m_baseNodes2.clear();
-
-        if( !fetchBaseNodes() )
-        {
-            std::cerr
-                            << "WARNING @ treeComparer::getCorrespTable(): base nodes are of mixed type (contain both leaves and nodes)"
-                            << std::endl;
-        }
-
-        if( m_verbose )
-        {
-            std::cout << reportBaseNodes() << std::endl;
-        }
-
-        if( absTable.size() != m_baseNodes1.size() || absTable.size() != m_baseNodes2.size() )
-            throw std::runtime_error( "table size is different from basenode number" );
-
-        // copy into corresptable
-        for( size_t i = 0; i < absTable.size(); ++i )
-        {
-            if( absTable[i].first != m_baseNodes1[i] )
-                throw std::runtime_error( "table id does npt correspond with basenode id" );
-            size_t target( absTable[i].second );
-
-            for( size_t j = 0; j < m_baseNodes2.size(); ++j )
-            {
-                if( target == m_baseNodes2[j] )
-                {
-                    correspTable.push_back( j );
-                    break;
-                }
-            }
-        }
-        break;
-    } // end big while
-
-    m_newCorrespondence = correspTable;
-
-    return;
-} // end treeComparer::getCorrespTable() -------------------------------------------------------------------------------------
-
-
 // PRIVATE member functionn
 
 
-bool treeComparer::mergeNodes( const WHtree &tree1, std::vector< size_t > &merged1,
-                std::vector< std::vector< size_t > > &containedBnodes1, std::vector< std::vector< size_t > > &targets1,
-                std::vector< size_t > &merged2, std::vector< std::vector< size_t > > &containedBnodes2, std::vector< std::vector<
-                                size_t > > &targets2 )
-{
-    bool change( false );
-
-    for( size_t i = 0; i < merged1.size(); ++i )
-    {
-        if( containedBnodes1[i].empty() ) // if this element has been already merged skip it
-            continue;
-
-        std::vector< size_t > mergedUpperNodes, mergedBaseNodes, mergedTargets;
-        mergedUpperNodes.push_back( merged1[i] );
-        mergedBaseNodes = ( containedBnodes1[i] );
-        mergedTargets = targets1[i];
-
-        size_t a( i ); // keeps track of the position in the table where the merged information will be kept
-
-        for( size_t j = 0; j < merged1.size(); ++j )
-        {
-            if( j == a || containedBnodes1[j].empty() ) // if this element has been already merged skip it
-                continue;
-
-            if( std::find_first_of( mergedTargets.begin(), mergedTargets.end(), targets1[j].begin(), targets1[j].end() )
-                            != mergedTargets.end() )
-            {
-                // they share at least one target, flag them for merging
-                a = std::min( a, j );
-                size_t b( std::max( a, j ) );
-                mergedUpperNodes.push_back( merged1[j] );
-
-                // get merged contained base nodes
-                mergedBaseNodes.insert( mergedBaseNodes.end(), containedBnodes1[j].begin(), containedBnodes1[j].end() );
-                std::sort( mergedBaseNodes.begin(), mergedBaseNodes.end() );
-                mergedBaseNodes.resize( std::unique( mergedBaseNodes.begin(), mergedBaseNodes.end() ) - mergedBaseNodes.begin(),
-                                0 );
-                containedBnodes1[a] = mergedBaseNodes;
-                containedBnodes1[b].clear();
-
-                // get merged targets
-                mergedTargets.insert( mergedTargets.end(), targets1[j].begin(), targets1[j].end() );
-                std::sort( mergedTargets.begin(), mergedTargets.end() );
-                mergedTargets.resize( std::unique( mergedTargets.begin(), mergedTargets.end() ) - mergedTargets.begin(), 0 );
-                targets1[a] = mergedTargets;
-                targets1[b].clear();
-
-                merged1[b] = a;
-                change = true;
-            }
-        } // end inner for
-
-        while( mergedUpperNodes.size() > 1 )
-        {
-            // if there was a merge at this step
-            size_t ancestor( mergedUpperNodes.front() );
-
-            for( size_t j = 1; j < mergedUpperNodes.size(); ++j )
-                ancestor = tree1.getCommonAncestor( ancestor, mergedUpperNodes[j] );
-
-            merged1[a] = ancestor;
-            mergedUpperNodes.clear();
-            mergedUpperNodes.push_back( ancestor );
-
-            std::vector< size_t > fullVector( tree1.getBaseNodes( ancestor ) );
-
-            if( fullVector.size() > mergedBaseNodes.size() )
-            {
-                // if the tree structure forces further merging
-                std::vector< size_t > missedVector;
-                missedVector.reserve( fullVector.size() - mergedBaseNodes.size() );
-
-                std::cout << "test 2" << std::endl;
-
-                for( size_t j = 0; j < fullVector.size(); ++j )
-                    if( std::find( mergedBaseNodes.begin(), mergedBaseNodes.end(), fullVector[j] ) != mergedBaseNodes.end() )
-                        missedVector.push_back( fullVector[j] );
-
-                for( size_t j = 0; j < merged1.size(); ++j )
-                {
-                    if( j == a || containedBnodes1[j].empty() ) // if this element has been already merged skip it
-                        continue;
-
-                    if( std::find_first_of( missedVector.begin(), missedVector.end(), containedBnodes1[j].begin(),
-                                    containedBnodes1[j].end() ) != missedVector.end() )
-                    {
-                        // they node group is contained
-                        a = std::min( a, j );
-                        size_t b( std::max( a, j ) );
-                        mergedUpperNodes.push_back( merged1[j] );
-
-                        // get merged contained base nodes
-                        mergedBaseNodes.insert( mergedBaseNodes.end(), containedBnodes1[j].begin(), containedBnodes1[j].end() );
-                        std::sort( mergedBaseNodes.begin(), mergedBaseNodes.end() );
-                        mergedBaseNodes.resize( std::unique( mergedBaseNodes.begin(), mergedBaseNodes.end() )
-                                        - mergedBaseNodes.begin(), 0 );
-                        containedBnodes1[a] = mergedBaseNodes;
-                        containedBnodes1[b].clear();
-
-                        // get merged targets
-                        mergedTargets.insert( mergedTargets.end(), targets1[j].begin(), targets1[j].end() );
-                        std::sort( mergedTargets.begin(), mergedTargets.end() );
-                        mergedTargets.resize( std::unique( mergedTargets.begin(), mergedTargets.end() ) - mergedTargets.begin(),
-                                        0 );
-                        targets1[a] = mergedTargets;
-                        targets1[b].clear();
-
-                        merged1[b] = a;
-                        change = true;
-                    }
-                } // end inner for
-            } // end if
-        } // end hierarchical while
-    } // end outer for
-
-    // Update oposite table if merges were performed
-    if( change )
-    {
-        for( size_t i = 0; i < merged2.size(); ++i )
-        {
-            if( containedBnodes2[i].empty() ) // if this element has been already merged skip it
-                continue;
-            for( size_t j = 0; j < targets2[i].size(); ++j )
-            {
-                size_t thisTarget( targets2[i][j] );
-                if( containedBnodes1[thisTarget].empty() ) // if target element was merged, substitute target index by new merged index
-                    targets2[i][j] = merged1[thisTarget];
-            }
-            std::sort( targets2[i].begin(), targets2[i].end() );
-            targets2[i].resize( std::unique( targets2[i].begin(), targets2[i].end() ) - targets2[i].begin(), 0 );
-        }
-    }
-
-    return change;
-} // end treeComparer::mergeNodes() -------------------------------------------------------------------------------------
-
-
-void treeComparer::reduceBaseNodes( size_t number )
-{
-    if( m_baseNodes1.size() > number )
-    {
-        std::vector< size_t > pruneNodes;
-        pruneNodes.reserve( m_baseNodes1.size() - number );
-        for( size_t i = number; i < m_baseNodes1.size(); ++i )
-        {
-            pruneNodes.push_back( m_baseNodes1[i] );
-        }
-        WHtreeProcesser proc1( &m_tree1 );
-        proc1.pruneSelection( pruneNodes );
-    }
-
-    if( m_baseNodes2.size() > number )
-    {
-        std::vector< size_t > pruneNodes;
-        pruneNodes.reserve( m_baseNodes2.size() - number );
-        for( size_t i = number; i < m_baseNodes2.size(); ++i )
-        {
-            pruneNodes.push_back( m_baseNodes2[i] );
-        }
-        WHtreeProcesser proc2( &m_tree2 );
-        proc2.pruneSelection( pruneNodes );
-    }
-
-    fetchBaseNodes();
-} // end treeComparer::reduceBaseNodes() -------------------------------------------------------------------------------------
 
 size_t treeComparer::findRelativeBasenodeID( size_t absoluteID, const std::vector< size_t > &baseNodes ) const
 {

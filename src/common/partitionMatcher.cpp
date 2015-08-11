@@ -1,3 +1,36 @@
+//---------------------------------------------------------------------------
+//
+// Project: hCLustering
+//
+// Whole-Brain Connectivity-Based Hierarchical Parcellation Project
+// David Moreno-Dominguez
+// d.mor.dom@gmail.com
+// moreno@cbs.mpg.de
+// www.cbs.mpg.de/~moreno//
+//
+// For more reference on the underlying algorithm and research they have been used for refer to:
+// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+//   A hierarchical method for whole-brain connectivity-based parcellation.
+//   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
+// - Moreno-Dominguez, D. (2014).
+//   Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography.
+//   PhD Thesis, Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig.
+//   ISBN 978-3-941504-45-5
+//
+// hClustering is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// http://creativecommons.org/licenses/by-nc/3.0
+//
+// hCLustering is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+//---------------------------------------------------------------------------
+
+
 
 // std library
 #include <vector>
@@ -17,9 +50,10 @@
 
 // PUBLIC member functions
 
-partitionMatcher::partitionMatcher( WHtree* const tree1, WHtree* const tree2, std::string matchFilename, bool verbose ) :
-    m_tree1( *tree1 ), m_tree2( *tree2 ), m_verbose( verbose )
+partitionMatcher::partitionMatcher( WHtree* const refTree, WHtree* const targetTree, std::string matchFilename, bool verbose ) :
+    m_refTree( *refTree ), m_targetTree( *targetTree ), m_verbose( verbose )
 {
+
     if( m_verbose )
     {
         std::cout<< "Testing trees basenodes..."<<std::flush;
@@ -34,14 +68,14 @@ partitionMatcher::partitionMatcher( WHtree* const tree1, WHtree* const tree2, st
     {
         std::cout<< ". OK"<<std::endl;
     }
-    if( m_tree1.getSelectedValues().empty() )
+    if( m_refTree.getSelectedValues().empty() )
     {
         throw std::runtime_error( "ERROR: Tree 1 has no saved partitions to be matched.");
     }
-    if( !m_tree2.getSelectedValues().empty() && m_tree2.getSelectedValues().size() != m_tree1.getSelectedValues().size() )
+    if( !m_targetTree.getSelectedValues().empty() && m_targetTree.getSelectedValues().size() != m_refTree.getSelectedValues().size() )
     {
         std::cerr<< "WARNING: Partitions of tree 1 and tree 2 have different sizes. Tree 2 partitions were cleared."<<std::endl;
-        m_tree2.clearPartitions();
+        m_targetTree.clearPartitions();
     }
 } // end partitionMatcher::partitionMatcher() -------------------------------------------------------------------------------------
 
@@ -54,10 +88,10 @@ std::string partitionMatcher::reportBaseNodes() const
 {
     std::stringstream message;
     {
-        size_t bMax( 0 ), bMin( m_tree1.getNumLeaves() ), numBig( 0 ), numSmall( 0 );
-        for( std::vector< size_t >::const_iterator iter( m_baseNodes1.begin() ); iter != m_baseNodes1.end(); ++iter )
+        size_t bMax( 0 ), bMin( m_refTree.getNumLeaves() ), numBig( 0 ), numSmall( 0 );
+        for( std::vector< size_t >::const_iterator iter( m_refBaseNodes.begin() ); iter != m_refBaseNodes.end(); ++iter )
         {
-            size_t currentSize( m_tree1.getNode( *iter ).getSize() );
+            size_t currentSize( m_refTree.getNode( *iter ).getSize() );
             if( currentSize > bMax )
             {
                 bMax = currentSize;
@@ -72,15 +106,15 @@ std::string partitionMatcher::reportBaseNodes() const
                 ++numSmall;
             }
         }
-        message << "Tree1: " << m_baseNodes1.size() << " base nodes. Biggest: " << bMax << ". Smallest: " << bMin << ". "
+        message << "Tree1: " << m_refBaseNodes.size() << " base nodes. Biggest: " << bMax << ". Smallest: " << bMin << ". "
                         << numBig << " >= 100." << numSmall << " <= 10." << std::endl;
     }
 
     {
-        size_t bMax( 0 ), bMin( m_tree2.getNumLeaves() ), numBig( 0 ), numSmall( 0 );
-        for( std::vector< size_t >::const_iterator iter( m_baseNodes2.begin() ); iter != m_baseNodes2.end(); ++iter )
+        size_t bMax( 0 ), bMin( m_targetTree.getNumLeaves() ), numBig( 0 ), numSmall( 0 );
+        for( std::vector< size_t >::const_iterator iter( m_targetBaseNodes.begin() ); iter != m_targetBaseNodes.end(); ++iter )
         {
-            size_t currentSize( m_tree2.getNode( *iter ).getSize() );
+            size_t currentSize( m_targetTree.getNode( *iter ).getSize() );
             if( currentSize > bMax )
             {
                 bMax = currentSize;
@@ -95,17 +129,17 @@ std::string partitionMatcher::reportBaseNodes() const
                 ++numSmall;
             }
         }
-        message << "Tree2: " << m_baseNodes2.size() << " base nodes. Biggest: " << bMax << ". Smallest: " << bMin << ". "
+        message << "Tree2: " << m_targetBaseNodes.size() << " base nodes. Biggest: " << bMax << ". Smallest: " << bMin << ". "
                         << numBig << " >= 100." << numSmall << " <= 10." << std::flush;
     }
-    message << std::endl<<"Trees have " <<  m_matchedBases1.size() << " Matched nodes "<< std::flush;
+    message << std::endl<<"Trees have " <<  m_refMatchedBases.size() << " Matched nodes "<< std::flush;
 
     std::string outMessage( message.str() );
     return outMessage;
 } // end partitionMatcher::reportBaseNodes() -------------------------------------------------------------------------------------
 
 
-bool partitionMatcher::matchColors()
+bool partitionMatcher::matchColors(bool exclusive)
 {
 
     std::cout<< "Matching colors"<<std::endl;
@@ -113,10 +147,18 @@ bool partitionMatcher::matchColors()
     std::vector< std::vector< WHcoord > > tree1partColors, tree2partColors;
     bool tree1changed( false );
 
+    std::vector< WHcoord >testColors(m_refTree.getSelectedColors( 0 ));
+    if(testColors.empty())
+    {
+        std::cout<< "Tree 1 has no saved colors for selected partitions. Ignoring color matching"<<std::endl;
+        return false;
+    }
+
+
     size_t numPartitions(0);
     {
-        std::vector< std::vector< size_t > > tree1partitions( m_tree1.getSelectedPartitions() );
-        std::vector< std::vector< size_t > > tree2partitions( m_tree2.getSelectedPartitions() );
+        std::vector< std::vector< size_t > > tree1partitions( m_refTree.getSelectedPartitions() );
+        std::vector< std::vector< size_t > > tree2partitions( m_targetTree.getSelectedPartitions() );
         if( tree1partitions.size() != tree2partitions.size() )
         {
             throw std::runtime_error( "ERROR: trees have different number of partitions.");
@@ -142,11 +184,11 @@ bool partitionMatcher::matchColors()
 
         std::vector< WHcoord > partColors1, partColors2;
 
-        partColors1 = m_tree1.getSelectedColors( i );
+        partColors1 = m_refTree.getSelectedColors( i );
 
 
-        const std::vector< size_t > partition1( m_tree1.getSelectedPartitions( i ) );
-        const std::vector< size_t > partition2( m_tree2.getSelectedPartitions( i ) );
+        const std::vector< size_t > partition1( m_refTree.getSelectedPartitions( i ) );
+        const std::vector< size_t > partition2( m_targetTree.getSelectedPartitions( i ) );
         size_t part1size( partition1.size() );
         size_t part2size( partition2.size() );
 
@@ -158,7 +200,7 @@ bool partitionMatcher::matchColors()
         std::vector< size_t > &matchValues2( matchSet2.second );
 
 
-        float partMatchValue( doPartMatch( partition1, partition2, &matchSet1, &matchSet2 ) );
+        float partMatchValue( evalOverlapPartMatch( partition1, partition2, &matchSet1, &matchSet2 ) );
 
 
         if( m_verbose )
@@ -173,7 +215,7 @@ bool partitionMatcher::matchColors()
             std:: cout <<" == Table 1: =="<<std::endl;
             for( size_t j = 0; j < matchTable1.size(); ++j )
             {
-                std::cout << "1:" << j << " (" << m_tree1.getNode(partition1[j]).getSize() << ";" <<  partColors1[j].m_x << "-" << partColors1[j].m_y << "-" << partColors1[j].m_z << ") -> 2:" ;
+                std::cout << "1:" << j << " (" << m_refTree.getNode(partition1[j]).getSize() << ";" <<  partColors1[j].m_x << "-" << partColors1[j].m_y << "-" << partColors1[j].m_z << ") -> 2:" ;
 
                 if(matchTable1[j] >= part2size )
                 {
@@ -199,7 +241,7 @@ bool partitionMatcher::matchColors()
             std:: cout <<" == Table 2: =="<<std::endl;
             for( size_t j = 0; j < matchTable2.size(); ++j )
             {
-                std::cout << "2:" << j <<";"<< m_tree2.getNode(partition2[j]).getSize() << " -> 1:" ;
+                std::cout << "2:" << j <<";"<< m_targetTree.getNode(partition2[j]).getSize() << " -> 1:" ;
 
                 if(matchTable2[j] >= part1size )
                 {
@@ -245,9 +287,16 @@ bool partitionMatcher::matchColors()
             // cluster j of part2 has no leaves in common with any cluster from part 1
             if( part1matched >= part1size )
             {
-                partColors2[j] = WHcoord();
                 test2[j] = true;
                 ++noMatch2;
+                if (exclusive)
+                {
+                    partColors2[j] = WHcoord(255,255,255);
+                }
+                else
+                {
+                    partColors2[j] = WHcoord();
+                }
             }
             else
             {
@@ -394,6 +443,11 @@ bool partitionMatcher::matchColors()
             {
                 test1[j] = true;
                 ++noMatch1;
+                if (exclusive)
+                {
+                    partColors1[j] = WHcoord(255,255,255);
+                    tree1changed = true;
+                }
             }
             else
             {
@@ -502,7 +556,7 @@ bool partitionMatcher::matchColors()
             std:: cout <<" == Table 1: =="<<std::endl;
             for( size_t j = 0; j < matchTable1.size(); ++j )
             {
-                std::cout << "1:" << j << " ("  << m_tree1.getNode(partition1[j]).getSize() << ";"<< partColors1[j].m_x << "-" << partColors1[j].m_y << "-" << partColors1[j].m_z << ") -> 2:" ;
+                std::cout << "1:" << j << " ("  << m_refTree.getNode(partition1[j]).getSize() << ";"<< partColors1[j].m_x << "-" << partColors1[j].m_y << "-" << partColors1[j].m_z << ") -> 2:" ;
 
                 if(matchTable1[j] >= part2size )
                 {
@@ -528,7 +582,7 @@ bool partitionMatcher::matchColors()
             std:: cout <<" == Table 2: =="<<std::endl;
             for( size_t j = 0; j < matchTable2.size(); ++j )
             {
-                std::cout << "2:" << j << " ("  << m_tree2.getNode(partition2[j]).getSize() << ";"<< partColors2[j].m_x << "-" << partColors2[j].m_y << "-" << partColors2[j].m_z << ") -> 1:" ;
+                std::cout << "2:" << j << " ("  << m_targetTree.getNode(partition2[j]).getSize() << ";"<< partColors2[j].m_x << "-" << partColors2[j].m_y << "-" << partColors2[j].m_z << ") -> 1:" ;
 
                 if(matchTable2[j] >= part1size )
                 {
@@ -576,8 +630,8 @@ bool partitionMatcher::matchColors()
 
     } // end partition for
 
-    m_tree1.insertPartColors( tree1partColors );
-    m_tree2.insertPartColors( tree2partColors );
+    m_refTree.insertPartColors( tree1partColors );
+    m_targetTree.insertPartColors( tree2partColors );
 
     return tree1changed;
 
@@ -594,32 +648,39 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
     bool autoDepth( predefDepth == 0 );
     size_t levelDepth( 1 );
 
-    if( overlapMatching )
+    if( m_verbose )
     {
-        std::cout << "Bidireactional cluster overlap partition-matching." << std::endl;
-    }
-    else
-    {
-        std::cout << "Signature based partition-matching . Lambda: " << lambda << std::endl;
+        if( overlapMatching )
+        {
+            std::cout << "Bidireactional cluster overlap partition-matching." << std::endl;
+        }
+        else
+        {
+            std::cout << "Signature based partition-matching . Lambda: " << lambda << std::endl;
+        }
+
+        if( autoDepth )
+        {
+            std::cout << "level depth assigned automatically depending on size of partition" << std::endl;
+        }
+        else
+        {
+            std::cout << "fixed level depth for partition exploration: " << predefDepth << std::endl;
+        }
     }
 
-    if( autoDepth )
+    if( !autoDepth )
     {
-        std::cout << "level depth assigned automatically depending on size of partition" << std::endl;
-    }
-    else
-    {
-        std::cout << "fixed level depth for partition exploration: " << predefDepth << std::endl;
         levelDepth = predefDepth;
     }
 
-    if( !m_tree2.getSelectedValues().empty() )
+    if( !m_targetTree.getSelectedValues().empty() )
     {
         std::cerr<< "WARNING @  partitionMatcher::findMatchingPartitions(): Tree 2 had partitions saved, they have been deleted."<<std::endl;
     }
-    m_tree2.clearPartitions();
+    m_targetTree.clearPartitions();
 
-    std::vector< std::vector< size_t > > tree1partitions( m_tree1.getSelectedPartitions() );
+    std::vector< std::vector< size_t > > tree1partitions( m_refTree.getSelectedPartitions() );
     std::vector< std::vector< size_t > > tree2partitions;
     tree2partitions.reserve( tree1partitions.size() );
     std::vector< float > tree2partValues;
@@ -680,19 +741,19 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
 
         // do first step
         {
-            const WHnode treeRoot( m_tree2.getRoot() );
+            const WHnode treeRoot( m_targetTree.getRoot() );
             lastPartition.push_back(treeRoot.getID());
 
             if( overlapMatching )
             {
                 std::pair< std::vector< size_t >, std::vector< size_t > > matchSet1;
                 std::pair< std::vector< size_t >, std::vector< size_t > > matchSet2;
-                lastValue =  doPartMatch( tree1partitions[i], lastPartition, &matchSet1, &matchSet2 );
+                lastValue =  evalOverlapPartMatch( tree1partitions[i], lastPartition, &matchSet1, &matchSet2 );
             }
             else
             {
                 std::vector< std::vector< bool > > tree2signature( getSignatureMatrix( lastPartition, TREE2 ) );
-                lastValue = evalPartitionMatch( lambda, tree1partitions[i].size(), tree1Signature, lastPartition.size(),tree2signature );
+                lastValue = evalSignaturePartMatch( lambda, tree1partitions[i].size(), tree1Signature, lastPartition.size(),tree2signature );
             }
         }// end first step
 
@@ -702,7 +763,7 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
             std::cout << "\rLast try: " << lastPartition.size() << " clusters. Match value: " << lastValue <<"            "<< std::flush;
 
             std::vector< std::vector< size_t > > derivedPartitionSet;
-            std::vector< std::vector< unsigned int > > derivedIndexes( m_tree2.getBranching(lastPartition, levelDepth, &derivedPartitionSet));
+            std::vector< std::vector< unsigned int > > derivedIndexes( m_targetTree.getBranching(lastPartition, levelDepth, &derivedPartitionSet));
 
             std::vector< double > derivedPartitionValues( derivedPartitionSet.size(), -1 );
             bool stopLoop( true );
@@ -717,12 +778,12 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
                 {
                     std::pair< std::vector< size_t >, std::vector< size_t > > matchSet1;
                     std::pair< std::vector< size_t >, std::vector< size_t > > matchSet2;
-                    derivedPartitionValues[j] =  doPartMatch( tree1partitions[i], derivedPartitionSet[j], &matchSet1, &matchSet2 );
+                    derivedPartitionValues[j] =  evalOverlapPartMatch( tree1partitions[i], derivedPartitionSet[j], &matchSet1, &matchSet2 );
                 }
                 else
                 {
                     std::vector< std::vector< bool > > derivedSignature( getSignatureMatrix( derivedPartitionSet[j], TREE2 ) );
-                    derivedPartitionValues[j] =( evalPartitionMatch( lambda,  tree1partitions[i].size(), tree1Signature, derivedPartitionSet[j].size(), derivedSignature ) );
+                    derivedPartitionValues[j] =( evalSignaturePartMatch( lambda,  tree1partitions[i].size(), tree1Signature, derivedPartitionSet[j].size(), derivedSignature ) );
                 }
             }// endFor
 
@@ -806,7 +867,7 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
 
     } // end big for
 
-    m_tree2.insertPartitions( tree2partitions, tree2partValues );
+    m_targetTree.insertPartitions( tree2partitions, tree2partValues );
 
 } // end partitionMatcher::findMatchingPartitions() -------------------------------------------------------------------------------------
 
@@ -814,26 +875,20 @@ void partitionMatcher::findMatchingPartitions( const float lambda, const size_t 
 
 void partitionMatcher::testBaseNodes()
 {
-    m_baseNodes1 = m_tree1.getRootBaseNodes();
-    m_baseNodes2 = m_tree2.getRootBaseNodes();
+    m_refBaseNodes = m_refTree.getRootBaseNodes();
+    m_targetBaseNodes = m_targetTree.getRootBaseNodes();
 
-    if( m_baseNodes1.empty() || m_baseNodes1.empty() )
+    if( m_refBaseNodes.empty() || m_refBaseNodes.empty() )
     {
         throw std::runtime_error( "ERROR @ partitionMatcher::testBaseNodes(): base node vectors are empty" );
     }
-    for( std::vector< size_t >::iterator iter( m_baseNodes1.begin() ); iter != m_baseNodes1.end(); ++iter )
+    if( !m_refTree.testRootBaseNodes() )
     {
-        if( m_tree1.getNode( *iter ).getHLevel() > 1 )
-        {
-            throw std::runtime_error( "ERROR @ partitionMatcher::testBaseNodes(): Tree1 is not purely with meta-leaves" );
-        }
+        throw std::runtime_error( "ERROR @ partitionMatcher::testBaseNodes(): reference tree is not purely with meta-leaves" );
     }
-    for( std::vector< size_t >::iterator iter( m_baseNodes2.begin() ); iter != m_baseNodes2.end(); ++iter )
+    if( !m_targetTree.testRootBaseNodes() )
     {
-        if( m_tree2.getNode( *iter ).getHLevel() > 1 )
-        {
-            throw std::runtime_error( "ERROR @ partitionMatcher::testBaseNodes(): Tree2 is not purely with meta-leaves" );
-        }
+        throw std::runtime_error( "ERROR @ partitionMatcher::testBaseNodes(): target tree is not purely with meta-leaves" );
     }
     return;
 } // end partitionMatcher::testBaseNodes() -------------------------------------------------------------------------------------
@@ -849,13 +904,13 @@ void partitionMatcher::loadCorrespondence( const std::string &matchFilename )
 
         std::vector< size_t > emptyVector1;
         std::vector< size_t > emptyVector2;
-        m_matchedBases1.swap( emptyVector1 );
-        m_matchedBases2.swap( emptyVector2 );
+        m_refMatchedBases.swap( emptyVector1 );
+        m_targetMatchedBases.swap( emptyVector2 );
 
         std::vector< std::vector< size_t > > emptyList1;
         std::vector< std::vector< size_t > > emptyList2;
-        m_matchedBases4Node1.swap( emptyList1 );
-        m_matchedBases4Node2.swap( emptyList2 );
+        m_refMatchedBases4Node.swap( emptyList1 );
+        m_targetMatchedBases4Node.swap( emptyList2 );
     }
 
     WFileParser parser( matchFilename );
@@ -881,7 +936,7 @@ void partitionMatcher::loadCorrespondence( const std::string &matchFilename )
     {
         fullIDtable.push_back( std::make_pair( string_utils::fromString< size_t >( matchStrings[i][0] ), string_utils::fromString< size_t >( matchStrings[i][1] ) ) );
     }
-    if( m_baseNodes1.size() != fullIDtable.size()  )
+    if( m_refBaseNodes.size() != fullIDtable.size()  )
     {
         throw std::runtime_error( "ERROR @ partitionMatcher::loadMatchTable(): correspondance vector size does not match basenodes vector" );
     }
@@ -889,22 +944,22 @@ void partitionMatcher::loadCorrespondence( const std::string &matchFilename )
 
     for( size_t i = 0; i < fullIDtable.size(); ++i)
     {
-        size_t rID1( findRelativeBasenodeID( fullIDtable[i].first, m_baseNodes1 ) );
-        if( rID1 >= m_baseNodes1.size())
+        size_t rID1( findRelativeBasenodeID( fullIDtable[i].first, m_refBaseNodes ) );
+        if( rID1 >= m_refBaseNodes.size())
         {
             throw std::runtime_error( "ERROR @ partitionMatcher::loadMatchTable(): node from correspondence table was not found among tree 1 basenodes" );
         }
-        size_t rID2( m_baseNodes2.size() + 1  );
+        size_t rID2( m_targetBaseNodes.size() + 1  );
 
-        if( fullIDtable[i].second < m_tree2.getNumNodes() )
+        if( fullIDtable[i].second < m_targetTree.getNumNodes() )
         {
-            rID2 = ( findRelativeBasenodeID( fullIDtable[i].second, m_baseNodes2 ) );
-            if( rID2 >= m_baseNodes2.size())
+            rID2 = ( findRelativeBasenodeID( fullIDtable[i].second, m_targetBaseNodes ) );
+            if( rID2 >= m_targetBaseNodes.size())
             {
                 throw std::runtime_error( "ERROR @ partitionMatcher::loadMatchTable(): node from correspondence table was not found among tree 2 basenodes" );
             }
-            m_matchedBases1.push_back( fullIDtable[i].first );
-            m_matchedBases2.push_back( fullIDtable[i].second );
+            m_refMatchedBases.push_back( fullIDtable[i].first );
+            m_targetMatchedBases.push_back( fullIDtable[i].second );
         }
         m_fullCorrespondence[ rID1 ] = rID2;
     }
@@ -914,36 +969,36 @@ void partitionMatcher::loadCorrespondence( const std::string &matchFilename )
 
 
     /// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    m_matchedBases4Node1.resize(m_tree1.getNumNodes());
-    for( size_t i = 0; i < m_matchedBases1.size(); ++i )
+    m_refMatchedBases4Node.resize(m_refTree.getNumNodes());
+    for( size_t i = 0; i < m_refMatchedBases.size(); ++i )
     {
-        m_matchedBases4Node1[m_matchedBases1[i]].push_back(i);
+        m_refMatchedBases4Node[m_refMatchedBases[i]].push_back(i);
     }
-    for( size_t i = 0; i < m_matchedBases4Node1.size(); ++i )
+    for( size_t i = 0; i < m_refMatchedBases4Node.size(); ++i )
     {
-        std::vector< nodeID_t > kids(m_tree1.getNode(i).getChildren());
+        std::vector< nodeID_t > kids(m_refTree.getNode(i).getChildren());
         for( size_t j = 0; j < kids.size(); ++j )
         {
             if( kids[j].first )
             {
-                m_matchedBases4Node1[i].insert(m_matchedBases4Node1[i].end(), m_matchedBases4Node1[kids[j].second].begin(), m_matchedBases4Node1[kids[j].second].end());
+                m_refMatchedBases4Node[i].insert(m_refMatchedBases4Node[i].end(), m_refMatchedBases4Node[kids[j].second].begin(), m_refMatchedBases4Node[kids[j].second].end());
             }
         }
     }
 
-    m_matchedBases4Node2.resize(m_tree2.getNumNodes());
-    for( size_t i = 0; i < m_matchedBases2.size(); ++i )
+    m_targetMatchedBases4Node.resize(m_targetTree.getNumNodes());
+    for( size_t i = 0; i < m_targetMatchedBases.size(); ++i )
     {
-        m_matchedBases4Node2[m_matchedBases2[i]].push_back(i);
+        m_targetMatchedBases4Node[m_targetMatchedBases[i]].push_back(i);
     }
-    for( size_t i = 0; i < m_matchedBases4Node2.size(); ++i )
+    for( size_t i = 0; i < m_targetMatchedBases4Node.size(); ++i )
     {
-        std::vector< nodeID_t > kids(m_tree2.getNode(i).getChildren());
+        std::vector< nodeID_t > kids(m_targetTree.getNode(i).getChildren());
         for( size_t j = 0; j < kids.size(); ++j )
         {
             if( kids[j].first )
             {
-                m_matchedBases4Node2[i].insert(m_matchedBases4Node2[i].end(), m_matchedBases4Node2[kids[j].second].begin(), m_matchedBases4Node2[kids[j].second].end());
+                m_targetMatchedBases4Node[i].insert(m_targetMatchedBases4Node[i].end(), m_targetMatchedBases4Node[kids[j].second].begin(), m_targetMatchedBases4Node[kids[j].second].end());
             }
         }
     }
@@ -965,21 +1020,21 @@ size_t partitionMatcher::findRelativeBasenodeID( size_t absoluteID, const std::v
     }
 } // end partitionMatcher::findRelativeBasenodeID() -------------------------------------------------------------------------------------
 
-std::vector< std::vector< bool > > partitionMatcher::getSignatureMatrix( const std::vector< size_t> &partition, const bool forTree1 ) const
+std::vector< std::vector< bool > > partitionMatcher::getSignatureMatrix( const std::vector< size_t> &partition, const bool forRefTree ) const
 {
-    std::vector< size_t >  membership( m_matchedBases1.size(), 0 );
+    std::vector< size_t >  membership( m_refMatchedBases.size(), 0 );
     const WHtree *treePointer;
     const std::vector< size_t > *baseNodePointer;
 
-    if( forTree1 )
+    if( forRefTree )
     {
-        treePointer = &m_tree1;
-        baseNodePointer = &m_matchedBases1;
+        treePointer = &m_refTree;
+        baseNodePointer = &m_refMatchedBases;
     }
     else
     {
-        treePointer = &m_tree2;
-        baseNodePointer = &m_matchedBases2;
+        treePointer = &m_targetTree;
+        baseNodePointer = &m_targetMatchedBases;
     }
 
     // for each partition cluster, find all their basenodes and update the basenode membership table
@@ -1040,24 +1095,24 @@ std::vector< std::vector< bool > > partitionMatcher::getSignatureMatrix( const s
 } // end partitionMatcher::getBaseNodeMembership() -------------------------------------------------------------------------------------
 
 
-float partitionMatcher::evalPartitionMatch(  const float lambda, size_t size1, std::vector< std::vector< bool > > &signature1,  size_t size2, std::vector< std::vector< bool > > &signature2 ) const
+float partitionMatcher::evalSignaturePartMatch(  const float lambda, size_t refSize, std::vector< std::vector< bool > >& refSignature,  size_t targetSize, std::vector< std::vector< bool > >& targetSignature ) const
 {
-    if( signature1.size() != signature2.size() )
-    {
+    if( refSignature.size() != targetSignature.size() )
+     {
         throw std::runtime_error( "ERROR @ partitionMatcher::evalPartitionMatch(): signature matrices do not have the same size" );
     }
 
     double sum1( 0 ), sum2( 0 ), sumProd( 0 );
-    double M ((signature1.size() * (signature1.size() -1)) / 2.0);
+    double M ((refSignature.size() * (refSignature.size() -1)) / 2.0);
 
 
-    for( size_t i = 0; i < signature1.size(); ++i )
+    for( size_t i = 0; i < refSignature.size(); ++i )
     {
         for( size_t j = 0; j < i; ++j )
         {
-            sum1 += signature1[i][j];
-            sum2 += signature2[i][j];
-            sumProd += signature1[i][j] * signature2[i][j];
+            sum1 += refSignature[i][j];
+            sum2 += targetSignature[i][j];
+            sumProd += refSignature[i][j] * targetSignature[i][j];
         }
     }
 
@@ -1069,20 +1124,20 @@ float partitionMatcher::evalPartitionMatch(  const float lambda, size_t size1, s
     double denominator2( ( mean2 ) * ( 1 - mean2 ) );
     double matchDist( numerator / sqrt( denominator1 * denominator2 ) );
 
-    double bigPart(std::max(size1,size2));
-    double smallPart(std::min(size1,size2));
+    double bigPart(std::max(refSize,targetSize));
+    double smallPart(std::min(refSize,targetSize));
 
     double final = matchDist + (lambda*(smallPart/bigPart));
 
     return final;
 } // end partitionMatcher::evalPartitionMatch() -------------------------------------------------------------------------------------
 
-size_t partitionMatcher::getClusterMatch( const size_t cluster1, const size_t cluster2 ) const
+size_t partitionMatcher::getClusterOverlap( const size_t cluster1, const size_t cluster2 ) const
 {
     size_t matchedLeaves( 0 );
 
-    std::vector< size_t > bases1 (m_matchedBases4Node1[cluster1]);
-    std::vector< size_t > bases2 (m_matchedBases4Node2[cluster2]);
+    std::vector< size_t > bases1 (m_refMatchedBases4Node[cluster1]);
+    std::vector< size_t > bases2 (m_targetMatchedBases4Node[cluster2]);
 
 
     for( size_t i = 0; i < bases1.size(); ++i )
@@ -1099,7 +1154,7 @@ size_t partitionMatcher::getClusterMatch( const size_t cluster1, const size_t cl
 
 
 
-std::pair< std::vector< std::vector< size_t > >, std::vector< std::vector< size_t > > > partitionMatcher::getClusterMatchMatrix(  const std::vector< size_t > &partition1, const std::vector< size_t > &partition2) const
+std::pair< std::vector< std::vector< size_t > >, std::vector< std::vector< size_t > > > partitionMatcher::getClusterOverlapMatrix(  const std::vector< size_t > &partition1, const std::vector< size_t > &partition2) const
 {
 
     std::vector< std::vector< size_t > > clusterMatchMatrix1( partition1.size(), std::vector< size_t >( partition2.size(), 0 ) );
@@ -1110,7 +1165,7 @@ std::pair< std::vector< std::vector< size_t > >, std::vector< std::vector< size_
     {
         for( size_t j = 0; j < partition2.size(); ++j )
         {
-            size_t thisMatch( getClusterMatch( partition1[i], partition2[j] ) );
+            size_t thisMatch( getClusterOverlap( partition1[i], partition2[j] ) );
             clusterMatchMatrix1[i][j] =  thisMatch;
             clusterMatchMatrix2[j][i] =  thisMatch;
 
@@ -1146,12 +1201,12 @@ std::pair< std::vector< size_t >, std::vector< size_t > > partitionMatcher::getC
     return std::make_pair( matchTable, matchValues );
 } // end partitionMatcher::getMatchTable() -------------------------------------------------------------------------------------
 
-double partitionMatcher::doPartMatch( const std::vector< size_t > &partition1, const std::vector< size_t > &partition2,
+double partitionMatcher::evalOverlapPartMatch( const std::vector< size_t > &partition1, const std::vector< size_t > &partition2,
                                     std::pair< std::vector< size_t >, std::vector< size_t > > *tablePoint1,
                                     std::pair< std::vector< size_t >, std::vector< size_t > > *tablePoint2 ) const
 {
 
-    std::pair< std::vector< std::vector< size_t > >, std::vector< std::vector< size_t > > > clusterMatchMatrices( getClusterMatchMatrix( partition1, partition2 ) );
+    std::pair< std::vector< std::vector< size_t > >, std::vector< std::vector< size_t > > > clusterMatchMatrices( getClusterOverlapMatrix( partition1, partition2 ) );
     std::vector< std::vector< size_t > > &clusterMatchMatrix1( clusterMatchMatrices.first );
     std::vector< std::vector< size_t > > &clusterMatchMatrix2( clusterMatchMatrices.second );
 
@@ -1364,7 +1419,7 @@ double partitionMatcher::doPartMatch( const std::vector< size_t > &partition1, c
         }
     }
     double addedSizeDouble( addedSize );
-    double quality(addedSizeDouble / m_matchedBases1.size());
+    double quality(addedSizeDouble / m_refMatchedBases.size());
 
 //    std::cout << "Q: "<< quality <<". S: " << partition2.size() << ". Total matches: " << totalMatches;
 //    if (  reDone > 0)
@@ -1475,48 +1530,11 @@ WHcoord partitionMatcher::shiftColor( const WHcoord &color, const size_t shiftIn
     return outColor;
 } // end partitionMatcher::shiftColor() -------------------------------------------------------------------------------------
 
-std::vector< size_t> partitionMatcher::getRelMatchedBases( const size_t cluster, const bool forTree1 ) const
+
+void partitionMatcher::searchPartition( const size_t maxPartSize, const std::vector< size_t > &thisPart, std::vector< std::vector< size_t > >* partVectorPtr)
 {
-
-    const WHtree *treePointer;
-    const std::vector< size_t > *matchedNodesPointer, *baseNodesPointer;
-
-    if( forTree1 )
-    {
-        treePointer = &m_tree1;
-        matchedNodesPointer = &m_matchedBases1;
-     ///   baseNodesPointer = &m_baseNodes1;
-    }
-    else
-    {
-        treePointer = &m_tree2;
-        matchedNodesPointer = &m_matchedBases2;
-      ///  baseNodesPointer = &m_baseNodes2;
-    }
-
-    // for each partition cluster, find all their basenodes
-    const WHtree &tree( *treePointer );
-    std::vector< size_t > matchedBases( *matchedNodesPointer );
-   /// std::vector< size_t > baseNodes( *baseNodesPointer );
-
-    const std::vector< size_t > allBases( tree.getBaseNodes( cluster ) );
-    std::vector< size_t > nodeBases;
-
-    for( size_t i = 0; i < allBases.size(); ++i )
-    {
-        std::vector<size_t>::const_iterator findIter( std::find(matchedBases.begin(),matchedBases.end(),allBases[i]) );
-        if( findIter != matchedBases.end() )
-        {
-            nodeBases.push_back( findIter - matchedBases.begin() );
-        }
-    }
-
-    return nodeBases;
-} // end partitionMatcher::getMatchedBases() -------------------------------------------------------------------------------------
-
-void partitionMatcher::searchPartition( const size_t partSize, const std::vector< size_t > &thisPart, std::vector< std::vector< size_t > > &partVector)
-{
-    if (thisPart.size() >= partSize)
+    std::vector< std::vector< size_t > >& partVector( *partVectorPtr );
+    if (thisPart.size() >= maxPartSize)
     {
         partVector.push_back( thisPart );
         return;
@@ -1527,7 +1545,7 @@ void partitionMatcher::searchPartition( const size_t partSize, const std::vector
 
         {
 
-            const WHnode thisBranch( m_tree2.getNode( thisPart[j] ) );
+            const WHnode thisBranch( m_targetTree.getNode( thisPart[j] ) );
             // if this branch is a base node, dont consider it
             if( thisBranch.getHLevel() == 1 )
             {
@@ -1553,7 +1571,7 @@ void partitionMatcher::searchPartition( const size_t partSize, const std::vector
                 partBranched.insert( partBranched.begin() + j, branchNodes.begin(), branchNodes.end() );
             }
         }
-        searchPartition( partSize, partBranched, partVector );
+        searchPartition( maxPartSize, partBranched, &partVector );
     } // endFor
     return;
 }

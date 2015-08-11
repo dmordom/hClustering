@@ -1,0 +1,308 @@
+\hypertarget{namespacestring__utils}{\section{string\-\_\-utils \-Namespace \-Reference}
+\label{namespacestring__utils}\index{string\-\_\-utils@{string\-\_\-utils}}
+}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\std\-::string \hyperlink{namespacestring__utils_a7d3311ef9559a1b5e6fdef079b28cb47}{to\-String} (const \-T \&value)
+\item 
+{\footnotesize template$<$typename T $>$ }\\\-T \hyperlink{namespacestring__utils_a7058154de83b4b508107b4ef172f2b8f}{from\-String} (const std\-::string \&str)
+\item 
+std\-::string \hyperlink{namespacestring__utils_a7361b7aeffdaecd0ee490f6f12796339}{r\-Trim} (const std\-::string \&source, const std\-::string \&t=\hyperlink{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E})
+\item 
+std\-::string \hyperlink{namespacestring__utils_a7e604334a4cdd40e0837691c6ce5164e}{l\-Trim} (const std\-::string \&source, const std\-::string \&t=\hyperlink{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E})
+\item 
+std\-::string \hyperlink{namespacestring__utils_a63713e559707c9cc927d62729fe424c9}{trim} (const std\-::string \&source, const std\-::string \&t=\hyperlink{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E})
+\item 
+std\-::string \hyperlink{namespacestring__utils_a4a692eb62e01ecc0757df7d2f53d3f36}{to\-Upper} (const std\-::string \&source)
+\item 
+std\-::string \hyperlink{namespacestring__utils_a213604a8351148a005bb3bea470358e1}{to\-Lower} (const std\-::string \&source)
+\item 
+std\-::vector$<$ std\-::string $>$ \hyperlink{namespacestring__utils_a535b9b20922e895321420967d2030116}{tokenize} (const std\-::string \&source, const std\-::string \&delim=\hyperlink{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}, bool compress=true)
+\item 
+{\footnotesize template$<$class T $>$ }\\std\-::ostream \& \hyperlink{namespacestring__utils_a2bb23cf681e96a435cf42db0f0faa727}{operator$<$$<$} (std\-::ostream \&os, const std\-::vector$<$ \-T $>$ \&v)
+\item 
+{\footnotesize template$<$class T $>$ }\\std\-::istream \& \hyperlink{namespacestring__utils_a54c6f86a6eb63870ef09e19e7da103f3}{operator$>$$>$} (std\-::istream \&in, std\-::vector$<$ \-T $>$ \&v)
+\item 
+{\footnotesize template$<$class T $>$ }\\std\-::ostream \& \hyperlink{namespacestring__utils_a8fc49064166e7829fe1c2ff5d4921e5f}{operator$<$$<$} (std\-::ostream \&os, const std\-::list$<$ \-T $>$ \&l)
+\item 
+{\footnotesize template$<$class T $>$ }\\std\-::ostream \& \hyperlink{namespacestring__utils_a290aeee844eb37e1c76a23243d5d8ee2}{operator$<$$<$} (std\-::ostream \&os, const std\-::set$<$ \-T $>$ \&s)
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\-::string \hyperlink{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}
+\begin{DoxyCompactList}\small\item\em \-These characters are regarded as whitespaces. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Some utilities for string manipulation and output operations. \-Please note that the overloaded ostream output operators aren't in a separate namespace but the string manipulation functions. \-This is because of short use of e.\-g. the {\ttfamily $<$$<$} operator instead of {\ttfamily string\-\_\-utils\-::operator( cout, my\-Vector)}.
+
+\-The reason for not using the \-Boost trimming functions is, that \-Boost providing just \-Whitespace trimming depending on the current locale, but we might want to trim other character sets too.
+
+\-The reason for not using the \-Boost case switching functions is that we want those functions to return a {\ttfamily std\-::string} copy which is modified to make some call chains ala\-: {\ttfamily foo( r\-Trim( to\-Lower( str ), \char`\"{}bar\char`\"{} ) );}.
+
+\-The reason for not using \-Boosts \-Tokenizer is, that this tokenizer, is much most simplest to use \-:). 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{namespacestring__utils_a7058154de83b4b508107b4ef172f2b8f}{\index{string\-\_\-utils@{string\-\_\-utils}!from\-String@{from\-String}}
+\index{from\-String@{from\-String}!string_utils@{string\-\_\-utils}}
+\subsubsection[{from\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ \-T {\bf string\-\_\-utils\-::from\-String} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{namespacestring__utils_a7058154de83b4b508107b4ef172f2b8f}
+\-Convert a given string to a value of a certain type. \-The target type must provide a operator$>$$>$ to work or be a standard scalar type.
+
+
+\begin{DoxyTemplParams}{\-Template Parameters}
+{\em \-T} & the source type. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{\-Parameters}
+{\em str} & the value to cast to string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the string. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a7e604334a4cdd40e0837691c6ce5164e}{\index{string\-\_\-utils@{string\-\_\-utils}!l\-Trim@{l\-Trim}}
+\index{l\-Trim@{l\-Trim}!string_utils@{string\-\_\-utils}}
+\subsubsection[{l\-Trim}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf string\-\_\-utils\-::l\-Trim} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source, }
+\item[{const std\-::string \&}]{t = {\ttfamily \-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a7e604334a4cdd40e0837691c6ce5164e}
+\-Trims any occurence of each character given in parameter t from the start (or left side) of the given string.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to trim \\
+\hline
+{\em t} & \-String representing a set containg all trimmable characters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A copy of the trimmed string 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a2bb23cf681e96a435cf42db0f0faa727}{\index{string\-\_\-utils@{string\-\_\-utils}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!string_utils@{string\-\_\-utils}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\-::ostream\& string\-\_\-utils\-::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\-::ostream \&}]{os, }
+\item[{const std\-::vector$<$ \-T $>$ \&}]{v}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a2bb23cf681e96a435cf42db0f0faa727}
+\-Writes every vector to an output stream such as cout, if its elements have an output operator defined.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em os} & \-The output stream where the elements are written to \\
+\hline
+{\em v} & \-Vector containing the elements \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The output stream again. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a8fc49064166e7829fe1c2ff5d4921e5f}{\index{string\-\_\-utils@{string\-\_\-utils}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!string_utils@{string\-\_\-utils}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\-::ostream\& string\-\_\-utils\-::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\-::ostream \&}]{os, }
+\item[{const std\-::list$<$ \-T $>$ \&}]{l}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a8fc49064166e7829fe1c2ff5d4921e5f}
+\-Writes every list to an output stream such as cout, if its elements have an output operator defined.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em os} & \-The output stream where the elements are written to \\
+\hline
+{\em l} & \-List containing the elements \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The output stream again. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a290aeee844eb37e1c76a23243d5d8ee2}{\index{string\-\_\-utils@{string\-\_\-utils}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!string_utils@{string\-\_\-utils}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\-::ostream\& string\-\_\-utils\-::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\-::ostream \&}]{os, }
+\item[{const std\-::set$<$ \-T $>$ \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a290aeee844eb37e1c76a23243d5d8ee2}
+\-Writes every set to an output stream such as cout, if its elements have an output operator defined.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em os} & \-The output stream where the elements are written to \\
+\hline
+{\em s} & set containing the elements \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The output stream again. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a54c6f86a6eb63870ef09e19e7da103f3}{\index{string\-\_\-utils@{string\-\_\-utils}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!string_utils@{string\-\_\-utils}}
+\subsubsection[{operator$>$$>$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ std\-::istream\& string\-\_\-utils\-::operator$>$$>$ (
+\begin{DoxyParamCaption}
+\item[{std\-::istream \&}]{in, }
+\item[{std\-::vector$<$ \-T $>$ \&}]{v}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a54c6f86a6eb63870ef09e19e7da103f3}
+\-Write an input stream into the given vector. \-The delimiter is implicitly set to \char`\"{}, \char`\"{}. \-Also wrapping brackets '\mbox{[}' '\mbox{]}' are expected. \-In general this is the opposite of the output operator above. \begin{DoxyWarning}{\-Warning}
+\-The inputstream is first written into a string then the convertion into \-T via from\-String takes place. 
+
+\-The delimiter should not be in an elements string representation since then the tokenizer may gets confused
+\end{DoxyWarning}
+
+\begin{DoxyParams}{\-Parameters}
+{\em in} & \-Input stream \\
+\hline
+{\em v} & \-Vector where to store the elements.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-The input stream again 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a7361b7aeffdaecd0ee490f6f12796339}{\index{string\-\_\-utils@{string\-\_\-utils}!r\-Trim@{r\-Trim}}
+\index{r\-Trim@{r\-Trim}!string_utils@{string\-\_\-utils}}
+\subsubsection[{r\-Trim}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf string\-\_\-utils\-::r\-Trim} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source, }
+\item[{const std\-::string \&}]{t = {\ttfamily \-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a7361b7aeffdaecd0ee490f6f12796339}
+\-Trims any occurence of each character given in parameter t from the end (or right side) of the given string.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to trim \\
+\hline
+{\em t} & \-String representing a set containg all trimmable characters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A copy of the trimmed string 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a535b9b20922e895321420967d2030116}{\index{string\-\_\-utils@{string\-\_\-utils}!tokenize@{tokenize}}
+\index{tokenize@{tokenize}!string_utils@{string\-\_\-utils}}
+\subsubsection[{tokenize}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::string $>$ {\bf string\-\_\-utils\-::tokenize} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source, }
+\item[{const std\-::string \&}]{delim = {\ttfamily \-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}, }
+\item[{bool}]{compress = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a535b9b20922e895321420967d2030116}
+\-Splits the given string into a vector of strings (so called tokens).
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to tokenize \\
+\hline
+{\em compress} & \-If true, charactes matching between two tokens are collapsed and handled as just one character. \\
+\hline
+{\em delim} & \-String representing a set containg all characters considered as whitespace. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A vector of strings containing the tokens. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a213604a8351148a005bb3bea470358e1}{\index{string\-\_\-utils@{string\-\_\-utils}!to\-Lower@{to\-Lower}}
+\index{to\-Lower@{to\-Lower}!string_utils@{string\-\_\-utils}}
+\subsubsection[{to\-Lower}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf string\-\_\-utils\-::to\-Lower} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a213604a8351148a005bb3bea470358e1}
+\-Transforms all characters in the given string into lower case characters.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to transpose. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A copy of the lower case only string 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a7d3311ef9559a1b5e6fdef079b28cb47}{\index{string\-\_\-utils@{string\-\_\-utils}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!string_utils@{string\-\_\-utils}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\-::string {\bf string\-\_\-utils\-::to\-String} (
+\begin{DoxyParamCaption}
+\item[{const \-T \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{namespacestring__utils_a7d3311ef9559a1b5e6fdef079b28cb47}
+\-Convert a given value to a string. \-The input value must provide a operator$<$$<$ or be a standard scalar type.
+
+
+\begin{DoxyTemplParams}{\-Template Parameters}
+{\em \-T} & the source type. \-You do not need to specify this directly as it can be deducted from the given parameter \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{\-Parameters}
+{\em value} & the value to cast to string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the string. 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a4a692eb62e01ecc0757df7d2f53d3f36}{\index{string\-\_\-utils@{string\-\_\-utils}!to\-Upper@{to\-Upper}}
+\index{to\-Upper@{to\-Upper}!string_utils@{string\-\_\-utils}}
+\subsubsection[{to\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf string\-\_\-utils\-::to\-Upper} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a4a692eb62e01ecc0757df7d2f53d3f36}
+\-Transforms all characters in the given string into upper case characters.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to transpose. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A copy of the upper case only string 
+\end{DoxyReturn}
+\hypertarget{namespacestring__utils_a63713e559707c9cc927d62729fe424c9}{\index{string\-\_\-utils@{string\-\_\-utils}!trim@{trim}}
+\index{trim@{trim}!string_utils@{string\-\_\-utils}}
+\subsubsection[{trim}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string {\bf string\-\_\-utils\-::trim} (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{source, }
+\item[{const std\-::string \&}]{t = {\ttfamily \-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}
+\end{DoxyParamCaption}
+)}}\label{namespacestring__utils_a63713e559707c9cc927d62729fe424c9}
+\-Trims any occurence of each character given in parameter t from both ends (right and left side) of the given string.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em source} & \-String to trim \\
+\hline
+{\em t} & \-String representing a set containg all trimmable characters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-A copy of the trimmed string 
+\end{DoxyReturn}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}{\index{string\-\_\-utils@{string\-\_\-utils}!\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E@{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}
+\index{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E@{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}!string_utils@{string\-\_\-utils}}
+\subsubsection[{\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string {\bf string\-\_\-utils\-::\-W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}}\label{namespacestring__utils_a716c3d0cc1ab19bd56d1b2aa2a50662f}
+
+
+\-These characters are regarded as whitespaces. 
+
+\-We consider the following characters as whitespace\-:
+\begin{DoxyItemize}
+\item {\ttfamily $\backslash$r} carriage return
+\item {\ttfamily $\backslash$n} newline
+\item {\ttfamily $\backslash$t} tab
+\item {\ttfamily ' '} space 
+\end{DoxyItemize}
