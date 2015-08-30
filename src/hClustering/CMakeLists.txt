@@ -58,7 +58,7 @@ SET( COMMON_SRCS
     ../common/compactTract.cpp
     ../common/distBlock.cpp
 
-    ../common/distMatComputer.cpp #******
+    ../common/distMatComputer.cpp #*****
 
     ../common/fileManager.cpp
     ../common/fileManagerFactory.cpp

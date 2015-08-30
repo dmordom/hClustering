@@ -56,6 +56,9 @@ distMatComputer::distMatComputer( const std::string& roiFilename, const float th
         std::cout << "Final normalized threshold: " << m_tractThreshold << std::endl;
     }
 
+    m_startingBlock = std::make_pair< size_t, size_t >( 0, 0 );
+    m_finishBlock = m_startingBlock;
+
 }
 
 void distMatComputer::setBlockSize( float memory, size_t blockSize )
@@ -180,14 +183,212 @@ void distMatComputer::setBlockSize( float memory, size_t blockSize )
         std::cout <<"Using "<< m_subBlocksPerBlock <<"x"<< m_subBlocksPerBlock <<" tractogram sub-blocks of "<< m_subBlockSize <<" tracts for each distance block."<< std::endl;
         std::cout << "Expected memory usage: " << ( memoryUsageBytes / (1024 * 1024 ) / 1024.) << " GBytes (" << memoryUsageBytes / (1024 * 1024) << " MBytes). [ distBlock: " << distBlockBytes/(1024 * 1024) << " MB. tract subBlocks: 2 x " << tractBlockBytes/(1024 * 1024) << " MB. ]" << std::endl;
     }
+
+    if( m_finishBlock.first == 0 && m_finishBlock.second == 0 )
+    {
+        m_finishBlock.first = m_blocksPerRow - 1;
+        m_finishBlock.second = m_blocksPerRow - 1;
+    }
+    else if( m_finishBlock.first > 0 || m_finishBlock.second > 0 )
+    {
+        setFinishBlock( m_finishBlock.first, m_finishBlock.second );
+    }
+
+    if( m_startingBlock.first > 0 || m_startingBlock.second > 0 )
+    {
+        setStartingBlock( m_startingBlock.first, m_startingBlock.second );
+    }
+
     m_ready2go = true;
     return;
 }
 
+void distMatComputer::setStartingBlock( size_t start_row, size_t start_column )
+{
+    if( start_column < start_row )
+    {
+        size_t newColTemp( start_row );
+        start_row = start_column;
+        start_column = newColTemp;
+    }
 
+    if( m_ready2go )
+    {
+        if( start_row >= m_blocksPerRow )
+        {
+            std::cerr << "WARNING @ distMatComputer::setStartingBlock: starting block indices are higher than number of matrix blocks, setting to 0;" << std::endl;
+            m_startingBlock.first = 0;
+            m_startingBlock.second = 0;
+        }
+        else
+        {
+            if( start_row > m_finishBlock.first || ( start_row == m_finishBlock.first && start_column >= m_finishBlock.second ) )
+            {
+                std::cerr << "WARNING @ distMatComputer::setStartingBlock: starting block indices are higher than preset finishing block indices, setting to 0;" << std::endl;
+                m_startingBlock.first = 0;
+                m_startingBlock.second = 0;
+            }
+            m_startingBlock.first = start_row;
+            m_startingBlock.second = start_column;
+        }
+    }
+    else
+    {
+        m_startingBlock.first = start_row;
+        m_startingBlock.second = start_column;
+    }
+}
+
+void distMatComputer::setFinishBlock( size_t finish_row, size_t finish_column )
+{
+    if( finish_column < finish_row )
+    {
+        size_t newColTemp( finish_row );
+        finish_row = finish_column;
+        finish_column = newColTemp;
+    }
+
+    if( m_ready2go )
+    {
+        if( finish_row >= m_blocksPerRow )
+        {
+            std::cerr << "WARNING @ distMatComputer::setFinishBlock: finish block indices are higher than number of matrix blocks, setting to final block indices;" << std::endl;
+            m_finishBlock.first = m_blocksPerRow - 1;
+            m_finishBlock.second = m_blocksPerRow - 1;
+        }
+        else
+        {
+            if( finish_row < m_startingBlock.first || ( finish_row == m_startingBlock.first && finish_column <= m_startingBlock.second ) )
+            {
+                std::cerr << "WARNING @ distMatComputer::setFinishBlock: finish block indices are higher than preset starting block indices, setting to max;" << std::endl;
+                m_finishBlock.first = m_blocksPerRow - 1;
+                m_finishBlock.second = m_blocksPerRow - 1;
+            }
+            m_finishBlock.first = finish_row;
+            m_finishBlock.second = finish_column;
+        }
+    }
+    else
+    {
+        m_finishBlock.first = finish_row;
+        m_finishBlock.second = finish_column;
+    }
+}
+
+
+
+void distMatComputer::doDistBlocks()
+{
+    //variables to keep tract of min and max values
+    float maxValue(-1), minValue(2);
+
+    // variables for progress printout
+    time_t distmatStartTime(time(NULL)), currentTime(time(NULL));
+    size_t blockProgress(0), progressInt(0), elapsedTime(0), expectedRemain(0), totalBlocks(0);
+    float progress(0);
+
+    // just to test the number of blocks that will be computed
+    for (size_t row = m_startingBlock.first ; row <= m_finishBlock.first ; ++row)
+    {
+        for (size_t column = row ; column < m_blocksPerRow ; ++column)
+        {
+            if( row == m_startingBlock.first && column < m_startingBlock.second )
+            {
+                continue;
+            }
+            if( row == m_finishBlock.first && column > m_finishBlock.second )
+            {
+                continue;
+            }
+            if( row == column )
+            {
+                ++totalBlocks;
+            }
+            else
+            {
+                totalBlocks += 2;
+            }
+        }
+    }
+
+    // loop through rows of the distance matrix (each element will be a separate distance block)
+    for (size_t row = m_startingBlock.first ; row <= m_finishBlock.first ; ++row)
+    {
+        // loop through columns of the distance matrix (each element will be a separate distance block)
+        for (size_t column = row ; column < m_blocksPerRow ; ++column)
+        {
+            if( row == m_startingBlock.first && column < m_startingBlock.second )
+            {
+                continue;
+            }
+
+            if( row == m_finishBlock.first && column > m_finishBlock.second )
+            {
+                 continue;
+            }
+
+            std::pair< float, float > blockMinMax = computeDistBlock( row, column );
+
+            if( blockMinMax.first < minValue )
+            {
+                minValue = blockMinMax.first;
+            }
+            if( blockMinMax.second > maxValue )
+            {
+                maxValue = blockMinMax.second;
+            }
+            //update progress
+            if( row == column )
+            {
+                ++blockProgress;
+            }
+            else
+            {
+                blockProgress += 2;
+            }
+
+            if( m_verbose )
+            {
+                currentTime = (time(NULL));
+
+                // printout progress
+                progress = ( blockProgress * 100.) / totalBlocks;
+                progressInt = progress;
+
+                currentTime = ( time( NULL ) );
+                elapsedTime = ( difftime( currentTime, distmatStartTime ) );
+                expectedRemain = ( elapsedTime * ( ( 100.-progress ) / progress ));
+
+                std::stringstream message;
+                message << "\r" << progressInt <<  "% of blocks completed (" << blockProgress/2. << " of " << totalBlocks/2. << "). ";
+                message << "Elapsed: " << elapsedTime/3600 <<"h "<<  (elapsedTime%3600)/60 <<"' "<< ((elapsedTime%3600)%60) <<"\". ";
+                message << "Remaining: "<< expectedRemain/3600 <<"h "<<  (expectedRemain%3600)/60 <<"' "<< ((expectedRemain%3600)%60) <<"\"           ";
+                std::cout << message.str() <<std::endl;
+
+            }
+        }
+    }
+
+    currentTime = ( time( NULL ) );
+    elapsedTime = ( difftime( currentTime, distmatStartTime ) );
+    std::cout << "100% of blocks completed (" << totalBlocks/2. << " of matrix total " << (m_blocksPerRow*m_blocksPerRow)/2. << "). ";
+    std::cout << "Elapsed time: " << elapsedTime/3600 <<"h "<<  (elapsedTime%3600)/60 <<"' "<< ((elapsedTime%3600)%60) <<"\". " << std::endl;
+    std::cout<<"Total MAX value: "<< maxValue <<". Total min value: "<< minValue <<std::endl;
+
+}// end "doDistBlocks()" -----------------------------------------------------------------
+
+
+std::pair< float, float > distMatComputer::computeDistBlock( size_t row, size_t column )
+{
+    //variables to keep tract of min and max values
+    float maxValue(-1), minValue(2);
+
+    ///////////////
+
+    return std::make_pair< float, float >( minValue, maxValue );
+}// end "computeDistBlock()" -----------------------------------------------------------------
 
 /*
-// "do_dist_blocks()": compute and write down the distance blocks
 void distMatComputer::doDistBlocks()
 {
 
@@ -202,28 +403,17 @@ void distMatComputer::doDistBlocks()
     float progress(0);
 
     // loop through rows of the distance matrix (each element will be a separate distance block)
-    for (int row=0 ; row < m_blocksPerRow ; ++row)
+    for (size_t row = m_startingBlock.first ; row <= m_finishBlock.first ; ++row)
     {
-
-#if 0
-        if( row < 3)
-        {
-           continue;
-        }
-#endif
-
         // get subset of row seeds
-        size_t first_row_seed(row*m_blockSize), postlast_row_seed((row+1)*m_blockSize);
-        if (postlast_row_seed>m_coordinates.size())
+        size_t first_row_seed( row * m_blockSize ), postlast_row_seed( ( row + 1 ) * m_blockSize );
+        if ( postlast_row_seed > m_coordinates.size() )
         {
             postlast_row_seed = m_coordinates.size();
         }
-        std::vector<WHcoord> seed_set_row(&m_coordinates[first_row_seed], &m_coordinates[postlast_row_seed]);
 
-
-        if (m_blockSize==m_subBlockSize)
+        if ( m_blockSize == m_subBlockSize )
         {
-
             time_t block_start(time(NULL));
             std::cout <<"Loading row block "<<row<<"..."<< std::flush;
 
@@ -593,6 +783,7 @@ void distMatComputer::doDistBlocks()
     std::cout<<"Total MAX value: "<< max_value <<". Total min value: "<< min_value <<std::endl;
 
 }// end "do_dist_blocks()" -----------------------------------------------------------------
+
 
 
 

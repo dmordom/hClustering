@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <cstdio>
 #include <algorithm>
+#include <utility>
 #include <boost/random/uniform_01.hpp>
 #include <boost/random/normal_distribution.hpp>
 #include <boost/random/bernoulli_distribution.hpp>
@@ -83,11 +84,25 @@ public:
     // === PUBLIC MEMBER FUNCTIONS ===
 
     /**
-     * Calculates memory usage and size of the tractogram sub blocks to be loaded, and sub blocks to divide the matrix in
+     * Calculates memory usage, blocks to divide the matrix in and size of the tractogram sub blocks to be loaded
      * \param memory the available RAM memory in GBytes
      * \param blockSize the desired size for the distBlocks, if 0 maximum size for the available memory will be used
      */
     void setBlockSize( float memory, size_t blockSize = 0 );
+
+    /**
+     * Sets a custom block index to start the matrix computation from, previous blocks will not be computed
+     * \param start_row row index of the starting block
+     * \param start_column column index of the starting block
+     */
+    void setStartingBlock( size_t start_row, size_t start_column );
+
+    /**
+     * Sets a custom block index to finish the matrix computation at, later blocks will not be computed
+     * \param finish_row row index of the finishing block
+     * \param finish_column column index of the finishing block
+     */
+    void setFinishBlock( size_t finish_row, size_t finish_column );
 
     /**
      * Computes and writes the distance matrix
@@ -123,8 +138,13 @@ private:
     size_t m_subBlockSize;          //!< The number of tractograms that will be loaded at the same time
     size_t m_subBlocksPerBlock;     //!< The number of tract-subblocks in each distance block
     size_t m_trackSize;             //!< The number of points in a compact tractogram
+    std::pair< size_t, size_t > m_startingBlock;  //!< the matrix block index to start computing from (in case some block computantions wished to be excluded i.e: if program closed before finishing)
+    std::pair< size_t, size_t > m_finishBlock;  //!< the matrix block index to finish computing at (in case only a subset of the blocks wished to be computed )
 
     // === PRIVATE MEMBER FUNCTIONS ===
+
+    std::pair< float, float > computeDistBlock( size_t row, size_t column );
+
 
 
     /*

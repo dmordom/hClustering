@@ -660,9 +660,10 @@ void CnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                     {
                         lastTime = currentTime;
                         float progress = nodes.size() * 100. / ( leaves.size() - 1. );
+                        int progressInt( progress );
                         size_t elapsedTime( difftime( currentTime, loopStart ) );
                         std::stringstream message;
-                        message << "\r" << static_cast<int>( progress ) << " % of tree built (";
+                        message << "\r" << progressInt << " % of tree built (";
                         message << nodes.size() << " nodes built. " << priorityNodes.size() + currentNodes.size() <<" current";
                         if( growingStage )
                         {
