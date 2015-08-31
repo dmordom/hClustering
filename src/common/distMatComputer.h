@@ -81,6 +81,16 @@ public:
      */
     inline bool ready() const { return m_ready2go; }
 
+    /**
+     * sets the the zip flag in order to zip the files upon writing
+     */
+    inline void storeZipped() { m_zipFlag = true; }
+
+    /**
+     * resets the the zip flag in order not to zip the files upon writing
+     */
+    inline void storeUnzipped() { m_zipFlag = false; }
+
     // === PUBLIC MEMBER FUNCTIONS ===
 
     /**
@@ -120,6 +130,7 @@ private:
     bool            m_roiLoaded;         //!< The roi loaded flag. If true, the seed voxel list was successfully read
     bool            m_veryVerbose;       //!< The very verbose output flag. If true, comprehensive progress information will be shown through the standard output on execution.
     bool            m_ready2go;          //!< The ready flag. If true, the class is ready to compute the distance matrix
+    bool            m_zipFlag;           //!< flag indicating if stored blocks will be zipped or not
     float           m_tractThreshold;    //!< The threshold to be applied to the tracts before computing dissimilarity measures, in normalized space. Calculated in class constructor
     float           m_logFactor;         //!< The Logarithmic factor to be applied when converting the tractogram data ftom log to natural units. Calculated in class constructor
     std::string     m_inputFolder;       //!< The folder path that contains the seed voxel tractograms
@@ -143,8 +154,23 @@ private:
 
     // === PRIVATE MEMBER FUNCTIONS ===
 
-    std::pair< float, float > computeDistBlock( size_t row, size_t column );
+    void writeIndex();
 
+    /**
+     * Computes the norms of all the seed voxel tractograms and stores them in the m_leafNorms vector
+     */
+    void computeNorms();
+
+    std::pair< dist_t, dist_t > computeDistBlock( size_t row, size_t column );
+
+    void loadTractSet( size_t firstID, size_t lastID, unsigned char* rowTracts, bool transposed = false );
+
+    void transposeSet( size_t setSize, unsigned char* originalSet, unsigned char* transposedSet );
+
+    void computeDistances( std::vector< double >& rowNorms, const unsigned char* rowTractSet,
+                           std::vector< double >& columnNorms, const unsigned char* columnTractSet,
+                           std::vector< std::vector< dist_t > >* distBlockPointer,
+                           size_t blockRowOffset, size_t blockColumnOffset);
 
 
     /*
@@ -160,33 +186,6 @@ private:
                          const bool &verbose,
                          const bool &veryvb);
 
-    // "load_tract_block()": load single tractograms into a block
-    void load_tract_block(std::string tract_dir,
-                          std::vector<WHcoord> &seed_set,
-                          const size_t  tract_block_size,
-                          const size_t &tract_length,
-                          unsigned char* tract_block);
-
-    // "load_tract_block_transposed()": load single transposed tractograms into a block
-    void load_tract_block_transposed(std::string tract_dir,
-                                     std::vector<WHcoord> seed_set,
-                                     const size_t  tract_block_size,
-                                     const size_t &tract_length,
-                                     unsigned char* tract_block);
-
-    // "do_sqrsum()": precoumpute squared sums of tract blocks
-    void do_sqrsum(double* sqrsum_array,
-                   unsigned char* tract_block,
-                   const size_t  tract_block_size,
-                   const size_t &tract_length,
-                   const size_t &threads);
-
-    // "do_sqrsum_transposed()": precoumpute squared sums of transposed tract blocks
-    void do_sqrsum_transposed(double* sqrsum_array,
-                              unsigned char* tract_block,
-                              const size_t  tract_block_size,
-                              const size_t &tract_length,
-                              const size_t &threads);
 
 
     // "compute_dist_block()":

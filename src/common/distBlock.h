@@ -52,8 +52,6 @@
 #include "fileManagerFactory.h"
 
 
-#define MATRIX_INDEX_FILENAME "roi_index.txt"
-
 /**
  * this class manages the reading and writing of blocks belonging to a dissimilarity matrix
  */

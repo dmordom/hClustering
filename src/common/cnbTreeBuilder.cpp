@@ -1276,9 +1276,10 @@ void CnbTreeBuilder::computeNorms()
                 lastTime = currentTime;
                 size_t currentCount( progCount );
                 float progress( currentCount * 100. / m_roi.size() );
+                size_t intProgress( progress );
                 size_t elapsedTime( difftime( currentTime, loopStart ) );
                 std::stringstream message;
-                message << "\r" << static_cast<int>( progress ) << " % of norms computed (" << currentCount << " tracts). ";
+                message << "\r" << intProgress << " % of norms computed (" << currentCount << " tracts). ";
                 if( progress > 0 )
                 {
                     size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );

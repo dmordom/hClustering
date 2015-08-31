@@ -10,6 +10,8 @@ distMatComputer::distMatComputer( const std::string& roiFilename, const float th
     m_blocksPerRow = 0;
     m_subBlockSize = 0;
     m_subBlocksPerBlock = 0;
+    m_zipFlag = true;
+
 
     fileManagerFactory fileMF;
     m_niftiMode = fileMF.isNifti();
@@ -280,12 +282,18 @@ void distMatComputer::setFinishBlock( size_t finish_row, size_t finish_column )
 void distMatComputer::doDistBlocks()
 {
     //variables to keep tract of min and max values
-    float maxValue(-1), minValue(2);
+    dist_t maxValue(-1), minValue(2);
 
     // variables for progress printout
     time_t distmatStartTime(time(NULL)), currentTime(time(NULL));
     size_t blockProgress(0), progressInt(0), elapsedTime(0), expectedRemain(0), totalBlocks(0);
     float progress(0);
+
+    // write index file
+    writeIndex();
+
+    // compute tractogram norms
+    computeNorms();
 
     // just to test the number of blocks that will be computed
     for (size_t row = m_startingBlock.first ; row <= m_finishBlock.first ; ++row)
@@ -300,14 +308,7 @@ void distMatComputer::doDistBlocks()
             {
                 continue;
             }
-            if( row == column )
-            {
-                ++totalBlocks;
-            }
-            else
-            {
-                totalBlocks += 2;
-            }
+            ++totalBlocks;
         }
     }
 
@@ -327,7 +328,12 @@ void distMatComputer::doDistBlocks()
                  continue;
             }
 
-            std::pair< float, float > blockMinMax = computeDistBlock( row, column );
+            if( m_verbose )
+            {
+                std::cout << "Computing Block " << row << "-" << column << ". " << std::flush;
+            }
+
+            std::pair< dist_t, dist_t > blockMinMax = computeDistBlock( row, column );
 
             if( blockMinMax.first < minValue )
             {
@@ -338,14 +344,9 @@ void distMatComputer::doDistBlocks()
                 maxValue = blockMinMax.second;
             }
             //update progress
-            if( row == column )
-            {
-                ++blockProgress;
-            }
-            else
-            {
-                blockProgress += 2;
-            }
+
+            ++blockProgress;
+
 
             if( m_verbose )
             {
@@ -360,7 +361,7 @@ void distMatComputer::doDistBlocks()
                 expectedRemain = ( elapsedTime * ( ( 100.-progress ) / progress ));
 
                 std::stringstream message;
-                message << "\r" << progressInt <<  "% of blocks completed (" << blockProgress/2. << " of " << totalBlocks/2. << "). ";
+                message << "\rCompleted block " << row << "-" << column << ". " << progressInt <<  "% completed (" << blockProgress << " of " << totalBlocks << "). ";
                 message << "Elapsed: " << elapsedTime/3600 <<"h "<<  (elapsedTime%3600)/60 <<"' "<< ((elapsedTime%3600)%60) <<"\". ";
                 message << "Remaining: "<< expectedRemain/3600 <<"h "<<  (expectedRemain%3600)/60 <<"' "<< ((expectedRemain%3600)%60) <<"\"           ";
                 std::cout << message.str() <<std::endl;
@@ -371,22 +372,463 @@ void distMatComputer::doDistBlocks()
 
     currentTime = ( time( NULL ) );
     elapsedTime = ( difftime( currentTime, distmatStartTime ) );
-    std::cout << "100% of blocks completed (" << totalBlocks/2. << " of matrix total " << (m_blocksPerRow*m_blocksPerRow)/2. << "). ";
+    std::cout << "100% of blocks completed (" << totalBlocks << " of matrix total " << (m_blocksPerRow*(m_blocksPerRow+1))/2. << "). ";
     std::cout << "Elapsed time: " << elapsedTime/3600 <<"h "<<  (elapsedTime%3600)/60 <<"' "<< ((elapsedTime%3600)%60) <<"\". " << std::endl;
     std::cout<<"Total MAX value: "<< maxValue <<". Total min value: "<< minValue <<std::endl;
 
 }// end "doDistBlocks()" -----------------------------------------------------------------
 
 
-std::pair< float, float > distMatComputer::computeDistBlock( size_t row, size_t column )
+void distMatComputer::computeNorms()
+{
+    // loop  through all the seed voxels and compute tractogram norms
+    std::cout << "Precomputing tractogram norms" << std::endl;
+    time_t loopStart( time( NULL ) ), lastTime( time( NULL ) );
+    m_leafNorms.assign( m_coordinates.size(), 0 );
+    size_t progCount( 0 );
+
+
+    fileManagerFactory fileSingleMF(m_inputFolder);
+    fileManager& fileSingle(fileSingleMF.getFM());
+    fileSingle.readAsUnThres();
+    fileSingle.readAsLog();
+
+#pragma omp parallel for schedule( static )
+    for( size_t i = 0; i < m_coordinates.size(); ++i )
+    {
+        compactTractChar thisTract;
+
+        fileSingle.readLeafTract( i, m_trackids, m_coordinates, &thisTract );
+        thisTract.threshold( m_tractThreshold );
+        m_leafNorms[i] = thisTract.computeNorm();
+
+#pragma omp atomic
+        ++progCount;
+
+#pragma omp single nowait // only one thread executes output
+        if( m_verbose )
+        {
+            time_t currentTime( time( NULL ) );
+            if( currentTime - lastTime > 1 )
+            {
+                lastTime = currentTime;
+                size_t currentCount( progCount );
+                float progress( currentCount * 100. / m_coordinates.size() );
+                size_t intProgress( progress );
+                size_t elapsedTime( difftime( currentTime, loopStart ) );
+                std::stringstream message;
+                message << "\r" << intProgress << " % of norms computed (" << currentCount << " tracts). ";
+                if( progress > 0 )
+                {
+                    size_t expectedRemain( elapsedTime * ( ( 100. - progress ) / progress ) );
+                    message << "Expected remaining time: ";
+                    message << expectedRemain / 3600 << "h ";
+                    message << ( expectedRemain % 3600 ) / 60 << "' ";
+                    message << ( expectedRemain % 3600 ) % 60 << "\". ";
+                }
+                message << "Elapsed time: ";
+                message << elapsedTime / 3600 << "h " << ( elapsedTime % 3600 ) / 60 << "' ";
+                message << ( elapsedTime % 3600 ) % 60 << "\". ";
+                std::cout << message.str() <<std::flush;
+            }
+        } // end verbose
+    } // end  for
+
+
+    int timeTaken = difftime( time( NULL ), loopStart );
+    if( m_verbose )
+    {
+        std::cout << "\r" << std::flush << "100 % of norms computed. Time taken: " << timeTaken / 3600 << "h " << ( timeTaken
+                        % 3600 ) / 60 << "' " << ( ( timeTaken % 3600 ) % 60 ) << "\"    " << std::endl;
+    }
+
+    if( m_verbose )
+    {
+        for( size_t i = 0; i < m_leafNorms.size(); ++i )
+        {
+            if( m_leafNorms[i] == 0)
+            {
+                std::cerr << "track " << i << " has norm 0" <<std::endl;
+            }
+        }
+    }
+} // end distMatComputer::computeNorms() -------------------------------------------------------------------------------------
+
+
+std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_t column )
 {
     //variables to keep tract of min and max values
-    float maxValue(-1), minValue(2);
+    dist_t maxValue(-1), minValue(2);
 
-    ///////////////
+    // get dimensions of the block and ID vectors for the row and column seeds
+    size_t firstRowSeedID( row * m_blockSize ), postlastRowSeedID( ( row + 1 ) * m_blockSize );
+    if ( postlastRowSeedID > m_coordinates.size() )
+    {
+        postlastRowSeedID = m_coordinates.size();
+    }
+    size_t thisBlockRowSize( postlastRowSeedID - firstRowSeedID );
+    std::vector<size_t> blockRowIDs;
+    blockRowIDs.reserve( thisBlockRowSize );
+    for( size_t i = firstRowSeedID; i < postlastRowSeedID; ++i )
+    {
+        blockRowIDs.push_back( i );
+    }
 
-    return std::make_pair< float, float >( minValue, maxValue );
+    size_t firstColumnSeedID( column * m_blockSize ), postlastColumnSeedID( ( column + 1 ) * m_blockSize );
+    if ( postlastColumnSeedID > m_coordinates.size() )
+    {
+        postlastColumnSeedID = m_coordinates.size();
+    }
+    size_t thisBlockColumnSize( postlastColumnSeedID - firstColumnSeedID );
+    std::vector<size_t> blockColumnIDs;
+    blockColumnIDs.reserve( thisBlockColumnSize );
+    for( size_t i = firstColumnSeedID; i < postlastColumnSeedID; ++i )
+    {
+        blockColumnIDs.push_back( i );
+    }
+
+    // reserve memory and initialize the distance block
+    std::vector< std::vector< dist_t > > distBlockValues;
+    {
+        std::vector< dist_t > blockRowTemp( thisBlockColumnSize, 0 );
+        std::vector< std::vector< dist_t > > blockTemp( thisBlockRowSize, blockRowTemp );
+        distBlockValues.swap( blockTemp );
+    }
+
+    // loop over sub block rows
+    for( size_t subRow = 0; subRow < m_subBlocksPerBlock; ++subRow )
+    {
+        size_t firstSubRowSeedPos( subRow * m_subBlockSize ), postlastSubRowSeedPos( ( subRow + 1 ) * m_subBlockSize );
+        if ( postlastSubRowSeedPos > thisBlockRowSize )
+        {
+            postlastSubRowSeedPos = thisBlockRowSize;
+        }
+        size_t subBlockRowSize( postlastSubRowSeedPos - firstSubRowSeedPos );
+        std::vector< double > subRowNorms( m_leafNorms.begin()+firstRowSeedID+firstSubRowSeedPos,  m_leafNorms.begin()+firstRowSeedID+postlastSubRowSeedPos );
+
+
+        if( m_subBlocksPerBlock == 1 )
+        {
+            if( m_verbose )
+            {
+                std::cout << " Loading row tracts..." << std::flush;
+            }
+        }
+        else if( m_veryVerbose )
+        {
+            std::cout << std::endl << "\t Loading sub-row " << subRow << " tracts..." << std::flush;
+        }
+
+        //load row tracts
+        unsigned char* rowTracts;
+        loadTractSet( blockRowIDs[firstSubRowSeedPos], blockRowIDs[postlastSubRowSeedPos-1], rowTracts, false );
+        if( m_verbose )
+        {
+            std::cout << "Done. " << std::flush;
+
+        }
+
+        // loop over sub block columns
+        for( size_t subColumn = 0; subColumn < m_subBlocksPerBlock; ++subColumn )
+        {
+
+            size_t firstSubColumnSeedPos( subColumn * m_subBlockSize ), postlastSubColumnSeedPos( ( subColumn + 1 ) * m_subBlockSize );
+            if ( postlastSubColumnSeedPos > thisBlockColumnSize )
+            {
+                postlastSubColumnSeedPos = thisBlockColumnSize;
+            }
+            size_t subBlockColumnSize( postlastSubColumnSeedPos - firstSubColumnSeedPos );
+            std::vector< double > subColumnNorms( m_leafNorms.begin()+firstColumnSeedID+firstSubColumnSeedPos,  m_leafNorms.begin()+firstColumnSeedID+postlastSubColumnSeedPos );
+
+
+            if( m_subBlocksPerBlock == 1 )
+            {
+                if( m_verbose )
+                {
+                    std::cout << "Loading column tracts..." << std::flush;
+                }
+            }
+            else if( m_veryVerbose )
+            {
+                std::cout << std::endl << "\t Loading sub-column " << subColumn << " tracts..." << std::flush;
+            }
+
+            unsigned char* colTracts;
+            if( row == column )
+            {
+                // if its a block in the diagonal do not compute sub-blocks under the diagonal
+                if( subRow > subColumn )
+                {
+                    continue;
+                }
+                else if( subRow == subColumn )
+                {
+                    // if its a sub-block in the diagonal sets are equal
+                    transposeSet( subBlockColumnSize, rowTracts, colTracts );
+                }
+            }
+            else
+            {
+                // load tractograms in transposed position
+                loadTractSet( blockColumnIDs[firstSubColumnSeedPos], blockColumnIDs[postlastSubColumnSeedPos-1], colTracts, true );
+            }
+            if( m_verbose )
+            {
+                std::cout << "Done. " << std::flush;
+
+            }
+            if( m_subBlocksPerBlock == 1 )
+            {
+                if( m_verbose )
+                {
+                    std::cout << "Computing distances..." << std::flush;
+                }
+            }
+            else if( m_veryVerbose )
+            {
+                std::cout << "Computing distaces..." << std::flush;
+            }
+
+            computeDistances( subRowNorms, rowTracts, subColumnNorms, colTracts, &distBlockValues, firstSubRowSeedPos, firstSubColumnSeedPos );
+            if( m_verbose )
+            {
+                std::cout << "Done. " << std::flush;
+
+
+            }
+            /////////////////////////// progress report
+
+            // cleanup
+            delete [] colTracts;
+        }
+        // cleanup
+        delete [] rowTracts;
+    }
+
+    /////////////////////////// progress report
+
+    // get min and max values
+    for( size_t i = 0; i < distBlockValues.size(); ++i )
+    {
+        size_t jInit( 0 );
+        if( row == column )
+        {
+            jInit = i + 1;
+        }
+
+        for( size_t j = jInit; j < distBlockValues[i].size(); ++j )
+        {
+            dist_t value(distBlockValues[i][j]);
+            if( minValue > value )
+            {
+                minValue = value;
+            }
+            if( maxValue < value )
+            {
+                maxValue = value;
+            }
+        }
+    }
+
+    // write to file
+    fileManagerFactory blockFMF( m_outputFolder );
+    fileManager& blockFM(blockFMF.getFM() );
+    blockFM.writeInFloat();
+    if( m_zipFlag )
+    {
+        blockFM.storeZipped();
+    }
+    else
+    {
+        blockFM.storeUnzipped();
+    }
+    blockFM.writeDistBlock( row, column, distBlockValues );
+
+    return std::make_pair< dist_t, dist_t >( minValue, maxValue );
 }// end "computeDistBlock()" -----------------------------------------------------------------
+
+void distMatComputer::writeIndex()
+{
+    std::vector< std::pair< size_t, size_t > > roiBlockIndex;
+    roiBlockIndex.reserve( m_coordinates.size() );
+
+    for (size_t row=0 ; row < m_blocksPerRow ; ++row)
+    {
+        size_t firstRowSeedID( row * m_blockSize ), postlastRowSeedID( ( row + 1 ) * m_blockSize );
+        if ( postlastRowSeedID > m_coordinates.size() )
+        {
+            postlastRowSeedID = m_coordinates.size();
+        }
+        size_t blockSize( postlastRowSeedID - firstRowSeedID );
+
+        for (size_t i=0; i < blockSize; ++i)
+        {
+            roiBlockIndex.push_back(std::make_pair( row, i ) );
+        }
+    }
+
+    std::string indexFilename = m_outputFolder + "/" + MATRIX_INDEX_FILENAME;
+    std::ofstream outFileStream( indexFilename.c_str() );
+    if( !outFileStream )
+    {
+        std::cerr << "ERROR: unable to open output index file: \"" << indexFilename << "\"" << std::endl;
+        throw std::runtime_error("ERROR: unable to open output index file");
+    }
+
+    if( m_verbose )
+    {
+        std::cout<< "Writing distance matrix index file in \""<< indexFilename <<"\""<< std::endl;
+    }
+
+    outFileStream << "#distindex" << std::endl;
+
+    for( size_t i = 0; i < m_coordinates.size(); ++i )
+    {
+        outFileStream << m_coordinates[i];
+        outFileStream << boost::format( " b %03d i %04d" ) % roiBlockIndex[i].first  % roiBlockIndex[i].second;
+        outFileStream << std::endl;
+    }
+
+    outFileStream << "#enddistindex" << std::endl;
+
+}// end "writeIndex()" -----------------------------------------------------------------
+
+void distMatComputer::computeDistances(
+                       std::vector< double >& rowNorms, const unsigned char* rowTractSet,
+                       std::vector< double >& columnNorms, const unsigned char* columnTractSet,
+                       std::vector< std::vector< dist_t > >* distBlockPointer,
+                       size_t blockRowOffset, size_t blockColumnOffset )
+{
+
+    std::vector< std::vector< dist_t > >& distBlockValues( *distBlockPointer );
+    const double normalizer( 255. * 255. );
+    size_t rowBlockSize( rowNorms.size() ), columnBlockSize( columnNorms.size() );
+
+    #pragma omp parallel for // loop through tractograms (use parallel threads)
+    for(size_t i=0 ; i<rowBlockSize ; ++i)
+    {
+        // if a sqrsum is 0 then distance is 1
+        if (rowNorms[i]!=0.)
+        {
+            double* dotprodArray = new double[ columnBlockSize ];
+
+            //initialize
+            for(size_t init=0; init < columnBlockSize; ++init)
+            {
+                    dotprodArray[init]=0;
+            }
+
+            size_t rowTractArrayOffset( i * m_trackSize );
+            double value1( 0 );
+            size_t k(0), j(0);
+            const unsigned char* p_value2;
+            double* p_result;
+
+            for(k=0 ; k<m_trackSize ; ++k)
+            {
+
+                p_result = dotprodArray;
+
+                value1 = rowTractSet[rowTractArrayOffset+k]/normalizer;
+                if (value1)
+                {
+                    p_value2 = columnTractSet + ( k * columnBlockSize );
+
+                    for (j=0 ; j<columnBlockSize ;++j)
+                    {
+
+                        *(p_result++) += *(p_value2++) * value1;
+                    }
+                }
+            }
+            size_t jInit( 0 );
+
+            for (j=0 ; j<columnBlockSize ;++j)
+            {
+
+                double vprod(0);
+
+                if (columnNorms[j]!=0.)
+                {
+                    vprod = dotprodArray[j]/(rowNorms[i] * columnNorms[j]);
+                }
+
+                //insert value in distance matrix
+                distBlockValues[blockRowOffset+i][blockColumnOffset+j] = 1 - (vprod);
+            }
+
+
+            delete [] dotprodArray;
+        }
+        else
+        {
+            for (int j=0 ; j<columnBlockSize ;++j)
+            {
+                distBlockValues[blockRowOffset+i][blockColumnOffset+j] = 1;
+            }
+        }
+    }
+
+}// end "computeDistances()" -----------------------------------------------------------------
+
+void distMatComputer::loadTractSet( size_t firstID, size_t lastID, unsigned char* tractSet, bool transposed )
+{
+    size_t setOffset(0);
+    size_t setElements( m_trackSize * ( lastID + 1 - firstID ) );
+    tractSet = new unsigned char [ setElements ];
+    for( size_t i = 0; i <  setElements; ++i )
+    {
+        tractSet[i]=0;
+    }
+
+    for(size_t i = firstID; i <= lastID; ++i )
+    {
+        fileManagerFactory tractFMF( m_inputFolder );
+        fileManager& tractFM( tractFMF.getFM() );
+        tractFM.readAsLog();
+        tractFM.readAsUnThres();
+        compactTractChar tract;
+        tractFM.readLeafTract( i, m_trackids, m_coordinates, &tract );
+        tract.threshold( m_tractThreshold );
+        std::vector< unsigned char > tractValues( tract.tract() );
+        if( transposed )
+        {
+            for( size_t tractPos = 0; tractPos < m_trackSize; ++tractPos )
+            {
+                tractSet[ ( tractPos * m_trackSize ) + setOffset ] = tractValues[ tractPos ];
+            }
+        }
+        else
+        {
+            for( size_t tractPos = 0; tractPos < m_trackSize; ++tractPos )
+            {
+                tractSet[ tractPos + ( setOffset * m_trackSize) ] = tractValues[ tractPos ];
+            }
+        }
+        ++setOffset;
+    }
+    return;
+}
+
+void distMatComputer::transposeSet( size_t setSize, unsigned char* originalSet, unsigned char* transposedSet )
+{
+    transposedSet = new unsigned char [ m_trackSize * setSize ];
+    for( size_t i = 0; i <  m_trackSize * setSize; ++i )
+    {
+        transposedSet[i] = 0;
+    }
+
+    for(size_t setOffset = 0; setOffset < setSize; ++setOffset )
+    {
+        for( size_t tractPos = 0; tractPos < m_trackSize; ++tractPos )
+        {
+            transposedSet[ ( tractPos * m_trackSize ) + setOffset ] = originalSet[ tractPos + (setOffset * m_trackSize) ];
+        }
+    }
+    return;
+}
+
+
 
 /*
 void distMatComputer::doDistBlocks()
@@ -432,14 +874,6 @@ void distMatComputer::doDistBlocks()
             // loop through columns of the distance matrix (each element will be a separate distance block)
             for (int col=row ; col < m_blocksPerRow ; ++col)
             {
-
-#if 0
-                if((row == 3 && ( col>row && col<15)))
-                {
-                   continue;
-                }
-#endif
-
 
                 std::cout <<std::endl <<"Computing block "<<row<<"-"<<col<<" in one go..."<< std::flush;
 
@@ -992,115 +1426,6 @@ void distMatComputer::fill_dist_block(std::string &tract_dir,
     return;
 
 }// end "fill_dist_block()" -----------------------------------------------------------------
-
-
-
-
-
-
-// "load_tract_block()": load single tractograms into a block
-void distMatComputer::load_tract_block(std::string tract_dir,
-                      std::vector<coordinate> &seed_set,
-                      const size_t  tract_block_size,
-                      const size_t &tract_length,
-                      unsigned char* tract_block) {
-
-    std::cout <<" Loading tract set..."<< std::flush;
-
-    for(int i=0; i < tract_block_size; ++i) {
-
-        coordinate current_coord(seed_set[i]);
-        get_Vtract_th(get_Vname(tract_dir,current_coord),&tract_block[i*tract_length],tract_length, threshold);
-
-    }
-    std::cout <<"Done."<< std::flush;
-    return;
-}// end "load_tract_block()" -----------------------------------------------------------------
-
-// "load_tract_block_transposed()": load single transposed tractograms into a block
-void distMatComputer::load_tract_block_transposed(std::string tract_dir,
-                                 std::vector<coordinate> seed_set,
-                                 const size_t  tract_block_size,
-                                 const size_t &tract_length,
-                                 unsigned char* tract_block) {
-
-    std::cout <<" Loading tp tract set..."<< std::flush;
-
-    unsigned char * current_tract = new unsigned char [tract_length];
-
-
-    for(int i=0; i < tract_block_size; ++i) {
-
-        coordinate current_coord(seed_set[i]);
-        get_Vtract_th(get_Vname(tract_dir,current_coord),current_tract,tract_length, threshold);
-        for (int j=0; j < tract_length; ++j )
-            tract_block[(j*tract_block_size)+i] = current_tract[j];
-    }
-    delete current_tract;
-
-    std::cout <<"Done."<< std::flush;
-    return;
-}// end "load_tract_block_transposed()" -----------------------------------------------------------------
-
-
-// "do_sqrsum()": precoumpute squared sums of tract blocks
-void distMatComputer::do_sqrsum(double* sqrsum_array,
-               unsigned char* tract_block,
-               const size_t  tract_block_size,
-               const size_t &tract_length,
-               const size_t &threads) {
-
-    std::cout <<" Computing square sum..."<< std::flush;
-
-    //initialize
-    for(int i=0; i < tract_block_size; ++i)
-        sqrsum_array[i]=0;
-
-    // compute
-    omp_set_num_threads(threads);
-    #pragma omp parallel for // loop through tractograms (use parallel threads)
-    for(int i=0; i < tract_block_size; ++i) {
-        size_t start(i*tract_length);
-        size_t end(start+tract_length);
-        double value;
-        for(size_t j=start; j < end; ++j) {
-            value = tract_block[j]/255.;
-            sqrsum_array[i] += value*value;
-        }
-    }
-
-    std::cout <<"Done."<< std::flush;
-    return;
-}// end "do_sqrsum()" -----------------------------------------------------------------
-
-
-// "do_sqrsum_transposed()": precoumpute squared sums of transposed tract blocks
-void distMatComputer::do_sqrsum_transposed(double* sqrsum_array,
-                          unsigned char* tract_block,
-                          const size_t  tract_block_size,
-                          const size_t &tract_length,
-                          const size_t &threads) {
-
-    std::cout <<" Computing tp square sum..."<< std::flush;
-
-    //initialize
-    for(int i=0; i < tract_block_size; ++i)
-        sqrsum_array[i]=0;
-
-    // compute
-   // omp_set_num_threads(threads);
-   // #pragma omp parallel for // loop through tractograms (use parallel threads)
-    for(int i=0; i < tract_length; ++i) {
-        size_t offset(i*tract_block_size);
-        double value;
-        for(int j=0; j < tract_block_size; ++j) {
-            value = tract_block[offset+j]/255.;
-            sqrsum_array[j] += value * value;
-        }
-    }
-    std::cout <<"Done."<< std::flush;
-    return;
-}// end "do_sqr_sum()" -----------------------------------------------------------------
 
 
 

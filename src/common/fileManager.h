@@ -57,7 +57,9 @@
 #define NODE_FULL_PREFIX_SIZE     10                    // string size of "fulltract_" is 10
 #define NODE_CLUSTER_FNAME        "cluster_%06d"        // %06d will be replaced with the seed ID
 #define NODE_CLUSTER_PREFIX_SIZE  8                     // string size of "cluster_" is 8
+
 #define DISTBLOCK_FNAME           "dist_block_%03d_%03d"
+#define MATRIX_INDEX_FILENAME "roi_index.txt"
 
 #define NIFTI_LEAF_COMPACT_FNAME  "probtract_%d"        // %d will be replaced with the seed ID
 #define NIFTI_LEAF_FULL_FNAME     "probtract_full_%06d"   // %06d will be replaced with the seed ID
