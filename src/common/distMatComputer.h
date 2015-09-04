@@ -25,6 +25,7 @@
 #include "fileManagerFactory.h"
 #include "compactTract.h"
 #include "roiLoader.h"
+#include "WStringUtils.h"
 
 
 #define MIN_BLOCK_SIZE 500
@@ -154,6 +155,9 @@ private:
 
     // === PRIVATE MEMBER FUNCTIONS ===
 
+    /**
+     * Generates the distance matrix seed-to-block index and writes it to file
+     */
     void writeIndex();
 
     /**
@@ -161,57 +165,47 @@ private:
      */
     void computeNorms();
 
+    /**
+     * Computes the distance values of a fragment (block) of the total matrix, loading the corresponding tractograms and calculating the normalized dot product
+     * \param row the row identifier of the block to be computed
+     * \param column the column identifier of the block to be computed
+     * \return a pair with the minimum and maximum distance values in the computed block
+     */
     std::pair< dist_t, dist_t > computeDistBlock( size_t row, size_t column );
 
+    /**
+     * Loads to memory a set of tractograms in a char array to compute a sub-block of the matrix. Allocation is done within.
+     * \param firstID the ID of the first seed of the set
+     * \param lastID the ID of the last seed of the set
+     * \param rowTracts the array pointer (unallocated) where the tractogram data will be loaded to
+     * \param transposed if set the tractogram data will be loaded in a transposed position (used when loading column sets)
+     */
     void loadTractSet( size_t firstID, size_t lastID, unsigned char* rowTracts, bool transposed = false );
 
+    /**
+     * Transposes a previously loaded tractogram set and stores it in a newly allocated array.
+     * \param setSize nomber of tracts in the original set
+     * \param originalSet the original tractogram set (must be in horizontal/not-transposed orientation)
+     * \param transposedSet the array pointer (unallocated) where the tractogram data will be loaded to.
+     */
     void transposeSet( size_t setSize, unsigned char* originalSet, unsigned char* transposedSet );
 
+    /**
+     * Computes the normalized dot product distance between previously loaded tractogram sets
+     * \param rowNorms a reference to a vector containing the norms of the row tractograms
+     * \param rowTractSet an array with the row tractogram data (normal orientation)
+     * \param columnNorms a reference to a vector containing the norms of the column tractograms
+     * \param columnTractSet an array with the column tractogram data (transposed orientation)
+     * \param distBlockPointer a pointer the matrix where the distance block are stored
+     * \param blockRowOffset offset of the row sub-block position in the block
+     * \param blockColumnOffset offset of the column sub-block position in the block
+     */
     void computeDistances( std::vector< double >& rowNorms, const unsigned char* rowTractSet,
                            std::vector< double >& columnNorms, const unsigned char* columnTractSet,
                            std::vector< std::vector< dist_t > >* distBlockPointer,
                            size_t blockRowOffset, size_t blockColumnOffset);
 
 
-    /*
-
-    // "fill_dist_block()": compute the distances from a distance block, computation will be divided into different sub-blocks due to memory issues
-    void fill_dist_block(std::string &tract_dir,
-                         std::vector<WHcoord> &seed_set_row,
-                         std::vector<WHcoord> &seed_set_col,
-                         std::vector<std::vector<float> > &dist_block,
-                         const size_t &tract_block_size,
-                         const size_t &tract_length,
-                         const size_t &threads,
-                         const bool &verbose,
-                         const bool &veryvb);
-
-
-
-    // "compute_dist_block()":
-    void compute_dist_block(std::vector<std::vector<float> > &dist_block,
-                            unsigned char* row_tract_block,
-                            unsigned char* col_tract_block,
-                            double* row_sqrsum,
-                            double* col_sqrsum,
-                            const size_t  row_distb_offset,
-                            const size_t  col_distb_offset,
-                            const size_t  row_tblock_size,
-                            const size_t  col_tblock_size,
-                            const size_t &tract_length,
-                            const size_t &threads);
-
-
-    // fill_rand_block(): load distance block with random data (upper triangle)
-    void fill_rand_block(std::vector<std::vector<float> > rand_tracts_row,
-                         std::vector<std::vector<float> > rand_tracts_col,
-                         std::vector<std::vector<float> > &dist_block,
-                         const size_t rand_tract_length,
-                         const size_t &threads,
-                         const bool &verbose,
-                         const bool &veryvb);
-
-                         */
 
 };
 

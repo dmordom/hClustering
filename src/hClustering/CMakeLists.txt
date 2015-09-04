@@ -57,9 +57,7 @@ SET( COMMON_SRCS
     ../common/compactTractChar.cpp
     ../common/compactTract.cpp
     ../common/distBlock.cpp
-
-    ../common/distMatComputer.cpp #*****
-
+    ../common/distMatComputer.cpp
     ../common/fileManager.cpp
     ../common/fileManagerFactory.cpp
     ../common/graphTreeBuilder.cpp
@@ -103,8 +101,7 @@ SET( MAIN_SRCS
     fliptracts.cpp
     randtracts.cpp
     surfprojection.cpp
-
-    distMatrix.cpp  #****
+    distmatrix.cpp
 )
 
 foreach( binarysourcefile ${MAIN_SRCS} )
