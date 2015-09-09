@@ -465,7 +465,7 @@ void distMatComputer::computeNorms()
 } // end distMatComputer::computeNorms() -------------------------------------------------------------------------------------
 
 
-std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_t column )
+std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( const size_t row, const size_t column ) const
 {
     // variables for progress printout
     size_t blockProgress(0), progressInt(0), totalSubBlocks( 0 );
@@ -532,7 +532,6 @@ std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_
         {
             postlastSubRowSeedPos = thisBlockRowSize;
         }
-        size_t subBlockRowSize( postlastSubRowSeedPos - firstSubRowSeedPos );
         std::vector< double > subRowNorms( m_leafNorms.begin()+firstRowSeedID+firstSubRowSeedPos,  m_leafNorms.begin()+firstRowSeedID+postlastSubRowSeedPos );
 
 
@@ -554,7 +553,7 @@ std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_
 
         //load row tracts
         unsigned char* rowTracts;
-        loadTractSet( blockRowIDs[firstSubRowSeedPos], blockRowIDs[postlastSubRowSeedPos-1], rowTracts, false );
+        loadTractSet( blockRowIDs[firstSubRowSeedPos], blockRowIDs[postlastSubRowSeedPos-1]+1, &rowTracts, false );
         if( m_verbose )
         {
             std::cout << "Done. " << std::flush;
@@ -596,13 +595,18 @@ std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_
                 else if( subRow == subColumn )
                 {
                     // if its a sub-block in the diagonal sets are equal
-                    transposeSet( subBlockColumnSize, rowTracts, colTracts );
+                    transposeSet( subBlockColumnSize, rowTracts, &colTracts );
+                }
+                else
+                {
+                    // load tractograms in transposed position
+                    loadTractSet( blockColumnIDs[firstSubColumnSeedPos], blockColumnIDs[postlastSubColumnSeedPos-1]+1, &colTracts, true );
                 }
             }
             else
             {
                 // load tractograms in transposed position
-                loadTractSet( blockColumnIDs[firstSubColumnSeedPos], blockColumnIDs[postlastSubColumnSeedPos-1], colTracts, true );
+                loadTractSet( blockColumnIDs[firstSubColumnSeedPos], blockColumnIDs[postlastSubColumnSeedPos-1]+1, &colTracts, true );
             }
 
 
@@ -622,8 +626,6 @@ std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_
             if( m_verbose )
             {
                 std::cout << "Done. " << std::flush;
-
-
             }
             ++blockProgress;
 
@@ -689,7 +691,7 @@ std::pair< dist_t, dist_t > distMatComputer::computeDistBlock( size_t row, size_
     return std::make_pair< dist_t, dist_t >( minValue, maxValue );
 }// end "computeDistBlock()" -----------------------------------------------------------------
 
-void distMatComputer::writeIndex()
+void distMatComputer::writeIndex() const
 {
     std::vector< std::pair< size_t, size_t > > roiBlockIndex;
     roiBlockIndex.reserve( m_coordinates.size() );
@@ -735,21 +737,19 @@ void distMatComputer::writeIndex()
 
 }// end "writeIndex()" -----------------------------------------------------------------
 
-void distMatComputer::computeDistances(
-                       std::vector< double >& rowNorms, const unsigned char* rowTractSet,
-                       std::vector< double >& columnNorms, const unsigned char* columnTractSet,
-                       std::vector< std::vector< dist_t > >* distBlockPointer,
-                       size_t blockRowOffset, size_t blockColumnOffset )
+void distMatComputer::computeDistances( const std::vector< double >& rowNorms, const unsigned char* rowTractSet,
+                                        const std::vector< double >& columnNorms, const unsigned char* columnTractSet,
+                                        std::vector< std::vector< dist_t > >* distBlockPointer,
+                                        const size_t blockRowOffset, const size_t blockColumnOffset ) const
 {
 
     std::vector< std::vector< dist_t > >& distBlockValues( *distBlockPointer );
-    const double normalizer( 255. * 255. );
     size_t rowBlockSize( rowNorms.size() ), columnBlockSize( columnNorms.size() );
 
     #pragma omp parallel for // loop through tractograms (use parallel threads)
     for(size_t i=0 ; i<rowBlockSize ; ++i)
     {
-        // if a sqrsum is 0 then distance is 1
+        // if a norm is 0 then distance is 1
         if (rowNorms[i]!=0.)
         {
             double* dotprodArray = new double[ columnBlockSize ];
@@ -771,7 +771,7 @@ void distMatComputer::computeDistances(
 
                 p_result = dotprodArray;
 
-                value1 = rowTractSet[rowTractArrayOffset+k]/normalizer;
+                value1 = rowTractSet[rowTractArrayOffset+k];
                 if (value1)
                 {
                     p_value2 = columnTractSet + ( k * columnBlockSize );
@@ -783,7 +783,6 @@ void distMatComputer::computeDistances(
                     }
                 }
             }
-            size_t jInit( 0 );
 
             for (j=0 ; j<columnBlockSize ;++j)
             {
@@ -813,22 +812,26 @@ void distMatComputer::computeDistances(
 
 }// end "computeDistances()" -----------------------------------------------------------------
 
-void distMatComputer::loadTractSet( size_t firstID, size_t lastID, unsigned char* tractSet, bool transposed )
+void distMatComputer::loadTractSet( const size_t firstID, const size_t postLastID, unsigned char** tractSetPtr, const bool transposed ) const
 {
-    size_t setOffset(0);
-    size_t setElements( m_trackSize * ( lastID + 1 - firstID ) );
-    tractSet = new unsigned char [ setElements ];
-    for( size_t i = 0; i <  setElements; ++i )
+    const size_t setSize( postLastID - firstID  );
+    *tractSetPtr = new unsigned char [ m_trackSize * setSize ];
+    unsigned char* tractSet = *tractSetPtr;
+
+    for( size_t i = 0; i <  m_trackSize * setSize; ++i )
     {
         tractSet[i]=0;
     }
 
-    for(size_t i = firstID; i <= lastID; ++i )
+    fileManagerFactory tractFMF( m_inputFolder );
+    fileManager& tractFM( tractFMF.getFM() );
+    tractFM.readAsLog();
+    tractFM.readAsUnThres();
+
+    size_t setOffset(0);
+    for(size_t i = firstID; i < postLastID; ++i )
     {
-        fileManagerFactory tractFMF( m_inputFolder );
-        fileManager& tractFM( tractFMF.getFM() );
-        tractFM.readAsLog();
-        tractFM.readAsUnThres();
+
         compactTractChar tract;
         tractFM.readLeafTract( i, m_trackids, m_coordinates, &tract );
         tract.threshold( m_tractThreshold );
@@ -837,7 +840,7 @@ void distMatComputer::loadTractSet( size_t firstID, size_t lastID, unsigned char
         {
             for( size_t tractPos = 0; tractPos < m_trackSize; ++tractPos )
             {
-                tractSet[ ( tractPos * m_trackSize ) + setOffset ] = tractValues[ tractPos ];
+                tractSet[ ( tractPos * setSize ) + setOffset ] = tractValues[ tractPos ];
             }
         }
         else
@@ -852,9 +855,11 @@ void distMatComputer::loadTractSet( size_t firstID, size_t lastID, unsigned char
     return;
 }
 
-void distMatComputer::transposeSet( size_t setSize, unsigned char* originalSet, unsigned char* transposedSet )
+void distMatComputer::transposeSet( const size_t setSize, const unsigned char* originalSet, unsigned char** transposedSetPtr ) const
 {
-    transposedSet = new unsigned char [ m_trackSize * setSize ];
+    *transposedSetPtr = new unsigned char [ m_trackSize * setSize ];
+    unsigned char* transposedSet = *transposedSetPtr;
+
     for( size_t i = 0; i <  m_trackSize * setSize; ++i )
     {
         transposedSet[i] = 0;
@@ -864,7 +869,7 @@ void distMatComputer::transposeSet( size_t setSize, unsigned char* originalSet, 
     {
         for( size_t tractPos = 0; tractPos < m_trackSize; ++tractPos )
         {
-            transposedSet[ ( tractPos * m_trackSize ) + setOffset ] = originalSet[ tractPos + (setOffset * m_trackSize) ];
+            transposedSet[ ( tractPos * setSize ) + setOffset ] = originalSet[ tractPos + (setOffset * m_trackSize) ];
         }
     }
     return;

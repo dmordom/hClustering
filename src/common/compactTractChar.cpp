@@ -139,7 +139,9 @@ double compactTractChar::computeNorm()
     {
         m_norm = 0;
         for( std::vector< unsigned char >::const_iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+        {
             m_norm += ( *iter ) * ( *iter );
+        }
 
         m_norm = sqrt( m_norm );
         m_normReady = true;
@@ -181,10 +183,14 @@ void compactTractChar::threshold( const float threshold )
     {
         if( threshold != 0 )
         {
-            unsigned char charThreshold( 255 * threshold);
+            unsigned char charThreshold( 255. * threshold);
             for( std::vector< unsigned char >::iterator iter = m_tract.begin(); iter != m_tract.end(); ++iter )
+            {
                 if( *iter < charThreshold )
+                {
                     *iter = 0.;
+                }
+            }
         }
         m_thresholded = true;
     }

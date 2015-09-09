@@ -158,7 +158,7 @@ private:
     /**
      * Generates the distance matrix seed-to-block index and writes it to file
      */
-    void writeIndex();
+    void writeIndex() const;
 
     /**
      * Computes the norms of all the seed voxel tractograms and stores them in the m_leafNorms vector
@@ -171,24 +171,24 @@ private:
      * \param column the column identifier of the block to be computed
      * \return a pair with the minimum and maximum distance values in the computed block
      */
-    std::pair< dist_t, dist_t > computeDistBlock( size_t row, size_t column );
+    std::pair< dist_t, dist_t > computeDistBlock( const size_t row, const size_t column ) const;
 
     /**
      * Loads to memory a set of tractograms in a char array to compute a sub-block of the matrix. Allocation is done within.
      * \param firstID the ID of the first seed of the set
-     * \param lastID the ID of the last seed of the set
-     * \param rowTracts the array pointer (unallocated) where the tractogram data will be loaded to
+     * \param lastID the ID following the last seed of the set
+     * \param rowTracts a pointer to the array pointer (unallocated) where the tractogram data will be loaded to
      * \param transposed if set the tractogram data will be loaded in a transposed position (used when loading column sets)
      */
-    void loadTractSet( size_t firstID, size_t lastID, unsigned char* rowTracts, bool transposed = false );
+    void loadTractSet( const size_t firstID, const size_t postLastID, unsigned char** rowTractsPtr, const bool transposed = false ) const;
 
     /**
      * Transposes a previously loaded tractogram set and stores it in a newly allocated array.
      * \param setSize nomber of tracts in the original set
      * \param originalSet the original tractogram set (must be in horizontal/not-transposed orientation)
-     * \param transposedSet the array pointer (unallocated) where the tractogram data will be loaded to.
+     * \param transposedSet a pointer to the the array pointer (unallocated) where the tractogram data will be loaded to.
      */
-    void transposeSet( size_t setSize, unsigned char* originalSet, unsigned char* transposedSet );
+    void transposeSet( const size_t setSize, const unsigned char* originalSet, unsigned char** transposedSetPtr ) const;
 
     /**
      * Computes the normalized dot product distance between previously loaded tractogram sets
@@ -200,10 +200,10 @@ private:
      * \param blockRowOffset offset of the row sub-block position in the block
      * \param blockColumnOffset offset of the column sub-block position in the block
      */
-    void computeDistances( std::vector< double >& rowNorms, const unsigned char* rowTractSet,
-                           std::vector< double >& columnNorms, const unsigned char* columnTractSet,
+    void computeDistances( const std::vector< double >& rowNorms, const unsigned char* rowTractSet,
+                           const std::vector< double >& columnNorms, const unsigned char* columnTractSet,
                            std::vector< std::vector< dist_t > >* distBlockPointer,
-                           size_t blockRowOffset, size_t blockColumnOffset);
+                           const size_t blockRowOffset, const size_t blockColumnOffset) const;
 
 
 
