@@ -33,10 +33,13 @@
 //  distmatrix
 //
 //  Compute a pairwise distance matrix between seed voxel compact tracts. Matrix will be divided in sub-blocks for easier & safer computing and storing.
-//  Notes:
+//
+//  * Notes:
 //         - As matrix will be simmetrical only upper triangle is computed.
 //         - Distance metric used is normalized dot product.
 //         - Memory and CPU heavy.
+//
+//  * Arguments:
 //
 //   --version:       Program version.
 //
@@ -68,14 +71,21 @@
 //
 //  [-z --zip]:       zip output files.
 //
-//  [--nolog]:        Treat input tractograms as being NORMALIZED in natural units rather than logarithmic.
+//  [--nolog]:        Treat input tractograms as being normalized in natural units rather than logarithmic.
 //
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  distmatrix -r roi_lh.txt -I tracograms/ -O results/ -t 0.001 -b 5000 -v -m 5 -z
+//   distmatrix -r roi_lh.txt -I tracograms/ -O results/ -t 0.001 -b 5000 -v -m 5 -z
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - "roi_index.txt" - A file containing an index matching each seed coordinate to a block number and position within the block.
+//   - "dist_block_X_Y.nii(.v)" - Files containing the distance values for the submatrix in pasition XY within the full distance matrix.
+//   - "distmatrix_log.txt" - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -202,11 +212,12 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "distmatrix" << std::endl << std::endl;
-            std::cout << "Compute a pairwise distance matrix between seed voxel compact tracts. Matrix will be divided in sub-blocks for easier & safer computing and storing." << std::endl;
-            std::cout << "Notes:" << std::endl;
+            std::cout << "Compute a pairwise distance matrix between seed voxel compact tracts. Matrix will be divided in sub-blocks for easier & safer computing and storing." << std::endl << std::endl;
+            std::cout << "* Notes:" << std::endl;
             std::cout << "       - As matrix will be simmetrical only upper triangle is computed." << std::endl;
             std::cout << "       - Distance metric used is normalized dot product." << std::endl;
             std::cout << "       - Memory and CPU heavy." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --roi:        File with the seed voxel coordinates and corresponding tractogram IDs." << std::endl << std::endl;
@@ -223,11 +234,16 @@ int main( int argc, char *argv[] )
             std::cout << "[--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << "[-m --memory]:    Approximate RAM memory amount to be made available and used by the program (in GBytes). Valid values [0.1,50]. Default: 0.5." << std::endl << std::endl;
             std::cout << "[-z --zip]:       Zip output files." << std::endl << std::endl;
-            std::cout << "[--nolog]:        Treat input tractograms as being NORMALIZED in natural units rather than logarithmic." << std::endl << std::endl;
+            std::cout << "[--nolog]:        Treat input tractograms as being normalized in natural units rather than logarithmic." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
             std::cout << "distmatrix -r roi_lh.txt -I tracograms/ -O results/ -t 0.001 -b 5000 -v -m 5 -z" << std::endl << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'roi_index.txt'' - A file containing an index matching each seed coordinate to a block number and position within the block." << std::endl;
+            std::cout << " - 'dist_block_X_Y.nii(.v)'' - Files containing the distance values for the submatrix in pasition XY within the full distance matrix." << std::endl;
+            std::cout << " - 'distmatrix_log.txt'' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
