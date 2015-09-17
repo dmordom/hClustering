@@ -23,7 +23,15 @@ void \hyperlink{classdistMatComputer_a76d5666d4cc06e25294581909d563274}{set\-Ver
 \item 
 bool \hyperlink{classdistMatComputer_ae8cb9613de8d550b5afb19954a219c65}{ready} () const 
 \item 
+void \hyperlink{classdistMatComputer_a2b69c255a55d06f9df8e77b1e6850224}{store\-Zipped} ()
+\item 
+void \hyperlink{classdistMatComputer_a908bfd7d361ebc0e07a353ecdce679fe}{store\-Unzipped} ()
+\item 
 void \hyperlink{classdistMatComputer_ac59ef6082cafa97fcc329143ca76a713}{set\-Block\-Size} (float memory, size\-\_\-t block\-Size=0)
+\item 
+void \hyperlink{classdistMatComputer_ae64101f05afd177f478bfb41b7bc4866}{set\-Starting\-Block} (size\-\_\-t start\-\_\-row, size\-\_\-t start\-\_\-column)
+\item 
+void \hyperlink{classdistMatComputer_aa63d6957fa826dc56f6bc7be3db2ad22}{set\-Finish\-Block} (size\-\_\-t finish\-\_\-row, size\-\_\-t finish\-\_\-column)
 \item 
 void \hyperlink{classdistMatComputer_a33aff7e2ad324c0a59b3302a929a6e5f}{do\-Dist\-Blocks} ()
 \end{DoxyCompactItemize}
@@ -82,11 +90,26 @@ the ready flag, if true class
 \item[{size\-\_\-t}]{block\-Size = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classdistMatComputer_ac59ef6082cafa97fcc329143ca76a713}
-\-Calculates memory usage and size of the tractogram sub blocks to be loaded, and sub blocks to divide the matrix in 
+\-Calculates memory usage, blocks to divide the matrix in and size of the tractogram sub blocks to be loaded 
 \begin{DoxyParams}{\-Parameters}
 {\em memory} & the available \-R\-A\-M memory in \-G\-Bytes \\
 \hline
 {\em block\-Size} & the desired size for the dist\-Blocks, if 0 maximum size for the available memory will be used \\
+\hline
+\end{DoxyParams}
+\hypertarget{classdistMatComputer_aa63d6957fa826dc56f6bc7be3db2ad22}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!set\-Finish\-Block@{set\-Finish\-Block}}
+\index{set\-Finish\-Block@{set\-Finish\-Block}!distMatComputer@{dist\-Mat\-Computer}}
+\subsubsection[{set\-Finish\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Mat\-Computer\-::set\-Finish\-Block} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{finish\-\_\-row, }
+\item[{size\-\_\-t}]{finish\-\_\-column}
+\end{DoxyParamCaption}
+)}}\label{classdistMatComputer_aa63d6957fa826dc56f6bc7be3db2ad22}
+\-Sets a custom block index to finish the matrix computation at, later blocks will not be computed 
+\begin{DoxyParams}{\-Parameters}
+{\em finish\-\_\-row} & row index of the finishing block \\
+\hline
+{\em finish\-\_\-column} & column index of the finishing block \\
 \hline
 \end{DoxyParams}
 \hypertarget{classdistMatComputer_a3eda189c29b6a4b33b7fb79fab285da7}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!set\-Input\-Folder@{set\-Input\-Folder}}
@@ -113,6 +136,21 @@ sets the output folder
 {\em output\-Folder} & folder where to write the created distance matrix files \\
 \hline
 \end{DoxyParams}
+\hypertarget{classdistMatComputer_ae64101f05afd177f478bfb41b7bc4866}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!set\-Starting\-Block@{set\-Starting\-Block}}
+\index{set\-Starting\-Block@{set\-Starting\-Block}!distMatComputer@{dist\-Mat\-Computer}}
+\subsubsection[{set\-Starting\-Block}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Mat\-Computer\-::set\-Starting\-Block} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{start\-\_\-row, }
+\item[{size\-\_\-t}]{start\-\_\-column}
+\end{DoxyParamCaption}
+)}}\label{classdistMatComputer_ae64101f05afd177f478bfb41b7bc4866}
+\-Sets a custom block index to start the matrix computation from, previous blocks will not be computed 
+\begin{DoxyParams}{\-Parameters}
+{\em start\-\_\-row} & row index of the starting block \\
+\hline
+{\em start\-\_\-column} & column index of the starting block \\
+\hline
+\end{DoxyParams}
 \hypertarget{classdistMatComputer_ad37c8350132ca868e82650deb26c83c4}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!set\-Verbose@{set\-Verbose}}
 \index{set\-Verbose@{set\-Verbose}!distMatComputer@{dist\-Mat\-Computer}}
 \subsubsection[{set\-Verbose}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Mat\-Computer\-::set\-Verbose} (
@@ -137,7 +175,21 @@ sets (or resets) the very verbose output flag in order to wrire extra progress i
 {\em very\-Verbose} & the true/false flag to set the m\-\_\-very\-Verbose member to \\
 \hline
 \end{DoxyParams}
-
+\hypertarget{classdistMatComputer_a908bfd7d361ebc0e07a353ecdce679fe}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!store\-Unzipped@{store\-Unzipped}}
+\index{store\-Unzipped@{store\-Unzipped}!distMatComputer@{dist\-Mat\-Computer}}
+\subsubsection[{store\-Unzipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Mat\-Computer\-::store\-Unzipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistMatComputer_a908bfd7d361ebc0e07a353ecdce679fe}
+resets the the zip flag in order not to zip the files upon writing \hypertarget{classdistMatComputer_a2b69c255a55d06f9df8e77b1e6850224}{\index{dist\-Mat\-Computer@{dist\-Mat\-Computer}!store\-Zipped@{store\-Zipped}}
+\index{store\-Zipped@{store\-Zipped}!distMatComputer@{dist\-Mat\-Computer}}
+\subsubsection[{store\-Zipped}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dist\-Mat\-Computer\-::store\-Zipped} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{classdistMatComputer_a2b69c255a55d06f9df8e77b1e6850224}
+sets the the zip flag in order to zip the files upon writing 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

@@ -59,7 +59,8 @@ randCnbTreeBuilder::randCnbTreeBuilder( std::string roiFilename, bool verbose ):
     }
     if( numStreamlines != 0 )
     {
-        throw std::runtime_error("ERROR @ randCnbTreeBuilder::randCnbTreeBuilder(): random tractogram roi states number of streamlines different than 0");
+        std::cerr << "WARNING @ randCnbTreeBuilder::randCnbTreeBuilder(): Random tractogram roi states number of streamlines different than 0." << std::endl;
+        std::cerr << "                                                    Make sure tractograms used where generated with randtracts command" << std::endl;
     }
 
 }
@@ -784,43 +785,14 @@ void randCnbTreeBuilder::buildRandCentroid( const unsigned int nbLevel, const fl
             ( *m_logfile ) << m_tree.getReport() << std::endl;
         }
 
-        if( m_debug )
+        if( !keepDiscarded )
         {
-            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
-            writeTree();
+            m_tree.m_discarded.clear();
         }
 
-        m_tree.forceMonotonicity();
-
-        if( m_verbose )
-        {
-            std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-        }
-
-        if( m_debug )
-        {
-            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
-            writeTree();
-        }
-
-        m_tree.debinarize( false );
-
-        if( m_verbose )
-        {
-            std::cout << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Debinarized, " << m_tree.getReport( false ) << std::endl;
-        }
-
-
-        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
         writeTree();
+
     }
     else
     {
@@ -829,130 +801,32 @@ void randCnbTreeBuilder::buildRandCentroid( const unsigned int nbLevel, const fl
         baseNodes.sort();
         std::vector< size_t > baseVector( baseNodes.begin(), baseNodes.end() );
 
-
-        if( m_debug )
-        {
-            writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
-            if( m_verbose )
-            {
-                std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
-            }
-            if( m_verbose )
-            {
-                std::cout << m_tree.getReport() << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << m_tree.getReport() << std::endl;
-            }
-            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
-            writeTree();
-
-            WHtree treeUp(m_tree);
-            WHtree treeDown(m_tree);
-
-            treeUp.forceMonotonicityUp();
-            WHtreeProcesser processerUp( &treeUp );
-            processerUp.flattenSelection(baseNodes, false);
-            treeUp.debinarize( true );
-            treeUp.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Up" );
-            treeUp.writeTree( m_outputFolder + "/" + treeUp.m_treeName + ".txt", m_niftiMode );
-
-            treeDown.forceMonotonicityDown();
-            WHtreeProcesser processerDown( &treeDown );
-            processerDown.flattenSelection(baseNodes, false);
-            treeDown.debinarize( true );
-            treeDown.m_treeName = ( "c" + string_utils::toString( nbLevel ) +"_Down" );
-            treeDown.writeTree( m_outputFolder + "/" + treeDown.m_treeName + ".txt", m_niftiMode );
-        }
-
-
-        m_tree.forceMonotonicity();
-
-        if( m_verbose )
-        {
-            std::cout << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "Monotonicity forced, " << m_tree.getReport( false ) << std::endl;
-        }
-
-        if( m_debug )
-        {
-            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin" );
-            writeTree();
-        }
-
-        WHtreeProcesser processer( &m_tree );
-        processer.flattenSelection(baseNodes, false);
-
-
-        if( m_verbose )
-        {
-            std::cout << "BaseNodes flattened, and tree pruned" << m_tree.getReport( false ) << std::endl;
-        }
-        if( m_logfile != 0 )
-        {
-            ( *m_logfile ) << "BaseNodes flattened,  and tree pruned" << m_tree.getReport( false ) << std::endl;
-        }
-
-        if( m_debug )
-        {
-            m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_granlimit" );
-            writeTree();
-        }
-
         if( !keepDiscarded )
         {
             m_tree.m_discarded.clear();
         }
 
-        m_tree.debinarize( true );
-
-
+        writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
         if( m_verbose )
         {
-            std::cout << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
+            std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
         }
         if( m_logfile != 0 )
         {
-            ( *m_logfile ) << "Tree Debinarized, " << m_tree.getReport( false ) << std::endl;
+            ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
         }
-
-        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) );
+        if( m_verbose )
+        {
+            std::cout << m_tree.getReport() << std::endl;
+        }
+        if( m_logfile != 0 )
+        {
+            ( *m_logfile ) << m_tree.getReport() << std::endl;
+        }
+        m_tree.m_treeName = ( "c" + string_utils::toString( nbLevel ) + "_bin_nmt" );
         writeTree();
 
-        if( m_tree.testRootBaseNodes() )
-        {
-            baseVector = m_tree.getRootBaseNodes();
-            std::sort( baseVector.begin(), baseVector.end() );
-            writeBases( baseVector, m_outputFolder + "/baselist.txt" );
 
-            if( m_verbose )
-            {
-                std::cout << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Final base list written in: "<< m_outputFolder << "/baselist.txt" << std::endl;
-            }
-        }
-        else
-        {
-            if( m_verbose )
-            {
-                std::cout << "Final tree is not a pure basenode tree" << std::endl;
-            }
-            if( m_logfile != 0 )
-            {
-                ( *m_logfile ) << "Final tree is not a pure basenode tree" << std::endl;
-            }
-        }
     }
 
     int timeTaken = difftime( time( NULL ), procStart );

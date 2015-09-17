@@ -40,6 +40,8 @@
 //   The alternative method generates uniformly distributed vectors in the hyperspace, then filters out elements outside the unit hypersphere, and normalizes the remaining elements to the surface.
 //    This method has higher accuracy than the main method at higher dimensions, but computing time also increases exponentially, as most elements must be filetered out.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -65,9 +67,16 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  randtracts -r roi.txt -O results/ -d 10 -s 0 -v
+//   randtracts -r roi.txt -O results/ -d 10 -s 0 -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'probtract_X.cmpct' (default)- (where X is a tract ID) artificial compact tractograms that would yield a uniformly random distance matrix.
+//.  - 'connect_X_Y_Z.v' (--vista option)- (where XYZ are tract seed voxel coordinates) artificial compact tractograms in vista format that would yield a uniformly random distance matrix.
+//   - 'randtracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -209,6 +218,7 @@ int main( int argc, char *argv[] )
             std::cout << "  However, for this approximation to be accurate dimension must be relatively low, therefore a dimension=10 is recommended (default)." << std::endl;
             std::cout << " The alternative method generates uniformly distributed vectors in the hyperspace, then filters out elements outside the unit hypersphere, and normalizes the remaining elements to the surface." << std::endl;
             std::cout << "  This method has higher accuracy than the main method at higher dimensions, but computing time also increases exponentially, as most elements must be filetered out." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --roi:        Roi file with leaf coordinates/trackIDs of tractograms to generate." << std::endl << std::endl;
@@ -222,8 +232,14 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    Use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "randtracts -r roi.txt -O results/ -d 10 -s 0 -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " randtracts -r roi.txt -O results/ -d 10 -s 0 -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'probtract_X.cmpct' (default)- (where X is a tract ID) artificial compact tractograms that would yield a uniformly random distance matrix." << std::endl;
+            std::cout << " - 'connect_X_Y_Z.v' (--vista option)- (where XYZ are tract seed voxel coordinates) artificial compact tractograms in vista format that would yield a uniformly random distance matrix." << std::endl;
+            std::cout << " - 'randtracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 

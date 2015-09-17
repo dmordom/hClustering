@@ -90,10 +90,10 @@
 //
 //   [extra outputs when using --debugout option)
 //
-//   - 'cX_bin.txt' - binary-branching hierarchical tree before tree processing.
-//   - 'cX_bin_nmt.txt' - non-monotonic tree after monotonicity correction.
+//   - 'cX_bin_nmt.txt' - non-monotonic binary-branching hierarchical tree before tree processing.
 //   - 'baselist_nmt.txt' - meta-leaves (base nodes) list with IDs corresponding to the non-monotonic tree file.
 //   - 'cX_bin_nmt_granlimit.txt' - non-monotonic hierarchical after granularity limitation (and meta-leaf formation).
+//   - 'cX_bin.txt' - binary tree after granularity and monotonicity correction.
 //   - 'cX_Down.txt' - processed hierarchical tree but using a lower-limit monotonicity correction algorithm rather than the standard weighetd one.
 //   - 'cX_Up.txt' - processed hierarchical tree but using a Higher-limit monotonicity correction algorithm rather than the standard weighetd one.
 //   - 'cX_[*]debug.txt' - versions of the counterpart files without suffix with redundant information for debugging purposes.
@@ -148,7 +148,7 @@ int main( int argc, char *argv[] )
         // program parameters
         std::string roiFilename, inputFolder, outputFolder, tempFolder;
         float memory( 0.5 ), maxNbDist( 1 ), relativeThreshold( 0 );
-        unsigned int nbLevel( 0 ), threads( 0 );
+        unsigned int nbLevel( 26 ), threads( 0 );
         bool keepDiscarded( false ), niftiMode( true ), debug( false ), noLog( false );
         TC_GROWTYPE growType( TC_GROWOFF );
         size_t baseSize( 0 );
@@ -271,10 +271,10 @@ int main( int argc, char *argv[] )
             std::cout << " - 'buildctree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
             std::cout << std::endl;
             std::cout << " [extra outputs when using --debugout option)" << std::endl << std::endl;
-            std::cout << " - 'cX_bin.txt' - binary-branching hierarchical tree before tree processing." << std::endl;
-            std::cout << " - 'cX_bin_nmt.txt' - non-monotonic tree after monotonicity correction." << std::endl;
+            std::cout << " - 'cX_bin_nmt.txt' - non-monotonic binary-branching hierarchical tree before tree processing." << std::endl;
             std::cout << " - 'baselist_nmt.txt' - meta-leaves (base nodes) list with IDs corresponding to the non-monotonic tree file." << std::endl;
             std::cout << " - 'cX_bin_nmt_granlimit.txt' - non-monotonic hierarchical after granularity limitation (and meta-leaf formation)." << std::endl;
+            std::cout << " - 'cX_bin.txt' -binary tree after granularity and monotonicity correction." << std::endl;
             std::cout << " - 'cX_Down.txt' - processed hierarchical tree but using a lower-limit monotonicity correction algorithm rather than the standard weighetd one." << std::endl;
             std::cout << " - 'cX_Up.txt' - processed hierarchical tree but using a Higher-limit monotonicity correction algorithm rather than the standard weighetd one." << std::endl;
             std::cout << " - 'cX_[*]debug.txt' - versions of the counterpart files without suffix with redundant information for debugging purposes." << std::endl;

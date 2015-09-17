@@ -100,7 +100,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#ad37c8350132ca868e82650deb26c83c4">setVerbose</a> (bool verbose=true)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#a76d5666d4cc06e25294581909d563274">setVeryVerbose</a> (bool veryVerbose=true)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#ae8cb9613de8d550b5afb19954a219c65">ready</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#a2b69c255a55d06f9df8e77b1e6850224">storeZipped</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#a908bfd7d361ebc0e07a353ecdce679fe">storeUnzipped</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#ac59ef6082cafa97fcc329143ca76a713">setBlockSize</a> (float memory, size_t blockSize=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#ae64101f05afd177f478bfb41b7bc4866">setStartingBlock</a> (size_t start_row, size_t start_column)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#aa63d6957fa826dc56f6bc7be3db2ad22">setFinishBlock</a> (size_t finish_row, size_t finish_column)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdistMatComputer.html#a33aff7e2ad324c0a59b3302a929a6e5f">doDistBlocks</a> ()</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -215,11 +219,46 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Calculates memory usage and size of the tractogram sub blocks to be loaded, and sub blocks to divide the matrix in </p>
+<p>Calculates memory usage, blocks to divide the matrix in and size of the tractogram sub blocks to be loaded </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">memory</td><td>the available RAM memory in GBytes </td></tr>
     <tr><td class="paramname">blockSize</td><td>the desired size for the distBlocks, if 0 maximum size for the available memory will be used </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa63d6957fa826dc56f6bc7be3db2ad22"></a><!-- doxytag: member="distMatComputer::setFinishBlock" ref="aa63d6957fa826dc56f6bc7be3db2ad22" args="(size_t finish_row, size_t finish_column)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdistMatComputer.html#aa63d6957fa826dc56f6bc7be3db2ad22">distMatComputer::setFinishBlock</a> </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>finish_row</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>finish_column</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets a custom block index to finish the matrix computation at, later blocks will not be computed </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">finish_row</td><td>row index of the finishing block </td></tr>
+    <tr><td class="paramname">finish_column</td><td>column index of the finishing block </td></tr>
   </table>
   </dd>
 </dl>
@@ -274,6 +313,41 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae64101f05afd177f478bfb41b7bc4866"></a><!-- doxytag: member="distMatComputer::setStartingBlock" ref="ae64101f05afd177f478bfb41b7bc4866" args="(size_t start_row, size_t start_column)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdistMatComputer.html#ae64101f05afd177f478bfb41b7bc4866">distMatComputer::setStartingBlock</a> </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>start_row</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>start_column</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets a custom block index to start the matrix computation from, previous blocks will not be computed </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start_row</td><td>row index of the starting block </td></tr>
+    <tr><td class="paramname">start_column</td><td>column index of the starting block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ad37c8350132ca868e82650deb26c83c4"></a><!-- doxytag: member="distMatComputer::setVerbose" ref="ad37c8350132ca868e82650deb26c83c4" args="(bool verbose=true)" -->
 <div class="memitem">
 <div class="memproto">
@@ -322,6 +396,40 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a908bfd7d361ebc0e07a353ecdce679fe"></a><!-- doxytag: member="distMatComputer::storeUnzipped" ref="a908bfd7d361ebc0e07a353ecdce679fe" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdistMatComputer.html#a908bfd7d361ebc0e07a353ecdce679fe">distMatComputer::storeUnzipped</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>resets the the zip flag in order not to zip the files upon writing </p>
+
+</div>
+</div>
+<a class="anchor" id="a2b69c255a55d06f9df8e77b1e6850224"></a><!-- doxytag: member="distMatComputer::storeZipped" ref="a2b69c255a55d06f9df8e77b1e6850224" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdistMatComputer.html#a2b69c255a55d06f9df8e77b1e6850224">distMatComputer::storeZipped</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>sets the the zip flag in order to zip the files upon writing </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/common/<a class="el" href="distMatComputer_8h_source.html">distMatComputer.h</a></li>
 <li>src/common/distMatComputer.cpp</li>
@@ -344,7 +452,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 11 2015 04:39:30 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 18 2015 00:13:18 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

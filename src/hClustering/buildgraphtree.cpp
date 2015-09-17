@@ -34,6 +34,8 @@
 //
 //  Build a graph linkage hierarchical tree from a distance matrix built with distBlocks.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -55,9 +57,19 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v
+//   buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'LINKAGE.txt' - (where LINKAGE is a string defining the method chosen in option -g: single/complete/average/weighgted/ward) Contains the output hierarchical tree.
+//   - 'buildgraphtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
+//
+//   [extra outputs when using --debugout option)
+//
+//   - 'LINKAGE_debug.txt' - tree file with redundant information for debugging purposes.
 //
 //---------------------------------------------------------------------------
 
@@ -185,6 +197,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "buildgraphtree" << std::endl << std::endl;
             std::cout << "Build a graph linkage hierarchical tree from a distance matrix built with distBlocks." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
@@ -196,8 +209,16 @@ int main( int argc, char *argv[] )
             std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'LINKAGE.txt' - (where LINKAGE is a string defining the method chosen in option -g: single/complete/average/weighgted/ward) Contains the output hierarchical tree." << std::endl;
+            std::cout << " - 'buildgraphtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
+            std::cout << " [extra outputs when using --debugout option)" << std::endl << std::endl;
+            std::cout << " - 'LINKAGE_debug.txt' - tree file with redundant information for debugging purposes." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if ( variableMap.count( "verbose" ) ) {
@@ -349,7 +370,7 @@ int main( int argc, char *argv[] )
             else
             {
                 graphMethod = TG_WARD;
-                std::cout<<"Weighted linkage: Dwd(k,i+j) = [(Si*Sj)/(Si+Sj)]*[Da(i,k)-Da(i,i)/2-Da(j,j)/2]"<<std::endl;
+                std::cout<<"Ward linkage: Dwd(k,i+j) = [(Si*Sj)/(Si+Sj)]*[Da(i,k)-Da(i,i)/2-Da(j,j)/2]"<<std::endl;
             }
         }
         else
@@ -391,6 +412,8 @@ int main( int argc, char *argv[] )
             logFile <<"Method used:\tAverage linkage: D(k,i+j) = [D(i,k)*Size(i),D(j,k)*size(j)]/[size(i)+size(j)]"<<std::endl;
         else if (graphMethod==TG_WEIGHTED)
             logFile <<"Method used:\tWeighted linkage: D(k,i+j) = [D(i,k)+D(i,k)]/2"<<std::endl;
+        else if (graphMethod==TG_WARD)
+            logFile <<"Method used:\tWard linkage: Dwd(k,i+j) = [(Si*Sj)/(Si+Sj)]*[Da(i,k)-Da(i,i)/2-Da(j,j)/2]"<<std::endl;
         else {
             std::cerr << "ERROR: unrecognized graph option"<<std::endl;
             exit(-1);

@@ -82,26 +82,30 @@ SET( COMMON_SRCS
 
 SET( MAIN_SRCS
     buildctree.cpp
-    buildrandctree.cpp
-    full2compact.cpp
-    compact2full.cpp
-    vista2cmpct.cpp
-    cmpct2vista.cpp
-    buildgraphtree.cpp
-    treetracts.cpp
-    cpcc.cpp
-    fliptree.cpp
-    partitiontree.cpp
-    processtree.cpp
-    image2tree.cpp
-    matchpartition.cpp
-    comparetrees.cpp
-    tractdist.cpp
-    pairdist.cpp
-    fliptracts.cpp
-    randtracts.cpp
-    surfprojection.cpp
     distmatrix.cpp
+    buildgraphtree.cpp
+    randtracts.cpp
+    buildrandctree.cpp
+
+    cpcc.cpp            #***
+    processtree.cpp     #***
+    partitiontree.cpp   #***
+    comparetrees.cpp    #***
+    matchpartition.cpp  #***
+
+    tractdist.cpp       #***
+    pairdist.cpp        #***
+    full2compact.cpp    #***
+    compact2full.cpp    #***
+    vista2cmpct.cpp     #***
+    cmpct2vista.cpp     #***
+    treetracts.cpp      #***
+
+    fliptree.cpp        #***
+    fliptracts.cpp      #***
+
+    image2tree.cpp      #***
+    surfprojection.cpp  #***
 )
 
 foreach( binarysourcefile ${MAIN_SRCS} )

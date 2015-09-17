@@ -238,7 +238,7 @@ int main( int argc, char *argv[] )
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Usage example:" << std::endl << std::endl;
-            std::cout << "distmatrix -r roi_lh.txt -I tracograms/ -O results/ -t 0.001 -b 5000 -v -m 5 -z" << std::endl << std::endl;
+            std::cout << " distmatrix -r roi_lh.txt -I tracograms/ -O results/ -t 0.001 -b 5000 -v -m 5 -z" << std::endl << std::endl;
             std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
             std::cout << " - 'roi_index.txt'' - A file containing an index matching each seed coordinate to a block number and position within the block." << std::endl;
             std::cout << " - 'dist_block_X_Y.nii(.v)'' - Files containing the distance values for the submatrix in pasition XY within the full distance matrix." << std::endl;

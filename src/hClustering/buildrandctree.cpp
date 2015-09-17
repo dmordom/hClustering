@@ -35,6 +35,8 @@
 //
 //  Build a centroid hierarchical tree from a set of artificially pre-generated set of tractograms yoielding a uniformly random similarity matrix and a seed neighborhood information voxel list.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -67,9 +69,20 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  buildrandctree -r roi_lh.txt -I tracograms/ -O results/ -c 26 -N 1000 -k -m 2 -v
+//   buildrandctree -r roi_lh.txt -I tracograms/ -O results/ -c 26 -N 1000 -k -m 2 -v
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'cX_bin_nmt.txt' - (where X is the neighborhood level defined at option -c) non-monotonic binary-branching hierarchical tree without tree processing (if desired use processtree command).
+//   - 'baselist_nmt.txt' - meta-leaves (base nodes defined by the us of option -N or -S) list with IDs corresponding to the non-monotonic tree file.
+//   - 'success.txt' - An empty file created when the program has sucessfully exited after completion (to help for automatic re-running scripting after failure).
+//   - 'buildrandtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
+//
+//   [extra outputs when using --debugout option)
+//
+//   - 'cX_bin_nmt_debug.txt' - version of the counterpart file without '_debug' suffix with redundant information for debugging purposes.
 //
 //---------------------------------------------------------------------------
 
@@ -113,7 +126,7 @@ int main( int argc, char *argv[] )
         // program parameters
         std::string roiFilename, inputFolder, outputFolder;
         float memory( 0.5 ), maxNbDist( 1 );
-        unsigned int nbLevel( 0 ), threads( 0 );
+        unsigned int nbLevel( 26 ), threads( 0 );
         bool keepDiscarded( false ), niftiMode( true ), debug( false );
         TC_GROWTYPE growType( TC_GROWOFF );
         size_t baseSize( 0 );
@@ -200,6 +213,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "buildrandctree" << std::endl << std::endl;
             std::cout << "Build a centroid hierarchical tree from a set of artificially pre-generated set of tractograms yoielding a uniformly random similarity matrix and a seed neighborhood information voxel list." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
@@ -216,10 +230,20 @@ int main( int argc, char *argv[] )
             std::cout << "[-k --keep-disc]: keep discarded voxel information in a specialiced section of the tree." << std::endl << std::endl;
             std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "buildrandctree -r roi_lh.txt -I tractograms/ -O results/ -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
-            exit(0);
-        }
+            std::cout << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " buildrandctree -r roi_lh.txt -I tractograms/ -O results/ -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'cX_bin_nmt.txt' - (where X is the neighborhood level defined at option -c) non-monotonic binary-branching hierarchical tree without tree processing (if desired use processtree command)." << std::endl;
+            std::cout << " - 'baselist_nmt.txt' - meta-leaves (base nodes defined by the us of option -N or -S) list with IDs corresponding to the non-monotonic tree file." << std::endl;
+            std::cout << " - 'success.txt' - An empty file created when the program has sucessfully exited after completion (to help for automatic re-running scripting after failure)." << std::endl;
+            std::cout << " - 'buildrandtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
+            std::cout << " [extra outputs when using --debugout option)" << std::endl << std::endl;
+            std::cout << " - 'cX_bin_nmt_debug.txt' - version of the counterpart file without '_debug' suffix with redundant information for debugging purposes." << std::endl;
+            std::cout << std::endl;
+            exit(0);        }
 
         if ( variableMap.count( "verbose" ) ) {
             std::cout << "verbose output" << std::endl;
