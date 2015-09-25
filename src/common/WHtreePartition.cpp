@@ -301,8 +301,7 @@ void WHtreePartition::scanOptimalPartitions( const size_t levelDepth, std::vecto
         std::cout << std::endl;
     }
 
-
-    ///////////printout
+    /*
     std::cout << "Are partition decisions the same as in horizontal partitioning???" << std::endl;
     std::cout << "250 % match: " << ( match250*100.0 )/( match250+mismatch250 );
     std::cout << ". Total matches: " << match250 << ". fails: " << mismatch250 << std::endl;
@@ -314,7 +313,7 @@ void WHtreePartition::scanOptimalPartitions( const size_t levelDepth, std::vecto
     std::cout << ". Total matches: " << match2000 << ". fails: " << mismatch2000 << std::endl;
     std::cout << "5000 % match: " << ( match5000*100.0 )/( match5000+mismatch5000 );
     std::cout << ". Total matches: " << match5000 << ". fails: " << mismatch5000 << std::endl;
-
+    */
 
 
 

@@ -37,6 +37,8 @@
 //   to keep local SS maxima within that kernel. For SS index refer to (Moreno-Dominguez, 2014).
 //   For an interactive 3D partition management with more options please use the Hierarchcial Clustering module developed in OpenWalnut (www.openwalnut.org).
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -63,9 +65,27 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  partitiontree -t tree_lh.txt -O results/ -d 3 -r 50 -v
+//   partitiontree -t tree_lh.txt -O results/ -d 3 -r 50 -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   (default outputs)
+//   - 'allSSparts_dX.txt' - (where X is the search depth level defined at parameter -d) Contains a summary of the partition information (cut value and size) for all granularities.
+//   - 'TREE_SSparts_dX.txt' - (where TREE is the filename of the input tree defined at parameter -t) contains a copy of the original tree file with the partitions at all granularities included in the relevant fields.
+//   - 'partitiontree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
+//
+//   (additional if using option -r)
+//   - 'filtSSparts_dX_rY.txt' - (where Y is the filter radius defined at parameter -r) Contains a summary of the resulting filtered partitions.
+//   - 'TREE_SSparts_dX_rY.txt' - contains a copy of the original tree file with the resulting filtered partitions included in the relevant fields.
+//
+//   (when using --hoz option, the prefix 'SS' will be replaced by 'Hoz')
+//
+//   (alternative outputs when using option --maxgran)
+//   - 'fmaxgranPart.txt' - Contains the size information of the resulting maximal granularity partition for that tree.
+//   - 'TREE_maxgranPart.txt' - contains a copy of the original tree file with the resulting max granularity partition included in the relevant fields.
 //
 //---------------------------------------------------------------------------
 
@@ -104,7 +124,7 @@ int main( int argc, char *argv[] )
 
         std::string progName("partitiontree");
         std::string configFilename("../../config/"+progName+".cfg");
-        unsigned int threads(0), levelDepth(1), filterRadius(2);
+        unsigned int threads(0), levelDepth(3), filterRadius(0);
         bool verbose(false), niftiMode( true );
 
         // program parameters
@@ -118,7 +138,7 @@ int main( int argc, char *argv[] )
                 ( "tree,t",  boost::program_options::value< std::string >(&treeFilename), "file with the tree to compute partitions from")
                 ( "outputf,O",  boost::program_options::value< std::string >(&outputFolder), "output folder where partition files will be written")
                 ( "search-depth,d", boost::program_options::value< unsigned int >(&levelDepth)->implicit_value(3), "[opt] optimal partition search depth (default = 3)")
-                ( "filter-radius,r", boost::program_options::value< unsigned int >(&filterRadius)->implicit_value(1), "[opt] output partition filter kernel radius (default = 1 | no filtering)")
+                ( "filter-radius,r", boost::program_options::value< unsigned int >(&filterRadius)->implicit_value(0), "[opt] output partition filter kernel radius (default = 0 | no filtering)")
                 ( "hoz", "[opt] obtain horizontal cut partitions (instead of Spread-Separation ones)")
                 ( "maxgran,m", "[opt] obtain only the maximum granularity partition")
                 ;
@@ -186,6 +206,7 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "partitiontree" << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << "Obtain tree partitions at all granularity levels using the Spread-Separation method (finding the the partition with highest SS index at each granularity)." << std::endl;
             std::cout << " Optimal SS value for each partition is searched within a defined search-depth hierarchical levels. Final partitions can be filtered with a defined kernel size." << std::endl;
             std::cout << " to keep local SS maxima within that kernel. For SS index refer to (Moreno-Dominguez, 2014)" << std::endl;
@@ -205,8 +226,25 @@ int main( int argc, char *argv[] )
             std::cout << "[--vista]: 	    write output tree in vista coordinates (default is nifti)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "partitiontree -t tree_lh.txt -O results/ -d 3 -r 50 -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " partitiontree -t tree_lh.txt -O results/ -d 3 -r 50 -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " (default outputs)" << std::endl;
+            std::cout << " - 'allSSparts_dX.txt' - (where X is the search depth level defined at parameter -d) Contains a summary of the partition information (cut value and size) for all granularities." << std::endl;
+            std::cout << " - 'TREE_SSparts_dX.txt' - (where TREE is the filename of the input tree defined at parameter -t) contains a copy of the original tree file with the partitions at all granularities included in the relevant fields." << std::endl;
+            std::cout << " - 'partitiontree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
+            std::cout << " (additional if using option -r)" << std::endl;
+            std::cout << " - 'filtSSparts_dX_rY.txt' - (where Y is the filter radius defined at parameter -r) Contains a summary of the resulting filtered partitions." << std::endl;
+            std::cout << " - 'TREE_SSparts_dX_rY.txt' - contains a copy of the original tree file with the resulting filtered partitions included in the relevant fields." << std::endl;
+            std::cout << std::endl;
+            std::cout << " (when using --hoz option, the prefix 'SS' will be replaced by 'Hoz'')" << std::endl;
+            std::cout << std::endl;
+            std::cout << " (alternative outputs when using option --maxgran)" << std::endl;
+            std::cout << " - 'fmaxgranPart.txt' - Contains the size information of the resulting maximal granularity partition for that tree." << std::endl;
+            std::cout << " - 'TREE_maxgranPart.txt' - contains a copy of the original tree file with the resulting max granularity partition included in the relevant fields." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version"))
@@ -265,7 +303,7 @@ int main( int argc, char *argv[] )
             niftiMode = true;
         }
 
-        if (variableMap.count("tree-file"))
+        if (variableMap.count("tree"))
         {
             if(!boost::filesystem::is_regular_file(boost::filesystem::path(treeFilename)))
             {
@@ -319,6 +357,10 @@ int main( int argc, char *argv[] )
                 WHtreePartition partitioner(&tree);
                 std::string outPartFilename( outputFolder + "/maxgranPart.txt" );
                 partitioner.writePartitionSet( outPartFilename, partitionValues,partitionVector);
+                tree.insertPartitions( partitionVector, partitionValues );
+                std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_maxgranPart" );
+                outTreeFilename += ( ".txt" );
+                tree.writeTree( outTreeFilename, niftiMode );
                 return 0;
             }
             else
@@ -340,12 +382,19 @@ int main( int argc, char *argv[] )
             std::cout << "filter radius indicated: " << filterRadius << " is too high (max is 1000), setting to 100" << std::endl;
             filterRadius = 10;
         }
-        if( filterRadius <= 0 )
+        if( filterRadius == 0 )
         {
-            std::cout << "filter radius indicated: " << filterRadius << " imust be positive. settign to 1" << std::endl;
-            filterRadius = 1;
+            std::cout << "using no filtering (radius 0)" << std::endl;
         }
-        std::cout << "Using a filter radius of: " << filterRadius << std::endl;
+        else if( filterRadius < 0 )
+        {
+            std::cout << "filter radius indicated: " << filterRadius << " must be positive. using no filtering (radius 0)" << std::endl;
+            filterRadius = 0;
+        }
+        else
+        {
+            std::cout << "Using a filter radius of: " << filterRadius << std::endl;
+        }
 
         /////////////////////////////////////////////////////////////////
 
@@ -382,89 +431,40 @@ int main( int argc, char *argv[] )
 
         WHtreePartition treePartition(&tree);
 
+        std::string prefix;
+
         if (variableMap.count("hoz"))
         {
-
+            prefix = "Hoz";
             std::cout <<"getting hoz partitions at all levels..." <<std::endl;
             treePartition.scanHozPartitions( &partitionValues, &partitionVector );
 
             std::cout << partitionValues.size() << " Partitions obtained, writing to file..." <<std::endl;
             logFile <<"Initial partitions:\t"<< partitionValues.size() <<std::endl;
-            std::string outPartFilename( outputFolder + "/allHozParts.txt" );
+            std::string outPartFilename( outputFolder + "/all" + prefix + "parts.txt" );
             treePartition.writePartitionSet( outPartFilename, partitionValues, partitionVector);
 
-
-            std::vector< float > filtPartValues( partitionValues );
-            std::vector< std::vector< size_t> > filtPartVector( partitionVector );
-
-            std::cout << "Filtering with a radius of 100..." <<std::endl;
-            treePartition.filterMaxPartitions( 100, &filtPartValues, &filtPartVector );
-
-            std::cout << filtPartValues.size() << " Filtered partitions obtained, writing to file..." <<std::endl;
-            logFile <<"Filtered partitions:\t"<< filtPartValues.size() <<std::endl;
-            outPartFilename = ( outputFolder + "/hozFiltParts_r100.txt" );
-            treePartition.writePartitionSet(outPartFilename, filtPartValues, filtPartVector);
-            return 0;
-
-        }
-
-
-        std::cout <<"getting optimal partitions at all levels..." <<std::endl;
-        treePartition.scanOptimalPartitions( levelDepth, &partitionValues, &partitionVector );
-
-        std::cout << partitionValues.size() << " Partitions obtained, writing to file..." <<std::endl;
-        logFile <<"Initial partitions:\t"<< partitionValues.size() <<std::endl;
-        std::string outPartFilename( outputFolder + "/allParts_d" + boost::lexical_cast<std::string>(levelDepth) + ".txt" );
-        treePartition.writePartitionSet( outPartFilename, partitionValues, partitionVector);
-
-        tree.insertPartitions( partitionVector, partitionValues );
-        std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_parts_d" + boost::lexical_cast<std::string>(levelDepth) );
-        outTreeFilename += ( ".txt" );
-        tree.writeTree( outTreeFilename, niftiMode );
-
-        if(false)
-        {
-            // get a tree with the best parttiions for 15 50 100 and 200 clusters
-            std::vector< size_t > clustNums;
-            clustNums.reserve( 4 );
-            clustNums.push_back( 15 );
-            clustNums.push_back( 50 );
-            clustNums.push_back( 100 );
-            clustNums.push_back( 250 );
-            size_t cnIndex(0);
-            std::vector< float > selPartValues;
-            std::vector< std::vector< size_t> > selPartVector;
-            selPartValues.reserve( clustNums.size() );
-            selPartVector.reserve( clustNums.size() );
-            for(size_t i=0; i< partitionVector.size(); ++i)
-            {
-                if( cnIndex >= clustNums.size())
-                {
-                    break;
-                }
-
-                if ( partitionVector[i].size() < clustNums[cnIndex])
-                {
-                    continue;
-                }
-                else
-                {
-                    selPartValues.push_back(partitionValues[i]);
-                    selPartVector.push_back(partitionVector[i]);
-                    ++cnIndex;
-                }
-            }
-            tree.insertPartitions( selPartVector, selPartValues );
-            std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_parts_d" + boost::lexical_cast<std::string>(levelDepth) );
+            tree.insertPartitions( partitionVector, partitionValues );
+            std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_" + prefix + "parts_d" + boost::lexical_cast<std::string>(levelDepth) );
             outTreeFilename += ( ".txt" );
             tree.writeTree( outTreeFilename, niftiMode );
+        }
+        else
+        {
 
-//            selPartVector.erase(selPartVector.end()-1);
-//            selPartValues.erase(selPartValues.end()-1);
-//            tree.insertPartitions( selPartVector, selPartValues );
-//            outTreeFilename = ( outputFolder + "/" + tree.getName() + "_parts_d" + boost::lexical_cast<std::string>(levelDepth) );
-//            outTreeFilename += ( "_num3.txt" );
-//            tree.writeTree( outTreeFilename, niftiMode );
+            prefix = "SS";
+            std::cout <<"getting SS partitions at all levels..." <<std::endl;
+            treePartition.scanOptimalPartitions( levelDepth, &partitionValues, &partitionVector );
+
+            std::cout << partitionValues.size() << " Partitions obtained, writing to file..." <<std::endl;
+            logFile <<"Initial partitions:\t"<< partitionValues.size() <<std::endl;
+            std::string outPartFilename( outputFolder + "/all" + prefix + "parts_d" + boost::lexical_cast<std::string>(levelDepth) + ".txt" );
+            treePartition.writePartitionSet( outPartFilename, partitionValues, partitionVector);
+
+            tree.insertPartitions( partitionVector, partitionValues );
+            std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_" + prefix + "parts_d" + boost::lexical_cast<std::string>(levelDepth) );
+            outTreeFilename += ( ".txt" );
+            tree.writeTree( outTreeFilename, niftiMode );
 
         }
 
@@ -483,6 +483,10 @@ int main( int argc, char *argv[] )
 
         for(size_t i=0; i< filterRadii.size(); ++i)
         {
+            if( filterRadii[i] <= 0 )
+            {
+                continue;
+            }
             std::vector< float > filtPartValues( partitionValues );
             std::vector< std::vector< size_t> > filtPartVector( partitionVector );
 
@@ -491,13 +495,13 @@ int main( int argc, char *argv[] )
 
             std::cout << filtPartValues.size() << " Filtered partitions obtained, writing to file..." <<std::endl;
             logFile <<"Filtered partitions:\t"<< filtPartValues.size() <<std::endl;
-            outPartFilename = ( outputFolder + "/filtParts_d" + boost::lexical_cast<std::string>(levelDepth) );
+            std::string outPartFilename( outputFolder + "/filt" + prefix + "parts_d" + boost::lexical_cast<std::string>(levelDepth) );
             outPartFilename += ( "_r" + boost::lexical_cast<std::string>(filterRadii[i]) +  ".txt" );
             treePartition.writePartitionSet(outPartFilename, filtPartValues, filtPartVector);
 
             std::cout << "Adding filtered partitions to tree and writing..." <<std::endl;
 
-            std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_parts_d" + boost::lexical_cast<std::string>(levelDepth) );
+            std::string outTreeFilename( outputFolder + "/" + tree.getName() + "_" + prefix + "parts_d" + boost::lexical_cast<std::string>(levelDepth) );
             outTreeFilename += ( "_r" + boost::lexical_cast<std::string>(filterRadii[i]) +  ".txt" );
 
             tree.insertPartitions( filtPartVector, filtPartValues );

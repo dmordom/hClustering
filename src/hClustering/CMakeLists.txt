@@ -89,7 +89,7 @@ SET( MAIN_SRCS
 
     cpcc.cpp
     processtree.cpp
-    partitiontree.cpp   #***
+    partitiontree.cpp
     comparetrees.cpp    #***
     matchpartition.cpp  #***
 

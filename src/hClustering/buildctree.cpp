@@ -262,7 +262,7 @@ int main( int argc, char *argv[] )
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Usage example:" << std::endl << std::endl;
-            std::cout << "buildctree -r roi_lh.txt -I tractograms/ -T /tmp/tracts -O results/ -t 0.001 -d 0.1 -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
+            std::cout << " buildctree -r roi_lh.txt -I tractograms/ -T /tmp/tracts -O results/ -t 0.001 -d 0.1 -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
             std::cout << " - 'cX.txt' - (where X is the neighborhood level defined at option -c) Contains the output hierarchical tree." << std::endl;
