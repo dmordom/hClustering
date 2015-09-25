@@ -91,13 +91,13 @@
 //   [extra outputs when using --debugout option)
 //
 //   - 'cX_bin_nmt.txt' - non-monotonic binary-branching hierarchical tree before tree processing.
-//   - 'baselist_nmt.txt' - meta-leaves (base nodes) list with IDs corresponding to the non-monotonic tree file.
+//   - 'baselist_bin.txt' - meta-leaves (base nodes) list with IDs corresponding to the binary tree files.
 //   - 'cX_bin_nmt_granlimit.txt' - non-monotonic hierarchical after granularity limitation (and meta-leaf formation).
 //   - 'cX_bin.txt' - binary tree after granularity and monotonicity correction.
 //   - 'cX_Down.txt' - processed hierarchical tree but using a lower-limit monotonicity correction algorithm rather than the standard weighetd one.
 //   - 'cX_Up.txt' - processed hierarchical tree but using a Higher-limit monotonicity correction algorithm rather than the standard weighetd one.
 //   - 'cX_[*]debug.txt' - versions of the counterpart files without suffix with redundant information for debugging purposes.
-//   - 'baselist_nmt_10k.txt' - IDs of the peak nodes at the building point where only 10k active node remained.
+//   - 'baselist_bin_10k.txt' - IDs of the peak nodes at the building point where only 10k active node remained.
 //   - 'compact_[ID/COORD].nii(.v)' - compact tractogram corresponding to the tree root node (mean tractogram of all seeds included in the final tree).
 //
 //---------------------------------------------------------------------------
@@ -272,13 +272,13 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << " [extra outputs when using --debugout option)" << std::endl << std::endl;
             std::cout << " - 'cX_bin_nmt.txt' - non-monotonic binary-branching hierarchical tree before tree processing." << std::endl;
-            std::cout << " - 'baselist_nmt.txt' - meta-leaves (base nodes) list with IDs corresponding to the non-monotonic tree file." << std::endl;
+            std::cout << " - 'baselist_bin.txt' - meta-leaves (base nodes) list with IDs corresponding to the binary tree files." << std::endl;
             std::cout << " - 'cX_bin_nmt_granlimit.txt' - non-monotonic hierarchical after granularity limitation (and meta-leaf formation)." << std::endl;
             std::cout << " - 'cX_bin.txt' -binary tree after granularity and monotonicity correction." << std::endl;
             std::cout << " - 'cX_Down.txt' - processed hierarchical tree but using a lower-limit monotonicity correction algorithm rather than the standard weighetd one." << std::endl;
             std::cout << " - 'cX_Up.txt' - processed hierarchical tree but using a Higher-limit monotonicity correction algorithm rather than the standard weighetd one." << std::endl;
             std::cout << " - 'cX_[*]debug.txt' - versions of the counterpart files without suffix with redundant information for debugging purposes." << std::endl;
-            std::cout << " - 'baselist_nmt_10k.txt' - IDs of the peak nodes at the building point where only 10k active node remained." << std::endl;
+            std::cout << " - 'baselist_bin_10k.txt' - IDs of the peak nodes at the building point where only 10k active node remained." << std::endl;
             std::cout << " - 'compact_[ID/COORD].nii(.v)' - compact tractogram corresponding to the tree root node (mean tractogram of all seeds included in the final tree)." << std::endl;
             std::cout << std::endl;
             exit(0);

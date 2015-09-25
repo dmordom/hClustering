@@ -979,11 +979,11 @@ bool WHtree::readTree( const std::string &filename )
         }
         m_logFactor = string_utils::fromString< float >( logFactorStrings[0][0] );
 
-        if( m_logFactor != 0 && m_numStreamlines != 0 && m_logFactor != log10( m_numStreamlines ) )
+        if( m_logFactor != 0 && m_numStreamlines != 0 &&  std::fabs( m_logFactor - log10( m_numStreamlines ) ) > 0.00001 )
         {
             std::cerr << "ERROR @ WHtree::readTree(): tracking streams number (";
             std::cerr << m_numStreamlines << ") and logarithmic normalization factor (";
-            std::cerr << m_logFactor << ") are a missmatch " << std::endl;
+            std::cerr << m_logFactor << ") are a missmatch . Log factor should be: "<< log10( m_numStreamlines) << std::endl;
             return false;
         }
     }

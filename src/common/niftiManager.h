@@ -41,6 +41,7 @@
 #include <cstdlib>
 #include <climits>
 #include <fstream>
+#include <stdint.h>
 
 // boost library
 #include <boost/format.hpp>
@@ -57,8 +58,8 @@
 
 
 const size_t FLOAT_SIZE = sizeof(float);
-const size_t SIZET_SIZE = sizeof(size_t);
-const size_t UINT8_SIZE = sizeof(unsigned char);
+const size_t UINT32_SIZE = sizeof(uint32_t);
+const size_t UINT8_SIZE = sizeof(uint8_t);
 
 
 /**

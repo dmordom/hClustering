@@ -87,8 +87,8 @@ SET( MAIN_SRCS
     randtracts.cpp
     buildrandctree.cpp
 
-    cpcc.cpp            #***
-    processtree.cpp     #***
+    cpcc.cpp
+    processtree.cpp
     partitiontree.cpp   #***
     comparetrees.cpp    #***
     matchpartition.cpp  #***

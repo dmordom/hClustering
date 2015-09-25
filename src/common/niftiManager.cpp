@@ -235,11 +235,11 @@ ValueType niftiManager::readVector(const std::string& vectorFilenameRef, std::ve
 
         inFile.close();
 
-        const size_t headerSize = SIZET_SIZE + SIZET_SIZE;
+        const size_t headerSize = UINT32_SIZE + UINT32_SIZE;
         void* dataPos = static_cast<unsigned char*>(data);
-        const size_t repType = *(static_cast<size_t*>(dataPos));
-        dataPos = static_cast<unsigned char*>(data) + SIZET_SIZE;
-        const size_t dimx = *(static_cast<size_t*>(dataPos));
+        const size_t repType = *(static_cast<uint32_t*>(dataPos));
+        dataPos = static_cast<unsigned char*>(data) + UINT32_SIZE;
+        const size_t dimx = *(static_cast<uint32_t*>(dataPos));
         size_t repByteSize( 0 );
 
         if( repType == (FLOAT_SIZE * CHAR_BIT) )
@@ -282,7 +282,7 @@ ValueType niftiManager::readVector(const std::string& vectorFilenameRef, std::ve
 
             if ( vectorValueType == VTUINT8 )
             {
-                unsigned char datapoint = *(static_cast<unsigned char*>(dataPos));
+                uint8_t datapoint = *(static_cast<uint8_t*>(dataPos));
                 vector[i] = (float)datapoint;
             }
             else if ( vectorValueType == VTFloat32 )
@@ -601,15 +601,15 @@ void niftiManager::writeVector( const std::string& vectorFilename, const ValueTy
         return;
     }
 
-    const size_t headerSize = SIZET_SIZE + SIZET_SIZE;
+    const size_t headerSize = UINT32_SIZE + UINT32_SIZE;
     const size_t dataSize = headerSize + (dimx*repByteSize);
     void* data = malloc (dataSize );
 
     //write header
     void* dataPos = static_cast<unsigned char*>(data);
-    *(static_cast<size_t*>(dataPos)) = repType;
-    dataPos = static_cast<unsigned char*>(data) + SIZET_SIZE;
-    *(static_cast<size_t*>(dataPos)) = dimx;
+    *(static_cast<uint32_t*>(dataPos)) = repType;
+    dataPos = static_cast<unsigned char*>(data) + UINT32_SIZE;
+    *(static_cast<uint32_t*>(dataPos)) = dimx;
 
     //write data
     for (int i=0 ; i<dimx ; ++i)
@@ -625,7 +625,7 @@ void niftiManager::writeVector( const std::string& vectorFilename, const ValueTy
         if (dataValueType == VTUINT8)
         {
             unsigned char datapoint = (unsigned char)vector[i];
-            *(static_cast<unsigned char*>(dataPos)) = datapoint;
+            *(static_cast<uint8_t*>(dataPos)) = datapoint;
         }
         else if (dataValueType == VTFloat32)
         {

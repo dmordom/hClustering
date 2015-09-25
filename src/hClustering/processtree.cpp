@@ -36,6 +36,8 @@
 //   For more information on the preprocessing steps refer to (Moreno-Dominguez, 2014).
 //   For an interactive tree processing management with more options please use the Hierarchcial Clustering module developed in OpenWalnut (www.openwalnut.org).
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -66,9 +68,16 @@
 //  [--debugout]:     write additional detailed outputs meant to be used for debugging.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  processtree -t tree_lh.txt -O results/ -n processedtree -raw -c -v
+//   processtree -t tree_lh.txt -O results/ -n processedtree -raw -c -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - The processed tree file with either the same original name as the one defined by option -t, or the name defined by option -n when used.
+//   - If both option -r and -c are used, the previous statement refers to the file with the processed raw-tree and the furthermore collapes output will be written with the "_collapsed" suffix.
+//   - 'processtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -200,6 +209,7 @@ int main( int argc, char *argv[] )
             std::cout << "Do tree processing, either full raw tree preprocessing (monotonicity correction, base-node flattening, debinarization...) or/and linear node collapse." << std::endl;
             std::cout << " For more information on the preprocessing steps refer to (Moreno-Dominguez, 2014)." << std::endl;
             std::cout << " For an interactive tree processing management with more options please use the Hierarchcial Clustering module developed in OpenWalnut (www.openwalnut.org)." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to preprocess." << std::endl << std::endl;
@@ -217,8 +227,14 @@ int main( int argc, char *argv[] )
             std::cout << "[--vista]: 	    write output tree in vista coordinates (default is nifti)." << std::endl << std::endl;
             std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "processtree -t tree_lh.txt -O results/ -n processedtree -raw -c -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " processtree -t tree_lh.txt -O results/ -n processedtree -raw -c -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - The processed tree file with either the same original name as the one defined by option -t, or the name defined by option -n when used." << std::endl;
+            std::cout << " - If both option -r and -c are used, the previous statement refers to the file with the processed raw-tree and the furthermore collapes output will be written with the '_collapsed'' suffix." << std::endl;
+            std::cout << " - 'processtree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version"))

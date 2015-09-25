@@ -703,7 +703,7 @@ void CnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
                     {
                         WHtree dummyTree;
                         WHtreeProcesser treeProcesser( &dummyTree );
-                        treeProcesser.writeBases( bases10k, m_outputFolder + "/baselist_nmt_10k.txt" );
+                        treeProcesser.writeBases( bases10k, m_outputFolder + "/baselist_bin_10k.txt" );
                     }
                 }
 
@@ -1035,14 +1035,14 @@ void CnbTreeBuilder::buildCentroid( const unsigned int nbLevel, const float memo
         if( m_debug )
         {
             WHtreeProcesser treeProcesser(&m_tree);
-            treeProcesser.writeBases( baseVector, m_outputFolder + "/baselist_nmt.txt" );
+            treeProcesser.writeBases( baseVector, m_outputFolder + "/baselist_bin.txt" );
             if( m_verbose )
             {
-                std::cout << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
+                std::cout << "Binary tree base list written in: "<< m_outputFolder << "/baselist_bin.txt" << std::endl;
             }
             if( m_logfile != 0 )
             {
-                ( *m_logfile ) << "Non monotonic base list written in: "<< m_outputFolder << "/baselist_nmt.txt" << std::endl;
+                ( *m_logfile ) << "Binary tree base list written in: "<< m_outputFolder << "/baselist_bin.txt" << std::endl;
             }
             if( m_verbose )
             {

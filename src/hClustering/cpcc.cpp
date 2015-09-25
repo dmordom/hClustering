@@ -34,6 +34,8 @@
 //
 //  Compute the cophenetic correlation coefficient (Farris, 1969) of a hierarchical tree.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -49,9 +51,14 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  cpcc -t tree_lh.txt -I distBlocks/ -v
+//   cpcc -t tree_lh.txt -I distBlocks/ -v
+//
+//
+//  * Outputs:
+//
+//   - Introduces the cpcc value in the #cpcc field of the tree file defined at option -t.
 //
 //---------------------------------------------------------------------------
 
@@ -167,6 +174,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "cpcc" << std::endl << std::endl;
             std::cout << "Compute the cophenetic correlation coefficient (Farris, 1969) of a hierarchical tree." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to compute cpcc from." << std::endl << std::endl;
@@ -175,8 +183,12 @@ int main( int argc, char *argv[] )
             std::cout << "[--vista]: 	     read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "cpcc -t tree_lh.txt -I distBlocks/ -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " cpcc -t tree_lh.txt -I distBlocks/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " - Introduces the cpcc value in the #cpcc field of the tree file defined at option -t." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version")) {
@@ -266,8 +278,15 @@ int main( int argc, char *argv[] )
         {
             std::cout<<tree.getReport()<<std::endl;
         }
+        if( !tree.isLoaded() )
+        {
+            std::cerr << "Error while loading tree "<< std::endl;
+            exit(-1);
+        }
 
         treeManager treeMngr(&tree, verbose);
+
+
 
         treeMngr.setDistMatrixFolder(distMatrixFolder);
         float cpcc(treeMngr.doCpcc());

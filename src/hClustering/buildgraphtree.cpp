@@ -42,7 +42,7 @@
 //
 //   -r --roi-file:   A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
 //
-//   -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward.
+//   -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified).
 //
 //   -I --inputf:     Input data folder (containing the distance blocks).
 //
@@ -201,7 +201,7 @@ int main( int argc, char *argv[] )
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
-            std::cout << " -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward." << std::endl;
+            std::cout << " -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified)." << std::endl;
             std::cout << " -I --inputf:     input data folder (containing the distance blocks)." << std::endl << std::endl;
             std::cout << " -O --outputf:    output folder where tree files will be written." << std::endl << std::endl;
             std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
