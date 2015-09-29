@@ -40,6 +40,8 @@
 //            a .v vector compacted from vista coordinates and then tranformed to .cmpct with this program, will not prodcue a correct image if then blown to full 3D .nii with compact2full.
 //            to transform a .v vector tract to a fully corresponding .nii tract, firstly blow to 3D .v image, then convert to nifti with vimage2nifti and then compact with full2compact.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -57,9 +59,17 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  vista2cmpct -i tract.v -o tract.cmpct
+//   vista2cmpct -i tract.v -o tract.cmpct
+//
+//  * Outputs:
+//
+//   - When using -f option and/or the input defined by -o option is a folder name:
+//     Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones.
+//
+//   - When using -i option and the input defined by -o is a single filename:
+//     Output file will be written at the specific filename path specified.
 //
 //---------------------------------------------------------------------------
 
@@ -186,6 +196,7 @@ int main( int argc, char *argv[] )
             std::cout << "WARNING: this program will port the vector as-is, and is meant simply for completion of the cmpct2vista program." << std::endl;
             std::cout << "          a .v vector compacted from vista coordinates and then tranformed to .cmpct with this program, will not prodcue a correct image if then blown to full 3D .nii with compact2full." << std::endl;
             std::cout << "          to transform a .v vector tract to a fully corresponding .nii tract, firstly blow to 3D .v image, then convert to nifti with vimage2nifti and then compact with full2compact." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
             std::cout << " -i --input:      [mutually exclusive with -f] Input vista 1D vector to be converted into .cmpct format, multiple inputs allowed separated by spaces." << std::endl << std::endl;
@@ -195,8 +206,15 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "vista2cmpct -i tract.v -o tract.cmpct" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " vista2cmpct -i tract.v -o tract.cmpct" << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " - When using -f option and/or the input defined by -o option is a folder name:" << std::endl;
+            std::cout << "   Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones." << std::endl;
+            std::cout << std::endl;
+            std::cout << " - When using -i option and the input defined by -o is a single filename:" << std::endl;
+            std::cout << "   Output file will be written at the specific filename path specified." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version")) {
@@ -351,36 +369,7 @@ int main( int argc, char *argv[] )
 
         //////////////////////////////
 
-        // file io classes
-        fileManagerFactory ioFMFactory;
-        ioFMFactory.isVista();
-        fileManager& inputFM(ioFMFactory.getFM());
-        ioFMFactory.isNifti();
-        fileManager& outputFM(ioFMFactory.getFM());
 
-
-        ValueType repValueType;
-        inputFM.readAsUnThres();
-        inputFM.readAsLog();
-
-        if( useFloat )
-        {
-            outputFM.writeInFloat();
-            repValueType = VTFloat32;
-        }
-        else
-        {
-            outputFM.writeInChar();
-            repValueType = VTUINT8;
-        }
-        if( doZip )
-        {
-            outputFM.storeZipped();
-        }
-        else
-        {
-            outputFM.storeUnzipped();
-        }
 
         #pragma omp parallel for schedule( static )
         for( size_t index = 0; index < finalInputs.size(); ++index )
@@ -402,10 +391,37 @@ int main( int argc, char *argv[] )
                 exit(-1);
             }
 
+            // file io classes
+            fileManagerFactory ioFMFactory;
+            ioFMFactory.isVista();
+            fileManager& inputFM(ioFMFactory.getFM());
 
+            inputFM.readAsUnThres();
+            inputFM.readAsLog();
 
             compactTract compactVect;
             inputFM.readTract( thisInput,  &compactVect);
+
+            ioFMFactory.isNifti();
+            fileManager& outputFM(ioFMFactory.getFM());
+
+            if( useFloat )
+            {
+                outputFM.writeInFloat();
+            }
+            else
+            {
+                outputFM.writeInChar();
+            }
+            if( doZip )
+            {
+                outputFM.storeZipped();
+            }
+            else
+            {
+                outputFM.storeUnzipped();
+            }
+
 
             if(!outputFilename.empty())
             {

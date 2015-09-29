@@ -37,7 +37,7 @@
 
 
 
-bool fileManagerFactory::m_isNifti = false;
+bool fileManagerFactory::m_isNifti = true;
 
 fileManager& fileManagerFactory::getFM() {
     if( m_isNifti)

@@ -36,6 +36,8 @@
 //
 //  Transform a 1D compact tract vector into a full 3D Image tractogram.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -57,9 +59,17 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  compact2full -i compact_tract_1.nii compact_tract_2.nii -m wm_mask.nii -o output/
+//   compact2full -i compact_tract_1.nii compact_tract_2.nii -m wm_mask.nii -o output/
+//
+//  * Outputs:
+//
+//   - When using -f option and/or the input defined by -o option is a folder name:
+//     Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones.
+//
+//   - When using -i option and the input defined by -o is a single filename:
+//     Output file will be written at the specific filename path specified.
 //
 //---------------------------------------------------------------------------
 
@@ -187,6 +197,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "compact2full" << std::endl << std::endl;
             std::cout << "Transform a 1D compact tract vector into a full 3D Image tractogram." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -i --input:      [mutually exclusive with -f] Input compact tractogram to be blown ito a full 3D image, multiple inputs allowed separated by spaces." << std::endl << std::endl;
@@ -198,8 +209,15 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "compact2full -i compact_tract_1.nii compact_tract_2.nii -m wm_mask.nii -o output/" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " compact2full -i compact_tract_1.nii compact_tract_2.nii -m wm_mask.nii -o output/" << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " - When using -f option and/or the input defined by -o option is a folder name:" << std::endl;
+            std::cout << "   Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones." << std::endl;
+            std::cout << std::endl;
+            std::cout << " - When using -i option and the input defined by -o is a single filename:" << std::endl;
+            std::cout << "   Output file will be written at the specific filename path specified." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version")) {

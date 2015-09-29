@@ -35,6 +35,8 @@
 //  Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree.
 //   Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -45,7 +47,7 @@
 //
 //  [-l --leaves]:    Interpret input node IDs as leaf IDs.
 //
-//  [-t --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result).
+//  [-T --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result).
 //                     Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold.
 //                     Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired.
 //
@@ -59,9 +61,13 @@
 //  [--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  pairdist -t tree.txt -i 234 368 -t 0.4 -L leaftracts/ -N nodetracts/ -M matrix/
+//   pairdist -t tree.txt -i 234 368 -T 0.4 -L leaftracts/ -N nodetracts/ -M matrix/
+//
+//  * Outputs:
+//
+//   Results are displayed on standard output (screen).
 //
 //---------------------------------------------------------------------------
 
@@ -117,7 +123,7 @@ int main( int argc, char *argv[] )
                 ( "tree,t",  boost::program_options::value< std::string >(&treeFilename), "tree file")
                 ( "IDs,i", boost::program_options::value< std::vector< size_t > >(&inNodes)->multitoken(), "input node IDs to compute the distance from, insert a pair of values, one for each node ID")
                 ( "leaves,l", "[opt] interpret input nodes as leaf IDs")
-                ( "threshold,t", boost::program_options::value<float> (&thresValue)->implicit_value(0), "[opt] threshold to apply before dissimilarity computation. Default 0 (no threshold). Use only for options -L and -N")
+                ( "threshold,T", boost::program_options::value<float> (&thresValue)->implicit_value(0), "[opt] threshold to apply before dissimilarity computation. Default 0 (no threshold). Use only for options -L and -N")
                 ( "leaftractf,L", boost::program_options::value< std::string >(&leafTractFolder), "[opt] folder with the leaf seed voxel probabilistic tracts. Tracts must be normalized")
                 ( "nodetractf,N", boost::program_options::value< std::string >(&nodeTractFolder), "[opt] folder with the node mean tracts. Tracts must be normalized")
                 ( "matrixf,M",  boost::program_options::value< std::string >(&distMatrixFolder), "[opt] folder with the distance matrix files")
@@ -192,12 +198,13 @@ int main( int argc, char *argv[] )
             std::cout << "pairdist" << std::endl << std::endl;
             std::cout << "Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree." << std::endl;
             std::cout << " Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree." << std::endl << std::endl;
             std::cout << " -i --IDs:        Input node IDs to compute the distance from, insert a pair of values, one for each node ID." << std::endl << std::endl;
             std::cout << "[-l --leaves]:    Interpret input node IDs as leaf IDs." << std::endl << std::endl;
-            std::cout << "[-t --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result)." << std::endl;
+            std::cout << "[-T --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result)." << std::endl;
             std::cout << "                   Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold." << std::endl;
             std::cout << "                   Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired." << std::endl << std::endl;
             std::cout << " -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tratograms in case of node IDS)." << std::endl;
@@ -206,8 +213,11 @@ int main( int argc, char *argv[] )
             std::cout << " -M --matrixf:    Folder with the dissimilarity matrix files. Use only toghether with -leaves option." << std::endl << std::endl;
             std::cout << "[--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "pairdist -t tree.txt -i 234 368 -t 0.4 -L leaftracts/ -N nodetracts/ -M matrix/" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " pairdist -t tree.txt -i 234 368 -T 0.4 -L leaftracts/ -N nodetracts/ -M matrix/" << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " Results are displayed on standard output (screen)." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
@@ -258,7 +268,7 @@ int main( int argc, char *argv[] )
             }
             idA = inNodes[0];
             idB = inNodes[1];
-            std::cout<< "Input IDs: " << idA << " " << idB << std::endl;
+            std::cout<< "Input IDs: " << idA << " and " << idB << std::endl;
         }
         else
         {
@@ -360,12 +370,17 @@ int main( int argc, char *argv[] )
 
         // ========== OBTAIN DISTANCES ==========
 
+        WHtree tree( treeFilename );
+        std::cout << tree.getReport() << std::endl;
+
         size_t id1( inNodes[0] ), id2( inNodes[1] );
         nodeID_t fullID1, fullID2;
         if( areLeaves )
         {
             fullID1 = std::make_pair< bool, size_t >( false, id1 );
             fullID2 = std::make_pair< bool, size_t >( false, id2 );
+            std::cout << "Input seed coordinates: " << tree.getCoordinate4leaf( id1 ).getNameString() << " and " << tree.getCoordinate4leaf( id2 ).getNameString() << std::endl;
+
         }
         else
         {
@@ -373,8 +388,8 @@ int main( int argc, char *argv[] )
             fullID2 = std::make_pair< bool, size_t >( true, id2 );
         }
 
-        WHtree tree( treeFilename );
-        std::cout << tree.getReport() << std::endl << std::endl;
+        std::cout << std::endl;
+
         dist_t copheneticDist( tree.getDistance( fullID1, fullID2 ) );
         std::cout << "Cophenetic distance:\t" << string_utils::toString( copheneticDist ) << std::endl;
 
@@ -396,10 +411,10 @@ int main( int argc, char *argv[] )
             nodeFM.readAsUnThres();
             nodeFM.readNodeTract( id1, &tract1 );
             nodeFM.readNodeTract( id2, &tract2 );
-            tract1.computeNorm();
-            tract2.computeNorm();
             tract1.threshold( thresValue );
             tract2.threshold( thresValue );
+            tract1.computeNorm();
+            tract2.computeNorm();
             dist_t nodeDist( tract1.tractDistance( tract2 ) );
             std::cout<< "Distance by node tracts:\t" << string_utils::toString( nodeDist ) << std::endl;
         }
@@ -415,10 +430,10 @@ int main( int argc, char *argv[] )
                 leafFM.readAsUnThres();
                 leafFM.readLeafTract( id1, tree.getTrackids(), tree.getRoi(), &tract1 );
                 leafFM.readLeafTract( id2, tree.getTrackids(), tree.getRoi(), &tract2 );
-                tract1.computeNorm();
-                tract2.computeNorm();
                 tract1.threshold( thresValue );
                 tract2.threshold( thresValue );
+                tract1.computeNorm();
+                tract2.computeNorm();
                 dist_t leafDist( tract1.tractDistance( tract2 ) );
                 std::cout<< "Distance by leaf tracts:\t" << string_utils::toString( leafDist ) << std::endl;
             }
@@ -428,10 +443,10 @@ int main( int argc, char *argv[] )
                 treeMgr.setSingleTractFolder( leafTractFolder );
                 compactTract meanTract1( treeMgr.getMeanTract( id1 ) );
                 compactTract meanTract2( treeMgr.getMeanTract( id2 ) );
-                meanTract1.computeNorm();
-                meanTract2.computeNorm();
                 meanTract1.threshold( thresValue );
                 meanTract2.threshold( thresValue );
+                meanTract1.computeNorm();
+                meanTract2.computeNorm();
                 dist_t meanDist( meanTract1.tractDistance( meanTract2 ) );
                 std::cout<< "Distance by averaged leaf tracts:\t" << string_utils::toString( meanDist ) << std::endl;
             }

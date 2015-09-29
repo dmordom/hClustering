@@ -36,6 +36,8 @@
 //
 //  Transform a full 3D Image probabilistic tractogram into a 1D compact tract vector
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -67,9 +69,20 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  full2compact -i fulltract1.nii fulltract2.nii -m wm_mask.nii -o nonorm/ -n natnorm/ -l lognorm/ -s 5000 --nosuffix
+//   full2compact -i fulltract1.nii fulltract2.nii -m wm_mask.nii -o nonorm/ -n natnorm/ -l lognorm/ -s 5000 --nosuffix
+//
+//
+//  * Outputs:
+//
+//   - When using -f option and/or the inputs defined by -o/-n/-l options are folder names:
+//     Output files will be written in the output folder defined by -o/-n/-l options, filenames will be the same as the original ones,
+//      and will have '_log' suffix in the case of -l option, and a '_nat' for -n option. To avoid the adding of this suffixes and making the
+//      output filenames of -l/-n options equal to the original filenames, add --nosuffix option to the command line.
+//
+//   - When using -i option and the inputs defined by -o/-n/-l are single filenames:
+//     Output files will be written at the specific filename paths specified.
 //
 //---------------------------------------------------------------------------
 
@@ -194,6 +207,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "full2compact" << std::endl << std::endl;
             std::cout << "Transform a full 3D Image probabilistic tractogram into a 1D compact tract vector." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -i --input:      [mutually exclusive with -f] Input full 3D image tractogram to be compacted, multiple inputs allowed separated by spaces." << std::endl << std::endl;
@@ -211,8 +225,17 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "buildctree -r roi_lh.txt -s 5000 -I tracograms/ -T /tmp/tracts -O results/ -t 0.001 -d 0.1 -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " full2compact -i fulltract1.nii fulltract2.nii -m wm_mask.nii -o nonorm/ -n natnorm/ -l lognorm/ -s 5000 --nosuffix " << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " - When using -f option and/or the inputs defined by -o/-n/-l options are folder names:" << std::endl;
+            std::cout << "   Output files will be written in the output folder defined by -o/-n/-l options, filenames will be the same as the original ones," << std::endl;
+            std::cout << "    and will have '_log' suffix in the case of -l option, and a '_nat' for -n option. To avoid the adding of this suffixes and making the" << std::endl;
+            std::cout << "    output filenames of -l/-n options equal to the original filenames, add --nosuffix option to the command line." << std::endl;
+            std::cout << std::endl;
+            std::cout << " - When using -i option and the inputs defined by -o/-n/-l are filenames:" << std::endl;
+            std::cout << "   Output files will be written at the specific filename paths specified." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version"))

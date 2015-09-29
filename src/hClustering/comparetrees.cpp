@@ -239,11 +239,11 @@ int main( int argc, char *argv[] )
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " --cl:            [xor with --cg and --cr] direct leaf-wise correspondence. Use for matching trees built over the same seed voxel tractograms." << std::endl;
-            std::cout << "                   Due to expected high number of leaves and to reduce computing time triples will be subsampled by 1/LEAF_TRIPLES_FREQ (to change this value modify at source code)." << std::endl << std::endl;
+            std::cout << "                   Due to expected high number of leaves and to reduce computing time triples will be subsampled by 1/LEAF_TRIPLES_FREQ(1/" << LEAF_TRIPLES_FREQ << ") (to change this value modify at source code)." << std::endl << std::endl;
             std::cout << " --cg:            [xor with --cl and --cr] greedy-match base-node-wise correspondence, indicate file where to write/load base-node dissimilarity matrix." << std::endl;
-            std::cout << "                   Matches with a dissimilarity higher than DISSIM_THRESHOLD will not be considered a match (to change this value modify at source code)." << std::endl << std::endl;
+            std::cout << "                   Matches with a dissimilarity higher than DISSIM_THRESHOLD(" << DISSIM_THRESHOLD << ") will not be considered a match (to change this value modify at source code)." << std::endl << std::endl;
             std::cout << " --cr:            [xor with --cl and --cg] random base-node-wise correspondence. Used to obtain a random chance baseline for tcpcc and triples value to compare to." << std::endl;
-            std::cout << "                   RAND_REPEAT repetitions will be computed and triples will be subsampled by 1/RAND_TRIPLES_FREQ (to change this value modify at source code)." << std::endl << std::endl;
+            std::cout << "                   RAND_REPEAT(" << RAND_REPEAT << ") repetitions will be computed and triples will be subsampled by 1/RAND_TRIPLES_FREQ(1/" << RAND_TRIPLES_FREQ << ") (to change this value modify at source code)." << std::endl << std::endl;
             std::cout << " --t1:            File with first tree to be matched and compared." << std::endl << std::endl;
             std::cout << " --t2:            File with second tree to be matched and compared." << std::endl << std::endl;
             std::cout << " --f1:            Folder with the tracts for the first tree. If --cl is chosen the folder should contain leaf tracts." << std::endl;

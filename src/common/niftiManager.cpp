@@ -264,6 +264,7 @@ ValueType niftiManager::readVector(const std::string& vectorFilenameRef, std::ve
         {
             std::stringstream errormessage;
             errormessage << "ERROR @ niftiManager::readVector(): file data as read: "<< dataSize << " is different as file data according to header: " << dataSizeTest <<std::endl;
+            errormessage<<" headerSize: "<< headerSize <<" dimx: "<< dimx <<" repSize: "<<repByteSize << std::endl;
             throw std::runtime_error(  errormessage.str() );
         }
 

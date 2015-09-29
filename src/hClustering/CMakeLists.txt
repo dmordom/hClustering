@@ -93,12 +93,12 @@ SET( MAIN_SRCS
     comparetrees.cpp    #***
     matchpartition.cpp  #***
 
-    tractdist.cpp       #***
-    pairdist.cpp        #***
-    full2compact.cpp    #***
-    compact2full.cpp    #***
-    vista2cmpct.cpp     #***
-    cmpct2vista.cpp     #***
+    tractdist.cpp
+    pairdist.cpp
+    full2compact.cpp
+    compact2full.cpp
+    vista2cmpct.cpp
+    cmpct2vista.cpp
     treetracts.cpp      #***
 
     fliptree.cpp        #***

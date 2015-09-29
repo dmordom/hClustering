@@ -34,6 +34,8 @@
 //
 //  Compute the distance (dissimilarity) value between two tractograms read from file.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -49,9 +51,13 @@
 //  [--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  tractdist -a tractA.nii -b tractB.nii -t 0.2
+//   tractdist -a tractA.nii -b tractB.nii -t 0.2
+//
+//  * Outputs:
+//
+//   Results are displayed on standard output (screen).
 //
 //---------------------------------------------------------------------------
 
@@ -168,6 +174,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "tractdist" << std::endl << std::endl;
             std::cout << "Compute the distance (dissimilarity) value between two tractograms read from file." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -a --tracta:     Filename of first tractogram." << std::endl << std::endl;
@@ -177,8 +184,11 @@ int main( int argc, char *argv[] )
             std::cout << "                   Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired." << std::endl << std::endl;
             std::cout << "[--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "tractdist -a tractA.nii -b tractB.nii -t 0.2" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " tractdist -a tractA.nii -b tractB.nii -t 0.2" << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " Results are displayed on standard output (screen)." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 

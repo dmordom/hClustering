@@ -40,6 +40,8 @@
 //            a .cmpct vector compacted from nifti coordinates and then tranformed to .v with this program, will not prodcue a correct image if then blown to full 3D with compact2full.
 //            to transform a .cmpct tract to a fully corresponding .v tract, firstly blow to 3D .nii image, then convert to vista with vnifti2image and then compact with full2compact.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -57,9 +59,17 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  cmpct2vista -i tract.cmpct -o tract.v
+//   cmpct2vista -i tract.cmpct -o tract.v
+//
+//  * Outputs:
+//
+//   - When using -f option and/or the input defined by -o option is a folder name:
+//     Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones.
+//
+//   - When using -i option and the input defined by -o is a single filename:
+//     Output file will be written at the specific filename path specified.
 //
 //---------------------------------------------------------------------------
 
@@ -187,6 +197,7 @@ int main( int argc, char *argv[] )
             std::cout << "WARNING: this program will port the vector as-is, and is meant simply to be able to easily visualize the contents and facilitate conversion to other formats." << std::endl;
             std::cout << "          a .cmpct vector compacted from nifti coordinates and then tranformed to .v withth this program, will not prodcue a correct image if then blown to full 3D with compact2full." << std::endl;
             std::cout << "          to transform a .cmpct tract to a fully corresponding .v tract, firstly blow to 3D .nii image, then convert to vista with vnifti2image and then compact with full2compact." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
             std::cout << " -i --input:      [mutually exclusive with -f]  Input .cmpct tractogram to be converted into vista 1D vector, multiple inputs allowed separated by spaces." << std::endl << std::endl;
@@ -196,8 +207,15 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "cmpct2vista -i tract.cmpct -o tract.v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " cmpct2vista -i tract.cmpct -o tract.v" << std::endl << std::endl;
+            std::cout << "* Outputs:" << std::endl << std::endl;
+            std::cout << " - When using -f option and/or the input defined by -o option is a folder name:" << std::endl;
+            std::cout << "   Output files will be written in the output folder defined by -o option, filenames will be the same as the original ones." << std::endl;
+            std::cout << std::endl;
+            std::cout << " - When using -i option and the input defined by -o is a single filename:" << std::endl;
+            std::cout << "   Output file will be written at the specific filename path specified." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version")) {
@@ -270,7 +288,7 @@ int main( int argc, char *argv[] )
                     std::cerr << visibleOptions << std::endl;
                     exit(-1);
                 }
-                std::cout << inputFilename << "_" << std::flush;
+                std::cout << inputFilename << " " << std::flush;
             }
             std::cout<<std::endl;
         }
@@ -352,36 +370,7 @@ int main( int argc, char *argv[] )
 
         //////////////////////////////
 
-        // file io classes
-        fileManagerFactory ioFMFactory;
-        ioFMFactory.isNifti();
-        fileManager& inputFM(ioFMFactory.getFM());
-        ioFMFactory.isVista();
-        fileManager& outputFM(ioFMFactory.getFM());
 
-
-        ValueType repValueType;
-        inputFM.readAsUnThres();
-        inputFM.readAsLog();
-
-        if( useFloat )
-        {
-            outputFM.writeInFloat();
-            repValueType = VTFloat32;
-        }
-        else
-        {
-            outputFM.writeInChar();
-            repValueType = VTUINT8;
-        }
-        if( doZip )
-        {
-            outputFM.storeZipped();
-        }
-        else
-        {
-            outputFM.storeUnzipped();
-        }
 
         #pragma omp parallel for schedule( static )
         for( size_t index = 0; index < finalInputs.size(); ++index )
@@ -404,9 +393,41 @@ int main( int argc, char *argv[] )
             }
 
 
+            // file io classes
+            fileManagerFactory ioFMFactory;
+            ioFMFactory.setNifti();
+            fileManager& inputFM(ioFMFactory.getFM());
+
+
+
+            inputFM.readAsUnThres();
+            inputFM.readAsLog();
+
+
 
             compactTract compactVect;
             inputFM.readTract( thisInput,  &compactVect);
+
+
+            ioFMFactory.setVista();
+            fileManager& outputFM(ioFMFactory.getFM());
+
+            if( useFloat )
+            {
+                outputFM.writeInFloat();
+            }
+            else
+            {
+                outputFM.writeInChar();
+            }
+            if( doZip )
+            {
+                outputFM.storeZipped();
+            }
+            else
+            {
+                outputFM.storeUnzipped();
+            }
 
             if(!outputFilename.empty())
             {
