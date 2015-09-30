@@ -132,6 +132,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classWHnode.html">WHnode</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#adc212da2ed903705afac40d96975cc7e">getLeaf</a> (const size_t thisLeaf) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classWHnode.html">WHnode</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#a53a4524bb216e0d320fdb5c98ec2c717">getRoot</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#a335e5ee61ee857d9da6fbd960393c109">getLeafID</a> (const <a class="el" href="classWHcoord.html">WHcoord</a> &amp;thisCoord) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#ab9237eac7db43b60db0ebe343bcba641">getTrackID</a> (const size_t &amp;leafID) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#a0f9a23021c60b6bc72839852d51e4203">getLeaves4node</a> (const size_t nodeID) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#a0768aa45b66453ef9689ce9b27a11038">getLeaves4node</a> (const nodeID_t &amp;nodeID) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWHtree.html#a50bc334e9b71cdc3c9821c5decad58b5">getBranchNodes</a> (const size_t nodeID) const </td></tr>
@@ -1557,6 +1558,31 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>image2treeBuilder</b
 
 </div>
 </div>
+<a class="anchor" id="ab9237eac7db43b60db0ebe343bcba641"></a><!-- doxytag: member="WHtree::getTrackID" ref="ab9237eac7db43b60db0ebe343bcba641" args="(const size_t &amp;leafID) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classWHtree.html#ab9237eac7db43b60db0ebe343bcba641">WHtree::getTrackID</a> </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>leafID</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>returns the corresponding track ID to a leaf ID on the tree </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">leafID</td><td>input leaf ID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>ID of seed tractogram corresponding to that leaf </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af0f3ea76d2b9c4a917bfc8ed74adfd41"></a><!-- doxytag: member="WHtree::getTrackids" ref="af0f3ea76d2b9c4a917bfc8ed74adfd41" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -2087,7 +2113,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>image2treeBuilder</b
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 18 2015 00:13:19 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 30 2015 23:39:22 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -53,9 +53,9 @@ void \hyperlink{classtreeComparer_ae160e4175a3f7d1a9563babe30c4c548}{greedy\-Cor
 \item 
 void \hyperlink{classtreeComparer_a18327588d6bcf43220beedf4a5fa1e14}{random\-Correspondence} ()
 \item 
-void \hyperlink{classtreeComparer_a16b088c494e3c07fb161078959df4f97}{write\-Correspondence} (std\-::string out\-Filename)
+void \hyperlink{classtreeComparer_a03cafc0fbf56f03ee3feac15422616e1}{write\-Final\-Correspondence} (std\-::string out\-Filename)
 \item 
-void \hyperlink{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}{write\-Full\-Correspondence} (std\-::string out\-Filename)
+void \hyperlink{classtreeComparer_a1bd3f274b1a069ed66c861fa184c4535}{write\-Proto\-Correspondence} (std\-::string out\-Filename)
 \item 
 std\-::vector$<$ float $>$ \hyperlink{classtreeComparer_ad627f4fd68587f567c9647ccca37914c}{rate\-Correspondence} ()
 \item 
@@ -354,26 +354,26 @@ sets the threshold (relative to the number of streamlines that were generated pe
 {\em matrix\-Filename} & the filepath to read the matrix data from \\
 \hline
 \end{DoxyParams}
-\hypertarget{classtreeComparer_a16b088c494e3c07fb161078959df4f97}{\index{tree\-Comparer@{tree\-Comparer}!write\-Correspondence@{write\-Correspondence}}
-\index{write\-Correspondence@{write\-Correspondence}!treeComparer@{tree\-Comparer}}
-\subsubsection[{write\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Correspondence} (
+\hypertarget{classtreeComparer_a03cafc0fbf56f03ee3feac15422616e1}{\index{tree\-Comparer@{tree\-Comparer}!write\-Final\-Correspondence@{write\-Final\-Correspondence}}
+\index{write\-Final\-Correspondence@{write\-Final\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{write\-Final\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Final\-Correspondence} (
 \begin{DoxyParamCaption}
 \item[{std\-::string}]{out\-Filename}
 \end{DoxyParamCaption}
-)}}\label{classtreeComparer_a16b088c494e3c07fb161078959df4f97}
-\-Write correspondence table (matchign of base-\/nodes across trees) to file \-Base nodes will be identified with relative values, that is, base node position in the base node vector 
+)}}\label{classtreeComparer_a03cafc0fbf56f03ee3feac15422616e1}
+\-Write final correspondence table (matching of base-\/nodes across final trees) to file \-Base nodes will be identified with relative values, that is, base node position in the base node vector 
 \begin{DoxyParams}{\-Parameters}
 {\em out\-Filename} & the filepath to the write the table to \\
 \hline
 \end{DoxyParams}
-\hypertarget{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}{\index{tree\-Comparer@{tree\-Comparer}!write\-Full\-Correspondence@{write\-Full\-Correspondence}}
-\index{write\-Full\-Correspondence@{write\-Full\-Correspondence}!treeComparer@{tree\-Comparer}}
-\subsubsection[{write\-Full\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Full\-Correspondence} (
+\hypertarget{classtreeComparer_a1bd3f274b1a069ed66c861fa184c4535}{\index{tree\-Comparer@{tree\-Comparer}!write\-Proto\-Correspondence@{write\-Proto\-Correspondence}}
+\index{write\-Proto\-Correspondence@{write\-Proto\-Correspondence}!treeComparer@{tree\-Comparer}}
+\subsubsection[{write\-Proto\-Correspondence}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf tree\-Comparer\-::write\-Proto\-Correspondence} (
 \begin{DoxyParamCaption}
 \item[{std\-::string}]{out\-Filename}
 \end{DoxyParamCaption}
-)}}\label{classtreeComparer_a10108cc3f38b19be5c3383dd0a29a70f}
-\-Write correspondence table (matchign of base-\/nodes across trees) to file \-Base nodes will be identified with absolute values values, that is, node \-I\-Ds within the tree structure 
+)}}\label{classtreeComparer_a1bd3f274b1a069ed66c861fa184c4535}
+\-Write correspondence table (matching of base-\/nodes across trees) of trees prior to further processing during matching to file \-Base nodes will be identified with absolute values values, that is, node \-I\-Ds within the tree structure 
 \begin{DoxyParams}{\-Parameters}
 {\em out\-Filename} & the filepath to the write the table to \\
 \hline

@@ -58,6 +58,7 @@ var searchData=
   ['getselectedpartitions',['getSelectedPartitions',['../classWHtree.html#a176e1b203ea2b839843fc0f59ae69a6a',1,'WHtree::getSelectedPartitions() const '],['../classWHtree.html#a6bf8c646f9bcde88e50811556cd017d4',1,'WHtree::getSelectedPartitions(size_t index) const ']]],
   ['getselectedvalues',['getSelectedValues',['../classWHtree.html#abb64d6b8f300437e56ffcf068f56cde2',1,'WHtree::getSelectedValues() const '],['../classWHtree.html#a938a77f4db0ad79692891955b66b2b20',1,'WHtree::getSelectedValues(size_t index) const ']]],
   ['getsize',['getSize',['../classWHnode.html#aa59d9547bf69a755b4614f723ce3be0c',1,'WHnode']]],
+  ['gettrackid',['getTrackID',['../classWHtree.html#ab9237eac7db43b60db0ebe343bcba641',1,'WHtree']]],
   ['gettrackids',['getTrackids',['../classWHtree.html#af0f3ea76d2b9c4a917bfc8ed74adfd41',1,'WHtree']]],
   ['gettractsize',['getTractSize',['../classfileManager.html#a24452e5e2e161dfba62be488d4ecc114',1,'fileManager']]],
   ['gettripletorder',['getTripletOrder',['../classWHtree.html#afafbcc4854af05430f68716da6dcf15d',1,'WHtree']]],

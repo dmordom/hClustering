@@ -5,7 +5,7 @@
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/compact2full.dir
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/comparetrees.dir
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/cpcc.dir
-/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/distMatrix.dir
+/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/distmatrix.dir
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/fliptracts.dir
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/fliptree.dir
 /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles/full2compact.dir

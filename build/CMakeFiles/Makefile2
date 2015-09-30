@@ -298,38 +298,38 @@ clean: CMakeFiles/cpcc.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/distMatrix.dir
+# Target rules for target CMakeFiles/distmatrix.dir
 
 # All Build rule for target.
-CMakeFiles/distMatrix.dir/all:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/depend
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/build
+CMakeFiles/distmatrix.dir/all:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/depend
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles  34 35 36 37 38
-	@echo "Built target distMatrix"
-.PHONY : CMakeFiles/distMatrix.dir/all
+	@echo "Built target distmatrix"
+.PHONY : CMakeFiles/distmatrix.dir/all
 
 # Include target in all.
-all: CMakeFiles/distMatrix.dir/all
+all: CMakeFiles/distmatrix.dir/all
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/distMatrix.dir/rule: cmake_check_build_system
+CMakeFiles/distmatrix.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles 5
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/distMatrix.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/distmatrix.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/CMakeFiles 0
-.PHONY : CMakeFiles/distMatrix.dir/rule
+.PHONY : CMakeFiles/distmatrix.dir/rule
 
 # Convenience name for target.
-distMatrix: CMakeFiles/distMatrix.dir/rule
-.PHONY : distMatrix
+distmatrix: CMakeFiles/distmatrix.dir/rule
+.PHONY : distmatrix
 
 # clean rule for target.
-CMakeFiles/distMatrix.dir/clean:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/clean
-.PHONY : CMakeFiles/distMatrix.dir/clean
+CMakeFiles/distmatrix.dir/clean:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/clean
+.PHONY : CMakeFiles/distmatrix.dir/clean
 
 # clean rule for target.
-clean: CMakeFiles/distMatrix.dir/clean
+clean: CMakeFiles/distmatrix.dir/clean
 .PHONY : clean
 
 #=============================================================================

@@ -56,7 +56,7 @@ SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/compact2full.dir/DependInfo.cmake"
   "CMakeFiles/comparetrees.dir/DependInfo.cmake"
   "CMakeFiles/cpcc.dir/DependInfo.cmake"
-  "CMakeFiles/distMatrix.dir/DependInfo.cmake"
+  "CMakeFiles/distmatrix.dir/DependInfo.cmake"
   "CMakeFiles/fliptracts.dir/DependInfo.cmake"
   "CMakeFiles/fliptree.dir/DependInfo.cmake"
   "CMakeFiles/full2compact.dir/DependInfo.cmake"

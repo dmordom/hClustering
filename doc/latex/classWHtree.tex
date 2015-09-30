@@ -79,6 +79,8 @@ const \hyperlink{classWHnode}{\-W\-Hnode} \& \hyperlink{classWHtree_a53a4524bb21
 \item 
 size\-\_\-t \hyperlink{classWHtree_a335e5ee61ee857d9da6fbd960393c109}{get\-Leaf\-I\-D} (const \hyperlink{classWHcoord}{\-W\-Hcoord} \&this\-Coord) const 
 \item 
+size\-\_\-t \hyperlink{classWHtree_ab9237eac7db43b60db0ebe343bcba641}{get\-Track\-I\-D} (const size\-\_\-t \&leaf\-I\-D) const 
+\item 
 std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a0f9a23021c60b6bc72839852d51e4203}{get\-Leaves4node} (const size\-\_\-t node\-I\-D) const 
 \item 
 std\-::vector$<$ size\-\_\-t $>$ \hyperlink{classWHtree_a0768aa45b66453ef9689ce9b27a11038}{get\-Leaves4node} (const node\-I\-D\-\_\-t \&node\-I\-D) const 
@@ -933,6 +935,21 @@ vector containing the values for the selected partitions
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
 cutting values for the selected partition 
+\end{DoxyReturn}
+\hypertarget{classWHtree_ab9237eac7db43b60db0ebe343bcba641}{\index{\-W\-Htree@{\-W\-Htree}!get\-Track\-I\-D@{get\-Track\-I\-D}}
+\index{get\-Track\-I\-D@{get\-Track\-I\-D}!WHtree@{\-W\-Htree}}
+\subsubsection[{get\-Track\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t {\bf \-W\-Htree\-::get\-Track\-I\-D} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t \&}]{leaf\-I\-D}
+\end{DoxyParamCaption}
+) const}}\label{classWHtree_ab9237eac7db43b60db0ebe343bcba641}
+returns the corresponding track \-I\-D to a leaf \-I\-D on the tree 
+\begin{DoxyParams}{\-Parameters}
+{\em leaf\-I\-D} & input leaf \-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-I\-D of seed tractogram corresponding to that leaf 
 \end{DoxyReturn}
 \hypertarget{classWHtree_af0f3ea76d2b9c4a917bfc8ed74adfd41}{\index{\-W\-Htree@{\-W\-Htree}!get\-Trackids@{get\-Trackids}}
 \index{get\-Trackids@{get\-Trackids}!WHtree@{\-W\-Htree}}

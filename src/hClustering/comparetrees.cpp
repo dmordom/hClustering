@@ -254,8 +254,9 @@ int main( int argc, char *argv[] )
             std::cout << " GNU Lesser General Public License for more details." << std::endl;
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
-            std::cout << "buildctree" << std::endl << std::endl;
-            std::cout << "Build a centroid hierarchical tree from a set of seed voxels and their corresponding tractograms." << std::endl << std::endl;
+            std::cout << "comparetrees" << std::endl << std::endl;
+            std::cout << "Matches leaves or meta-leaves (base-nodes) across trees and computes tree comparison values (tcpcc and triples)." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " --cl:            [xor with --cg and --cr] direct leaf-wise correspondence. Use for matching trees built over the same seed voxel tractograms." << std::endl;

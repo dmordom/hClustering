@@ -395,8 +395,8 @@
             <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="distMatrix">
-         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distMatrix" prefix_auto="0" extension_auto="0" />
+      <Target title="distmatrix">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distmatrix" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
          <Option object_output="./" />
          <Option type="1" />
@@ -416,14 +416,14 @@
             <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distMatrix" />
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distmatrix" />
             <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="distMatrix/fast">
-         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distMatrix" prefix_auto="0" extension_auto="0" />
+      <Target title="distmatrix/fast">
+         <Option output="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/distmatrix" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build" />
          <Option object_output="./" />
          <Option type="1" />
@@ -443,7 +443,7 @@
             <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distMatrix/fast" />
+            <Build command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 distmatrix/fast" />
             <CompileFile command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/build/Makefile&quot;  VERBOSE=1 clean" />
@@ -1236,7 +1236,7 @@
       </Unit>
       <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/cpcc.cpp">
       </Unit>
-      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/distMatrix.cpp">
+      <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/distmatrix.cpp">
       </Unit>
       <Unit filename="/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/hClustering/fliptracts.cpp">
       </Unit>

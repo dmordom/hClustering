@@ -116,8 +116,8 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#ac29c95118034b2cb9a1a7c2a7b438698">leafCorrespondence</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#ae160e4175a3f7d1a9563babe30c4c548">greedyCorrespondence</a> (float dissimThreshold, bool redoCoords=true)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a18327588d6bcf43220beedf4a5fa1e14">randomCorrespondence</a> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a16b088c494e3c07fb161078959df4f97">writeCorrespondence</a> (std::string outFilename)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a10108cc3f38b19be5c3383dd0a29a70f">writeFullCorrespondence</a> (std::string outFilename)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a03cafc0fbf56f03ee3feac15422616e1">writeFinalCorrespondence</a> (std::string outFilename)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a1bd3f274b1a069ed66c861fa184c4535">writeProtoCorrespondence</a> (std::string outFilename)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#ad627f4fd68587f567c9647ccca37914c">rateCorrespondence</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::pair&lt; float, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#a2bacc683c09597ff98d0ce5352053122">applyNoiseBaseline</a> (const float noiseAlpha=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtreeComparer.html#aed2990051e67d007d168e1b1c51168f3">reportBaseNodes</a> () const </td></tr>
@@ -705,12 +705,12 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 
 </div>
 </div>
-<a class="anchor" id="a16b088c494e3c07fb161078959df4f97"></a><!-- doxytag: member="treeComparer::writeCorrespondence" ref="a16b088c494e3c07fb161078959df4f97" args="(std::string outFilename)" -->
+<a class="anchor" id="a03cafc0fbf56f03ee3feac15422616e1"></a><!-- doxytag: member="treeComparer::writeFinalCorrespondence" ref="a03cafc0fbf56f03ee3feac15422616e1" args="(std::string outFilename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classtreeComparer.html#a16b088c494e3c07fb161078959df4f97">treeComparer::writeCorrespondence</a> </td>
+          <td class="memname">void <a class="el" href="classtreeComparer.html#a03cafc0fbf56f03ee3feac15422616e1">treeComparer::writeFinalCorrespondence</a> </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>outFilename</em></td><td>)</td>
@@ -719,7 +719,7 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
       </table>
 </div>
 <div class="memdoc">
-<p>Write correspondence table (matchign of base-nodes across trees) to file Base nodes will be identified with relative values, that is, base node position in the base node vector </p>
+<p>Write final correspondence table (matching of base-nodes across final trees) to file Base nodes will be identified with relative values, that is, base node position in the base node vector </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">outFilename</td><td>the filepath to the write the table to </td></tr>
@@ -729,12 +729,12 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 
 </div>
 </div>
-<a class="anchor" id="a10108cc3f38b19be5c3383dd0a29a70f"></a><!-- doxytag: member="treeComparer::writeFullCorrespondence" ref="a10108cc3f38b19be5c3383dd0a29a70f" args="(std::string outFilename)" -->
+<a class="anchor" id="a1bd3f274b1a069ed66c861fa184c4535"></a><!-- doxytag: member="treeComparer::writeProtoCorrespondence" ref="a1bd3f274b1a069ed66c861fa184c4535" args="(std::string outFilename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classtreeComparer.html#a10108cc3f38b19be5c3383dd0a29a70f">treeComparer::writeFullCorrespondence</a> </td>
+          <td class="memname">void <a class="el" href="classtreeComparer.html#a1bd3f274b1a069ed66c861fa184c4535">treeComparer::writeProtoCorrespondence</a> </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>outFilename</em></td><td>)</td>
@@ -743,7 +743,7 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
       </table>
 </div>
 <div class="memdoc">
-<p>Write correspondence table (matchign of base-nodes across trees) to file Base nodes will be identified with absolute values values, that is, node IDs within the tree structure </p>
+<p>Write correspondence table (matching of base-nodes across trees) of trees prior to further processing during matching to file Base nodes will be identified with absolute values values, that is, node IDs within the tree structure </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">outFilename</td><td>the filepath to the write the table to </td></tr>
@@ -775,7 +775,7 @@ float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 18 2015 00:13:19 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 30 2015 23:39:22 for hClustering by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

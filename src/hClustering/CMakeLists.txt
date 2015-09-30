@@ -91,7 +91,7 @@ SET( MAIN_SRCS
     processtree.cpp
     partitiontree.cpp
     comparetrees.cpp
-    matchpartition.cpp  #***
+    matchpartition.cpp
 
     tractdist.cpp
     pairdist.cpp

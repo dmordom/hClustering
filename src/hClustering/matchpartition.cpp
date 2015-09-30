@@ -36,6 +36,8 @@
 //  Two partition matching algorithms are available: signature matching and overlap matching. Found target partitions will be color-matched as best as possible.
 //  There is also the possibility of only color-matching predefined partitions of the target tree to predefined partitions of the reference tree.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -76,7 +78,7 @@
 //  [--vista]:        Write output tree files in vista coordinates (default is nifti).
 //
 //
-//  example:
+//  * Usage example:
 //
 //  matchpartition -r refTree.txt -t targetTree.txt -m matching.txt -O results/ -s 0.5 -v
 //    -or-
@@ -203,6 +205,7 @@ int main( int argc, char *argv[] )
             std::cout << "Finds the best matching corresponding partitions in a target tree to those present in an unrelated reference tree (meta-leaf matching across these two trees must have been precomputed using comparetrees)." << std::endl;
             std::cout << " Two partition matching algorithms are available: signature matching and overlap matching. Found target partitions will be color-matched as best as possible." << std::endl;
             std::cout << " There is also the possibility of only color-matching predefined partitions of the target tree to predefined partitions of the reference tree." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -r --reference:  The tree file with the reference partitioned tree." << std::endl << std::endl;
@@ -230,8 +233,8 @@ int main( int argc, char *argv[] )
             std::cout << "[-v --verbose]:   Verbose output (recommended)." << std::endl << std::endl;
             std::cout << "[--vista]:        Write output tree files in vista coordinates (default is nifti)." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "matchpartition -r refTree.txt -t targetTree.txt -m matching.txt -O results/ -s 0.5 -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " matchpartition -r refTree.txt -t targetTree.txt -m matching.txt -O results/ -s 0.5 -v" << std::endl << std::endl;
             exit(0);
         }
         if (variableMap.count( "version" ) )

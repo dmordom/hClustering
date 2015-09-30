@@ -190,17 +190,17 @@ cpcc/fast:
 .PHONY : cpcc/fast
 
 #=============================================================================
-# Target rules for targets named distMatrix
+# Target rules for targets named distmatrix
 
 # Build rule for target.
-distMatrix: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 distMatrix
-.PHONY : distMatrix
+distmatrix: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 distmatrix
+.PHONY : distmatrix
 
 # fast build rule for target.
-distMatrix/fast:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/build
-.PHONY : distMatrix/fast
+distmatrix/fast:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/build
+.PHONY : distmatrix/fast
 
 #=============================================================================
 # Target rules for targets named fliptracts
@@ -539,29 +539,29 @@ cpcc.cpp.s:
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/cpcc.cpp.s
 .PHONY : cpcc.cpp.s
 
-distMatrix.o: distMatrix.cpp.o
-.PHONY : distMatrix.o
+distmatrix.o: distmatrix.cpp.o
+.PHONY : distmatrix.o
 
 # target to build an object file
-distMatrix.cpp.o:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/distMatrix.cpp.o
-.PHONY : distMatrix.cpp.o
+distmatrix.cpp.o:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/distmatrix.cpp.o
+.PHONY : distmatrix.cpp.o
 
-distMatrix.i: distMatrix.cpp.i
-.PHONY : distMatrix.i
+distmatrix.i: distmatrix.cpp.i
+.PHONY : distmatrix.i
 
 # target to preprocess a source file
-distMatrix.cpp.i:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/distMatrix.cpp.i
-.PHONY : distMatrix.cpp.i
+distmatrix.cpp.i:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/distmatrix.cpp.i
+.PHONY : distmatrix.cpp.i
 
-distMatrix.s: distMatrix.cpp.s
-.PHONY : distMatrix.s
+distmatrix.s: distmatrix.cpp.s
+.PHONY : distmatrix.s
 
 # target to generate assembly for a file
-distMatrix.cpp.s:
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/distMatrix.cpp.s
-.PHONY : distMatrix.cpp.s
+distmatrix.cpp.s:
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/distmatrix.cpp.s
+.PHONY : distmatrix.cpp.s
 
 fliptracts.o: fliptracts.cpp.o
 .PHONY : fliptracts.o
@@ -791,7 +791,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.o
@@ -819,7 +819,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.i
@@ -847,7 +847,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WFileParser.cpp.s
@@ -875,7 +875,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.o
@@ -903,7 +903,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.i
@@ -931,7 +931,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHcoord.cpp.s
@@ -959,7 +959,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.o
@@ -987,7 +987,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.i
@@ -1015,7 +1015,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHnode.cpp.s
@@ -1043,7 +1043,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.o
@@ -1071,7 +1071,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.i
@@ -1099,7 +1099,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtree.cpp.s
@@ -1127,7 +1127,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.o
@@ -1155,7 +1155,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.i
@@ -1183,7 +1183,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreePartition.cpp.s
@@ -1211,7 +1211,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.o
@@ -1239,7 +1239,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.i
@@ -1267,7 +1267,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WHtreeProcesser.cpp.s
@@ -1295,7 +1295,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.o
@@ -1323,7 +1323,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.i
@@ -1351,7 +1351,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/WStringUtils.cpp.s
@@ -1379,7 +1379,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.o
@@ -1407,7 +1407,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.i
@@ -1435,7 +1435,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/cnbTreeBuilder.cpp.s
@@ -1463,7 +1463,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.o
@@ -1491,7 +1491,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.i
@@ -1519,7 +1519,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTract.cpp.s
@@ -1547,7 +1547,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.o
@@ -1575,7 +1575,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.i
@@ -1603,7 +1603,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/compactTractChar.cpp.s
@@ -1631,7 +1631,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.o
@@ -1659,7 +1659,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.i
@@ -1687,7 +1687,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distBlock.cpp.s
@@ -1715,7 +1715,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.o
@@ -1743,7 +1743,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.i
@@ -1771,7 +1771,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/distMatComputer.cpp.s
@@ -1799,7 +1799,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.o
@@ -1827,7 +1827,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.i
@@ -1855,7 +1855,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManager.cpp.s
@@ -1883,7 +1883,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.o
@@ -1911,7 +1911,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.i
@@ -1939,7 +1939,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/fileManagerFactory.cpp.s
@@ -1967,7 +1967,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.o
@@ -1995,7 +1995,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.i
@@ -2023,7 +2023,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/graphTreeBuilder.cpp.s
@@ -2051,7 +2051,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.o
@@ -2079,7 +2079,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.i
@@ -2107,7 +2107,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/image2treeBuilder.cpp.s
@@ -2135,7 +2135,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.o
@@ -2163,7 +2163,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.i
@@ -2191,7 +2191,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/niftiManager.cpp.s
@@ -2219,7 +2219,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.o
@@ -2247,7 +2247,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.i
@@ -2275,7 +2275,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/partitionMatcher.cpp.s
@@ -2303,7 +2303,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.o
@@ -2331,7 +2331,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.i
@@ -2359,7 +2359,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/protoNode.cpp.s
@@ -2387,7 +2387,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.o
@@ -2415,7 +2415,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.i
@@ -2443,7 +2443,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/randCnbTreeBuilder.cpp.s
@@ -2471,7 +2471,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.o
@@ -2499,7 +2499,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.i
@@ -2527,7 +2527,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/roiLoader.cpp.s
@@ -2555,7 +2555,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.o
@@ -2583,7 +2583,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.i
@@ -2611,7 +2611,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/surfProjecter.cpp.s
@@ -2639,7 +2639,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.o
@@ -2667,7 +2667,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.i
@@ -2695,7 +2695,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeComparer.cpp.s
@@ -2723,7 +2723,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.o
@@ -2751,7 +2751,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.i
@@ -2779,7 +2779,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/treeManager.cpp.s
@@ -2807,7 +2807,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.o
@@ -2835,7 +2835,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.i
@@ -2863,7 +2863,7 @@ scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/com
 	$(MAKE) -f CMakeFiles/compact2full.dir/build.make CMakeFiles/compact2full.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
 	$(MAKE) -f CMakeFiles/comparetrees.dir/build.make CMakeFiles/comparetrees.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
 	$(MAKE) -f CMakeFiles/cpcc.dir/build.make CMakeFiles/cpcc.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
-	$(MAKE) -f CMakeFiles/distMatrix.dir/build.make CMakeFiles/distMatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
+	$(MAKE) -f CMakeFiles/distmatrix.dir/build.make CMakeFiles/distmatrix.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptracts.dir/build.make CMakeFiles/fliptracts.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
 	$(MAKE) -f CMakeFiles/fliptree.dir/build.make CMakeFiles/fliptree.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
 	$(MAKE) -f CMakeFiles/full2compact.dir/build.make CMakeFiles/full2compact.dir/scr/spinat2/moreno_hClustering_project/1_Code/hClusteringGit/hClustering/src/common/vistaManager.cpp.s
@@ -2988,7 +2988,7 @@ help:
 	@echo "... compact2full"
 	@echo "... comparetrees"
 	@echo "... cpcc"
-	@echo "... distMatrix"
+	@echo "... distmatrix"
 	@echo "... edit_cache"
 	@echo "... fliptracts"
 	@echo "... fliptree"
@@ -3025,9 +3025,9 @@ help:
 	@echo "... cpcc.o"
 	@echo "... cpcc.i"
 	@echo "... cpcc.s"
-	@echo "... distMatrix.o"
-	@echo "... distMatrix.i"
-	@echo "... distMatrix.s"
+	@echo "... distmatrix.o"
+	@echo "... distmatrix.i"
+	@echo "... distmatrix.s"
 	@echo "... fliptracts.o"
 	@echo "... fliptracts.i"
 	@echo "... fliptracts.s"
