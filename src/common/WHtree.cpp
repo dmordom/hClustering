@@ -1281,19 +1281,22 @@ bool WHtree::writeTree( const std::string &filename, const bool niftiMode ) cons
     }
     outFile << "#endcoordinates" << std::endl << std::endl;
 
-    if( m_coordinates.size() != m_trackids.size() )
+    if( niftiMode )
     {
-        std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will note written to file" << std::endl;
-    }
-    else
-    {
-        outFile << "#trackindex" << std::endl;
-
-        for( std::vector<size_t>::const_iterator indexIter( m_trackids.begin() ) ; indexIter != m_trackids.end() ; ++indexIter )
+        if( m_coordinates.size() != m_trackids.size() )
         {
-            outFile << *indexIter << std::endl;
+            std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will note written to file" << std::endl;
         }
-        outFile << "#endtrackindex" << std::endl << std::endl;
+        else
+        {
+            outFile << "#trackindex" << std::endl;
+
+            for( std::vector<size_t>::const_iterator indexIter( m_trackids.begin() ) ; indexIter != m_trackids.end() ; ++indexIter )
+            {
+                outFile << *indexIter << std::endl;
+            }
+            outFile << "#endtrackindex" << std::endl << std::endl;
+        }
     }
 
     outFile << "#clusters" << std::endl;

@@ -1226,11 +1226,8 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
         ++( *tractProg );
 
         // log and write the meantract, boost::bind creates a self contained function object, so ts ok if the function takes everything by reference
-#pragma omp atomic
-        ++threadcounter; // increment thread counter
         //volatile size_t *tcpointer();
-        boost::thread doWrite( boost::bind( &treeManager::logWriteTract, this, currentNode.getID(), &meanTract, m_meanTractFolder,
-                        &threadcounter ) );
+        logWriteTract( currentNode.getID(), &meanTract, m_meanTractFolder );
 
 #pragma omp single nowait // only one thread executes output
         if( m_verbose )
@@ -1253,14 +1250,10 @@ void treeManager::writeNodeTracts( std::vector< size_t >* const nodeVector, list
 
     std::cout << "\r100 % Completed (" << *tractProg << " node tracts)" << std::endl;
 
-    while( threadcounter != 0 )
-    { // wait until all threads have finished
-        boost::this_thread::sleep( boost::posix_time::microseconds( 100 ) );
-    }
+
 } // end treeManager::writeNodeTracts() -------------------------------------------------------------------------------------
 
-void treeManager::logWriteTract( const size_t &nodeID,  compactTract* tractPtr, const std::string &meanTractFolder,
-                volatile size_t* const threadcounter ) const
+void treeManager::logWriteTract( const size_t &nodeID,  compactTract* tractPtr, const std::string &meanTractFolder ) const
 {
     compactTract& tract( *tractPtr );
     tract.doLog( m_tree.m_logFactor );
@@ -1285,8 +1278,7 @@ void treeManager::logWriteTract( const size_t &nodeID,  compactTract* tractPtr, 
     }
 
     meanTractFM.writeNodeTract( nodeID, tract );
-#pragma omp atomic
-    --( *threadcounter );
+
     return;
 } // end treeManager::logWriteTract() -------------------------------------------------------------------------------------
 

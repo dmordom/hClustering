@@ -35,6 +35,8 @@
 //  Flip the desired precomputed compact tractograms in the X-axis. Requires the white matter mask used to compact them.
 //   Options are: flip all leaf tracts defined in a roi file or flip the desired node tracts by ID or as defiend in a tree file.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -66,9 +68,15 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  fliptracts -m wmask.nii -t tree.txt -n 20 234 -I meantracts/ -O results/ -v
+//   fliptracts -m wmask.nii -t tree.txt -n 20 234 -I meantracts/ -O results/ -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'compact_X.cmpct(.v)' - (where X is the corresponding node ID): A compact tractogram with the X-flipped tractogram for X node cluster.
+//   - 'fliptracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -206,6 +214,7 @@ int main( int argc, char *argv[] )
             std::cout << "fliptracts" << std::endl << std::endl;
             std::cout << "Compute the mean tractograms from a hierarchical tree nodes and the original leaf tracts and write them in compact form." << std::endl;
             std::cout << " Options are: flip all leaf tracts defined in a roi file or flip the desired node tracts by ID or as defiend in a tree file." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -m --mask:       White matter mask image that was used to compact the tracts." << std::endl << std::endl;
@@ -222,9 +231,13 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    Use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "fliptracts -m wmask.nii -t tree.txt -n 20 234 -I meantracts/ -O results/ -v" << std::endl << std::endl;
-            exit(0);
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " fliptracts -m wmask.nii -t tree.txt -n 20 234 -I meantracts/ -O results/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'compact_X.cmpct(.v)' - (where X is the corresponding node ID): A compact tractogram with the X-flipped tractogram for X node cluster." << std::endl;
+            std::cout << " - 'fliptracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;exit(0);
         }
 
         if ( variableMap.count( "version" ) )

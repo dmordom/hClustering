@@ -276,8 +276,7 @@ private:
      * \param meanTractFolder the folder where to write the tract
      * \param threadcount a pointer to a variable keeping count of the number of threads already running
      */
-    void logWriteTract( const size_t &nodeID, compactTract* tract, const std::string& meanTractFolder,
-                    volatile size_t* const threadcount ) const;
+    void logWriteTract( const size_t &nodeID, compactTract* tract, const std::string& meanTractFolder ) const;
 
 };
 

@@ -33,7 +33,9 @@
 //  surfprojection
 //
 //  Performs an interpolated projection from the roi seed voxels to the vertices of a (freesurfer) surface.
-//   Options include nearest neighbor, averaging, and gassian interpolation.
+//   Options include nearest neighbor, averaging, and gaussian interpolation.
+//
+//  * Arguments:
 //
 //   --version:       Program version.
 //
@@ -62,9 +64,14 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  surfprojection -k 6 -g 3 -r roi.txt -s surf.txt -I leaftracts/ -O output/ -v
+//   surfprojection -k 6 -g 3 -r roi.txt -s surf.txt -I leaftracts/ -O output/ -v
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'compact_X.cmpct(.v)' (where X is the corresponding surface vertex ID): A compact tractogram with the mean tractogram projected to vertex X.
+//   - 'surfprojection_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -192,7 +199,8 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "surfprojection" << std::endl << std::endl;
             std::cout << "Performs an interpolated projection from the roi seed voxels to the vertices of a (freesurfer) surface." << std::endl;
-            std::cout << " Options include nearest neighbor, averaging, and gassian interpolation." << std::endl << std::endl;
+            std::cout << " Options include nearest neighbor, averaging, and gaussian interpolation." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << "[-k --kradius]:  Kernel radius (in voxel dimension units). Use 0 for nearest neighbor interpolation (default) and > 0 for average interpolation." << std::endl << std::endl;
@@ -207,8 +215,13 @@ int main( int argc, char *argv[] )
             std::cout << "[-F --ufloat]:    Use float32 representation to write output tracts (default is uint8)." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "surfprojection -k 6 -g 3 -r roi.txt -s surf.txt -I leaftracts/ -O output/ -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " surfprojection -k 6 -g 3 -r roi.txt -s surf.txt -I leaftracts/ -O output/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'compact_X.cmpct(.v)' (where X is the corresponding surface vertex ID): A compact tractogram with the mean tractogram projected to vertex X." << std::endl;
+            std::cout << " - 'surfprojection_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
@@ -311,9 +324,9 @@ int main( int argc, char *argv[] )
 
         if (variableMap.count("kradius"))
         {
-            if(kernelRadius <= 0)
+            if(kernelRadius < 0)
             {
-                std::cerr << "ERROR: kernel size must be positive non-zero value"<<std::endl;
+                std::cerr << "ERROR: kernel size must be positive value"<<std::endl;
                 std::cerr << visibleOptions << std::endl;
                 exit(-1);
 

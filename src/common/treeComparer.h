@@ -210,18 +210,18 @@ public:
     void randomCorrespondence();
 
     /**
-     * Write correspondence table (matchign of base-nodes across trees) to file
+     * Write final correspondence table (matching of base-nodes across final trees) to file
      * Base nodes will be identified with relative values, that is, base node position in the base node vector
      * \param outFilename the filepath to the write the table to
      */
-    void writeCorrespondence( std::string outFilename );
+    void writeFinalCorrespondence( std::string outFilename );
 
     /**
-     * Write correspondence table (matchign of base-nodes across trees) to file
+     * Write correspondence table (matching of base-nodes across trees) of trees prior to further processing during matching to file
      * Base nodes will be identified with absolute values values, that is, node IDs within the tree structure
      * \param outFilename the filepath to the write the table to
      */
-    void writeFullCorrespondence( std::string outFilename );
+    void writeProtoCorrespondence( std::string outFilename );
 
     /**
      * Performs an analyiss of the base node matching and gives several informational outputs to evaluate the quality of the matching

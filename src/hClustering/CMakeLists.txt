@@ -90,7 +90,7 @@ SET( MAIN_SRCS
     cpcc.cpp
     processtree.cpp
     partitiontree.cpp
-    comparetrees.cpp    #***
+    comparetrees.cpp
     matchpartition.cpp  #***
 
     tractdist.cpp
@@ -99,13 +99,13 @@ SET( MAIN_SRCS
     compact2full.cpp
     vista2cmpct.cpp
     cmpct2vista.cpp
-    treetracts.cpp      #***
+    treetracts.cpp
 
-    fliptree.cpp        #***
-    fliptracts.cpp      #***
+    fliptree.cpp
+    fliptracts.cpp
 
-    image2tree.cpp      #***
-    surfprojection.cpp  #***
+    image2tree.cpp
+    surfprojection.cpp
 )
 
 foreach( binarysourcefile ${MAIN_SRCS} )

@@ -41,6 +41,7 @@ bool RoiLoader::readRoi(const std::string &roiFilename, HC_GRID *datasetGridPtr,
 
     coordinates.clear();
     trackids.clear();
+    bool surf( false );
 
     WFileParser parser( roiFilename );
     if( !parser.readFile() )
@@ -79,9 +80,10 @@ bool RoiLoader::readRoi(const std::string &roiFilename, HC_GRID *datasetGridPtr,
         {
             datasetGrid = HC_NIFTI;
         }
-        else if( gridString != getGridString( HC_SURF ) )
+        else if( gridString == getGridString( HC_SURF ) )
         {
             datasetGrid = HC_SURF;
+            surf = true;
         }
         else
         {
@@ -201,7 +203,7 @@ bool RoiLoader::readRoi(const std::string &roiFilename, HC_GRID *datasetGridPtr,
         std::vector< std::vector< std::string > > indexStrings = parser.getLinesForTagSeparated( "trackindex" );
         if( indexStrings.empty() )
         {
-            if( datasetGrid == HC_NIFTI )
+            if( datasetGrid == HC_NIFTI && !surf )
             {
                 std::cerr << "ERROR @ roiLoader::readRoi(): no tract ids in roi file, necessary to work on nifti mode" << std::endl;
                 return false;

@@ -32,11 +32,13 @@
 //
 //  image2tree
 //
-//  Creates a tree with base nodes matching those of an input tree file and structure matchign that of an input single partition 3D image.
+//  Creates a tree with base nodes matching those of an input tree file and structure matching that of an input single partition 3D image.
 //   It uses the partition and roi coordinates information in the 3D image to assign each base-node (meta-leaf) of a hierarchical tree
 //   to one of the partition clusters, then create a new tree with the same base nodes as the orginal but with only one partition in the hierarchical structure:
 //   the most similar to the one defined in the 3D partition label image. This single-partition tree can then be used to perform tree-comparison statistics between the
 //   original tree and the single-partition tree.
+//
+//  * Arguments:
 //
 //   --version:       Program version.
 //
@@ -55,9 +57,16 @@
 //  [--vista]:        Write output tree in vista coordinates (default is nifti).
 //
 //
-//  example:
+//  * Usage example:
 //
 //  image2tree -t tree.txt -i partition.nii -O results/ -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'partitionTree.txt' - A copy of the original tree file with the best-matched partitions to the 3D label file included in the relevant fields.
+//   - 'success.txt' - An empty file created when the program has sucessfully exited after completion (to help for automatic re-running scripting after failure).
+//   - 'image2tree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -172,11 +181,12 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "image2tree" << std::endl << std::endl;
-            std::cout << "Creates a tree with base nodes matching those of an input tree file and structure matchign that of an input single partition 3D image." << std::endl;
+            std::cout << "Creates a tree with base nodes matching those of an input tree file and structure matching that of an input single partition 3D image." << std::endl;
             std::cout << " It uses the partition and roi coordinates information in the 3D image to assign each base-node (meta-leaf) of a hierarchical tree" << std::endl;
             std::cout << " to one of the partition clusters, then create a new tree with the same base nodes as the orginal but with only one partition in the hierarchical structure:" << std::endl;
             std::cout << " the most similar to the one defined in the 3D partition label image. This single-partition tree can then be used to perform tree-comparison statistics between the" << std::endl;
             std::cout << " original tree and the single-partition tree." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to be used as base node template." << std::endl << std::endl;
@@ -186,8 +196,14 @@ int main( int argc, char *argv[] )
             std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
             std::cout << "[--vista]: 	    write output tree in vista coordinates (default is nifti)." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "image2tree -t tree.txt -i partition.nii -O results/ -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " image2tree -t tree.txt -i partition.nii -O results/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'partitionTree.txt' - A copy of the original tree file with the best-matched partitions to the 3D label file included in the relevant fields." << std::endl;
+            std::cout << " - 'success.txt' - An empty file created when the program has sucessfully exited after completion (to help for automatic re-running scripting after failure)." << std::endl;
+            std::cout << " - 'image2tree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
@@ -284,7 +300,7 @@ int main( int argc, char *argv[] )
         }
 
 
-        if ( variableMap.count( "output" ) )
+        if ( variableMap.count( "outputf" ) )
         {
             if(!boost::filesystem::is_directory(boost::filesystem::path( outputFolder ) ) )
             {

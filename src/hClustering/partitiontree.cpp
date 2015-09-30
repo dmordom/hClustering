@@ -206,11 +206,11 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "partitiontree" << std::endl << std::endl;
-            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << "Obtain tree partitions at all granularity levels using the Spread-Separation method (finding the the partition with highest SS index at each granularity)." << std::endl;
             std::cout << " Optimal SS value for each partition is searched within a defined search-depth hierarchical levels. Final partitions can be filtered with a defined kernel size." << std::endl;
             std::cout << " to keep local SS maxima within that kernel. For SS index refer to (Moreno-Dominguez, 2014)" << std::endl;
             std::cout << " For an interactive 3D partition management with more options please use the Hierarchcial Clustering module developed in OpenWalnut (www.openwalnut.org)." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to extract partitions from." << std::endl << std::endl;

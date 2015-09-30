@@ -34,6 +34,8 @@
 //
 //  Matches leaves or meta-leaves (base-nodes) across trees and computes tree comparison values (tcpcc and triples).
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -82,9 +84,27 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  comparetrees -cg distMatrix.nii --t1 tree1.txt --t2 tree2.txt --f1 tracts1/ --f2 tracts2/ -O results/ -t 0.001 -d 20 -v
+//   comparetrees -cg distMatrix.nii --t1 tree1.txt --t2 tree2.txt --f1 tracts1/ --f2 tracts2/ -O results/ -t 0.001 -d 20 -v
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   (common outputs when  using --cl option)
+//   - 'compactValues.txt' - File containing the main tree-comparison values: tCPCC and wTriples (if not using --notriples option)
+//   - 'compValues.txt' - File with extended comparison outputs and tree-matching quality values.
+//   - 'treeCompared1.txt' - Tree file with the final first that was compared (after further processing at the matchign stage).
+//   - 'treeCompared2.txt' - Tree file with the final second tree that was  compared (after further processing at the matchign stage).
+//   - 'comparetrees_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
+//
+//   (additional outputs when using -cg option)
+//   - MATRIXFILE (with filename indicated at option --cg) - The 2D matrix file with the basenode-tract distances across trees.
+//   - 'protoCorrespTable.txt' - A file with the base node correspondence across trees before final unmatched-nodes elimination (original trees).
+//   - 'finalCorrespTable.txt' - A file with the base node correspondence across trees after final unmatched-nodes elimination (final trees).
+//
+//   (outputs when using -cr option)
+//   - 'randCpct.txt' - File with the tCPCC outputs for the randomized matching runs.
+//   - 'randStriples.txt' - File with the Triples outputs for the randomized matching runs.
 //
 //---------------------------------------------------------------------------
 
@@ -254,7 +274,6 @@ int main( int argc, char *argv[] )
             std::cout << "[-t --threshold]: number of streamlines relative to the total generated that must pass through a tract voxel to be considered for tract similarity" << std::endl;
             std::cout << "                   (i.e.: minimum value of a normalized probabilistic tract in natural units to be considered above noise)." << std::endl;
             std::cout << "                   Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired." << std::endl << std::endl;
-
             std::cout << "[-d --eucdist]:   Maximum euclidean distance (in number of isotorpic voxel distance units) between matched base-node cluster center coordinates to be accepted as a valid match." << std::endl;
             std::cout << "                   Base-nodes considered for match with a higher euclidean distance (in common space) will be considered without match if no better matching possibilities exist." << std::endl;
             std::cout << "                   [use only with --cg or --cr] Default: 20 voxel distance units." << std::endl << std::endl;
@@ -267,8 +286,26 @@ int main( int argc, char *argv[] )
             std::cout << "[--vista]: 	    Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "comparetrees -cg distMatrix.nii --t1 tree1.txt --t2 tree2.txt --f1 tracts1/ --f2 tracts2/ -O results/ -t 0.001 -d 20 -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " comparetrees -cg distMatrix.nii --t1 tree1.txt --t2 tree2.txt --f1 tracts1/ --f2 tracts2/ -O results/ -t 0.001 -d 20 -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " (common outputs when  using --cl option)" << std::endl;
+            std::cout << " - 'compactValues.txt' - File containing the main tree-comparison values: tCPCC and wTriples (if not using --notriples option)" << std::endl;
+            std::cout << " - 'compValues.txt' - File with extended comparison outputs and tree-matching quality values." << std::endl;
+            std::cout << " - 'treeCompared1.txt' - Tree file with the final first that was compared (after further processing at the matchign stage)." << std::endl;
+            std::cout << " - 'treeCompared2.txt' - Tree file with the final second tree that was  compared (after further processing at the matchign stage)." << std::endl;
+            std::cout << " - 'comparetrees_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
+            std::cout << " (additional outputs when using -cg option)" << std::endl;
+            std::cout << " - MATRIXFILE (with filename indicated at option --cg) - The 2D matrix file with the basenode-tract distances across trees." << std::endl;
+            std::cout << " - 'protoCorrespTable.txt' - A file with the base node correspondence across trees before final unmatched-nodes elimination (original trees)." << std::endl;
+            std::cout << " - 'finalCorrespTable.txt' - A file with the base node correspondence across trees after final unmatched-nodes elimination (final trees)." << std::endl;
+            std::cout << std::endl;
+            std::cout << " (outputs when using -cr option)" << std::endl;
+            std::cout << " - 'randCpct.txt' - File with the tCPCC outputs for the randomized matching runs." << std::endl;
+            std::cout << " - 'randStriples.txt' - File with the Triples outputs for the randomized matching runs." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
@@ -764,8 +801,8 @@ int main( int argc, char *argv[] )
 
 
                 comparer.greedyCorrespondence( DISSIM_THRESHOLD, redoCoords );
-                comparer.writeFullCorrespondence( outputFolder + "/fullCorresp.txt" );
-                comparer.writeCorrespondence( outputFolder + "/correspTable.txt" );
+                comparer.writeProtoCorrespondence( outputFolder + "/protoCorrespTable.txt" );
+                comparer.writeFinalCorrespondence( outputFolder + "/finalCorrespTable.txt" );
 
                 correspRates = ( comparer.rateCorrespondence() );
                 if( correspRates.size() != 6 )
@@ -944,9 +981,8 @@ int main( int argc, char *argv[] )
 
                 logFile << "Final Tree 1: " << tree1.getReport( false ) << std::endl;
                 logFile << "Final Tree 2: " << tree2.getReport( false ) << std::endl;
+                comparer.fetchBaseNodes( false );
                 logFile << comparer.reportBaseNodes() << std::endl;
-
-
 
                 if (verbose) {
                     std::cout << "Final Tree 1: " << tree1.getReport( false ) << std::endl;

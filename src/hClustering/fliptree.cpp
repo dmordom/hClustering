@@ -34,6 +34,8 @@
 //
 //  Flips the seed voxel coordinates saved in a tree file in the x-dimension (use to compare trees across hemispheres).
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -47,9 +49,15 @@
 //  [--vista]:        write output tree in vista coordinates (default is nifti).
 //
 //
-//  example:
+//  * Usage example:
 //
-//  fliptree -t tree_lh.txt -O results/ -v
+//   fliptree -t tree_lh.txt -O results/ -v
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'TREE_flipX.txt' - (where TREE is the tree filename defined at option -t) Contains the output X-flipped hierarchical tree.
+//   - 'fliptree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -170,6 +178,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "fliptree" << std::endl << std::endl;
             std::cout << "Flips the seed voxel coordinates saved in a tree file in the x-dimension (use to compare trees across hemispheres)." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to flip voxel coordinates from." << std::endl << std::endl;
@@ -177,8 +186,13 @@ int main( int argc, char *argv[] )
             std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
             std::cout << "[--vista]: 	    write output tree in vista coordinates (default is nifti)." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "fliptree -t tree_lh.txt -O results/ -v" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " fliptree -t tree_lh.txt -O results/ -v" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'TREE_flipX.txt' - (where TREE is the tree filename defined at option -t) Contains the output X-flipped hierarchical tree." << std::endl;
+            std::cout << " - 'fliptree_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
         if (variableMap.count("version")) {

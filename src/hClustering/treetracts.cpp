@@ -34,6 +34,8 @@
 //
 //  Compute the mean tractograms from a hierarchical tree nodes and the original leaf tracts and write them in compact form.
 //
+//  * Arguments:
+//
 //   --version:       Program version.
 //
 //   -h --help:       Produce extended program help message.
@@ -71,9 +73,17 @@
 //  [-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors.
 //
 //
-//  example:
+//  * Usage example:
 //
-//  treetracts -t tree_lh.txt -I tracograms/ -O results/ -n 40 65 -b -m 2 -v -c
+//   treetracts -t tree_lh.txt -I tracograms/ -O results/ -n 40 65 -b -m 2 -v -c
+//
+//
+//  * Outputs (in output folder defined at option -O):
+//
+//   - 'compact_X.cmpct(.v)' (where X is the corresponding node ID): A compact tractogram with the mean tractogram corresponding to X node cluster.
+//   - 'fulltract_X.nii(.v)' (when using -f option): A full 3D tractogram with the mean tractogram corresponding to X node cluster.
+//   - 'cluster_X.nii(.v)' (when using -c option): A full 3D mask with the seed voxels corresponding to X node cluster.
+//   - 'treetracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program.
 //
 //---------------------------------------------------------------------------
 
@@ -204,6 +214,7 @@ int main( int argc, char *argv[] )
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "treetracts" << std::endl << std::endl;
             std::cout << "Compute the mean tractograms from a hierarchical tree nodes and the original leaf tracts and write them in compact form." << std::endl << std::endl;
+            std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
             std::cout << " -t --tree:       File with the hierarchical tree to compute node tractograms from." << std::endl << std::endl;
@@ -223,8 +234,15 @@ int main( int argc, char *argv[] )
             std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
             std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
-            std::cout << "example:" << std::endl << std::endl;
-            std::cout << "treetracts -t tree_lh.txt -I tracograms/ -O results/ -n 40 65 -b -m 2 -v -c" << std::endl << std::endl;
+            std::cout << "* Usage example:" << std::endl << std::endl;
+            std::cout << " treetracts -t tree_lh.txt -I tracograms/ -O results/ -n 40 65 -b -m 2 -v -c" << std::endl << std::endl;
+            std::cout << std::endl;
+            std::cout << "* Outputs (in output folder defined at option -O):" << std::endl << std::endl;
+            std::cout << " - 'compact_X.cmpct(.v)' (where X is the corresponding node ID): A compact tractogram with the mean tractogram corresponding to X node cluster." << std::endl;
+            std::cout << " - 'fulltract_X.nii(.v)' (when using -f option): A full 3D tractogram with the mean tractogram corresponding to X node cluster." << std::endl;
+            std::cout << " - 'cluster_X.nii(.v)' (when using -c option): A full 3D mask with the seed voxels corresponding to X node cluster." << std::endl;
+            std::cout << " - 'treetracts_log.txt' - A text log file containing the parameter details and in-run and completion information of the program." << std::endl;
+            std::cout << std::endl;
             exit(0);
         }
 
@@ -570,11 +588,6 @@ int main( int argc, char *argv[] )
         if(clustMasks)
         {
             treeMngr.writeClusterMasks(nodes2write);
-            for( size_t i=0; i < nodes2write.size() ; ++i  )
-            {
-                WHcoord centre( tree.getMeanCoordinate4node(nodes2write[i]) );
-                std::cout << "node " << nodes2write[i] << " -> " << centre.getNameString() << std::endl;
-            }
         }
 
         // ==============================================================================

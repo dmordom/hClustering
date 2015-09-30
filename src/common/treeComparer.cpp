@@ -1229,8 +1229,6 @@ void treeComparer::getBaseCoords()
     m_baseCoords1.clear();
     m_baseCoords1.resize( m_baseNodes1.size() );
 
-    std::cout << "loop1..." << std::endl;
-
 
 //    #pragma omp parallel for
     for( size_t i = 0; i < m_baseNodes1.size(); ++i )
@@ -1240,13 +1238,8 @@ void treeComparer::getBaseCoords()
             fileManagerFactory clusterFMF( m_meanTractFolder1 );
             fileManager& clusterMaskmanager( clusterFMF.getFM() );
             std::string clusterMaskFilename( clusterMaskmanager.getClusterMaskFilename( m_baseNodes1[i] ) );
-            std::stringstream loadmessage;
-            loadmessage << clusterMaskFilename << "...";
             clusterMaskmanager.loadMaskImage( clusterMaskFilename );
-            loadmessage << "loaded...";
             m_baseCoords1[i]=( clusterMaskmanager.meanCoordFromMask() );
-            loadmessage << "added";
-            std::cout << loadmessage.str() << std::endl;
         }
         else
         {
@@ -1257,7 +1250,6 @@ void treeComparer::getBaseCoords()
     m_baseCoords2.clear();
     m_baseCoords2.resize( m_baseNodes2.size() );
 
-    std::cout << "loop2..." << std::endl;
 
 
 //    #pragma omp parallel for
@@ -1268,13 +1260,8 @@ void treeComparer::getBaseCoords()
             fileManagerFactory clusterFMF( m_meanTractFolder2 );
             fileManager& clusterMaskmanager( clusterFMF.getFM() );
             std::string clusterMaskFilename( clusterMaskmanager.getClusterMaskFilename( m_baseNodes2[i] ) );
-            std::stringstream loadmessage;
-            loadmessage << clusterMaskFilename << "...";
             clusterMaskmanager.loadMaskImage( clusterMaskFilename );
-            loadmessage << "loaded...";
             m_baseCoords2[i]=( clusterMaskmanager.meanCoordFromMask() );
-            loadmessage << "added";
-            std::cout << loadmessage.str() << std::endl;
         }
         else
         {
@@ -1282,7 +1269,6 @@ void treeComparer::getBaseCoords()
         }
     }
 
-    std::cout << "loops finished..." << std::endl;
 
     return;
 } // end treeComparer::getBaseNodeCoords() -------------------------------------------------------------------------------------
@@ -1757,7 +1743,7 @@ void treeComparer::randomCorrespondence()
 
 
 
-void treeComparer::writeCorrespondence( std::string filename )
+void treeComparer::writeFinalCorrespondence( std::string filename )
 {
 
     if( m_baseNodes1.empty() || m_baseNodes1.size() != m_baseNodes2.size() )
@@ -1805,7 +1791,7 @@ void treeComparer::writeCorrespondence( std::string filename )
 
 } // end treeComparer::writeCorrespondence() -------------------------------------------------------------------------------------
 
-void treeComparer::writeFullCorrespondence( std::string filename )
+void treeComparer::writeProtoCorrespondence( std::string filename )
 {
 
     if( m_originalBaseNodes1.empty() ||m_originalBaseNodes2.empty() )

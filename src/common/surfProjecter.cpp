@@ -18,7 +18,7 @@
 #include "WStringUtils.h"
 
 surfProjecter::surfProjecter( std::string roiFilename, std::string surfFfilename, bool verbose ):
-    m_loaded( false ), m_gaussKernel(false), m_kernelRadius(1), m_sigma(1), m_verbose( verbose )
+    m_loaded( false ), m_gaussKernel(false), m_kernelRadius(0), m_sigma(1), m_verbose( verbose )
 {
     fileManagerFactory fMFtestFormat;
     m_niftiMode = fMFtestFormat.isNifti();
@@ -257,11 +257,20 @@ void surfProjecter::writeMeanTracts( std::string singleTractFolder, std::string 
         std::cerr << "ERROR @ seedMatcher::writeMeanTracts(): matching was not previously performed" << std::endl;
         return;
     }
+    std::cout << "Kernel radius: " << m_kernelRadius << std::endl;
+
 
     std::cout << "Kernel type: ";
     if( !m_gaussKernel )
     {
-        std::cout << "Mean (square function)" << std::endl;
+        if( m_kernelRadius == 0 )
+        {
+            std::cout << "Nearest Neighbor" << std::endl;
+        }
+        else
+        {
+            std::cout << "Mean (square function)" << std::endl;
+        }
     }
     else
     {
