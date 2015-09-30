@@ -155,6 +155,15 @@ bool WHtree::check() const
         std::cerr << "ERROR @ WHtree::check(): only 0-1 leaf / no nodes" << std::endl;
         return false;
     }
+    if( m_coordinates.size() != m_leaves.size() )
+    {
+        std::cerr << "ERROR @ WHtree::check(): leaves(" << m_leaves.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match" << std::endl;
+        return false;
+    }
+    if( m_coordinates.size() != m_trackids.size() )
+    {
+        std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will be invalid" << std::endl;
+    }
     if( m_nodes.size() >= m_leaves.size() )
     {
         std::cerr << "ERROR @ WHtree::check(): same number of nodes as leaves" << std::endl;
@@ -351,6 +360,19 @@ size_t WHtree::getLeafID( const WHcoord &thisCoord ) const
     }
 } // end getLeafID() -------------------------------------------------------------------------------------
 
+size_t WHtree::getTrackID(const size_t &leafID) const
+{
+    if( leafID >= m_trackids.size() )
+    {
+        throw std::runtime_error( "ERROR @ WHtree::getTrackID(): leafID is out of boundaries" );
+    }
+    else
+    {
+        return m_trackids[leafID];
+    }
+
+} // end getTrackID() -------------------------------------------------------------------------------------
+
 
 std::vector<size_t> WHtree::getLeaves4node( const size_t nodeID ) const
 {
@@ -358,7 +380,7 @@ std::vector<size_t> WHtree::getLeaves4node( const size_t nodeID ) const
 
     if( nodeID >= m_nodes.size() )
     {
-        std::cerr << "ERROR @ WHtree::coordinate4leaf(): leafID is out of boundaries" << std::endl;
+        std::cerr << "ERROR @ WHtree::getLeaves4node(): nodeID is out of boundaries" << std::endl;
         return returnVector;
     }
     else
@@ -1214,6 +1236,8 @@ bool WHtree::writeTree( const std::string &filename, const bool niftiMode ) cons
         exit( -1 );
     }
 
+
+
     std::string gridString;
     if( niftiMode )
     {
@@ -1257,12 +1281,20 @@ bool WHtree::writeTree( const std::string &filename, const bool niftiMode ) cons
     }
     outFile << "#endcoordinates" << std::endl << std::endl;
 
-    outFile << "#trackindex" << std::endl;
-    for( std::vector<size_t>::const_iterator indexIter( m_trackids.begin() ) ; indexIter != m_trackids.end() ; ++indexIter )
+    if( m_coordinates.size() != m_trackids.size() )
     {
-        outFile << *indexIter << std::endl;
+        std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will note written to file" << std::endl;
     }
-    outFile << "#endtrackindex" << std::endl << std::endl;
+    else
+    {
+        outFile << "#trackindex" << std::endl;
+
+        for( std::vector<size_t>::const_iterator indexIter( m_trackids.begin() ) ; indexIter != m_trackids.end() ; ++indexIter )
+        {
+            outFile << *indexIter << std::endl;
+        }
+        outFile << "#endtrackindex" << std::endl << std::endl;
+    }
 
     outFile << "#clusters" << std::endl;
     for( std::vector<WHnode>::const_iterator nodeIter( m_nodes.begin() ) ; nodeIter != m_nodes.end() ; ++nodeIter )
@@ -1363,7 +1395,7 @@ bool WHtree::writeTreeDebug( const std::string &filename ) const
     for( std::vector<WHnode>::const_iterator leafIter( m_leaves.begin() ); leafIter != m_leaves.end(); ++leafIter )
     {
         WHcoord currentCoord( getCoordinate4leaf( leafIter->getID() ) );
-        outFile << "Coord: " << currentCoord << " " <<  leafIter->printAllData() << std::endl;
+        outFile << "ID: " << leafIter->getID() << ". Track: "  << getTrackID( leafIter->getID() ) << "Coord: " << currentCoord << " " <<  leafIter->printAllData() << std::endl;
     }
     outFile << std::endl << std::endl << "============NODES============" << std::endl << std::endl;
     for( std::vector<WHnode>::const_iterator nodeIter( m_nodes.begin() ) ; nodeIter != m_nodes.end() ; ++nodeIter )
@@ -1809,6 +1841,8 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
     size_t discardedLeaves( 0 ), discardedNodes( 0 );
     std::vector<WHnode>::iterator leavesDelIter( m_leaves.begin() );
     std::vector<WHcoord>::iterator coordDelIter( m_coordinates.begin() );
+    std::vector< size_t >::iterator trackidIter( m_trackids.begin() );
+
     while( leavesDelIter != m_leaves.end() )
     {
         if( leavesDelIter->isFlagged() )
@@ -1817,11 +1851,13 @@ std::pair<size_t, size_t> WHtree::cleanup( std::vector<size_t> *outLookup )
             m_discarded.push_back( *coordDelIter );
             leavesDelIter = m_leaves.erase( leavesDelIter );
             coordDelIter = m_coordinates.erase( coordDelIter );
+            trackidIter = m_trackids.erase( trackidIter );
         }
         else
         {
             ++leavesDelIter;
             ++coordDelIter;
+            ++trackidIter;
         }
     }
     // eliminate discarded nodes from the vector

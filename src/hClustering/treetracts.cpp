@@ -50,9 +50,9 @@
 //
 //  [-a --all]:       Write tracts for all the tree nodes.
 //
-//  [-f --full]:      Write full 3D image tracts instead of compact tracts.
+//  [-f --full]:      Write full 3D image tracts instead of compact tracts, indicate location of wm mask file here.
 //
-//  [-c --clustmsk]:  Write for each tract the corresponding 3D mask of all the seed voxels contained in the corresponding cluster.
+//  [-c --clustmsk]:  Write for each tract the corresponding 3D mask of all the seed voxels contained in the corresponding cluster, indicate location of wm mask file here.
 //
 //  [--notracts]:     [use only with -c] Do not write tracts to file (only cluster masks).
 //
@@ -111,7 +111,7 @@ int main( int argc, char *argv[] )
 
 
         // program parameters
-        std::string treeFilename, maskFilename;
+        std::string treeFilename, maskFilename, maskFilename2;
         std::string tractFolder, outputFolder;
         std::vector<size_t> inputNodes;
         unsigned int threads(0);
@@ -133,7 +133,7 @@ int main( int argc, char *argv[] )
                 ( "bases,b", "[opt] write tracts for all base nodes")
                 ( "all,a", "[opt] write tracts for all tree nodes")
                 ( "full,f", boost::program_options::value< std::string >(&maskFilename), "[opt] write full 3D image tracts instead of compact tracts, must be followed my wm mask filepath")
-                ( "clustmsk,c", "[opt] write for each mean tract the corresponding 3D mask of contained seed voxels")
+                ( "clustmsk,c", boost::program_options::value< std::string >(&maskFilename2),  "[opt] write for each mean tract the corresponding 3D mask of contained seed voxels,, must be followed my wm mask filepath")
                 ( "notracts", "[opt, use only with -c] do not write tracts to file (write only cluster masks)")
                 ;
 
@@ -210,10 +210,10 @@ int main( int argc, char *argv[] )
             std::cout << " -I --inputf:     Input data folder (containing the seed voxel compact tractograms)." << std::endl << std::endl;
             std::cout << " -O --outputf:    Output folder where tractogram files will be written." << std::endl << std::endl;
             std::cout << "[-n --nodes]:     Write tracts for the following node ids (separated with whitespaces)." << std::endl << std::endl;
-            std::cout << "[-b --bases]:     Write only the tracts corresponding to the base-nodes (meta-leaves)." << std::endl;
+            std::cout << "[-b --bases]:     Write only the tracts corresponding to the base-nodes (meta-leaves)." << std::endl << std::endl;
             std::cout << "[-a --all]:       Write tracts for all the tree nodes." << std::endl << std::endl;
-            std::cout << "[-f --full]:      Write full 3D image tracts instead of compact tracts." << std::endl << std::endl;
-            std::cout << "[-c --clustmsk]:  Write for each tract the corresponding 3D mask of all the seed voxels contained in the corresponding cluster." << std::endl << std::endl;
+            std::cout << "[-f --full]:      Write full 3D image tracts instead of compact tracts, indicate location of wm mask file here." << std::endl << std::endl;
+            std::cout << "[-c --clustmsk]:  Write for each tract the corresponding 3D mask of all the seed voxels contained in the corresponding cluster, indicate location of wm mask file here." << std::endl << std::endl;
             std::cout << "[--notracts]:     [use only with -c] Do not write tracts to file (only cluster masks)." << std::endl << std::endl;
             std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
             std::cout << "[--vista]: 	     read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
@@ -257,7 +257,7 @@ int main( int argc, char *argv[] )
             }
         }
 
-        if (variableMap.count("full"))
+        if ( variableMap.count("full") )
         {
             if( !boost::filesystem::is_regular_file( boost::filesystem::path( maskFilename ) ) )
             {
@@ -274,16 +274,37 @@ int main( int argc, char *argv[] )
 
         if ( variableMap.count( "clustmsk" ) )
         {
-            clustMasks = true;
-            if ( variableMap.count( "notracts" ) )
+            if( !boost::filesystem::is_regular_file( boost::filesystem::path( maskFilename2 ) ) )
             {
-                std::cout << "writing only cluster seed voxel masks (no tracts will be written)" << std::endl;
-                onlyClustMasks = true;
+                std::cerr << "ERROR: white matter mask file \"" <<maskFilename2<< "\" is not a regular file" << std::endl;
+                std::cerr << visibleOptions << std::endl;
+                exit(-1);
             }
             else
             {
-                std::cout << "writing the corresponding cluster seed voxel mask for each tractogram " << std::endl;
-                verbose=true;
+                clustMasks = true;
+                if ( variableMap.count( "notracts" ) )
+                {
+                    std::cout << "writing only cluster seed voxel masks (no tracts will be written). " << std::flush;
+                    onlyClustMasks = true;
+                }
+                else
+                {
+                    std::cout << "writing the corresponding cluster seed voxel mask for each tractogram. " << std::flush;
+                    verbose=true;
+                }
+
+                std::cout << "White mattter mask filepath: " << maskFilename2 << std::endl;
+
+                if ( fullTracts )
+                {
+                    if( maskFilename2 != maskFilename )
+                    {
+                        std::cerr << "ERROR: white matter mask files from -f and -c options do not match" << std::endl;
+                        exit(-1);
+                    }
+                }
+                maskFilename = maskFilename2;
             }
         }
 
@@ -471,9 +492,13 @@ int main( int argc, char *argv[] )
 
         treeManager treeMngr(&tree, verbose );
         treeMngr.log(&logFile);
-        treeMngr.setMeanTractFolder(outputFolder);
         treeMngr.setFullTractFolder(outputFolder);
         treeMngr.setSingleTractFolder(tractFolder);
+        if( !maskFilename.empty() )
+        {
+            treeMngr.setMaskFilename( maskFilename );
+        }
+
         if( useFloat )
         {
             treeMngr.writeInFloat();
@@ -515,11 +540,6 @@ int main( int argc, char *argv[] )
                 }
             }
 
-            if(!inputNodes.empty())
-            {
-                nodes2write = inputNodes;
-            }
-
             if( !inputNodes.empty() )
             {
                 nodes2write.insert(nodes2write.end(),inputNodes.begin(),inputNodes.end());
@@ -536,6 +556,7 @@ int main( int argc, char *argv[] )
             }
             else
             {
+                treeMngr.setMeanTractFolder(outputFolder);
                 if(allNodes)
                 {
                     treeMngr.writeAllNodeTracts( memory );
@@ -549,6 +570,11 @@ int main( int argc, char *argv[] )
         if(clustMasks)
         {
             treeMngr.writeClusterMasks(nodes2write);
+            for( size_t i=0; i < nodes2write.size() ; ++i  )
+            {
+                WHcoord centre( tree.getMeanCoordinate4node(nodes2write[i]) );
+                std::cout << "node " << nodes2write[i] << " -> " << centre.getNameString() << std::endl;
+            }
         }
 
         // ==============================================================================

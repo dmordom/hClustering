@@ -275,12 +275,7 @@ void fileManager::compact2full(const std::vector<float>& compact, std::vector< s
     const size_t dimz = m_maskMatrix[0][0].size();
 
     std::vector<std::vector<std::vector<float> > >& fullTract( *fullTractPointer );
-    fullTract.clear();
-    {
-        std::vector<float> zvect(dimz,0);
-        std::vector<std::vector<float> >yzmatrix(dimy,zvect);
-        fullTract.resize(dimx,yzmatrix);
-    }
+    fullTract.resize( dimx, std::vector<std::vector<float> >( dimy, ( std::vector<float>( dimz, 0 ) ) ) );
 
     std::vector<float>::const_iterator tractIter(compact.begin());
     for( int i=0 ; i<dimz ; ++i )
@@ -572,20 +567,16 @@ void fileManager::writeMask( const std::string& maskFilename, const std::vector<
 }// end fileManager::writeMask() -----------------------------------------------------------------
 void fileManager::writeMask( const std::string& maskFilename, const std::vector<std::vector<std::vector<bool> > >& maskMatrix) const
 {
-    const size_t iDim = maskMatrix[0][0].size();
-    const size_t jDim = maskMatrix[0].size();
-    const size_t kDim = maskMatrix.size();
-    std::vector<std::vector<std::vector<float> > > maskMatrixFloat;
+    const size_t dimx = maskMatrix.size();
+    const size_t dimy = maskMatrix[0].size();
+    const size_t dimz = maskMatrix[0][0].size();
+    std::vector<std::vector<std::vector<float> > > maskMatrixFloat( dimx, std::vector<std::vector<float> >( dimy, std::vector<float>( dimz, 0 ) ) );
+
+    for (int i=0 ; i<dimx ; ++i)
     {
-        std::vector<float> tempVector(iDim,0);
-        std::vector<std::vector<float> >slice(jDim,tempVector);
-        maskMatrixFloat.resize(kDim,slice);
-    }
-    for (int i=0 ; i<iDim ; ++i)
-    {
-        for (int j=0 ; j<jDim ; ++j)
+        for (int j=0 ; j<dimy ; ++j)
         {
-            for (int k=0 ; k<kDim ; ++k)
+            for (int k=0 ; k<dimz ; ++k)
             {
                 maskMatrixFloat[i][j][k] = maskMatrix[i][j][k];
             }

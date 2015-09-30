@@ -36,6 +36,7 @@
 #include <list>
 #include <string>
 #include <algorithm>
+#include <cmath>
 
 #include "treeManager.h"
 
@@ -304,23 +305,39 @@ compactTract treeManager::getMeanTract( const size_t inNode ) const
     fileSingle.readAsUnThres();
 
     //loop through nodes
-    compactTract sumTract;
+    compactTract testTract;
     std::vector< size_t > nodeLeaves( m_tree.getLeaves4node( inNode) );
 
-    fileSingle.readLeafTract( nodeLeaves.front(), m_tree.m_trackids, m_tree.m_coordinates, &sumTract );
-    sumTract.unLog( m_tree.m_logFactor ); //to sum tractograms they must be in natrual units
+    fileSingle.readLeafTract( nodeLeaves.front(), m_tree.m_trackids, m_tree.m_coordinates, &testTract );
+
+    std::vector< size_t >sumVector( testTract.size(), 0 );
 
 
-    for( size_t j = 1; j < nodeLeaves.size(); ++j )
+
+    for( size_t j = 0; j < nodeLeaves.size(); ++j )
     {
         compactTract tempTract;
         size_t leafID = nodeLeaves[j];
 
         fileSingle.readLeafTract( leafID, m_tree.m_trackids, m_tree.m_coordinates, &tempTract );
-        tempTract.unLog( m_tree.m_logFactor ); //to sum tractograms they must be in natrual units
-        sumTract.add( tempTract );
+        tempTract.unLog( m_tree.m_logFactor ); //to sum tractograms they must be in natural units
+
+        std::vector< float > tempVector( tempTract.tract() );
+
+        for( size_t i = 0; i <  tempVector.size(); ++i )
+        {
+            sumVector[i] += lroundf( tempVector[i] );
+        }
     }
-    sumTract.divide( nodeLeaves.size() ); // we must divide the sum tract by the number of leaves to obtain a mean tract
+    std::vector< float >meanFloat( sumVector.size(), 0 );
+    double divisor( nodeLeaves.size() );
+    for( size_t i = 0; i <  sumVector.size(); ++i )
+    {
+        meanFloat[i] = sumVector[i]/divisor;
+    }
+
+    compactTract sumTract( meanFloat );
+    sumTract.unLog( 0 ); // set as in natural units
     sumTract.doLog( m_tree.m_logFactor ); // we want to view it in logarithmic units
 
     return sumTract;
@@ -653,26 +670,29 @@ void treeManager::writeClusterMasks( std::vector< size_t > input )
     {
         maskManager.storeUnzipped();
     }
+    if( !m_maskFilename.empty() )
+    {
+        maskManager.loadMaskImage( m_maskFilename );
+    }
 
     time_t startTime( time( NULL ) ), lastTime( time( NULL ) );
     size_t progCount( 0 );
 
 
-
     // write cluster masks
     for( size_t i = 0; i < input.size(); ++i )
     {
-        std::vector<std::vector<std::vector<bool> > > maskMatrix( m_tree.getDataSize().m_z,
-                    std::vector<std::vector<bool> > ( m_tree.getDataSize().m_y, std::vector<bool> ( m_tree.getDataSize().m_x, false ) ) );
+        std::vector<std::vector< std::vector<bool> > > maskMatrix( m_tree.getDataSize().m_x,
+                    std::vector< std::vector<bool> > ( m_tree.getDataSize().m_y,
+                                 std::vector<bool>   ( m_tree.getDataSize().m_z, false ) ) );
 
         std::vector<WHcoord> nodeCoords( m_tree.getCoordinates4node( input[i] ) );
-
         for( size_t j = 0; j < nodeCoords.size(); ++j )
         {
-            maskMatrix[nodeCoords[j].m_z][nodeCoords[j].m_y][nodeCoords[j].m_x] = true;
+            maskMatrix[nodeCoords[j].m_x][nodeCoords[j].m_y][nodeCoords[j].m_z] = true;
         }
-
         std::string maskFilename( maskManager.getClusterMaskFilename( input[i] ) );
+
         maskManager.writeMask( maskFilename, maskMatrix );
         ++progCount;
 

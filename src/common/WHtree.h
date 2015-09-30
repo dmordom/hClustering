@@ -292,6 +292,13 @@ public:
     size_t getLeafID( const WHcoord &thisCoord ) const;
 
     /**
+     * returns the corresponding track ID to a leaf ID on the tree
+     * \param leafID input leaf ID
+     * \return ID of seed tractogram corresponding to that leaf
+     */
+    size_t getTrackID( const size_t &leafID ) const;
+
+    /**
      * Returns a vector with all the leaf IDs contained in that cluster
      * \param nodeID id of the selected node
      * \return vector with all the leaf IDs contained in that cluster

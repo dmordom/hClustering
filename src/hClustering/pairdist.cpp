@@ -379,7 +379,8 @@ int main( int argc, char *argv[] )
         {
             fullID1 = std::make_pair< bool, size_t >( false, id1 );
             fullID2 = std::make_pair< bool, size_t >( false, id2 );
-            std::cout << "Input seed coordinates: " << tree.getCoordinate4leaf( id1 ).getNameString() << " and " << tree.getCoordinate4leaf( id2 ).getNameString() << std::endl;
+            std::cout << "Seed A. ID: " << id1 << ". Coords: " << tree.getCoordinate4leaf( id1 ).getNameString() << ". Trackid: " << tree.getTrackID( id1 ) << std::endl;
+            std::cout << "Seed B. ID: " << id2 << ". Coords: " << tree.getCoordinate4leaf( id2 ).getNameString() << ". Trackid: " << tree.getTrackID( id2 ) << std::endl;
 
         }
         else
