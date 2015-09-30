@@ -34,7 +34,7 @@
 // This file is also part of OpenWalnut ( http://www.openwalnut.org ).
 //
 // For more reference on the underlying algorithm and research they have been used for refer to:
-// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+// - Moreno-Dominguez, D., Anwander, A., & Knoesche, T. R. (2014).
 //   A hierarchical method for whole-brain connectivity-based parcellation.
 //   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
 // - Moreno-Dominguez, D. (2014).
@@ -157,12 +157,14 @@ bool WHtree::check() const
     }
     if( m_coordinates.size() != m_leaves.size() )
     {
-        std::cerr << "ERROR @ WHtree::check(): leaves(" << m_leaves.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match" << std::endl;
+        std::cerr << "ERROR @ WHtree::check(): leaves(" << m_leaves.size() << ") and coordinates(";
+        std::cerr << m_coordinates.size() << ") vector sizes do not match" << std::endl;
         return false;
     }
     if( m_coordinates.size() != m_trackids.size() )
     {
-        std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will be invalid" << std::endl;
+        std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(";
+        std::cerr << m_coordinates.size() << ") vector sizes do not match. track ids will be invalid" << std::endl;
     }
     if( m_nodes.size() >= m_leaves.size() )
     {
@@ -360,7 +362,7 @@ size_t WHtree::getLeafID( const WHcoord &thisCoord ) const
     }
 } // end getLeafID() -------------------------------------------------------------------------------------
 
-size_t WHtree::getTrackID(const size_t &leafID) const
+size_t WHtree::getTrackID( const size_t &leafID ) const
 {
     if( leafID >= m_trackids.size() )
     {
@@ -370,7 +372,6 @@ size_t WHtree::getTrackID(const size_t &leafID) const
     {
         return m_trackids[leafID];
     }
-
 } // end getTrackID() -------------------------------------------------------------------------------------
 
 
@@ -1005,7 +1006,7 @@ bool WHtree::readTree( const std::string &filename )
         {
             std::cerr << "ERROR @ WHtree::readTree(): tracking streams number (";
             std::cerr << m_numStreamlines << ") and logarithmic normalization factor (";
-            std::cerr << m_logFactor << ") are a missmatch . Log factor should be: "<< log10( m_numStreamlines) << std::endl;
+            std::cerr << m_logFactor << ") are a missmatch . Log factor should be: "<< log10( m_numStreamlines ) << std::endl;
             return false;
         }
     }
@@ -1285,7 +1286,8 @@ bool WHtree::writeTree( const std::string &filename, const bool niftiMode ) cons
     {
         if( m_coordinates.size() != m_trackids.size() )
         {
-            std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(" << m_coordinates.size() << ") vector sizes do not match. track ids will note written to file" << std::endl;
+            std::cerr << "WARNING @ WHtree::writeTree(): trackids(" << m_trackids.size() << ") and coordinates(";
+            std::cerr << m_coordinates.size() << ") vector sizes do not match. track ids will note written to file" << std::endl;
         }
         else
         {
@@ -1398,7 +1400,8 @@ bool WHtree::writeTreeDebug( const std::string &filename ) const
     for( std::vector<WHnode>::const_iterator leafIter( m_leaves.begin() ); leafIter != m_leaves.end(); ++leafIter )
     {
         WHcoord currentCoord( getCoordinate4leaf( leafIter->getID() ) );
-        outFile << "ID: " << leafIter->getID() << ". Track: "  << getTrackID( leafIter->getID() ) << "Coord: " << currentCoord << " " <<  leafIter->printAllData() << std::endl;
+        outFile << "ID: " << leafIter->getID() << ". Track: "  << getTrackID( leafIter->getID() );
+        outFile << "Coord: " << currentCoord << " " <<  leafIter->printAllData() << std::endl;
     }
     outFile << std::endl << std::endl << "============NODES============" << std::endl << std::endl;
     for( std::vector<WHnode>::const_iterator nodeIter( m_nodes.begin() ) ; nodeIter != m_nodes.end() ; ++nodeIter )

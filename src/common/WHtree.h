@@ -34,7 +34,7 @@
 // This file is also part of OpenWalnut ( http://www.openwalnut.org ).
 //
 // For more reference on the underlying algorithm and research they have been used for refer to:
-// - Moreno-Dominguez, D., Anwander, A., & Knösche, T. R. (2014).
+// - Moreno-Dominguez, D., Anwander, A., & Knoesche, T. R. (2014).
 //   A hierarchical method for whole-brain connectivity-based parcellation.
 //   Human Brain Mapping, 35(10), 5000-5025. doi: http://dx.doi.org/10.1002/hbm.22528
 // - Moreno-Dominguez, D. (2014).
