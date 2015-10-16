@@ -54,21 +54,21 @@
 //                     In this method a pair signature matrices are computed for each reference-target partitions to find the quality of the match.
 //                     Each signature matrix defines a value for each pair of base-nodes of the tree it belongs to: 1 the base nodes are found in the same cluster, 0 if otherwise.
 //                     The higher the correlation between the reference and target-derived matrices, the best match is the target tree partition to the reference tree one.
-//                     A smart hierarchical search through possible partritions is conducted to find the one with best signature matching.
+//                     A smart hierarchical search through possible partitions is conducted to find the one with best signature matching.
 //                    The lambda coefficient determines if and how a similar number of clusters in both partitions affects the matching quality value,
 //                     Lambda=0 -> cluster number does not affect the quality value. Lambda=1 -> cluster value similarity has as much weight as singature correlation.
 //
 //  [-o --overlap]:   Overlap-based partition matching. [xor with -o and -c].
 //                     A match between two partititionsis found by iteratively matching clusters with higher base-node overlap and resolving possible ambiguities.
-//                     The matching quality between parittions is defined as the number of base-nodes pairs that are classified in the same way in both partitions
+//                     The matching quality between partitions is defined as the number of base-nodes pairs that are classified in the same way in both partitions
 //                     (both in the smae cluster r both in different clusters) against the total number of pair combinations.
-//                     A smart hierarchical search through possible partritions is conducted to find the one with best signature matching.
+//                     A smart hierarchical search through possible partitions is conducted to find the one with best signature matching.
 //
 //  [-d --depth]:     Partition search depth (for signature and overlap matching. A higher value will mean a more exhaustive search of the possible partitions,
 //                     but also a higher computation time, specially if the partition to be matched has a high number of clusters (>100).
-//                     The default value (0, recommended) will adaptively give high search depth to low-cluster partitions and lower search depth to high-cluster partittions.
+//                     The default value (0, recommended) partitions adaptively give high search depth to low-cluster partitions and lower search depth to high-cluster partitions.
 //
-//  [-c --justcolor]: Perform only color matching across reference and target tree parttitions (both trees need to have the same number of precompouted partitions).
+//  [-c --justcolor]: Perform only color matching across reference and target tree partitions (both trees need to have the same number of precompouted partitions).
 //                     In multiple-to-one matching cases clusters from the reference tree might also be recolored to better identify matching relationships across partitions.
 //
 //  [-x --excl]:      Color exclusively clusters that have a match, clusters without match will be recolored white (on both reference and target trees)
@@ -221,7 +221,7 @@ int main( int argc, char *argv[] )
             std::cout << "                   Lambda=0 -> cluster number does not affect the quality value. Lambda=1 -> cluster value similarity has as much weight as singature correlation." << std::endl << std::endl;
             std::cout << "[-o --overlap]:   Overlap-based partition matching. [xor with -o and -c]." << std::endl;
             std::cout << "                   A match between two partititionsis found by iteratively matching clusters with higher base-node overlap and resolving possible ambiguities." << std::endl;
-            std::cout << "                   The matching quality between parittions is defined as the number of base-nodes pairs that are classified in the same way in both partitions" << std::endl;
+            std::cout << "                   The matching quality between partitions is defined as the number of base-nodes pairs that are classified in the same way in both partitions" << std::endl;
             std::cout << "                   (both in the smae cluster r both in different clusters) against the total number of pair combinations." << std::endl;
             std::cout << "                   A smart hierarchical search through possible partritions is conducted to find the one with best signature matching." << std::endl << std::endl;
             std::cout << "[-d --depth]:     Partition search depth (for signature and overlap matching. A higher value will mean a more exhaustive search of the possible partitions," << std::endl;
