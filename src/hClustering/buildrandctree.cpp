@@ -33,7 +33,7 @@
 //
 //  buildrandctree
 //
-//  Build a centroid hierarchical tree from a set of artificially pre-generated set of tractograms yoielding a uniformly random similarity matrix and a seed neighborhood information voxel list.
+//  Build a centroid hierarchical tree from a set of artificially pre-generated set of tractograms yielding a uniformly random similarity matrix and a seed neighborhood information voxel list.
 //
 //  * Arguments:
 //
@@ -41,7 +41,7 @@
 //
 //   -h --help:       Produce extended program help message.
 //
-//   -r --roi-file:   A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
+//   -r --roi:        A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
 //
 //   -I --inputf:     Input data folder (containing the compact tractograms).
 //
@@ -136,7 +136,7 @@ int main( int argc, char *argv[] )
         genericOptions.add_options()
                 ( "version", "Program version" )
                 ( "help,h", "Produce extended program help message" )
-                ( "roi-file,r", boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates." )
+                ( "roi,r", boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates." )
                 ( "inputf,I",  boost::program_options::value< std::string >(&inputFolder), "input data folder (seed tractograms)." )
                 ( "outputf,O",  boost::program_options::value< std::string >(&outputFolder), "output folder" )
                 ( "maxnbdist,d",  boost::program_options::value< float >(&maxNbDist)->implicit_value(1), "[opt] maximum dissimilarity a seed voxel tract must have to its most similar neighbor not be discarded. (0,1]." )
@@ -167,7 +167,7 @@ int main( int argc, char *argv[] )
         boost::program_options::options_description visibleOptions( "Allowed options" );
         visibleOptions.add(genericOptions).add(configOptions);
         boost::program_options::positional_options_description posOpt; //this arguments do not need to specify the option descriptor when typed in
-        //posOpt.add( "roi-file", -1);
+        //posOpt.add( "roi", -1);
 
         boost::program_options::variables_map variableMap;
         store(boost::program_options::command_line_parser(argc, argv).options(cmdlineOptions).positional(posOpt).run(), variableMap);
@@ -215,21 +215,21 @@ int main( int argc, char *argv[] )
             std::cout << "Build a centroid hierarchical tree from a set of artificially pre-generated set of tractograms yoielding a uniformly random similarity matrix and a seed neighborhood information voxel list." << std::endl << std::endl;
             std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
-            std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
-            std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
+            std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
+            std::cout << " -r --roi:        A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
             std::cout << " -I --inputf:     input data folder (containing the compact tractograms)." << std::endl << std::endl;
-            std::cout << " -O --outputf:    output folder where tree files will be written." << std::endl << std::endl;
-            std::cout << "[-d --maxnbdist]: maximum dissimilarity a seed voxel tract must have to its most similar neighbor not be discarded." << std::endl;
+            std::cout << " -O --outputf:    Output folder where tree files will be written." << std::endl << std::endl;
+            std::cout << "[-d --maxnbdist]: Maximum dissimilarity a seed voxel tract must have to its most similar neighbor not be discarded." << std::endl;
             std::cout << "                   Valid values: (0,1] Use a value of 1 (default) if no discarding is desired." << std::endl << std::endl;
-            std::cout << "[-c --cnbhood]:   use centroid method with C neighborhood level. Valid values: 6, 18, 24(default), 32, 96, 124." << std::endl << std::endl;
-            std::cout << "[-S --basesize]:  merge homogeneous base nodes of size S. (mutually exclusive with -N option). Default: 0 (no homogeneous merging)." << std::endl << std::endl;
-            std::cout << "[-N --basenum]:   grow N homogeneous base nodes. (mutually exclusive with -S option). Default: 0 (no homogeneous merging)." << std::endl << std::endl;
-            std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
-            std::cout << "[--vista]: 	     read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
-            std::cout << "[-m --cache-mem]: maximum amount of RAM memory (in GBytes) to use for temporal tractogram cache storing. Valid values [0.1,50]. Default: 0.5." << std::endl << std::endl;
-            std::cout << "[-k --keep-disc]: keep discarded voxel information in a specialiced section of the tree." << std::endl << std::endl;
-            std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
-            std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
+            std::cout << "[-c --cnbhood]:   Use centroid method with C neighborhood level. Valid values: 6, 18, 24(default), 32, 96, 124." << std::endl << std::endl;
+            std::cout << "[-S --basesize]:  Merge homogeneous base nodes of size S. (mutually exclusive with -N option). Default: 0 (no homogeneous merging)." << std::endl << std::endl;
+            std::cout << "[-N --basenum]:   Grow N homogeneous base nodes. (mutually exclusive with -S option). Default: 0 (no homogeneous merging)." << std::endl << std::endl;
+            std::cout << "[-v --verbose]:   Verbose output (recommended)." << std::endl << std::endl;
+            std::cout << "[--vista]: 	    Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
+            std::cout << "[-m --cache-mem]: Maximum amount of RAM memory (in GBytes) to use for temporal tractogram cache storing. Valid values [0.1,50]. Default: 0.5." << std::endl << std::endl;
+            std::cout << "[-k --keep-disc]: Keep discarded voxel information in a specialiced section of the tree." << std::endl << std::endl;
+            std::cout << "[--debugout]:     Write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
+            std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Usage example:" << std::endl << std::endl;
             std::cout << " buildrandctree -r roi_lh.txt -I tractograms/ -O results/ -c 26 -N 1000 -k -m 2 -v " << std::endl << std::endl;
@@ -310,7 +310,7 @@ int main( int argc, char *argv[] )
             exit(0);
         }
 
-        if ( variableMap.count( "roi-file" ) )
+        if ( variableMap.count( "roi" ) )
         {
             if( !boost::filesystem::is_regular_file( boost::filesystem::path( roiFilename ) ) )
             {
