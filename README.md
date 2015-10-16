@@ -9,7 +9,7 @@ These algorithms are delivered in the form of easy-to-use Linux command-line too
 
 The original code was developed in the framework of the Whole-Brain Hierarchical clustering project carried out in the Max Planck Institute for Human Cognitive and Brain Sciences in Leipzig, as part of the PhD Thesis:  “Whole-brain cortical parcellation: A hierarchical method based on dMRI tractography” by David Moreno-Dominguez. For this release, the code has been documented, upgraded and streamlined to be more easy to use and accept both the neuroimaging de-facto standard Nifti (.nii) and Lipsia neuroimaging processing package Vista (.v) formats.
 
-* Doxygen-generated documentation can be found in the "doc" directory (open index.html file).
+* Doxygen-generated documentation can be found in the "doc" directory (open html/index.html file for browsing).
 * User guides can be found in the "manuals" folder (in .pdf format).
 
 For further information on the underlying algorithms and research done with this code refer to:
