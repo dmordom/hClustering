@@ -32,8 +32,8 @@
 //
 //  pairdist
 //
-//  Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree.
-//   Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms.
+//  Retrieve the distance (dissimilarity) value between two tree leaves or nodes as encoded in the corresponding hierarchical tree.
+//   Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed directly from leaf/node tractograms.
 //
 //  * Arguments:
 //
@@ -51,12 +51,12 @@
 //                     Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold.
 //                     Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired.
 //
-//   -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tratograms in case of node IDS).
+//   -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tractograms in case of node IDS).
 //                     Tracts must be normalized.
 //
-//   -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use toghether with -leaves option.
+//   -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use together with -leaves option.
 //
-//   -M --matrixf:    Folder with the dissimilarity matrix files. Use only toghether with -leaves option.
+//   -M --matrixf:    Folder with the dissimilarity matrix files. Use only together with -leaves option.
 //
 //  [--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files.
 //
@@ -196,7 +196,7 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "pairdist" << std::endl << std::endl;
-            std::cout << "Retrieve the distance (dissimilarity) value between two tree leaves or nodes as enconded in the corresponding hierarchical tree." << std::endl;
+            std::cout << "Retrieve the distance (dissimilarity) value between two tree leaves or nodes as encoded in the corresponding hierarchical tree." << std::endl;
             std::cout << " Additionally distance between leaves can be retrieved from a distance matrix, and those from leaves/nodes computed direclty from leaf/node tractograms." << std::endl << std::endl;
             std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
@@ -207,10 +207,10 @@ int main( int argc, char *argv[] )
             std::cout << "[-T --threshold]: Threshold to apply directly to the tractogram values before computing the dissimilarity (in order to avoid tractography noise affect the result)." << std::endl;
             std::cout << "                   Unlike in other hClustering commands, this threshold value is an absolute value to apply to the tractogram data as is, not a relative threshold." << std::endl;
             std::cout << "                   Valid values: [0,1) Use a value of 0 (default) if no thresholding is desired." << std::endl << std::endl;
-            std::cout << " -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tratograms in case of node IDS)." << std::endl;
+            std::cout << " -L --leaftractf: Folder with the leaf seed voxel probabilistic tracts. Will trigger direct computation of tractogram distance (and prior computation of mean tractograms in case of node IDS)." << std::endl;
             std::cout << "                   Tracts must be normalized." << std::endl << std::endl;
-            std::cout << " -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use toghether with -leaves option." << std::endl << std::endl;
-            std::cout << " -M --matrixf:    Folder with the dissimilarity matrix files. Use only toghether with -leaves option." << std::endl << std::endl;
+            std::cout << " -N --nodetractf: Folder with the node mean tracts. Tracts must be normalized. Do not use together with -leaves option." << std::endl << std::endl;
+            std::cout << " -M --matrixf:    Folder with the dissimilarity matrix files. Use only together with -leaves option." << std::endl << std::endl;
             std::cout << "[--vista]:        Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Usage example:" << std::endl << std::endl;
