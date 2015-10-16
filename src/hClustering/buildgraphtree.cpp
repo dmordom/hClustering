@@ -32,7 +32,7 @@
 //
 //  buildgraphtree
 //
-//  Build a graph linkage hierarchical tree from a distance matrix built with distBlocks.
+//  Build a graph linkage hierarchical tree from a distance matrix built with distmatrix.
 //
 //  * Arguments:
 //
@@ -196,7 +196,7 @@ int main( int argc, char *argv[] )
             std::cout << std::endl;
             std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
             std::cout << "buildgraphtree" << std::endl << std::endl;
-            std::cout << "Build a graph linkage hierarchical tree from a distance matrix built with distBlocks." << std::endl << std::endl;
+            std::cout << "Build a graph linkage hierarchical tree from a distance matrix built with distmatrix." << std::endl << std::endl;
             std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
             std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
