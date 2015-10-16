@@ -40,9 +40,9 @@
 //
 //   -h --help:       Produce extended program help message.
 //
-//   -r --roi-file:   A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
+//   -r --roi:        A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates).
 //
-//   -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified).
+//   -g --graph:      The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified).
 //
 //   -I --inputf:     Input data folder (containing the distance blocks).
 //
@@ -125,8 +125,8 @@ int main( int argc, char *argv[] )
         genericOptions.add_options()
                 ( "version", "Program version" )
                 ( "help,h", "Produce extended program help message" )
-                ( "roi-file,r", boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates." )
-                ( "graph-method,g",  boost::program_options::value< unsigned int >(&selector), "use N graph method (0=single, 1=complete, 2=average, 3=weighted, 4=ward)")
+                ( "roi,r", boost::program_options::value< std::string >(&roiFilename), "file with the seed voxels coordinates." )
+                ( "graph,g",  boost::program_options::value< unsigned int >(&selector), "use N graph method (0=single, 1=complete, 2=average, 3=weighted, 4=ward)")
                 ( "inputf,I",  boost::program_options::value< std::string >(&inputFolder), "input data folder (distance blocks)." )
                 ( "outputf,O",  boost::program_options::value< std::string >(&outputFolder), "output folder" )
                 ;
@@ -199,15 +199,15 @@ int main( int argc, char *argv[] )
             std::cout << "Build a graph linkage hierarchical tree from a distance matrix built with distBlocks." << std::endl << std::endl;
             std::cout << "* Arguments:" << std::endl << std::endl;
             std::cout << " --version:       Program version." << std::endl << std::endl;
-            std::cout << " -h --help:       produce extended program help message." << std::endl << std::endl;
-            std::cout << " -r --roi-file:   a text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
-            std::cout << " -g --graph-method: The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified)." << std::endl;
-            std::cout << " -I --inputf:     input data folder (containing the distance blocks)." << std::endl << std::endl;
-            std::cout << " -O --outputf:    output folder where tree files will be written." << std::endl << std::endl;
-            std::cout << "[-v --verbose]:   verbose output (recommended)." << std::endl << std::endl;
-            std::cout << "[--vista]: 	     read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
-            std::cout << "[--debugout]:     write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
-            std::cout << "[-p --pthreads]:  number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
+            std::cout << " -h --help:       Produce extended program help message." << std::endl << std::endl;
+            std::cout << " -r --roi:        A text file with the seed voxel coordinates and the corresponding tractogram index (if tractogram naming is based on index rather than coordinates)." << std::endl << std::endl;
+            std::cout << " -g --graph:      The graph linkage method to recalculate distances, use: 0=single, 1=complete, 2=average, 3=weighted, 4=ward(not verified)." << std::endl;
+            std::cout << " -I --inputf:     Input data folder (containing the distance blocks)." << std::endl << std::endl;
+            std::cout << " -O --outputf:    Output folder where tree files will be written." << std::endl << std::endl;
+            std::cout << "[-v --verbose]:   Verbose output (recommended)." << std::endl << std::endl;
+            std::cout << "[--vista]: 	    Read/write vista (.v) files [default is nifti (.nii) and compact (.cmpct) files]." << std::endl << std::endl;
+            std::cout << "[--debugout]:     Write additional detailed outputs meant to be used for debugging." << std::endl << std::endl;
+            std::cout << "[-p --pthreads]:  Number of processing threads to run the program in parallel. Default: use all available processors." << std::endl << std::endl;
             std::cout << std::endl;
             std::cout << "* Usage example:" << std::endl << std::endl;
             std::cout << " buildgraphtree -r roi_lh.txt -g 2 -I distblocks/ -O results/ -v" << std::endl << std::endl;
@@ -286,7 +286,7 @@ int main( int argc, char *argv[] )
             exit(0);
         }
 
-        if ( variableMap.count( "roi-file" ) )
+        if ( variableMap.count( "roi" ) )
         {
             if( !boost::filesystem::is_regular_file( boost::filesystem::path( roiFilename ) ) )
             {
@@ -338,7 +338,7 @@ int main( int argc, char *argv[] )
         }
 
 
-        if (variableMap.count("graph-method"))
+        if (variableMap.count("graph"))
         {
             if ( (selector<0)||(selector>4))
             {
