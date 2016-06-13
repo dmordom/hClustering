@@ -1,7 +1,7 @@
 # hClustering
 Hierarchical clustering algorithms for whole-brain connectivity similarity analysis
  
- David Moreno-Dominguez. d.mor.dom@gmail.com, moreno@cbs.mpg.de, www.cbs.mpg.de/alumni/moreno-11266
+ David Moreno-Dominguez. dmordom@gmail.com, www.linkedin.com/in/dmordom
 
 The hClustering repository groups a set of algorithms created to generate fully hierarchical characterization of human whole-brain high-res dMRI-based anatomical connectivity data (although with minor source code modifications it could be used with functional or any other kind of data that can be represented as a “fingerprint” vector).
 
