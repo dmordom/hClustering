@@ -37,7 +37,7 @@ Install if necessary the following library packages:
 Clone and compile the hClustering  code from GitHub: 
 https://github.com/dmordom/hClustering.git.
 
-NOTE: Depending on your system, the installed dependency library paths may not coincide with the paths used in the CMakeLists.txt file, or may not be automatically found. To help with this, i recommend installing and using "cmake-gui" command. With it, it is possible to manually set the paths for each library (you can search inside /usr/libs/ for the installed packages through your file browser).
+NOTE: Depending on your system, the installed dependency library paths may not coincide with the paths used in the CMakeLists.txt file, or may not be automatically found. To help with this, i recommend installing and using "cmake-gui" command ( sudo apt-get install cmake-gui ). With it, it is possible to manually set the paths for each library (you can search inside /usr/libs/ for the installed packages through your file browser).
 
 The minimum data required to use the hClustering commands is listed below:
 - 	A 3D white matter mask (the one used as tracking target space).
